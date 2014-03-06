@@ -86,6 +86,38 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     pathsWidget->setLayout(pathsLayout);
 
 
+    //Emulation tab
+    emulationWidget = new QWidget(this);
+    emulationLayout = new QGridLayout(emulationWidget);
+
+    emulationGroup = new QButtonGroup(this);
+
+    pureButton = new QRadioButton(tr("Pure Interpreter"), this);
+    cachedButton = new QRadioButton(tr("Cached Interpreter"), this);
+    dynamicButton = new QRadioButton(tr("Dynamic Recompiler"), this);
+
+    emulationGroup->addButton(pureButton);
+    emulationGroup->addButton(cachedButton);
+    emulationGroup->addButton(dynamicButton);
+
+    QString emuMode = SETTINGS.value("Emulation/mode", "").toString();
+    if (emuMode == "0")
+        pureButton->setChecked(true);
+    else if (emuMode == "1")
+        cachedButton->setChecked(true);
+    else
+        dynamicButton->setChecked(true);
+
+    emulationLayout->addWidget(pureButton, 1, 0);
+    emulationLayout->addWidget(cachedButton, 2, 0);
+    emulationLayout->addWidget(dynamicButton, 3, 0);
+
+    emulationLayout->setRowMinimumHeight(0, 10);
+    emulationLayout->setColumnStretch(1, 1);
+    emulationLayout->setRowStretch(4, 1);
+    emulationWidget->setLayout(emulationLayout);
+
+
     //Graphics tab
     graphicsWidget = new QWidget(this);
     graphicsLayout = new QGridLayout(graphicsWidget);
@@ -232,6 +264,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
 
     tabWidget->addTab(pathsWidget, "Paths");
+    tabWidget->addTab(emulationWidget, "Emulation");
     tabWidget->addTab(graphicsWidget, "Graphics");
     tabWidget->addTab(pluginsWidget, "Plugins");
 
@@ -296,6 +329,13 @@ void SettingsDialog::editSettings()
     SETTINGS.setValue("Paths/plugins", pluginPath->text());
     SETTINGS.setValue("Paths/data", dataPath->text());
     SETTINGS.setValue("Paths/config", configPath->text());
+
+    if (pureButton->isChecked())
+        SETTINGS.setValue("Emulation/mode", "0");
+    else if (cachedButton->isChecked())
+        SETTINGS.setValue("Emulation/mode", "1");
+    else
+        SETTINGS.setValue("Emulation/mode", "2");
 
     if (osdOption->isChecked())
         SETTINGS.setValue("Graphics/osd", true);

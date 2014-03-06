@@ -150,10 +150,12 @@ void Mupen64PlusQt::createMenu()
 
     settingsMenu = new QMenu(tr("&Settings"), this);
     pathsAction = settingsMenu->addAction(tr("&Paths"));
+    emulationAction = settingsMenu->addAction(tr("&Emulation"));
     graphicsAction = settingsMenu->addAction(tr("&Graphics"));
-    pluginsAction = settingsMenu->addAction(tr("&Plugins"));
+    pluginsAction = settingsMenu->addAction(tr("P&lugins"));
 
     pathsAction->setIcon(QIcon::fromTheme("preferences-other"));
+    emulationAction->setIcon(QIcon::fromTheme("preferences-system"));
     graphicsAction->setIcon(QIcon::fromTheme("video-display"));
     pluginsAction->setIcon(QIcon::fromTheme("input-gaming"));
 
@@ -183,6 +185,7 @@ void Mupen64PlusQt::createMenu()
     connect(startAction, SIGNAL(triggered()), this, SLOT(runEmulatorFromRomTree()));
     connect(stopAction, SIGNAL(triggered()), this, SLOT(stopEmulator()));
     connect(pathsAction, SIGNAL(triggered()), this, SLOT(openPaths()));
+    connect(emulationAction, SIGNAL(triggered()), this, SLOT(openEmulation()));
     connect(graphicsAction, SIGNAL(triggered()), this, SLOT(openGraphics()));
     connect(pluginsAction, SIGNAL(triggered()), this, SLOT(openPlugins()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(openAbout()));
@@ -233,9 +236,15 @@ void Mupen64PlusQt::openAbout()
 }
 
 
-void Mupen64PlusQt::openGraphics()
+void Mupen64PlusQt::openEmulation()
 {
     openOptions(1);
+}
+
+
+void Mupen64PlusQt::openGraphics()
+{
+    openOptions(2);
 }
 
 
@@ -259,7 +268,7 @@ void Mupen64PlusQt::openPaths()
 
 void Mupen64PlusQt::openPlugins()
 {
-    openOptions(2);
+    openOptions(3);
 }
 
 
@@ -281,6 +290,8 @@ void Mupen64PlusQt::runEmulator(QString completeRomPath)
     dataDir = QDir(dataPath);
     configDir = QDir(configPath);
     pluginDir = QDir(pluginPath);
+
+    QString emuMode = SETTINGS.value("Emulation/mode", "").toString();
 
     QString resolution = SETTINGS.value("Graphics/resolution", "").toString();
 
@@ -311,6 +322,9 @@ void Mupen64PlusQt::runEmulator(QString completeRomPath)
         args << "--configdir" << configPath;
     if (pluginPath != "" && pluginDir.exists())
         args << "--plugindir" << pluginPath;
+
+    if (emuMode != "")
+        args << "--emumode" << emuMode;
 
     if (SETTINGS.value("Graphics/osd", "").toString() == "true")
         args << "--osd";

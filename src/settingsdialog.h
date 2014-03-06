@@ -32,6 +32,7 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
+#include <QButtonGroup>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDesktopWidget>
@@ -39,10 +40,10 @@
 #include <QDialogButtonBox>
 #include <QFileDialog>
 #include <QGridLayout>
-#include <QGroupBox>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QRadioButton>
 #include <QSettings>
 #include <QTabWidget>
 
@@ -64,6 +65,7 @@ private:
     QStringList useableModes;
     QStringList videoPlugins;
 
+    QButtonGroup *emulationGroup;
     QCheckBox *fullscreenOption;
     QCheckBox *osdOption;
     QComboBox *audioBox;
@@ -73,15 +75,11 @@ private:
     QComboBox *videoBox;
     QDesktopWidget *desktop;
     QDialogButtonBox *buttonBox;
-    QGridLayout *emulatorLayout;
-    QGridLayout *filesLayout;
+    QGridLayout *emulationLayout;
     QGridLayout *graphicsLayout;
     QGridLayout *layout;
     QGridLayout *pathsLayout;
     QGridLayout *pluginsLayout;
-    QGroupBox *graphics;
-    QGroupBox *paths;
-    QGroupBox *plugins;
     QLabel *audioLabel;
     QLabel *configPathLabel;
     QLabel *dataPathLabel;
@@ -104,7 +102,11 @@ private:
     QPushButton *dataButton;
     QPushButton *configButton;
     QPushButton *romButton;
+    QRadioButton *cachedButton;
+    QRadioButton *dynamicButton;
+    QRadioButton *pureButton;
     QTabWidget *tabWidget;
+    QWidget *emulationWidget;
     QWidget *graphicsWidget;
     QWidget *pathsWidget;
     QWidget *pluginsWidget;

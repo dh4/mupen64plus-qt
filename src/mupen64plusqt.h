@@ -77,6 +77,7 @@ private:
 
     QAction *aboutAction;
     QAction *convertAction;
+    QAction *emulationAction;
     QAction *graphicsAction;
     QAction *openAction;
     QAction *outputAction;
@@ -111,6 +112,7 @@ private slots:
     void checkStatus(int status);
     void enableButtons();
     void openAbout();
+    void openEmulation();
     void openGraphics();
     void openPaths();
     void openPlugins();
