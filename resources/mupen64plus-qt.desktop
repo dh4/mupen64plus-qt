@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Mupen64Plus-Qt
+Comment=A basic frontend for Mupen64plus
+Exec=mupen64plus-qt
+Icon=mupen64plus-qt
+Terminal=false
+Categories=Game;Emulator;
