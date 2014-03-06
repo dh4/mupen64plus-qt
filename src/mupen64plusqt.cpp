@@ -30,7 +30,6 @@
  ***/
 
 #include "mupen64plusqt.h"
-#include <QDebug>
 
 
 Mupen64PlusQt::Mupen64PlusQt(QWidget *parent) : QMainWindow(parent)
@@ -326,8 +325,6 @@ void Mupen64PlusQt::runEmulator(QString completeRomPath)
     if (resolution != "")
         args << "--resolution" << resolution;
 
-    if (videoPlugin != "")
-        args << "--gfx" << videoPlugin;
     if (videoPlugin != "")
         args << "--gfx" << videoPlugin;
     if (audioPlugin != "")

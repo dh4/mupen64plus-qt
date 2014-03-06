@@ -30,7 +30,6 @@
  ***/
 
 #include "settingsdialog.h"
-#include <QDebug>
 
 
 SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)

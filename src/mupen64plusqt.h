@@ -33,7 +33,6 @@
 #define MUPEN64PLUSQT_H
 
 #include <QCloseEvent>
-#include <QCryptographicHash>
 #include <QDir>
 #include <QHeaderView>
 #include <QMainWindow>
