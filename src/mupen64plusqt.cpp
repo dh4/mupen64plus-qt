@@ -500,11 +500,19 @@ void Mupen64PlusQt::resetRomTreeLayout(QStringList visible)
     foreach (QString current, visible)
     {
         if (i == 1) {
+            if (SETTINGS.value("ROMs/stretchfirstcolumn", "true") == "true") {
 #if QT_VERSION >= 0x050000
-            romTree->header()->setSectionResizeMode(i, QHeaderView::Stretch);
+                romTree->header()->setSectionResizeMode(i, QHeaderView::Stretch);
 #else
-            romTree->header()->setResizeMode(i, QHeaderView::Stretch);
+                romTree->header()->setResizeMode(i, QHeaderView::Stretch);
 #endif
+            } else {
+#if QT_VERSION >= 0x050000
+                romTree->header()->setSectionResizeMode(i, QHeaderView::Interactive);
+#else
+                romTree->header()->setResizeMode(i, QHeaderView::Interactive);
+#endif
+            }
         }
 
         if (widths.size() == visible.size()) {

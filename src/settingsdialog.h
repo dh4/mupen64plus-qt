@@ -73,6 +73,7 @@ private:
     QCheckBox *fullscreenOption;
     QCheckBox *osdOption;
     QCheckBox *saveOption;
+    QCheckBox *stretchOption;
     QComboBox *audioBox;
     QComboBox *inputBox;
     QComboBox *resolutionBox;

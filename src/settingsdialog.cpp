@@ -326,16 +326,21 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     sortWidget->setLayout(sortLayout);
     sortWidget->setMaximumHeight(80);
 
+    stretchOption = new QCheckBox(tr("Stretch first column"), this);
+    if (SETTINGS.value("ROMs/stretchfirstcolumn", "true").toString() == "true")
+        stretchOption->setChecked(true);
+
     columnsLayout->addWidget(availableLabel, 0, 1);
     columnsLayout->addWidget(currentLabel, 0, 3);
     columnsLayout->addWidget(availableList, 1, 1);
     columnsLayout->addWidget(currentList, 1, 3);
     columnsLayout->addWidget(toggleWidget, 1, 2);
     columnsLayout->addWidget(sortWidget, 1, 4);
+    columnsLayout->addWidget(stretchOption, 2, 3);
 
     columnsLayout->setColumnStretch(0, 1);
     columnsLayout->setColumnStretch(5, 1);
-    columnsLayout->setRowStretch(2, 1);
+    columnsLayout->setRowStretch(3, 1);
     columnsWidget->setLayout(columnsLayout);
 
 
@@ -484,6 +489,11 @@ void SettingsDialog::editSettings()
         visibleItems << item->text();
 
     SETTINGS.setValue("ROMs/columns", visibleItems.join("|"));
+
+    if (stretchOption->isChecked())
+        SETTINGS.setValue("ROMs/stretchfirstcolumn", true);
+    else
+        SETTINGS.setValue("ROMs/stretchfirstcolumn", "");
 
     if (saveOption->isChecked())
         SETTINGS.setValue("saveoptions", true);
