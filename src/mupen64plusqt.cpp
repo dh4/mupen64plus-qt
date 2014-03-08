@@ -110,7 +110,8 @@ void Mupen64PlusQt::addRoms()
 
                     delete romData;
 
-                    addToRomTree(fileName, romMD5, internalName, visible);
+                    if (visible.join("") != "") //Otherwise no columns, so don't bother populating
+                        addToRomTree(fileName, romMD5, internalName, visible);
 
                     QString currentSetting = SETTINGS.value("ROMs/cache", "").toString();
                     QString newSetting = currentSetting
@@ -131,7 +132,8 @@ void Mupen64PlusQt::addRoms()
         }
     }
 
-    romTree->setEnabled(true);
+    if (visible.join("") != "")
+        romTree->setEnabled(true);
 }
 
 
@@ -263,19 +265,22 @@ void Mupen64PlusQt::cachedRoms()
     QStringList visible = SETTINGS.value("ROMs/columns", "Filename|Size").toString().split("|");
     resetRomTreeLayout(visible);
 
-    QString cache = SETTINGS.value("ROMs/cache", "").toString();
-    QStringList cachedRoms = cache.split("||");
+    if (visible.join("") != "") { //Otherwise no columns, so don't bother populating
 
-    foreach (QString current, cachedRoms)
-    {
-        QStringList romInfo = current.split("|");
+        QString cache = SETTINGS.value("ROMs/cache", "").toString();
+        QStringList cachedRoms = cache.split("||");
 
-        if (romInfo.size() == 3) {
-            addToRomTree(romInfo[0], romInfo[2], romInfo[1], visible);
+        foreach (QString current, cachedRoms)
+        {
+            QStringList romInfo = current.split("|");
+
+            if (romInfo.size() == 3) {
+                addToRomTree(romInfo[0], romInfo[2], romInfo[1], visible);
+            }
         }
-    }
 
-    romTree->setEnabled(true);
+        romTree->setEnabled(true);
+    }
 }
 
 
