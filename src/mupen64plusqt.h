@@ -33,12 +33,14 @@
 #define MUPEN64PLUSQT_H
 
 #include <QCloseEvent>
+#include <QCryptographicHash>
 #include <QDir>
 #include <QHeaderView>
 #include <QMainWindow>
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QProcess>
+#include <QProgressDialog>
 #include <QPushButton>
 #include <QSettings>
 #include <QStatusBar>
@@ -46,9 +48,7 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
-#include "aboutdialog.h"
-#include "global.h"
-#include "settingsdialog.h"
+#include "treewidgetitem.h"
 
 
 class Mupen64PlusQt : public QMainWindow
@@ -62,11 +62,17 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private:
+    void addToRomTree(QString fileName, QString romMD5, QString internalName, QStringList visible);
+    void cachedRoms();
     void createMenu();
     void createRomView();
     void openOptions(int activeTab);
+    void resetRomTreeLayout(QStringList visible);
     void runEmulator(QString completeRomPath);
+    void saveColumnWidths();
     void toggleMenus(bool active);
+
+    QByteArray byteswap(QByteArray romData);
 
     QDir configDir;
     QDir dataDir;
@@ -74,36 +80,40 @@ private:
     QDir romDir;
     QDir savesDir;
     QString romPath;
+    QStringList headerLabels;
 
     QAction *aboutAction;
-    QAction *convertAction;
+    QAction *columnsAction;
     QAction *emulationAction;
+    QAction *filenameAction;
+    QAction *goodnameAction;
     QAction *graphicsAction;
     QAction *openAction;
-    QAction *outputAction;
     QAction *pathsAction;
     QAction *pluginsAction;
     QAction *quitAction;
     QAction *refreshAction;
+    QAction *saveAction;
+    QAction *sizeAction;
     QAction *startAction;
-    QAction *statusBarAction;
     QAction *stopAction;
     QActionGroup *inputGroup;
     QByteArray *romData;
+    QHeaderView *headerView;
     QList<QAction*> menuEnable;
     QList<QAction*> menuDisable;
     QMenu *emulationMenu;
     QMenu *fileMenu;
     QMenu *helpMenu;
-    QMenu *inputMenu;
     QMenu *settingsMenu;
     QMenu *viewMenu;
     QMenuBar *menuBar;
     QProcess *mupen64proc;
+    QSettings *romCatalog;
     QStatusBar *statusBar;
     QTreeWidget *romTree;
-    QTreeWidgetItem *headerItem;
-    QTreeWidgetItem *fileItem;
+    TreeWidgetItem *headerItem;
+    TreeWidgetItem *fileItem;
     QVBoxLayout *layout;
     QWidget *widget;
 
@@ -112,12 +122,14 @@ private slots:
     void checkStatus(int status);
     void enableButtons();
     void openAbout();
+    void openColumns();
     void openEmulation();
     void openGraphics();
     void openPaths();
     void openPlugins();
     void openRom();
     void runEmulatorFromRomTree();
+    void saveSortOrder(int column, Qt::SortOrder order);
     void stopEmulator();
 
 };

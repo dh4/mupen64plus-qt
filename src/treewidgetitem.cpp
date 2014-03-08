@@ -29,31 +29,21 @@
  *
  ***/
 
-#ifndef ABOUTDIALOG_H
-#define ABOUTDIALOG_H
-
-#include <QDialog>
-#include <QDialogButtonBox>
-#include <QGridLayout>
-#include <QLabel>
-#include <QPlainTextEdit>
+#include "treewidgetitem.h"
 
 
-class AboutDialog : public QDialog
+//Reimplemented QTreeWidgetItem operator to sort based on both integers and text
+bool TreeWidgetItem::operator< (const QTreeWidgetItem &other) const
 {
-    Q_OBJECT
+    int column = treeWidget()->sortColumn();
 
-public:
-    explicit AboutDialog(QWidget *parent = 0);
-
-private:
-    QDialogButtonBox *buttonBox;
-    QGridLayout *aboutLayout;
-    QLabel *descriptionLabel;
-    QLabel *githubLink;
-    QLabel *mupen64Link;
-    QLabel *icon;
-    QPlainTextEdit *license;
-};
-
-#endif // ABOUTDIALOG_H
+    if (data(column, Qt::UserRole).toString() != "") {
+        int firstNumber = data(column, Qt::UserRole).toInt();
+        int otherNumber = other.data(column, Qt::UserRole).toInt();
+        return firstNumber < otherNumber;
+    } else {
+        QString firstText = text(column);
+        QString otherText = other.text(column);
+        return firstText < otherText;
+    }
+}

@@ -30,6 +30,7 @@
  ***/
 
 #include "aboutdialog.h"
+#include "global.h"
 
 
 AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
@@ -48,16 +49,25 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
     license->setReadOnly(true);
     licenseFile.close();
 
-    mupen64Link = new QLabel("<a href=\"https://code.google.com/p/mupen64plus/\">Mupen64Plus Website</a>", this);
+    QString description = tr("A basic launcher for Mupen64Plus using Qt.");
+    QString mupen64 = "<a href=\"https://code.google.com/p/mupen64plus/\">Mupen64Plus website</a>";
+    QString github = "<a href=\"https://github.com/dh4/mupen64plus-qt\">Github repository</a>";
+
+    descriptionLabel = new QLabel(description, this);
+    mupen64Link = new QLabel(mupen64, this);
+    githubLink = new QLabel(github, this);
+
     mupen64Link->setOpenExternalLinks(true);
+    githubLink->setOpenExternalLinks(true);
 
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok, Qt::Horizontal, this);
 
     aboutLayout->addWidget(icon, 0, 0, 4, 1);
-    aboutLayout->addWidget(new QLabel(tr("A basic launcher for Mupen64Plus using Qt."), this), 0, 1);
+    aboutLayout->addWidget(descriptionLabel, 0, 1);
     aboutLayout->addWidget(license, 1, 1);
     aboutLayout->addWidget(mupen64Link, 3, 1);
-    aboutLayout->addWidget(buttonBox, 4, 1);
+    aboutLayout->addWidget(githubLink, 4, 1);
+    aboutLayout->addWidget(buttonBox, 5, 1);
     aboutLayout->setColumnStretch(1, 1);
     aboutLayout->setRowStretch(1, 1);
     aboutLayout->setColumnMinimumWidth(0, 150);

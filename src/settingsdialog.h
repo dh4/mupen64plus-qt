@@ -42,12 +42,14 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QListWidget>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QSettings>
 #include <QTabWidget>
+#include <QToolButton>
+#include <QVBoxLayout>
 
-#include "global.h"
 
 class SettingsDialog : public QDialog
 {
@@ -59,6 +61,8 @@ public:
 private:
     QDir pluginsDir;
     QStringList audioPlugins;
+    QStringList available;
+    QStringList current;
     QStringList inputPlugins;
     QStringList modes;
     QStringList rspPlugins;
@@ -68,6 +72,7 @@ private:
     QButtonGroup *emulationGroup;
     QCheckBox *fullscreenOption;
     QCheckBox *osdOption;
+    QCheckBox *saveOption;
     QComboBox *audioBox;
     QComboBox *inputBox;
     QComboBox *resolutionBox;
@@ -75,13 +80,17 @@ private:
     QComboBox *videoBox;
     QDesktopWidget *desktop;
     QDialogButtonBox *buttonBox;
+    QGridLayout *columnsLayout;
     QGridLayout *emulationLayout;
     QGridLayout *graphicsLayout;
     QGridLayout *layout;
+    QGridLayout *otherLayout;
     QGridLayout *pathsLayout;
     QGridLayout *pluginsLayout;
     QLabel *audioLabel;
+    QLabel *availableLabel;
     QLabel *configPathLabel;
+    QLabel *currentLabel;
     QLabel *dataPathLabel;
     QLabel *fullscreenLabel;
     QLabel *inputLabel;
@@ -91,33 +100,50 @@ private:
     QLabel *resolutionLabel;
     QLabel *romPathLabel;
     QLabel *rspLabel;
+    QLabel *saveLabel;
     QLabel *videoLabel;
     QLineEdit *mupen64Path;
     QLineEdit *pluginPath;
     QLineEdit *dataPath;
     QLineEdit *configPath;
     QLineEdit *romPath;
+    QListWidget *availableList;
+    QListWidget *currentList;
+    QPushButton *configButton;
+    QPushButton *dataButton;
     QPushButton *mupen64Button;
     QPushButton *pluginButton;
-    QPushButton *dataButton;
-    QPushButton *configButton;
     QPushButton *romButton;
     QRadioButton *cachedButton;
     QRadioButton *dynamicButton;
     QRadioButton *pureButton;
     QTabWidget *tabWidget;
+    QToolButton *addButton;
+    QToolButton *removeButton;
+    QToolButton *sortDownButton;
+    QToolButton *sortUpButton;
+    QVBoxLayout *sortLayout;
+    QVBoxLayout *toggleLayout;
+    QWidget *columnsWidget;
     QWidget *emulationWidget;
     QWidget *graphicsWidget;
+    QWidget *otherWidget;
     QWidget *pathsWidget;
     QWidget *pluginsWidget;
+    QWidget *sortWidget;
+    QWidget *toggleWidget;
 
 private slots:
+    void addColumn();
     void browseMupen64();
     void browsePlugin();
     void browseData();
     void browseConfig();
     void browseROM();
     void editSettings();
+    void removeColumn();
+    void sortDown();
+    void sortUp();
 };
 
 #endif // SETTINGSDIALOG_H

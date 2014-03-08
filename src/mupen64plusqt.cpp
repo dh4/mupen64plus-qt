@@ -30,6 +30,9 @@
  ***/
 
 #include "mupen64plusqt.h"
+#include "aboutdialog.h"
+#include "global.h"
+#include "settingsdialog.h"
 
 
 Mupen64PlusQt::Mupen64PlusQt(QWidget *parent) : QMainWindow(parent)
@@ -62,6 +65,11 @@ Mupen64PlusQt::Mupen64PlusQt(QWidget *parent) : QMainWindow(parent)
 
 void Mupen64PlusQt::addRoms()
 {
+    SETTINGS.setValue("ROMs/cache", "");
+    QStringList visible = SETTINGS.value("ROMs/columns", "Filename|Size").toString().split("|");
+    resetRomTreeLayout(visible);
+
+    romTree->setEnabled(false);
     romTree->clear();
     startAction->setEnabled(false);
     stopAction->setEnabled(false);
@@ -72,17 +80,48 @@ void Mupen64PlusQt::addRoms()
                                                  QDir::Files | QDir::NoSymLinks);
 
             if (files.size() > 0) {
-                for(QStringList::Iterator it = files.begin(); it != files.end(); ++it)
+                QProgressDialog progress("Loading ROMs...", "Cancel", 0, files.size(), this);
+#if QT_VERSION >= 0x050000
+                progress.setWindowFlags(progress.windowFlags() & ~Qt::WindowCloseButtonHint);
+                progress.setWindowFlags(progress.windowFlags() & ~Qt::WindowMinimizeButtonHint);
+                progress.setWindowFlags(progress.windowFlags() & ~Qt::WindowContextHelpButtonHint);
+#else
+                progress.setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+#endif
+                progress.setCancelButton(0);
+                progress.show();
+                progress.setWindowModality(Qt::WindowModal);
+
+                int count = 0;
+                foreach (QString fileName, files)
                 {
-                    QFile file(romDir.absoluteFilePath(*it));
-                    qint64 size = QFileInfo(file).size();
+                    QFile file(romDir.absoluteFilePath(fileName));
 
-                    fileItem = new QTreeWidgetItem;
-                    fileItem->setText(0, QFileInfo(file).fileName());
-                    fileItem->setText(1, tr("%1 MB").arg(int((size + 1023) / 1024 / 1024)));
-                    fileItem->setTextAlignment(1, Qt::AlignRight | Qt::AlignVCenter);
+                    file.open(QIODevice::ReadOnly);
+                    romData = new QByteArray(file.readAll());
+                    file.close();
 
-                    romTree->addTopLevelItem(fileItem);
+                    *romData = byteswap(*romData);
+
+                    QString internalName = QString(romData->mid(32, 20)).trimmed();
+
+                    QString romMD5 = QString(QCryptographicHash::hash(*romData,
+                                             QCryptographicHash::Md5).toHex());
+
+                    delete romData;
+
+                    addToRomTree(fileName, romMD5, internalName, visible);
+
+                    QString currentSetting = SETTINGS.value("ROMs/cache", "").toString();
+                    QString newSetting = currentSetting
+                                         + fileName + "|"
+                                         + internalName + "|"
+                                         + romMD5 + "||";
+
+                    SETTINGS.setValue("ROMs/cache", newSetting);
+
+                    count++;
+                    progress.setValue(count);
                 }
             } else {
             QMessageBox::warning(this, "Warning", "No ROMs found.");
@@ -91,6 +130,152 @@ void Mupen64PlusQt::addRoms()
             QMessageBox::warning(this, "Warning", "Failed to open ROM directory.");
         }
     }
+
+    romTree->setEnabled(true);
+}
+
+
+
+void Mupen64PlusQt::addToRomTree(QString fileName, QString romMD5, QString internalName, QStringList visible)
+{
+    QFile file(romDir.absoluteFilePath(fileName));
+    qint64 size = QFileInfo(file).size();
+
+    QString dataPath = SETTINGS.value("Paths/data", "").toString();
+    dataDir = QDir(dataPath);
+    QString catalogFile = dataDir.absoluteFilePath("mupen64plus.ini");
+
+    bool getGoodName = false;
+    if (QFileInfo(catalogFile).exists()) {
+        romCatalog = new QSettings(catalogFile, QSettings::IniFormat);
+        getGoodName = true;
+    }
+
+    QString goodName = "Requires data directory";
+    QString CRC1 = "";
+    QString CRC2 = "";
+    QString players = "";
+    QString saveType = "";
+    QString rumble = "";
+
+    if (getGoodName) {
+        //Join GoodName on ", ", otherwise entries with a comma won't show
+        QVariant goodNameVariant = romCatalog->value(romMD5+"/GoodName","Unknown ROM");
+        goodName = goodNameVariant.toStringList().join(", ");
+
+        QStringList CRC = romCatalog->value(romMD5+"/CRC","").toString().split(" ");
+
+        if (CRC.size() == 2) {
+            CRC1 = CRC[0];
+            CRC2 = CRC[1];
+        }
+
+        QString newMD5 = romCatalog->value(romMD5+"/RefMD5","").toString();
+        if (newMD5 == "")
+            newMD5 = romMD5;
+
+        players = romCatalog->value(newMD5+"/Players","").toString();
+        saveType = romCatalog->value(newMD5+"/SaveType","").toString();
+        rumble = romCatalog->value(newMD5+"/Rumble","").toString();
+    }
+
+    fileItem = new TreeWidgetItem(romTree);
+    fileItem->setText(0, fileName);
+
+    int i = 1;
+    foreach (QString current, visible)
+    {
+        if (current == "GoodName") {
+            fileItem->setText(i, goodName);
+            if (goodName == "Unknown ROM" || goodName == "Requires data directory")
+                fileItem->setForeground(i, QBrush(Qt::gray));
+        }
+        else if (current == "Filename") {
+            fileItem->setText(i, QFileInfo(file).completeBaseName());
+        }
+        else if (current == "Filename (extension)") {
+            fileItem->setText(i, fileName);
+        }
+        else if (current == "Internal Name") {
+            fileItem->setText(i, internalName);
+        }
+        else if (current == "Size") {
+            fileItem->setText(i, tr("%1 MB").arg(int((size + 1023) / 1024 / 1024)));
+            fileItem->setData(i, Qt::UserRole, (int)size);
+            fileItem->setTextAlignment(i, Qt::AlignRight | Qt::AlignVCenter);
+        }
+        else if (current == "MD5") {
+            fileItem->setText(i, romMD5);
+            fileItem->setTextAlignment(i, Qt::AlignHCenter | Qt::AlignVCenter);
+        }
+        else if (current == "CRC1") {
+            fileItem->setText(i, CRC1.toLower());
+        }
+        else if (current == "CRC2") {
+            fileItem->setText(i, CRC2.toLower());
+        }
+        else if (current == "Players") {
+            fileItem->setText(i, players);
+            fileItem->setTextAlignment(i, Qt::AlignRight | Qt::AlignVCenter);
+        }
+        else if (current == "Rumble") {
+            fileItem->setText(i, rumble);
+            fileItem->setTextAlignment(i, Qt::AlignRight | Qt::AlignVCenter);
+        }
+        else if (current == "Save Type") {
+            fileItem->setText(i, saveType);
+            fileItem->setTextAlignment(i, Qt::AlignRight | Qt::AlignVCenter);
+        }
+        else //Invalid column name in config file
+            fileItem->setText(i, "");
+
+        i++;
+    }
+
+    romTree->addTopLevelItem(fileItem);
+}
+
+
+QByteArray Mupen64PlusQt::byteswap(QByteArray romData)
+{
+        QByteArray flipped;
+
+        if (romData.left(4).toHex() == "37804012") {
+            for (int i = 0; i < romData.length(); i += 2)
+            {
+                flipped.append(romData[i + 1]);
+                flipped.append(romData[i]);
+            }
+            return flipped;
+        } else {
+            return romData;
+        }
+}
+
+
+void Mupen64PlusQt::cachedRoms()
+{
+    romTree->setEnabled(false);
+    romTree->clear();
+    startAction->setEnabled(false);
+    stopAction->setEnabled(false);
+
+    QStringList visible = SETTINGS.value("ROMs/columns", "Filename|Size").toString().split("|");
+    resetRomTreeLayout(visible);
+
+    QString cache = SETTINGS.value("ROMs/cache", "").toString();
+    QStringList cachedRoms = cache.split("||");
+
+    foreach (QString current, cachedRoms)
+    {
+        QStringList romInfo = current.split("|");
+
+        if (romInfo.size() == 3) {
+            addToRomTree(romInfo[0], romInfo[2], romInfo[1], visible);
+        }
+    }
+
+    romTree->setEnabled(true);
 }
 
 
@@ -112,6 +297,9 @@ void Mupen64PlusQt::closeEvent(QCloseEvent *event)
         SETTINGS.setValue("Geometry/maximized", true);
     else
         SETTINGS.setValue("Geometry/maximized", "");
+
+    saveColumnWidths();
+
     event->accept();
 }
 
@@ -153,11 +341,13 @@ void Mupen64PlusQt::createMenu()
     emulationAction = settingsMenu->addAction(tr("&Emulation"));
     graphicsAction = settingsMenu->addAction(tr("&Graphics"));
     pluginsAction = settingsMenu->addAction(tr("P&lugins"));
+    columnsAction = settingsMenu->addAction(tr("&Columns"));
 
     pathsAction->setIcon(QIcon::fromTheme("preferences-other"));
     emulationAction->setIcon(QIcon::fromTheme("preferences-system"));
     graphicsAction->setIcon(QIcon::fromTheme("video-display"));
     pluginsAction->setIcon(QIcon::fromTheme("input-gaming"));
+    columnsAction->setIcon(QIcon::fromTheme("tab-new"));
 
     menuBar->addMenu(settingsMenu);
 
@@ -168,15 +358,18 @@ void Mupen64PlusQt::createMenu()
     menuBar->addMenu(helpMenu);
 
 
-    //Create list of actions that are enabled only when Mupen64 is not running
+    //Create list of actions that are enabled only when Mupen64Plus is not running
     menuEnable << startAction
                << openAction
                << refreshAction
+               << emulationAction
                << graphicsAction
                << pathsAction
-               << pluginsAction;
+               << pluginsAction
+               << columnsAction
+               << quitAction;
 
-    //Create list of actions that are disabled when Mupen64 is not running
+    //Create list of actions that are disabled when Mupen64Plus is not running
     menuDisable << stopAction;
 
     connect(openAction, SIGNAL(triggered()), this, SLOT(openRom()));
@@ -188,6 +381,7 @@ void Mupen64PlusQt::createMenu()
     connect(emulationAction, SIGNAL(triggered()), this, SLOT(openEmulation()));
     connect(graphicsAction, SIGNAL(triggered()), this, SLOT(openGraphics()));
     connect(pluginsAction, SIGNAL(triggered()), this, SLOT(openPlugins()));
+    connect(columnsAction, SIGNAL(triggered()), this, SLOT(openColumns()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(openAbout()));
 }
 
@@ -195,31 +389,21 @@ void Mupen64PlusQt::createMenu()
 void Mupen64PlusQt::createRomView()
 {
     romTree = new QTreeWidget(this);
-    romTree->setColumnCount(2);
     romTree->setWordWrap(false);
     romTree->setAllColumnsShowFocus(true);
     romTree->setRootIsDecorated(false);
+    romTree->setSortingEnabled(true);
     romTree->setStyleSheet("QTreeView { border: none; } QTreeView::item { height: 25px; }");
 
-    headerItem = new QTreeWidgetItem;
-    headerItem->setText(0, tr("ROM"));
-    headerItem->setText(1, tr("Size"));
-    headerItem->setTextAlignment(0, Qt::AlignCenter | Qt::AlignVCenter);
-    headerItem->setTextAlignment(1, Qt::AlignCenter | Qt::AlignVCenter);
-    romTree->setHeaderItem(headerItem);
+    headerView = new QHeaderView(Qt::Horizontal, this);
+    headerView->setMinimumSectionSize(75);
+    romTree->setHeader(headerView);
 
-    romTree->header()->setStretchLastSection(false);
-#if QT_VERSION >= 0x050000
-    romTree->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-#else
-    romTree->header()->setResizeMode(0, QHeaderView::Stretch);
-#endif
-    romTree->setColumnWidth(1, 100);
-
-    addRoms();
+    cachedRoms();
 
     connect(romTree, SIGNAL(clicked(QModelIndex)), this, SLOT(enableButtons()));
     connect(romTree, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(runEmulatorFromRomTree()));
+    connect(headerView, SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), this, SLOT(saveSortOrder(int,Qt::SortOrder)));
 }
 
 
@@ -233,6 +417,12 @@ void Mupen64PlusQt::openAbout()
 {
     AboutDialog aboutDialog(this);
     aboutDialog.exec();
+}
+
+
+void Mupen64PlusQt::openColumns()
+{
+    openOptions(4);
 }
 
 
@@ -252,10 +442,13 @@ void Mupen64PlusQt::openOptions(int activeTab) {
     SettingsDialog settingsDialog(this, activeTab);
     settingsDialog.exec();
 
-    if (romPath != SETTINGS.value("Paths/roms","").toString()) {
-        romPath = SETTINGS.value("Paths/roms","").toString();
+    QString romSave = SETTINGS.value("Paths/roms","").toString();
+    if (romPath != romSave) {
+        romPath = romSave;
         romDir = QDir(romPath);
         addRoms();
+    } else {
+        cachedRoms();
     }
 }
 
@@ -278,6 +471,61 @@ void Mupen64PlusQt::openRom()
                                                 tr("N64 ROMs (*.z64 *.n64 *.v64);;All Files (*)"));
     if (path != "")
         runEmulator(path);
+}
+
+
+void Mupen64PlusQt::resetRomTreeLayout(QStringList visible)
+{
+    saveColumnWidths();
+    QStringList widths = SETTINGS.value("ROMs/width", "").toString().split("|");
+
+    headerLabels.clear();
+    headerLabels << "" << visible;
+    romTree->setColumnCount(headerLabels.size());
+    romTree->setHeaderLabels(headerLabels);
+    headerView->setSortIndicatorShown(false);
+
+    QStringList sort = SETTINGS.value("ROMs/sort", "").toString().split("|");
+    if (sort.size() == 2) {
+        if (sort[1] == "descending")
+            headerView->setSortIndicator(visible.indexOf(sort[0]) + 1, Qt::DescendingOrder);
+        else
+            headerView->setSortIndicator(visible.indexOf(sort[0]) + 1, Qt::AscendingOrder);
+    }
+
+    romTree->setColumnHidden(0, true); //Hidden filename for launching emulator
+
+
+    int i = 1;
+    foreach (QString current, visible)
+    {
+        if (i == 1) {
+#if QT_VERSION >= 0x050000
+            romTree->header()->setSectionResizeMode(i, QHeaderView::Stretch);
+#else
+            romTree->header()->setResizeMode(i, QHeaderView::Stretch);
+#endif
+        }
+
+        if (widths.size() == visible.size()) {
+            romTree->setColumnWidth(i, widths[i - 1].toInt());
+        } else {
+            if (current == "GoodName" || current.left(8) == "Filename")
+                romTree->setColumnWidth(i, 300);
+            else if (current == "MD5")
+                romTree->setColumnWidth(i, 250);
+            else if (current == "Internal Name")
+                romTree->setColumnWidth(i, 200);
+            else if (current == "Save Type")
+                romTree->setColumnWidth(i, 100);
+            else if (current == "CRC1" || current == "CRC2")
+                romTree->setColumnWidth(i, 90);
+            else if (current == "Size" || current == "Rumble" || current == "Players")
+                romTree->setColumnWidth(i, 75);
+        }
+
+        i++;
+    }
 }
 
 
@@ -314,7 +562,11 @@ void Mupen64PlusQt::runEmulator(QString completeRomPath)
     }
 
     QStringList args;
-    args << "--nosaveoptions";
+
+    if (SETTINGS.value("saveoptions", "").toString() == "true")
+        args << "--saveoptions";
+    else
+        args << "--nosaveoptions";
 
     if (dataPath != "" && dataDir.exists())
         args << "--datadir" << dataPath;
@@ -368,6 +620,31 @@ void Mupen64PlusQt::runEmulatorFromRomTree()
 }
 
 
+void Mupen64PlusQt::saveColumnWidths()
+{
+    QStringList widths;
+
+    for (int i = 1; i < romTree->columnCount(); i++)
+    {
+        widths << QString::number(romTree->columnWidth(i));
+    }
+
+    if (widths.size() > 0)
+        SETTINGS.setValue("ROMs/width", widths.join("|"));
+}
+
+
+void Mupen64PlusQt::saveSortOrder(int column, Qt::SortOrder order)
+{
+    QString columnName = headerLabels.value(column);
+
+    if (order == Qt::DescendingOrder)
+        SETTINGS.setValue("ROMs/sort", columnName + "|descending");
+    else
+        SETTINGS.setValue("ROMs/sort", columnName + "|ascending");
+}
+
+
 void Mupen64PlusQt::stopEmulator()
 {
     mupen64proc->terminate();
@@ -376,17 +653,14 @@ void Mupen64PlusQt::stopEmulator()
 
 void Mupen64PlusQt::toggleMenus(bool active)
 {
-    QListIterator<QAction*> enableIter(menuEnable);
-    while(enableIter.hasNext())
-        enableIter.next()->setEnabled(active);
+    foreach (QAction *next, menuEnable)
+        next->setEnabled(active);
 
-    QListIterator<QAction*> disableIter(menuDisable);
-    while(disableIter.hasNext())
-        disableIter.next()->setEnabled(!active);
+    foreach (QAction *next, menuDisable)
+        next->setEnabled(!active);
 
     romTree->setEnabled(active);
 
     if (romTree->currentItem() == NULL)
         startAction->setEnabled(false);
 }
-

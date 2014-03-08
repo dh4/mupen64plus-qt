@@ -29,10 +29,12 @@
  *
  ***/
 
-#include "mupen64plusqt.h"
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QSettings>
+
+#include "global.h"
+#include "mupen64plusqt.h"
 
 
 int main(int argc, char *argv[])

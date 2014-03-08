@@ -30,12 +30,14 @@
  ***/
 
 #include "settingsdialog.h"
+#include "global.h"
 
 
 SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 {
     setWindowTitle(tr("Settings"));
     setMinimumWidth(500);
+    setMinimumHeight(250);
 
     layout = new QGridLayout(this);
     tabWidget = new QTabWidget(this);
@@ -167,9 +169,8 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     int screenWidth = desktop->width();
     int screenHeight = desktop->height();
 
-    for(QStringList::Iterator it = modes.begin(); it != modes.end(); ++it)
+    foreach (QString mode, modes)
     {
-        QString mode = *it;
         QStringList values = mode.split("x");
 
         if (values.value(0).toInt() <= screenWidth && values.value(1).toInt() <= screenHeight)
@@ -205,11 +206,8 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
         QStringList files = pluginsDir.entryList(QStringList() << "*", QDir::Files);
 
         if (files.size() > 0) {
-            for(QStringList::Iterator it = files.begin(); it != files.end(); ++it)
+            foreach (QString fileName, files)
             {
-                QFile file(pluginsDir.absoluteFilePath(*it));
-                QString fileName = QFileInfo(file).fileName();
-
                 if (fileName.contains("-audio-"))
                     audioPlugins << fileName;
                 else if (fileName.contains("-input-"))
@@ -263,10 +261,114 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     pluginsWidget->setLayout(pluginsLayout);
 
 
+    //Columns tab
+    columnsWidget = new QWidget(this);
+    columnsLayout = new QGridLayout(columnsWidget);
+
+    availableLabel = new QLabel(tr("Available:"), this);
+    currentLabel = new QLabel(tr("Current:"), this);
+
+    availableList = new QListWidget(this);
+    currentList = new QListWidget(this);
+
+    addButton = new QToolButton(this);
+    removeButton = new QToolButton(this);
+    sortUpButton = new QToolButton(this);
+    sortDownButton = new QToolButton(this);
+
+    addButton->setArrowType(Qt::RightArrow);
+    removeButton->setArrowType(Qt::LeftArrow);
+    sortUpButton->setArrowType(Qt::DownArrow);
+    sortDownButton->setArrowType(Qt::UpArrow);
+
+    available << "Filename"
+              << "Filename (extension)"
+              << "GoodName"
+              << "Internal Name"
+              << "Size"
+              << "MD5"
+              << "CRC1"
+              << "CRC2"
+              << "Players"
+              << "Rumble"
+              << "Save Type";
+
+    current = SETTINGS.value("ROMs/columns", "Filename|Size").toString().split("|");
+
+    foreach (QString cur, current)
+    {
+        if (available.contains(cur))
+            available.removeOne(cur);
+        else //Someone added an invalid item
+            current.removeOne(cur);
+    }
+
+    availableList->setMaximumHeight(140);
+    availableList->setMaximumWidth(150);
+    availableList->addItems(available);
+    availableList->sortItems();
+
+    currentList->setMaximumHeight(140);
+    currentList->setMaximumWidth(150);
+    currentList->addItems(current);
+
+    toggleWidget = new QWidget(this);
+    toggleLayout = new QVBoxLayout(toggleWidget);
+    toggleLayout->addWidget(addButton);
+    toggleLayout->addWidget(removeButton);
+    toggleWidget->setLayout(toggleLayout);
+    toggleWidget->setMaximumHeight(80);
+
+    sortWidget = new QWidget(this);
+    sortLayout = new QVBoxLayout(sortWidget);
+    sortLayout->addWidget(sortDownButton);
+    sortLayout->addWidget(sortUpButton);
+    sortWidget->setLayout(sortLayout);
+    sortWidget->setMaximumHeight(80);
+
+    columnsLayout->addWidget(availableLabel, 0, 1);
+    columnsLayout->addWidget(currentLabel, 0, 3);
+    columnsLayout->addWidget(availableList, 1, 1);
+    columnsLayout->addWidget(currentList, 1, 3);
+    columnsLayout->addWidget(toggleWidget, 1, 2);
+    columnsLayout->addWidget(sortWidget, 1, 4);
+
+    columnsLayout->setColumnStretch(0, 1);
+    columnsLayout->setColumnStretch(5, 1);
+    columnsLayout->setRowStretch(2, 1);
+    columnsWidget->setLayout(columnsLayout);
+
+
+    //Other tab
+    otherWidget = new QWidget(this);
+    otherLayout = new QGridLayout(otherWidget);
+
+    saveLabel = new QLabel(tr("Save Options:"), this);
+    saveOption = new QCheckBox(this);
+
+    QString saveToolTip = "Invokes --saveoptions: Save the given options ";
+    saveToolTip        += "into the mupen64plus configuration file.";
+    saveOption->setToolTip(saveToolTip);
+
+    if (SETTINGS.value("saveoptions", "").toString() == "true")
+        saveOption->setChecked(true);
+
+    otherLayout->addWidget(saveLabel, 1, 0);
+    otherLayout->addWidget(saveOption, 1, 1);
+
+    otherLayout->setColumnMinimumWidth(0, 100);
+    otherLayout->setRowMinimumHeight(0, 10);
+    otherLayout->setColumnStretch(2, 1);
+    otherLayout->setRowStretch(2, 1);
+    otherWidget->setLayout(otherLayout);
+
+
     tabWidget->addTab(pathsWidget, "Paths");
     tabWidget->addTab(emulationWidget, "Emulation");
     tabWidget->addTab(graphicsWidget, "Graphics");
     tabWidget->addTab(pluginsWidget, "Plugins");
+    tabWidget->addTab(columnsWidget, "Columns");
+    tabWidget->addTab(otherWidget, "Other");
 
     tabWidget->setCurrentIndex(activeTab);
 
@@ -281,8 +383,23 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     connect(dataButton, SIGNAL(clicked()), this, SLOT(browseData()));
     connect(configButton, SIGNAL(clicked()), this, SLOT(browseConfig()));
     connect(romButton, SIGNAL(clicked()), this, SLOT(browseROM()));
+    connect(addButton, SIGNAL(clicked()), this, SLOT(addColumn()));
+    connect(removeButton, SIGNAL(clicked()), this, SLOT(removeColumn()));
+    connect(sortUpButton, SIGNAL(clicked()), this, SLOT(sortUp()));
+    connect(sortDownButton, SIGNAL(clicked()), this, SLOT(sortDown()));
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(editSettings()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+}
+
+
+void SettingsDialog::addColumn()
+{
+    int row = availableList->currentRow();
+
+    if (row >= 0) {
+        currentList->addItem(availableList->currentItem()->text());
+        delete availableList->takeItem(row);
+    }
 }
 
 void SettingsDialog::browseMupen64()
@@ -293,6 +410,7 @@ void SettingsDialog::browseMupen64()
 
 }
 
+
 void SettingsDialog::browsePlugin()
 {
     QString path = QFileDialog::getExistingDirectory(this);
@@ -301,12 +419,14 @@ void SettingsDialog::browsePlugin()
 
 }
 
+
 void SettingsDialog::browseData()
 {
     QString path = QFileDialog::getExistingDirectory(this);
     if (path != "")
         dataPath->setText(path);
 }
+
 
 void SettingsDialog::browseConfig()
 {
@@ -315,12 +435,14 @@ void SettingsDialog::browseConfig()
         configPath->setText(path);
 }
 
+
 void SettingsDialog::browseROM()
 {
     QString path = QFileDialog::getExistingDirectory(this);
     if (path != "")
         romPath->setText(path);
 }
+
 
 void SettingsDialog::editSettings()
 {
@@ -357,5 +479,53 @@ void SettingsDialog::editSettings()
     SETTINGS.setValue("Plugins/input", inputBox->currentText());
     SETTINGS.setValue("Plugins/rsp", rspBox->currentText());
 
+    QStringList visibleItems;
+    foreach (QListWidgetItem *item, currentList->findItems("*", Qt::MatchWildcard))
+        visibleItems << item->text();
+
+    SETTINGS.setValue("ROMs/columns", visibleItems.join("|"));
+
+    if (saveOption->isChecked())
+        SETTINGS.setValue("saveoptions", true);
+    else
+        SETTINGS.setValue("saveoptions", "");
+
     close();
+}
+
+
+void SettingsDialog::removeColumn()
+{
+    int row = currentList->currentRow();
+
+    if (row >= 0) {
+        availableList->addItem(currentList->currentItem()->text());
+        delete currentList->takeItem(row);
+
+        availableList->sortItems();
+    }
+}
+
+
+void SettingsDialog::sortDown()
+{
+    int row = currentList->currentRow();
+
+    if (row > 0) {
+        QListWidgetItem *item = currentList->takeItem(row);
+        currentList->insertItem(row - 1, item);
+        currentList->setCurrentRow(row - 1);
+    }
+}
+
+
+void SettingsDialog::sortUp()
+{
+    int row = currentList->currentRow();
+
+    if (row >= 0 && row < currentList->count() - 1) {
+        QListWidgetItem *item = currentList->takeItem(row);
+        currentList->insertItem(row + 1, item);
+        currentList->setCurrentRow(row + 1);
+    }
 }
