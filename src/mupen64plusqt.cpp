@@ -160,6 +160,8 @@ void Mupen64PlusQt::addToRomTree(QString fileName, QString romMD5, QString inter
     QString saveType = "";
     QString rumble = "";
 
+    romMD5 = romMD5.toUpper();
+
     if (getGoodName) {
         //Join GoodName on ", ", otherwise entries with a comma won't show
         QVariant goodNameVariant = romCatalog->value(romMD5+"/GoodName","Unknown ROM");
@@ -207,7 +209,7 @@ void Mupen64PlusQt::addToRomTree(QString fileName, QString romMD5, QString inter
             fileItem->setTextAlignment(i, Qt::AlignRight | Qt::AlignVCenter);
         }
         else if (current == "MD5") {
-            fileItem->setText(i, romMD5);
+            fileItem->setText(i, romMD5.toLower());
             fileItem->setTextAlignment(i, Qt::AlignHCenter | Qt::AlignVCenter);
         }
         else if (current == "CRC1") {
@@ -319,7 +321,9 @@ void Mupen64PlusQt::createMenu()
     openAction = fileMenu->addAction(tr("&Open ROM..."));
     fileMenu->addSeparator();
     refreshAction = fileMenu->addAction(tr("&Refresh List"));
+#ifndef Q_OS_OSX //OSX does not show the quit action so the separator is unneeded
     fileMenu->addSeparator();
+#endif
     quitAction = fileMenu->addAction(tr("&Quit"));
 
     openAction->setIcon(QIcon::fromTheme("document-open"));
@@ -633,6 +637,7 @@ void Mupen64PlusQt::runEmulator(QString completeRomPath)
     connect(mupen64proc, SIGNAL(finished(int)), this, SLOT(enableButtons()));
     connect(mupen64proc, SIGNAL(finished(int)), this, SLOT(checkStatus(int)));
 
+    mupen64proc->setWorkingDirectory(QFileInfo(mupen64File).dir().canonicalPath());
     mupen64proc->start(mupen64Path, args);
 }
 

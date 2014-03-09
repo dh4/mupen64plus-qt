@@ -35,7 +35,7 @@
 
 AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 {
-    setWindowTitle(tr("About Mupen64-Qt"));
+    setWindowTitle(tr("About Mupen64Plus-Qt"));
     setMinimumSize(600, 300);
 
     aboutLayout = new QGridLayout(this);
