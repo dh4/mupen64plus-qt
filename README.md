@@ -39,7 +39,7 @@ This can be configured with the "Resolution" combo box underneath the graphics t
 
 ### --datadir
 
-This is set underneath the paths tab. Mupen64Plus-Qt will also make use of the data directory setting to load the GoodName text and other information from the mupen64plus.ini file, so make sure this directory contains that file.
+This is set underneath the paths tab. Mupen64Plus-Qt will also make use of the data directory setting to load the GoodName text and other information from the mupen64plus.ini file, so make sure this directory contains that file. It's usually /usr/share/mupen64plus on Linux or the same directory as the executable on Windows. 
 
 ### --plugindir
 
@@ -55,4 +55,4 @@ This is configured under the emulation tab.
 
 ### --saveoptions/--nosaveoptions
 
-One or the other is sent to Mupen64Plus based on the "Save Options" checkbox underneath the other tab. If --saveoptions is set, then Mupen64Plus will save whatever settings are passed to it into it's configuration file (mupen64plus.cfg)
+One or the other is sent to Mupen64Plus based on the "Save Options" checkbox underneath the other tab. If --saveoptions is set, then Mupen64Plus will save whatever settings are passed to it into its configuration file (mupen64plus.cfg)
