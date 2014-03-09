@@ -208,14 +208,16 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
         if (files.size() > 0) {
             foreach (QString fileName, files)
             {
+                QString baseName = QFileInfo(fileName).completeBaseName();
+
                 if (fileName.contains("-audio-"))
-                    audioPlugins << fileName;
+                    audioPlugins << baseName;
                 else if (fileName.contains("-input-"))
-                    inputPlugins << fileName;
+                    inputPlugins << baseName;
                 else if (fileName.contains("-rsp-"))
-                    rspPlugins << fileName;
+                    rspPlugins << baseName;
                 else if (fileName.contains("-video-"))
-                    videoPlugins << fileName;
+                    videoPlugins << baseName;
             }
         }
     }
