@@ -13,6 +13,7 @@ macx {
 }
 
 TEMPLATE = app
+ICON = macosx/mupen64plus.icns
 
 
 SOURCES += src/main.cpp \
