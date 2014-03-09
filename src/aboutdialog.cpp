@@ -41,7 +41,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
     aboutLayout = new QGridLayout(this);
 
     icon = new QLabel(this);
-    icon->setPixmap(QPixmap(":/images/mupen64.png"));
+    icon->setPixmap(QPixmap(":/images/mupen64plus.png"));
 
     QFile licenseFile(":/other/LICENSE");
     licenseFile.open(QIODevice::ReadOnly);

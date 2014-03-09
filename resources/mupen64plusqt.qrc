@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/mupen64.png</file>
+        <file>images/mupen64plus.png</file>
         <file>other/LICENSE</file>
     </qresource>
 </RCC>

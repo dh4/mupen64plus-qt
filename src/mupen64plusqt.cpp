@@ -38,7 +38,7 @@
 Mupen64PlusQt::Mupen64PlusQt(QWidget *parent) : QMainWindow(parent)
 {
     setWindowTitle(tr("Mupen64Plus-Qt"));
-    setWindowIcon(QIcon(":/images/mupen64.png"));
+    setWindowIcon(QIcon(":/images/mupen64plus.png"));
 
     romPath = SETTINGS.value("Paths/roms","").toString();
     romDir = QDir(romPath);
