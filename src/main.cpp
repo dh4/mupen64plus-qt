@@ -42,7 +42,6 @@ int main(int argc, char *argv[])
     QApplication application(argc, argv);
 
     QCoreApplication::setOrganizationName("Mupen64Plus");
-    QCoreApplication::setOrganizationDomain("https://code.google.com/p/mupen64plus/");
     QCoreApplication::setApplicationName("Mupen64Plus-Qt");
 
     Mupen64PlusQt window;

@@ -32,24 +32,14 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include <QButtonGroup>
-#include <QCheckBox>
-#include <QComboBox>
 #include <QDesktopWidget>
-#include <QDialog>
-#include <QDialogButtonBox>
 #include <QFileDialog>
-#include <QGridLayout>
-#include <QLabel>
-#include <QLineEdit>
-#include <QListWidget>
-#include <QPushButton>
-#include <QRadioButton>
 #include <QSettings>
-#include <QTabWidget>
-#include <QToolButton>
-#include <QVBoxLayout>
 
+
+namespace Ui {
+    class SettingsDialog;
+}
 
 class SettingsDialog : public QDialog
 {
@@ -57,82 +47,13 @@ class SettingsDialog : public QDialog
 
 public:
     explicit SettingsDialog(QWidget *parent = 0, int activeTab = 0);
+    ~SettingsDialog();
 
 private:
-    QDir pluginsDir;
-    QStringList audioPlugins;
-    QStringList available;
-    QStringList current;
-    QStringList inputPlugins;
-    QStringList modes;
-    QStringList rspPlugins;
-    QStringList useableModes;
-    QStringList videoPlugins;
+    Ui::SettingsDialog *ui;
 
-    QButtonGroup *emulationGroup;
-    QCheckBox *fullscreenOption;
-    QCheckBox *osdOption;
-    QCheckBox *saveOption;
-    QCheckBox *stretchOption;
-    QComboBox *audioBox;
-    QComboBox *inputBox;
-    QComboBox *resolutionBox;
-    QComboBox *rspBox;
-    QComboBox *videoBox;
     QDesktopWidget *desktop;
-    QDialogButtonBox *buttonBox;
-    QGridLayout *columnsLayout;
-    QGridLayout *emulationLayout;
-    QGridLayout *graphicsLayout;
-    QGridLayout *layout;
-    QGridLayout *otherLayout;
-    QGridLayout *pathsLayout;
-    QGridLayout *pluginsLayout;
-    QLabel *audioLabel;
-    QLabel *availableLabel;
-    QLabel *configPathLabel;
-    QLabel *currentLabel;
-    QLabel *dataPathLabel;
-    QLabel *fullscreenLabel;
-    QLabel *inputLabel;
-    QLabel *mupen64PathLabel;
-    QLabel *osdLabel;
-    QLabel *pluginPathLabel;
-    QLabel *resolutionLabel;
-    QLabel *romPathLabel;
-    QLabel *rspLabel;
-    QLabel *saveLabel;
-    QLabel *videoLabel;
-    QLineEdit *mupen64Path;
-    QLineEdit *pluginPath;
-    QLineEdit *dataPath;
-    QLineEdit *configPath;
-    QLineEdit *romPath;
-    QListWidget *availableList;
-    QListWidget *currentList;
-    QPushButton *configButton;
-    QPushButton *dataButton;
-    QPushButton *mupen64Button;
-    QPushButton *pluginButton;
-    QPushButton *romButton;
-    QRadioButton *cachedButton;
-    QRadioButton *dynamicButton;
-    QRadioButton *pureButton;
-    QTabWidget *tabWidget;
-    QToolButton *addButton;
-    QToolButton *removeButton;
-    QToolButton *sortDownButton;
-    QToolButton *sortUpButton;
-    QVBoxLayout *sortLayout;
-    QVBoxLayout *toggleLayout;
-    QWidget *columnsWidget;
-    QWidget *emulationWidget;
-    QWidget *graphicsWidget;
-    QWidget *otherWidget;
-    QWidget *pathsWidget;
-    QWidget *pluginsWidget;
-    QWidget *sortWidget;
-    QWidget *toggleWidget;
+    QDir pluginsDir;
 
 private slots:
     void addColumn();

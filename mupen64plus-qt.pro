@@ -22,12 +22,12 @@ SOURCES += src/main.cpp \
     src/settingsdialog.cpp \
     src/treewidgetitem.cpp
 
-HEADERS  += \
+HEADERS += src/global.h \
     src/aboutdialog.h \
-    src/global.h \
     src/mupen64plusqt.h \
     src/settingsdialog.h \
     src/treewidgetitem.h
 
-RESOURCES += \
-    resources/mupen64plusqt.qrc
+RESOURCES += resources/mupen64plusqt.qrc
+
+FORMS += src/settingsdialog.ui

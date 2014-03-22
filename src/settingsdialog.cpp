@@ -30,116 +30,48 @@
  ***/
 
 #include "settingsdialog.h"
+#include "ui_settingsdialog.h"
 #include "global.h"
 
 
-SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
+SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent), ui(new Ui::SettingsDialog)
 {
-    setWindowTitle(tr("Settings"));
-    setMinimumWidth(500);
-    setMinimumHeight(250);
-
-    layout = new QGridLayout(this);
-    tabWidget = new QTabWidget(this);
+    ui->setupUi(this);
+    ui->tabWidget->setCurrentIndex(activeTab);
 
 
-    //Paths tab
-    pathsWidget = new QWidget(this);
-    pathsLayout = new QGridLayout(pathsWidget);
+    //Populate Paths tab
+    ui->mupen64Path->setText(SETTINGS.value("Paths/mupen64plus", "").toString());
+    ui->romPath->setText(SETTINGS.value("Paths/roms", "").toString());
+    ui->pluginPath->setText(SETTINGS.value("Paths/plugins", "").toString());
+    ui->dataPath->setText(SETTINGS.value("Paths/data", "").toString());
+    ui->configPath->setText(SETTINGS.value("Paths/config", "").toString());
 
-    mupen64PathLabel = new QLabel(tr("Mupen64Plus executable:"), this);
-    romPathLabel = new QLabel(tr("ROM directory:"), this);
-    pluginPathLabel = new QLabel(tr("Plugins directory:"), this);
-    dataPathLabel = new QLabel(tr("Data directory:"), this);
-    configPathLabel = new QLabel(tr("Config directory:"), this);
-
-    mupen64Path = new QLineEdit(SETTINGS.value("Paths/mupen64plus", "").toString(), this);
-    romPath = new QLineEdit(SETTINGS.value("Paths/roms", "").toString(), this);
-    pluginPath = new QLineEdit(SETTINGS.value("Paths/plugins", "").toString(), this);
-    dataPath = new QLineEdit(SETTINGS.value("Paths/data", "").toString(), this);
-    configPath = new QLineEdit(SETTINGS.value("Paths/config", "").toString(), this);
-
-    mupen64Button = new QPushButton(tr("Browse..."), this);
-    romButton = new QPushButton(tr("Browse..."), this);
-    pluginButton = new QPushButton(tr("Browse..."), this);
-    dataButton = new QPushButton(tr("Browse..."), this);
-    configButton = new QPushButton(tr("Browse..."), this);
-
-    pathsLayout->addWidget(mupen64PathLabel, 0, 0);
-    pathsLayout->addWidget(romPathLabel, 1, 0);
-    pathsLayout->addWidget(pluginPathLabel, 2, 0);
-    pathsLayout->addWidget(dataPathLabel, 3, 0);
-    pathsLayout->addWidget(configPathLabel, 4, 0);
-
-    pathsLayout->addWidget(mupen64Path, 0, 1);
-    pathsLayout->addWidget(romPath, 1, 1);
-    pathsLayout->addWidget(pluginPath, 2, 1);
-    pathsLayout->addWidget(dataPath, 3, 1);
-    pathsLayout->addWidget(configPath, 4, 1);
-
-    pathsLayout->addWidget(mupen64Button, 0, 2);
-    pathsLayout->addWidget(romButton, 1, 2);
-    pathsLayout->addWidget(pluginButton, 2, 2);
-    pathsLayout->addWidget(dataButton, 3, 2);
-    pathsLayout->addWidget(configButton, 4, 2);
-
-    pathsLayout->setColumnStretch(1, 1);
-    pathsLayout->setRowStretch(5, 1);
-    pathsWidget->setLayout(pathsLayout);
+    connect(ui->mupen64Button, SIGNAL(clicked()), this, SLOT(browseMupen64()));
+    connect(ui->pluginButton, SIGNAL(clicked()), this, SLOT(browsePlugin()));
+    connect(ui->dataButton, SIGNAL(clicked()), this, SLOT(browseData()));
+    connect(ui->configButton, SIGNAL(clicked()), this, SLOT(browseConfig()));
+    connect(ui->romButton, SIGNAL(clicked()), this, SLOT(browseROM()));
 
 
-    //Emulation tab
-    emulationWidget = new QWidget(this);
-    emulationLayout = new QGridLayout(emulationWidget);
-
-    emulationGroup = new QButtonGroup(this);
-
-    pureButton = new QRadioButton(tr("Pure Interpreter"), this);
-    cachedButton = new QRadioButton(tr("Cached Interpreter"), this);
-    dynamicButton = new QRadioButton(tr("Dynamic Recompiler"), this);
-
-    emulationGroup->addButton(pureButton);
-    emulationGroup->addButton(cachedButton);
-    emulationGroup->addButton(dynamicButton);
-
+    //Populate Emulation tab
     QString emuMode = SETTINGS.value("Emulation/mode", "").toString();
     if (emuMode == "0")
-        pureButton->setChecked(true);
+        ui->pureButton->setChecked(true);
     else if (emuMode == "1")
-        cachedButton->setChecked(true);
+        ui->cachedButton->setChecked(true);
     else
-        dynamicButton->setChecked(true);
-
-    emulationLayout->addWidget(pureButton, 1, 0);
-    emulationLayout->addWidget(cachedButton, 2, 0);
-    emulationLayout->addWidget(dynamicButton, 3, 0);
-
-    emulationLayout->setRowMinimumHeight(0, 10);
-    emulationLayout->setColumnStretch(1, 1);
-    emulationLayout->setRowStretch(4, 1);
-    emulationWidget->setLayout(emulationLayout);
+        ui->dynamicButton->setChecked(true);
 
 
-    //Graphics tab
-    graphicsWidget = new QWidget(this);
-    graphicsLayout = new QGridLayout(graphicsWidget);
-
-    osdLabel = new QLabel(tr("On Screen Display:"), this);
-    fullscreenLabel = new QLabel(tr("Fullscreen:"), this);
-    resolutionLabel = new QLabel(tr("Resolution:"), this);
-
-    osdOption = new QCheckBox(this);
-    fullscreenOption = new QCheckBox(this);
-
+    //Populate Graphics tab
     if (SETTINGS.value("Graphics/osd", "").toString() == "true")
-        osdOption->setChecked(true);
+        ui->osdOption->setChecked(true);
     if (SETTINGS.value("Graphics/fullscreen", "").toString() == "true")
-        fullscreenOption->setChecked(true);
+        ui->fullscreenOption->setChecked(true);
 
-    resolutionBox = new QComboBox(this);
-
-    //Allow users to use the screen resolution set in the config file
-    useableModes << "default";
+    QStringList useableModes, modes;
+    useableModes << "default"; //Allow users to use the screen resolution set in the config file
 
     modes << "2560x1600"
           << "2560x1440"
@@ -177,29 +109,13 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
             useableModes << mode;
     }
 
-    resolutionBox->insertItems(0, useableModes);
+    ui->resolutionBox->insertItems(0, useableModes);
     int resIndex = useableModes.indexOf(SETTINGS.value("Graphics/resolution","").toString());
-    if (resIndex >= 0) resolutionBox->setCurrentIndex(resIndex);
-    resolutionBox->setMaximumWidth(100);
-
-    graphicsLayout->addWidget(osdLabel, 0, 0);
-    graphicsLayout->addWidget(fullscreenLabel, 1, 0);
-    graphicsLayout->addWidget(resolutionLabel, 2, 0);
-
-    graphicsLayout->addWidget(osdOption, 0, 1);
-    graphicsLayout->addWidget(fullscreenOption, 1, 1);
-    graphicsLayout->addWidget(resolutionBox, 2, 1);
-
-    graphicsLayout->setColumnMinimumWidth(0, 150);
-    graphicsLayout->setColumnStretch(2, 1);
-    graphicsLayout->setRowStretch(3, 1);
-    graphicsWidget->setLayout(graphicsLayout);
+    if (resIndex >= 0) ui->resolutionBox->setCurrentIndex(resIndex);
 
 
-    //Plugins tab
-    pluginsWidget = new QWidget(this);
-    pluginsLayout = new QGridLayout(pluginsWidget);
-
+    //Populate Plugins tab
+    QStringList audioPlugins, inputPlugins, rspPlugins, videoPlugins;
     pluginsDir = QDir(SETTINGS.value("Paths/plugins", "").toString());
 
     if (pluginsDir.exists()) {
@@ -222,66 +138,24 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
         }
     }
 
-    videoLabel = new QLabel(tr("Video Plugin:"), this);
-    audioLabel = new QLabel(tr("Audio Plugin:"), this);
-    inputLabel = new QLabel(tr("Input Plugin:"), this);
-    rspLabel = new QLabel(tr("RSP Plugin:"), this);
-
-    videoBox = new QComboBox(this);
-    audioBox = new QComboBox(this);
-    inputBox = new QComboBox(this);
-    rspBox = new QComboBox(this);
-
-    videoBox->insertItems(0, videoPlugins);
-    audioBox->insertItems(0, audioPlugins);
-    inputBox->insertItems(0, inputPlugins);
-    rspBox->insertItems(0, rspPlugins);
+    ui->videoBox->insertItems(0, videoPlugins);
+    ui->audioBox->insertItems(0, audioPlugins);
+    ui->inputBox->insertItems(0, inputPlugins);
+    ui->rspBox->insertItems(0, rspPlugins);
 
     int videoIndex = videoPlugins.indexOf(SETTINGS.value("Plugins/video","").toString());
     int audioIndex = videoPlugins.indexOf(SETTINGS.value("Plugins/audio","").toString());
     int inputIndex = videoPlugins.indexOf(SETTINGS.value("Plugins/input","").toString());
     int rspIndex = videoPlugins.indexOf(SETTINGS.value("Plugins/rsp","").toString());
 
-    if (videoIndex >= 0) videoBox->setCurrentIndex(videoIndex);
-    if (audioIndex >= 0) audioBox->setCurrentIndex(audioIndex);
-    if (inputIndex >= 0) inputBox->setCurrentIndex(inputIndex);
-    if (rspIndex >= 0) rspBox->setCurrentIndex(rspIndex);
-
-    pluginsLayout->addWidget(videoLabel, 0, 0);
-    pluginsLayout->addWidget(audioLabel, 1, 0);
-    pluginsLayout->addWidget(inputLabel, 2, 0);
-    pluginsLayout->addWidget(rspLabel, 3, 0);
-
-    pluginsLayout->addWidget(videoBox, 0, 1);
-    pluginsLayout->addWidget(audioBox, 1, 1);
-    pluginsLayout->addWidget(inputBox, 2, 1);
-    pluginsLayout->addWidget(rspBox, 3, 1);
-
-    pluginsLayout->setColumnMinimumWidth(0, 100);
-    pluginsLayout->setColumnStretch(1, 1);
-    pluginsLayout->setRowStretch(4, 1);
-    pluginsWidget->setLayout(pluginsLayout);
+    if (videoIndex >= 0) ui->videoBox->setCurrentIndex(videoIndex);
+    if (audioIndex >= 0) ui->audioBox->setCurrentIndex(audioIndex);
+    if (inputIndex >= 0) ui->inputBox->setCurrentIndex(inputIndex);
+    if (rspIndex >= 0) ui->rspBox->setCurrentIndex(rspIndex);
 
 
-    //Columns tab
-    columnsWidget = new QWidget(this);
-    columnsLayout = new QGridLayout(columnsWidget);
-
-    availableLabel = new QLabel(tr("Available:"), this);
-    currentLabel = new QLabel(tr("Current:"), this);
-
-    availableList = new QListWidget(this);
-    currentList = new QListWidget(this);
-
-    addButton = new QToolButton(this);
-    removeButton = new QToolButton(this);
-    sortUpButton = new QToolButton(this);
-    sortDownButton = new QToolButton(this);
-
-    addButton->setArrowType(Qt::RightArrow);
-    removeButton->setArrowType(Qt::LeftArrow);
-    sortUpButton->setArrowType(Qt::DownArrow);
-    sortDownButton->setArrowType(Qt::UpArrow);
+    //Populate Columns tab
+    QStringList available, current;
 
     available << "Filename"
               << "Filename (extension)"
@@ -305,107 +179,43 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
             current.removeOne(cur);
     }
 
-    availableList->setMaximumHeight(140);
-    availableList->setMaximumWidth(160);
-    availableList->addItems(available);
-    availableList->sortItems();
+    ui->availableList->addItems(available);
+    ui->availableList->sortItems();
 
-    currentList->setMaximumHeight(140);
-    currentList->setMaximumWidth(160);
-    currentList->addItems(current);
+    ui->currentList->addItems(current);
 
-    toggleWidget = new QWidget(this);
-    toggleLayout = new QVBoxLayout(toggleWidget);
-    toggleLayout->addWidget(addButton);
-    toggleLayout->addWidget(removeButton);
-    toggleWidget->setLayout(toggleLayout);
-    toggleWidget->setMaximumHeight(80);
-
-    sortWidget = new QWidget(this);
-    sortLayout = new QVBoxLayout(sortWidget);
-    sortLayout->addWidget(sortDownButton);
-    sortLayout->addWidget(sortUpButton);
-    sortWidget->setLayout(sortLayout);
-    sortWidget->setMaximumHeight(80);
-
-    stretchOption = new QCheckBox(tr("Stretch first column"), this);
     if (SETTINGS.value("ROMs/stretchfirstcolumn", "true").toString() == "true")
-        stretchOption->setChecked(true);
+        ui->stretchOption->setChecked(true);
 
-    columnsLayout->addWidget(availableLabel, 0, 1);
-    columnsLayout->addWidget(currentLabel, 0, 3);
-    columnsLayout->addWidget(availableList, 1, 1);
-    columnsLayout->addWidget(currentList, 1, 3);
-    columnsLayout->addWidget(toggleWidget, 1, 2);
-    columnsLayout->addWidget(sortWidget, 1, 4);
-    columnsLayout->addWidget(stretchOption, 2, 3);
-
-    columnsLayout->setColumnStretch(0, 1);
-    columnsLayout->setColumnStretch(5, 1);
-    columnsLayout->setRowStretch(3, 1);
-    columnsWidget->setLayout(columnsLayout);
+    connect(ui->addButton, SIGNAL(clicked()), this, SLOT(addColumn()));
+    connect(ui->removeButton, SIGNAL(clicked()), this, SLOT(removeColumn()));
+    connect(ui->sortUpButton, SIGNAL(clicked()), this, SLOT(sortUp()));
+    connect(ui->sortDownButton, SIGNAL(clicked()), this, SLOT(sortDown()));
 
 
-    //Other tab
-    otherWidget = new QWidget(this);
-    otherLayout = new QGridLayout(otherWidget);
-
-    saveLabel = new QLabel(tr("Save Options:"), this);
-    saveOption = new QCheckBox(this);
-
-    QString saveToolTip = "Invokes --saveoptions: Save the given options ";
-    saveToolTip        += "into the mupen64plus configuration file.";
-    saveOption->setToolTip(saveToolTip);
-
+    //Populate Other tab
     if (SETTINGS.value("saveoptions", "").toString() == "true")
-        saveOption->setChecked(true);
-
-    otherLayout->addWidget(saveLabel, 1, 0);
-    otherLayout->addWidget(saveOption, 1, 1);
-
-    otherLayout->setColumnMinimumWidth(0, 100);
-    otherLayout->setRowMinimumHeight(0, 10);
-    otherLayout->setColumnStretch(2, 1);
-    otherLayout->setRowStretch(2, 1);
-    otherWidget->setLayout(otherLayout);
+        ui->saveOption->setChecked(true);
 
 
-    tabWidget->addTab(pathsWidget, "Paths");
-    tabWidget->addTab(emulationWidget, "Emulation");
-    tabWidget->addTab(graphicsWidget, "Graphics");
-    tabWidget->addTab(pluginsWidget, "Plugins");
-    tabWidget->addTab(columnsWidget, "Columns");
-    tabWidget->addTab(otherWidget, "Other");
+    connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(editSettings()));
+    connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+}
 
-    tabWidget->setCurrentIndex(activeTab);
 
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel,
-                                     Qt::Horizontal, this);
-
-    layout->addWidget(tabWidget);
-    layout->addWidget(buttonBox);
-
-    connect(mupen64Button, SIGNAL(clicked()), this, SLOT(browseMupen64()));
-    connect(pluginButton, SIGNAL(clicked()), this, SLOT(browsePlugin()));
-    connect(dataButton, SIGNAL(clicked()), this, SLOT(browseData()));
-    connect(configButton, SIGNAL(clicked()), this, SLOT(browseConfig()));
-    connect(romButton, SIGNAL(clicked()), this, SLOT(browseROM()));
-    connect(addButton, SIGNAL(clicked()), this, SLOT(addColumn()));
-    connect(removeButton, SIGNAL(clicked()), this, SLOT(removeColumn()));
-    connect(sortUpButton, SIGNAL(clicked()), this, SLOT(sortUp()));
-    connect(sortDownButton, SIGNAL(clicked()), this, SLOT(sortDown()));
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(editSettings()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+SettingsDialog::~SettingsDialog()
+{
+    delete ui;
 }
 
 
 void SettingsDialog::addColumn()
 {
-    int row = availableList->currentRow();
+    int row = ui->availableList->currentRow();
 
     if (row >= 0) {
-        currentList->addItem(availableList->currentItem()->text());
-        delete availableList->takeItem(row);
+        ui->currentList->addItem(ui->availableList->currentItem()->text());
+        delete ui->availableList->takeItem(row);
     }
 }
 
@@ -413,7 +223,7 @@ void SettingsDialog::browseMupen64()
 {
     QString path = QFileDialog::getOpenFileName(this);
     if (path != "")
-        mupen64Path->setText(path);
+        ui->mupen64Path->setText(path);
 
 }
 
@@ -422,7 +232,7 @@ void SettingsDialog::browsePlugin()
 {
     QString path = QFileDialog::getExistingDirectory(this);
     if (path != "")
-        pluginPath->setText(path);
+        ui->pluginPath->setText(path);
 
 }
 
@@ -431,7 +241,7 @@ void SettingsDialog::browseData()
 {
     QString path = QFileDialog::getExistingDirectory(this);
     if (path != "")
-        dataPath->setText(path);
+        ui->dataPath->setText(path);
 }
 
 
@@ -439,7 +249,7 @@ void SettingsDialog::browseConfig()
 {
     QString path = QFileDialog::getExistingDirectory(this);
     if (path != "")
-        configPath->setText(path);
+        ui->configPath->setText(path);
 }
 
 
@@ -447,57 +257,57 @@ void SettingsDialog::browseROM()
 {
     QString path = QFileDialog::getExistingDirectory(this);
     if (path != "")
-        romPath->setText(path);
+        ui->romPath->setText(path);
 }
 
 
 void SettingsDialog::editSettings()
 {
-    SETTINGS.setValue("Paths/mupen64plus", mupen64Path->text());
-    SETTINGS.setValue("Paths/roms", romPath->text());
-    SETTINGS.setValue("Paths/plugins", pluginPath->text());
-    SETTINGS.setValue("Paths/data", dataPath->text());
-    SETTINGS.setValue("Paths/config", configPath->text());
+    SETTINGS.setValue("Paths/mupen64plus", ui->mupen64Path->text());
+    SETTINGS.setValue("Paths/roms", ui->romPath->text());
+    SETTINGS.setValue("Paths/plugins", ui->pluginPath->text());
+    SETTINGS.setValue("Paths/data", ui->dataPath->text());
+    SETTINGS.setValue("Paths/config", ui->configPath->text());
 
-    if (pureButton->isChecked())
+    if (ui->pureButton->isChecked())
         SETTINGS.setValue("Emulation/mode", "0");
-    else if (cachedButton->isChecked())
+    else if (ui->cachedButton->isChecked())
         SETTINGS.setValue("Emulation/mode", "1");
     else
         SETTINGS.setValue("Emulation/mode", "2");
 
-    if (osdOption->isChecked())
+    if (ui->osdOption->isChecked())
         SETTINGS.setValue("Graphics/osd", true);
     else
         SETTINGS.setValue("Graphics/osd", "");
 
-    if (fullscreenOption->isChecked())
+    if (ui->fullscreenOption->isChecked())
         SETTINGS.setValue("Graphics/fullscreen", true);
     else
         SETTINGS.setValue("Graphics/fullscreen", "");
 
-    if (resolutionBox->currentText() != "default")
-        SETTINGS.setValue("Graphics/resolution", resolutionBox->currentText());
+    if (ui->resolutionBox->currentText() != "default")
+        SETTINGS.setValue("Graphics/resolution", ui->resolutionBox->currentText());
     else
         SETTINGS.setValue("Graphics/resolution", "");
 
-    SETTINGS.setValue("Plugins/video", videoBox->currentText());
-    SETTINGS.setValue("Plugins/audio", audioBox->currentText());
-    SETTINGS.setValue("Plugins/input", inputBox->currentText());
-    SETTINGS.setValue("Plugins/rsp", rspBox->currentText());
+    SETTINGS.setValue("Plugins/video", ui->videoBox->currentText());
+    SETTINGS.setValue("Plugins/audio", ui->audioBox->currentText());
+    SETTINGS.setValue("Plugins/input", ui->inputBox->currentText());
+    SETTINGS.setValue("Plugins/rsp", ui->rspBox->currentText());
 
     QStringList visibleItems;
-    foreach (QListWidgetItem *item, currentList->findItems("*", Qt::MatchWildcard))
+    foreach (QListWidgetItem *item, ui->currentList->findItems("*", Qt::MatchWildcard))
         visibleItems << item->text();
 
     SETTINGS.setValue("ROMs/columns", visibleItems.join("|"));
 
-    if (stretchOption->isChecked())
+    if (ui->stretchOption->isChecked())
         SETTINGS.setValue("ROMs/stretchfirstcolumn", true);
     else
         SETTINGS.setValue("ROMs/stretchfirstcolumn", "");
 
-    if (saveOption->isChecked())
+    if (ui->saveOption->isChecked())
         SETTINGS.setValue("saveoptions", true);
     else
         SETTINGS.setValue("saveoptions", "");
@@ -508,36 +318,36 @@ void SettingsDialog::editSettings()
 
 void SettingsDialog::removeColumn()
 {
-    int row = currentList->currentRow();
+    int row = ui->currentList->currentRow();
 
     if (row >= 0) {
-        availableList->addItem(currentList->currentItem()->text());
-        delete currentList->takeItem(row);
+        ui->availableList->addItem(ui->currentList->currentItem()->text());
+        delete ui->currentList->takeItem(row);
 
-        availableList->sortItems();
+        ui->availableList->sortItems();
     }
 }
 
 
 void SettingsDialog::sortDown()
 {
-    int row = currentList->currentRow();
+    int row = ui->currentList->currentRow();
 
     if (row > 0) {
-        QListWidgetItem *item = currentList->takeItem(row);
-        currentList->insertItem(row - 1, item);
-        currentList->setCurrentRow(row - 1);
+        QListWidgetItem *item = ui->currentList->takeItem(row);
+        ui->currentList->insertItem(row - 1, item);
+        ui->currentList->setCurrentRow(row - 1);
     }
 }
 
 
 void SettingsDialog::sortUp()
 {
-    int row = currentList->currentRow();
+    int row = ui->currentList->currentRow();
 
-    if (row >= 0 && row < currentList->count() - 1) {
-        QListWidgetItem *item = currentList->takeItem(row);
-        currentList->insertItem(row + 1, item);
-        currentList->setCurrentRow(row + 1);
+    if (row >= 0 && row < ui->currentList->count() - 1) {
+        QListWidgetItem *item = ui->currentList->takeItem(row);
+        ui->currentList->insertItem(row + 1, item);
+        ui->currentList->setCurrentRow(row + 1);
     }
 }

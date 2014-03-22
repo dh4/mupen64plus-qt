@@ -149,7 +149,7 @@ void Mupen64PlusQt::addToRomTree(QString fileName, QString romMD5, QString inter
 
     bool getGoodName = false;
     if (QFileInfo(catalogFile).exists()) {
-        romCatalog = new QSettings(catalogFile, QSettings::IniFormat);
+        romCatalog = new QSettings(catalogFile, QSettings::IniFormat, this);
         getGoodName = true;
     }
 
