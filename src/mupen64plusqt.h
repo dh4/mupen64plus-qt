@@ -63,6 +63,7 @@ protected:
 
 private:
     void addToRomTree(QString fileName, QString romMD5, QString internalName, QStringList visible);
+    void autoloadSettings();
     void cachedRoms();
     void createMenu();
     void createRomView();

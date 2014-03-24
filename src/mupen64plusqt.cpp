@@ -40,6 +40,8 @@ Mupen64PlusQt::Mupen64PlusQt(QWidget *parent) : QMainWindow(parent)
     setWindowTitle(tr("Mupen64Plus-Qt"));
     setWindowIcon(QIcon(":/images/mupen64plus.png"));
 
+    autoloadSettings();
+
     romPath = SETTINGS.value("Paths/roms","").toString();
     romDir = QDir(romPath);
 
@@ -237,6 +239,71 @@ void Mupen64PlusQt::addToRomTree(QString fileName, QString romMD5, QString inter
     }
 
     romTree->addTopLevelItem(fileItem);
+}
+
+
+void Mupen64PlusQt::autoloadSettings()
+{
+    QString mupen64Path = SETTINGS.value("Paths/mupen64plus", "").toString();
+    QString dataPath = SETTINGS.value("Paths/data", "").toString();
+    QString pluginPath = SETTINGS.value("Paths/plugins", "").toString();
+
+    if (mupen64Path == "" && dataPath == "" && pluginPath == "") {
+#ifdef Q_OS_LINUX
+        //If user has not entered any settings, check common locations for them
+        QStringList mupen64Check, dataCheck, pluginCheck;
+
+        mupen64Check << "/usr/games/mupen64plus"
+                     << "/usr/bin/mupen64plus";
+
+        pluginCheck  << "/usr/lib/mupen64plus"
+                     << "/usr/lib/x86_64-linux-gnu/mupen64plus"
+                     << "/usr/lib/i386-linux-gnu/mupen64plus"
+                     << "/usr/lib/mupen64plus/mupen64plus";
+
+        dataCheck    << "/usr/share/mupen64plus"
+                     << "/usr/share/games/mupen64plus";
+
+
+        foreach (QString check, mupen64Check)
+            if (QFileInfo(check).exists())
+                SETTINGS.setValue("Paths/mupen64plus", check);
+
+        foreach (QString check, pluginCheck)
+            if (QFileInfo(check+"/mupen64plus-video-rice.so").exists())
+                SETTINGS.setValue("Paths/plugins", check);
+
+        foreach (QString check, dataCheck)
+            if (QFileInfo(check+"/mupen64plus.ini").exists())
+                SETTINGS.setValue("Paths/data", check);
+#endif
+
+#ifdef Q_OS_WIN
+        //Check for Mupen64Plus within the same directory
+        QString currentDir = QDir::currentPath();
+
+        if (QFileInfo(currentDir+"/mupen64plus.exe").exists())
+            SETTINGS.setValue("Paths/mupen64plus", currentDir+"/mupen64plus.exe");
+
+        if (QFileInfo(currentDir+"/mupen64plus-video-rice.dll").exists())
+            SETTINGS.setValue("Paths/plugins", currentDir);
+
+        if (QFileInfo(currentDir+"/mupen64plus.ini").exists())
+            SETTINGS.setValue("Paths/data", currentDir);
+#endif
+
+#ifdef Q_OS_OSX
+        //Check for Mupen64Plus App within the same directory
+        QString currentDir = QDir::currentPath();
+
+        QString mupen64App = currentDir+"/mupen64plus.app/Contents";
+        if (QFileInfo(mupen64App+"/MacOS/mupen64plus").exists()) {
+            SETTINGS.setValue("Paths/mupen64plus", mupen64App+"/MacOS/mupen64plus");
+            SETTINGS.setValue("Paths/plugins", mupen64App+"/MacOS");
+            SETTINGS.setValue("Paths/data", mupen64App+"/Resources");
+        }
+#endif
+    }
 }
 
 

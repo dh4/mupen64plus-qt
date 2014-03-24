@@ -143,7 +143,12 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     ui->inputBox->insertItems(0, inputPlugins);
     ui->rspBox->insertItems(0, rspPlugins);
 
-    int videoIndex = videoPlugins.indexOf(SETTINGS.value("Plugins/video","").toString());
+    //Set Rice as default
+    QString videoDefault = "";
+    if (videoPlugins.contains("mupen64plus-video-rice"))
+        videoDefault = "mupen64plus-video-rice";
+
+    int videoIndex = videoPlugins.indexOf(SETTINGS.value("Plugins/video",videoDefault).toString());
     int audioIndex = videoPlugins.indexOf(SETTINGS.value("Plugins/audio","").toString());
     int inputIndex = videoPlugins.indexOf(SETTINGS.value("Plugins/input","").toString());
     int rspIndex = videoPlugins.indexOf(SETTINGS.value("Plugins/rsp","").toString());
@@ -225,6 +230,14 @@ void SettingsDialog::browseMupen64()
     if (path != "")
         ui->mupen64Path->setText(path);
 
+#ifdef Q_OS_OSX
+    //Allow OSX users to just select the .app directory and auto-populate for them
+    if (path.right(15) == "mupen64plus.app") {
+        ui->mupen64Path->setText(path+"/Contents/MacOS/mupen64plus");
+        ui->pluginPath->setText(path+"/Contents/MacOS");
+        ui->dataPath->setText(path+"/Contents/Resources");
+    }
+#endif
 }
 
 
