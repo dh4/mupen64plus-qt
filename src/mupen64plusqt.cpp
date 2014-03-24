@@ -423,7 +423,10 @@ void Mupen64PlusQt::createMenu()
     pathsAction->setIcon(QIcon::fromTheme("preferences-other"));
     emulationAction->setIcon(QIcon::fromTheme("preferences-system"));
     graphicsAction->setIcon(QIcon::fromTheme("video-display"));
-    pluginsAction->setIcon(QIcon::fromTheme("input-gaming"));
+    if (QIcon::hasThemeIcon("input-gaming"))
+        pluginsAction->setIcon(QIcon::fromTheme("input-gaming"));
+    else
+        pluginsAction->setIcon(QIcon::fromTheme("preferences-other"));
     columnsAction->setIcon(QIcon::fromTheme("tab-new"));
 
     menuBar->addMenu(settingsMenu);
