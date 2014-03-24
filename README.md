@@ -31,7 +31,7 @@ One or the other is sent to Mupen64Plus based on whether the "On Screen Display"
 
 ### --fullscreen/--windowed
 
-Similiarly, one or the other is sent based on the "Fullscreen" checkbox underneath the graphics tab.
+Similarly, one or the other is sent based on the "Fullscreen" checkbox underneath the graphics tab.
 
 ### --resolution
 
