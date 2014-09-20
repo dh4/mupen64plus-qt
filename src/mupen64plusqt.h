@@ -34,7 +34,12 @@
 
 #include <QCloseEvent>
 #include <QCryptographicHash>
+#include <QDesktopServices>
 #include <QDir>
+#include <QDialogButtonBox>
+#include <QEventLoop>
+#include <QLineEdit>
+#include <QGraphicsDropShadowEffect>
 #include <QHeaderView>
 #include <QMainWindow>
 #include <QMenuBar>
@@ -42,13 +47,59 @@
 #include <QProcess>
 #include <QProgressDialog>
 #include <QPushButton>
+#include <QScrollArea>
+#include <QScrollBar>
 #include <QSettings>
 #include <QStatusBar>
 #include <QTableWidgetItem>
+#include <QTextStream>
+#include <QTime>
 #include <QTreeWidget>
+#include <QUrl>
 #include <QVBoxLayout>
 
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
+#include <QtXml/QDomDocument>
+
+#include "clickablewidget.h"
 #include "treewidgetitem.h"
+
+
+typedef struct {
+    QString fileName;
+    QString romMD5;
+    QString internalName;
+
+    QString baseName;
+    QString size;
+    int sortSize;
+
+    QString goodName;
+    QString CRC1;
+    QString CRC2;
+    QString players;
+    QString saveType;
+    QString rumble;
+
+    QString gameTitle;
+    QString releaseDate;
+    QString sortDate;
+    QString overview;
+    QString esrb;
+    QString genre;
+    QString publisher;
+    QString developer;
+    QString rating;
+
+    QPixmap image;
+
+    int count;
+    bool imageExists;
+} Rom;
+
+bool romSorter(const Rom &firstRom, const Rom &lastRom);
 
 
 class Mupen64PlusQt : public QMainWindow
@@ -62,18 +113,34 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private:
-    void addToRomTree(QString fileName, QString romMD5, QString internalName, QStringList visible);
+    void addToGridView(Rom *currentRom, int count);
+    void addToListView(Rom *currentRom);
+    void addToTableView(Rom *currentRom);
     void autoloadSettings();
-    void cachedRoms();
+    void cacheGameInfo(QString identifier, QString searchName, QString gameID = "", bool force = false);
+    void cachedRoms(bool imageUpdated = false);
     void createMenu();
     void createRomView();
-    void openOptions(int activeTab);
-    void resetRomTreeLayout(QStringList visible);
+    void initializeRom(Rom *currentRom, bool cached);
+    void resetLayouts(QStringList tableVisible, bool imageUpdated = false);
     void runEmulator(QString completeRomPath);
     void saveColumnWidths();
+    void setGridBackground();
     void toggleMenus(bool active);
 
     QByteArray byteswap(QByteArray romData);
+    QByteArray getUrlContents(QUrl url);
+    QColor getColor(QString color, int transparency = 255);
+    QGraphicsDropShadowEffect *getShadow(bool active);
+    QSize getImageSize(QString view);
+    QString getCacheLocation();
+    QString getCurrentRomInfo(int index);
+
+    int currentGridRom;
+    int currentListRom;
+    int getGridSize(QString which);
+    bool gridCurrent;
+    bool listCurrent;
 
     QDir configDir;
     QDir dataDir;
@@ -84,54 +151,72 @@ private:
     QStringList headerLabels;
 
     QAction *aboutAction;
-    QAction *columnsAction;
-    QAction *emulationAction;
+    QAction *configureAction;
+    QAction *downloadAction;
     QAction *filenameAction;
     QAction *goodnameAction;
-    QAction *graphicsAction;
     QAction *openAction;
-    QAction *pathsAction;
-    QAction *pluginsAction;
     QAction *quitAction;
     QAction *refreshAction;
     QAction *saveAction;
     QAction *sizeAction;
     QAction *startAction;
     QAction *stopAction;
-    QActionGroup *inputGroup;
+    QActionGroup *layoutGroup;
     QByteArray *romData;
+    QDialog *downloadDialog;
+    QDialogButtonBox *downloadButtonBox;
+    QGridLayout *downloadLayout;
+    QGridLayout *emptyLayout;
+    QGridLayout *gridLayout;
     QHeaderView *headerView;
+    QLabel *fileLabel;
+    QLabel *gameNameLabel;
+    QLabel *gameIDLabel;
+    QLabel *icon;
+    QLineEdit *gameNameField;
+    QLineEdit *gameIDField;
     QList<QAction*> menuEnable;
     QList<QAction*> menuDisable;
     QMenu *emulationMenu;
     QMenu *fileMenu;
     QMenu *helpMenu;
+    QMenu *layoutMenu;
     QMenu *settingsMenu;
-    QMenu *viewMenu;
     QMenuBar *menuBar;
     QProcess *mupen64proc;
+    QScrollArea *emptyView;
+    QScrollArea *listView;
+    QScrollArea *gridView;
     QSettings *romCatalog;
     QStatusBar *statusBar;
     QTreeWidget *romTree;
     TreeWidgetItem *headerItem;
     TreeWidgetItem *fileItem;
     QVBoxLayout *layout;
+    QVBoxLayout *listLayout;
+    QWidget *listWidget;
+    QWidget *gridContainer;
+    QWidget *gridWidget;
     QWidget *widget;
 
 private slots:
     void addRoms();
     void checkStatus(int status);
     void enableButtons();
+    void highlightGridWidget(QWidget *current);
+    void highlightListWidget(QWidget *current);
     void openAbout();
-    void openColumns();
-    void openEmulation();
-    void openGraphics();
-    void openPaths();
-    void openPlugins();
+    void openDownloader();
+    void openOptions();
     void openRom();
+    void runDownloader();
+    void runEmulatorFromMenu();
     void runEmulatorFromRomTree();
+    void runEmulatorFromWidget(QWidget *current);
     void saveSortOrder(int column, Qt::SortOrder order);
     void stopEmulator();
+    void updateLayoutSetting();
 
 };
 

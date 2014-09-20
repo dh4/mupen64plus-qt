@@ -1,4 +1,4 @@
-QT       += core
+QT       += core network xml
 
 lessThan(QT_MAJOR_VERSION, 5) {
     QT   += gui
@@ -21,13 +21,15 @@ SOURCES += src/main.cpp \
     src/aboutdialog.cpp \
     src/mupen64plusqt.cpp \
     src/settingsdialog.cpp \
-    src/treewidgetitem.cpp
+    src/treewidgetitem.cpp \
+    src/clickablewidget.cpp
 
 HEADERS += src/global.h \
     src/aboutdialog.h \
     src/mupen64plusqt.h \
     src/settingsdialog.h \
-    src/treewidgetitem.h
+    src/treewidgetitem.h \
+    src/clickablewidget.h
 
 RESOURCES += resources/mupen64plusqt.qrc
 

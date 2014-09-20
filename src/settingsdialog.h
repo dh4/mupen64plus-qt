@@ -34,6 +34,7 @@
 
 #include <QDesktopWidget>
 #include <QFileDialog>
+#include <QListWidget>
 #include <QSettings>
 
 
@@ -50,22 +51,43 @@ public:
     ~SettingsDialog();
 
 private:
+    void populateAvailable(bool downloadItems);
+
     Ui::SettingsDialog *ui;
 
     QDesktopWidget *desktop;
     QDir pluginsDir;
+    QList<QWidget*> downloadEnable;
+    QList<QWidget*> labelEnable;
+    QList<QWidget*> listCoverEnable;
+    QStringList available;
+    QStringList labelOptions;
+    QStringList sortOptions;
 
 private slots:
-    void addColumn();
+    void addColumn(QListWidget *currentList, QListWidget *availableList);
+    void browseBackground();
     void browseMupen64();
     void browsePlugin();
     void browseData();
     void browseConfig();
     void browseROM();
     void editSettings();
-    void removeColumn();
-    void sortDown();
-    void sortUp();
+    void listAddColumn();
+    void listRemoveColumn();
+    void listSortDown();
+    void listSortUp();
+    void removeColumn(QListWidget *currentList, QListWidget *availableList);
+    void populateTableAndListTab(bool downloadItems);
+    void sortDown(QListWidget *currentList);
+    void sortUp(QListWidget *currentList);
+    void tableAddColumn();
+    void tableRemoveColumn();
+    void tableSortDown();
+    void tableSortUp();
+    void toggleDownload(bool active);
+    void toggleLabel(bool active);
+    void toggleListCover(bool active);
 };
 
 #endif // SETTINGSDIALOG_H

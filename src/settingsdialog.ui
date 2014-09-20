@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>550</width>
-    <height>300</height>
+    <height>450</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>550</width>
-    <height>300</height>
+    <height>450</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -36,13 +36,13 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="pathsWidget">
       <attribute name="title">
        <string>Paths</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
+      <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
         <layout class="QGridLayout" name="pathsLayout">
          <item row="0" column="1">
@@ -357,50 +357,47 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="columnsWidget">
+     <widget class="QWidget" name="tableWidget">
       <attribute name="title">
-       <string>Columns</string>
+       <string>Table</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_8">
-       <item row="0" column="2">
-        <spacer name="columnsHSpacer2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="0" column="1">
-        <layout class="QGridLayout" name="columnsLayout">
+        <layout class="QGridLayout" name="tableViewLayout">
          <property name="leftMargin">
           <number>20</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="1" column="0">
-          <widget class="QListWidget" name="availableList">
+         <item row="2" column="0">
+          <widget class="QLabel" name="tableSizeLabel">
+           <property name="text">
+            <string>Image:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="tableSizeBox"/>
+         </item>
+         <item row="1" column="3">
+          <widget class="QListWidget" name="tableCurrentList">
            <property name="minimumSize">
             <size>
              <width>160</width>
-             <height>0</height>
+             <height>250</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>170</width>
-             <height>250</height>
+             <width>160</width>
+             <height>300</height>
             </size>
            </property>
           </widget>
          </item>
-         <item row="1" column="3">
-          <widget class="QWidget" name="sortWidget" native="true">
+         <item row="1" column="4">
+          <widget class="QWidget" name="tableSortWidget" native="true">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -409,9 +406,9 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_5">
             <item row="0" column="0">
-             <layout class="QVBoxLayout" name="sortLayout" stretch="0,0">
+             <layout class="QVBoxLayout" name="tableSortLayout" stretch="0,0">
               <item>
-               <widget class="QToolButton" name="sortDownButton">
+               <widget class="QToolButton" name="tableSortDownButton">
                 <property name="text">
                  <string>...</string>
                 </property>
@@ -421,7 +418,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QToolButton" name="sortUpButton">
+               <widget class="QToolButton" name="tableSortUpButton">
                 <property name="text">
                  <string>...</string>
                 </property>
@@ -435,45 +432,24 @@
            </layout>
           </widget>
          </item>
-         <item row="1" column="2">
-          <widget class="QListWidget" name="currentList">
+         <item row="1" column="0" colspan="2">
+          <widget class="QListWidget" name="tableAvailableList">
            <property name="minimumSize">
             <size>
              <width>160</width>
-             <height>0</height>
+             <height>250</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>170</width>
-             <height>250</height>
+             <width>160</width>
+             <height>300</height>
             </size>
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="currentLabel">
-           <property name="text">
-            <string>Current:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="availableLabel">
-           <property name="text">
-            <string>Available:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QCheckBox" name="stretchOption">
-           <property name="text">
-            <string>Stretch first column</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QWidget" name="toggleWidget" native="true">
+         <item row="1" column="2">
+          <widget class="QWidget" name="tableToggleWidget" native="true">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -482,9 +458,9 @@
            </property>
            <layout class="QGridLayout" name="gridLayout_7">
             <item row="0" column="0">
-             <layout class="QVBoxLayout" name="toggleLayout">
+             <layout class="QVBoxLayout" name="tableToggleLayout">
               <item>
-               <widget class="QToolButton" name="addButton">
+               <widget class="QToolButton" name="tableAddButton">
                 <property name="text">
                  <string>...</string>
                 </property>
@@ -494,7 +470,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QToolButton" name="removeButton">
+               <widget class="QToolButton" name="tableRemoveButton">
                 <property name="text">
                  <string>...</string>
                 </property>
@@ -508,23 +484,31 @@
            </layout>
           </widget>
          </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="tableCurrentLabel">
+           <property name="text">
+            <string>Current Columns:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QCheckBox" name="tableStretchOption">
+           <property name="text">
+            <string>Stretch First Column</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="tableAvailableLabel">
+           <property name="text">
+            <string>Available Columns:</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
-       <item row="1" column="1">
-        <spacer name="columnsVSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item row="0" column="0">
-        <spacer name="columnsHSpacer1">
+        <spacer name="tableHSpacer1">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -536,13 +520,505 @@
          </property>
         </spacer>
        </item>
+       <item row="0" column="2">
+        <spacer name="tableHSpacer2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="1">
+        <spacer name="tableVSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="gridWidget">
+      <attribute name="title">
+       <string>Grid</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout7">
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="gridText">
+         <property name="title">
+          <string>ROM Label</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout5">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridTextLayout" columnstretch="0,0" columnminimumwidth="150,0">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMinAndMaxSize</enum>
+            </property>
+            <item row="0" column="0">
+             <widget class="QLabel" name="labelLabel">
+              <property name="text">
+               <string>Show Label:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="labelTextBox">
+              <property name="minimumSize">
+               <size>
+                <width>150</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>150</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="labelTextLabel">
+              <property name="text">
+               <string>Label Text:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QCheckBox" name="labelOption">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="labelColorLabel">
+              <property name="text">
+               <string>Label Color:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QComboBox" name="labelColorBox">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="1">
+           <spacer name="gridHSpacer2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Other</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout6">
+          <item row="2" column="0">
+           <layout class="QGridLayout" name="gridOtherLayout" columnstretch="0,1,1,0" columnminimumwidth="150,0,0,0">
+            <item row="0" column="3">
+             <widget class="QPushButton" name="backgroundButton">
+              <property name="text">
+               <string>Browse...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="backgroundLabel">
+              <property name="text">
+               <string>Custom Background:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="gridSortLabel">
+              <property name="text">
+               <string>Sorting:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1" colspan="2">
+             <widget class="QLineEdit" name="backgroundPath"/>
+            </item>
+            <item row="1" column="2" colspan="2">
+             <widget class="QCheckBox" name="gridDescendingOption">
+              <property name="text">
+               <string>Descending</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QComboBox" name="gridSortBox">
+              <property name="maximumSize">
+               <size>
+                <width>150</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="gridImage">
+         <property name="title">
+          <string>ROM Image</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout4">
+          <item row="0" column="1">
+           <spacer name="gridHSpacer1">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridImageLayout" rowstretch="0,0,0,0" columnstretch="0,0" columnminimumwidth="150,0">
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item row="2" column="0">
+             <widget class="QLabel" name="shadowInactiveLabel">
+              <property name="text">
+               <string>Shadow Inactive Color:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="shadowActiveLabel">
+              <property name="text">
+               <string>Shadow Active Color:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="columnCountLabel">
+              <property name="text">
+               <string>Columns:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="gridSizeLabel">
+              <property name="text">
+               <string>Image Size:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QComboBox" name="shadowActiveBox">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="columnCountBox">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>20</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="gridSizeBox">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="editable">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QComboBox" name="shadowInactiveBox">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <spacer name="gridVSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="listWidget">
+      <attribute name="title">
+       <string>List</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_30">
+       <item row="0" column="2">
+        <spacer name="listHSpacer2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="1">
+        <layout class="QGridLayout" name="listViewLayout">
+         <property name="leftMargin">
+          <number>20</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <item row="2" column="3">
+          <widget class="QCheckBox" name="listHeaderOption">
+           <property name="text">
+            <string>First Item as Header</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="listCurrentLabel">
+           <property name="text">
+            <string>Current Items:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QWidget" name="listToggleWidget" native="true">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>80</height>
+            </size>
+           </property>
+           <layout class="QGridLayout" name="gridLayout8">
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="listToggleLayout">
+              <item>
+               <widget class="QToolButton" name="listAddButton">
+                <property name="text">
+                 <string>...</string>
+                </property>
+                <property name="arrowType">
+                 <enum>Qt::RightArrow</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="listRemoveButton">
+                <property name="text">
+                 <string>...</string>
+                </property>
+                <property name="arrowType">
+                 <enum>Qt::LeftArrow</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <widget class="QListWidget" name="listAvailableList">
+           <property name="maximumSize">
+            <size>
+             <width>160</width>
+             <height>250</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QWidget" name="listSortWidget" native="true">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>80</height>
+            </size>
+           </property>
+           <layout class="QGridLayout" name="gridLayout9">
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="listSortLayout" stretch="0,0">
+              <item>
+               <widget class="QToolButton" name="listSortDownButton">
+                <property name="text">
+                 <string>...</string>
+                </property>
+                <property name="arrowType">
+                 <enum>Qt::UpArrow</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="listSortUpButton">
+                <property name="text">
+                 <string>...</string>
+                </property>
+                <property name="arrowType">
+                 <enum>Qt::DownArrow</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QListWidget" name="listCurrentList">
+           <property name="maximumSize">
+            <size>
+             <width>160</width>
+             <height>250</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="listAvailableLabel">
+           <property name="text">
+            <string>Available Items:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="listSizeBox"/>
+         </item>
+         <item row="2" column="0" colspan="2">
+          <widget class="QCheckBox" name="listCoverOption">
+           <property name="text">
+            <string>Display Cover Image</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="listSizeLabel">
+           <property name="text">
+            <string>Image Size:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="3">
+          <widget class="QCheckBox" name="listDescendingOption">
+           <property name="text">
+            <string>Descending</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="listSortLabel">
+           <property name="text">
+            <string>Sorting:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1" colspan="2">
+          <widget class="QComboBox" name="listSortBox"/>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="0">
+        <spacer name="listHSpacer1">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="1">
+        <spacer name="listVSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="otherWidget">
       <attribute name="title">
        <string>Other</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout">
+      <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
         <layout class="QGridLayout" name="otherLayout" columnminimumwidth="100,0">
          <property name="leftMargin">
@@ -551,18 +1027,32 @@
          <property name="topMargin">
           <number>10</number>
          </property>
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="QLabel" name="saveLabel">
            <property name="text">
             <string>Save Options:</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item row="1" column="1">
           <widget class="QCheckBox" name="saveOption">
            <property name="toolTip">
             <string extracomment="If checked, CEN64's output will be redirected to CEN64-Qt so you can view the VI/s or debug information."/>
            </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="downloadLabel">
+           <property name="text">
+            <string>Download Game Information (thegamesdb.net):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QCheckBox" name="downloadOption">
            <property name="text">
             <string/>
            </property>
@@ -625,13 +1115,6 @@
   <tabstop>audioBox</tabstop>
   <tabstop>inputBox</tabstop>
   <tabstop>rspBox</tabstop>
-  <tabstop>availableList</tabstop>
-  <tabstop>addButton</tabstop>
-  <tabstop>removeButton</tabstop>
-  <tabstop>currentList</tabstop>
-  <tabstop>sortDownButton</tabstop>
-  <tabstop>sortUpButton</tabstop>
-  <tabstop>stretchOption</tabstop>
   <tabstop>saveOption</tabstop>
  </tabstops>
  <resources/>
