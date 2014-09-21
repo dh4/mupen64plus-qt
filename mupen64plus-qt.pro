@@ -22,14 +22,16 @@ SOURCES += src/main.cpp \
     src/mupen64plusqt.cpp \
     src/settingsdialog.cpp \
     src/treewidgetitem.cpp \
-    src/clickablewidget.cpp
+    src/clickablewidget.cpp \
+    src/configeditor.cpp
 
 HEADERS += src/global.h \
     src/aboutdialog.h \
     src/mupen64plusqt.h \
     src/settingsdialog.h \
     src/treewidgetitem.h \
-    src/clickablewidget.h
+    src/clickablewidget.h \
+    src/configeditor.h
 
 RESOURCES += resources/mupen64plusqt.qrc
 

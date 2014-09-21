@@ -31,6 +31,7 @@
 
 #include "mupen64plusqt.h"
 #include "aboutdialog.h"
+#include "configeditor.h"
 #include "global.h"
 #include "settingsdialog.h"
 
@@ -92,17 +93,7 @@ void Mupen64PlusQt::addRoms()
                                                  QDir::Files | QDir::NoSymLinks);
 
             if (files.size() > 0) {
-                QProgressDialog progress("Loading ROMs...", "Cancel", 0, files.size(), this);
-#if QT_VERSION >= 0x050000
-                progress.setWindowFlags(progress.windowFlags() & ~Qt::WindowCloseButtonHint);
-                progress.setWindowFlags(progress.windowFlags() & ~Qt::WindowMinimizeButtonHint);
-                progress.setWindowFlags(progress.windowFlags() & ~Qt::WindowContextHelpButtonHint);
-#else
-                progress.setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
-#endif
-                progress.setCancelButton(0);
-                progress.show();
-                progress.setWindowModality(Qt::WindowModal);
+                setupProgressDialog(files);
 
                 int count = 0;
                 foreach (QString fileName, files)
@@ -136,8 +127,10 @@ void Mupen64PlusQt::addRoms()
                     SETTINGS.setValue("ROMs/cache", newSetting);
 
                     count++;
-                    progress.setValue(count);
+                    progress->setValue(count);
                 }
+
+                progress->close();
             } else {
             QMessageBox::warning(this, "Warning", "No ROMs found.");
             }
@@ -787,19 +780,6 @@ void Mupen64PlusQt::cachedRoms(bool imageUpdated)
     QString cache = SETTINGS.value("ROMs/cache", "").toString();
     QStringList cachedRoms = cache.split("||");
 
-
-    QProgressDialog progress("Loading ROMs...", "Cancel", 0, cachedRoms.size(), this);
-#if QT_VERSION >= 0x050000
-    progress.setWindowFlags(progress.windowFlags() & ~Qt::WindowCloseButtonHint);
-    progress.setWindowFlags(progress.windowFlags() & ~Qt::WindowMinimizeButtonHint);
-    progress.setWindowFlags(progress.windowFlags() & ~Qt::WindowContextHelpButtonHint);
-#else
-    progress.setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
-#endif
-    progress.setCancelButton(0);
-    progress.setWindowModality(Qt::WindowModal);
-
-
     int count = 0;
     bool showProgress = false;
     QTime checkPerformance;
@@ -826,7 +806,7 @@ void Mupen64PlusQt::cachedRoms(bool imageUpdated)
 
                 //check if operation expected to take longer than two seconds
                 if (runtime * cachedRoms.size() > 2000) {
-                    progress.show();
+                    setupProgressDialog(cachedRoms);
                     showProgress = true;
                 }
             }
@@ -834,9 +814,12 @@ void Mupen64PlusQt::cachedRoms(bool imageUpdated)
             count++;
 
             if (showProgress)
-                progress.setValue(count);
+                progress->setValue(count);
         }
     }
+
+    if (showProgress)
+        progress->close();
 
     qSort(roms.begin(), roms.end(), romSorter);
 
@@ -914,6 +897,8 @@ void Mupen64PlusQt::createMenu()
     emulationMenu = new QMenu(tr("&Emulation"), this);
     startAction = emulationMenu->addAction(tr("&Start"));
     stopAction = emulationMenu->addAction(tr("St&op"));
+    emulationMenu->addSeparator();
+    logAction = emulationMenu->addAction(tr("View Log..."));
 
     startAction->setIcon(QIcon::fromTheme("media-playback-start"));
     stopAction->setIcon(QIcon::fromTheme("media-playback-stop"));
@@ -940,15 +925,16 @@ void Mupen64PlusQt::createMenu()
         layoutItem->setCheckable(true);
         layoutGroup->addAction(layoutItem);
 
-        //Only enable layout changes when CEN64 is not running
+        //Only enable layout changes when Mupen64Plus is not running
         menuEnable << layoutItem;
 
         if(layoutValue == layoutName)
             layoutItem->setChecked(true);
     }
 
+    editorAction = settingsMenu->addAction(tr("Edit mupen64plus.cfg..."));
     settingsMenu->addSeparator();
-    configureAction = settingsMenu->addAction(tr("&Configure"));
+    configureAction = settingsMenu->addAction(tr("&Configure..."));
     configureAction->setIcon(QIcon::fromTheme("preferences-other"));
 
     menuBar->addMenu(settingsMenu);
@@ -962,10 +948,12 @@ void Mupen64PlusQt::createMenu()
 
     //Create list of actions that are enabled only when Mupen64Plus is not running
     menuEnable << startAction
+               << logAction
                << openAction
                << refreshAction
                << downloadAction
                << configureAction
+               << editorAction
                << quitAction;
 
     //Create list of actions that are disabled when Mupen64Plus is not running
@@ -977,7 +965,9 @@ void Mupen64PlusQt::createMenu()
     connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(startAction, SIGNAL(triggered()), this, SLOT(runEmulatorFromMenu()));
     connect(stopAction, SIGNAL(triggered()), this, SLOT(stopEmulator()));
+    connect(logAction, SIGNAL(triggered()), this, SLOT(openLog()));
     connect(configureAction, SIGNAL(triggered()), this, SLOT(openOptions()));
+    connect(editorAction, SIGNAL(triggered()), this, SLOT(openEditor()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(openAbout()));
     connect(layoutGroup, SIGNAL(triggered(QAction*)), this, SLOT(updateLayoutSetting()));
 }
@@ -995,7 +985,7 @@ void Mupen64PlusQt::createRomView()
     emptyLayout = new QGridLayout(emptyView);
 
     icon = new QLabel(emptyView);
-    icon->setPixmap(QPixmap(":/images/cen64.png"));
+    icon->setPixmap(QPixmap(":/images/mupen64plus.png"));
 
     emptyLayout->addWidget(icon, 1, 1);
     emptyLayout->setColumnStretch(0, 1);
@@ -1233,7 +1223,7 @@ QByteArray Mupen64PlusQt::getUrlContents(QUrl url)
 
     QNetworkRequest request;
     request.setUrl(url);
-    request.setRawHeader("User-Agent", "CEN64-Qt");
+    request.setRawHeader("User-Agent", "Mupen64Plus-Qt");
     QNetworkReply *reply = manager->get(request);
 
     QEventLoop loop;
@@ -1454,7 +1444,63 @@ void Mupen64PlusQt::openDownloader()
 
     downloadDialog->setLayout(downloadLayout);
 
-    downloadDialog->show();
+    downloadDialog->exec();
+}
+
+
+void Mupen64PlusQt::openEditor()
+{
+    QString configPath = SETTINGS.value("Paths/config", "").toString();
+    QDir configDir = QDir(configPath);
+    QString configFile = configDir.absoluteFilePath("mupen64plus.cfg");
+    QFile config(configFile);
+
+    if (configPath == "" || !config.exists()) {
+        QMessageBox::information(this, "Not Found", QString("Editor requires config directory to be\n")
+                                 + "set to a directory with mupen64plus.cfg.");
+    } else {
+        ConfigEditor configEditor(configFile, this);
+        configEditor.exec();
+    }
+}
+
+
+void Mupen64PlusQt::openLog()
+{
+    if (lastOutput == "") {
+        QMessageBox::information(this, "No Output", QString("There is no log. Either Mupen64Plus has not ")
+                                 + "yet\nrun or there was no output from the last run.");
+    } else {
+        logDialog = new QDialog(this);
+        logDialog->setWindowTitle(tr("Mupen64Plus Log"));
+        logDialog->setMinimumSize(600, 400);
+
+        logLayout = new QGridLayout(logDialog);
+        logLayout->setContentsMargins(5, 10, 5, 10);
+
+        logArea = new QTextEdit(logDialog);
+        logArea->setWordWrapMode(QTextOption::NoWrap);
+
+        QFont font;
+        font.setFamily("Monospace");
+        font.setFixedPitch(true);
+        font.setPointSize(9);
+        logArea->setFont(font);
+
+        logArea->setPlainText(lastOutput);
+
+        logButtonBox = new QDialogButtonBox(Qt::Horizontal, logDialog);
+        logButtonBox->addButton(tr("Close"), QDialogButtonBox::AcceptRole);
+
+        logLayout->addWidget(logArea, 0, 0);
+        logLayout->addWidget(logButtonBox, 1, 0);
+
+        connect(logButtonBox, SIGNAL(accepted()), logDialog, SLOT(close()));
+
+        logDialog->setLayout(logLayout);
+
+        logDialog->exec();
+    }
 }
 
 
@@ -1499,6 +1545,12 @@ void Mupen64PlusQt::openRom()
                                                 tr("N64 ROMs (*.z64 *.n64 *.v64);;All Files (*)"));
     if (path != "")
         runEmulator(path);
+}
+
+
+void Mupen64PlusQt::readMupen64PlusOutput()
+{
+    lastOutput = mupen64proc->readAllStandardOutput();
 }
 
 
@@ -1654,12 +1706,12 @@ void Mupen64PlusQt::runEmulator(QString completeRomPath)
     QFile mupen64File(mupen64Path);
     QFile romFile(completeRomPath);
 
-    if(!QFileInfo(mupen64File).exists()) {
+    if(!mupen64File.exists() || QFileInfo(mupen64File).isDir() || !QFileInfo(mupen64File).isExecutable()) {
         QMessageBox::warning(this, "Warning", "Mupen64Plus executable not found.");
         return;
     }
 
-    if(!QFileInfo(romFile).exists()) {
+    if(!romFile.exists() || QFileInfo(romFile).isDir()) {
         QMessageBox::warning(this, "Warning", "ROM file not found.");
         return;
     }
@@ -1708,10 +1760,12 @@ void Mupen64PlusQt::runEmulator(QString completeRomPath)
     toggleMenus(false);
 
     mupen64proc = new QProcess(this);
+    connect(mupen64proc, SIGNAL(finished(int)), this, SLOT(readMupen64PlusOutput()));
     connect(mupen64proc, SIGNAL(finished(int)), this, SLOT(enableButtons()));
     connect(mupen64proc, SIGNAL(finished(int)), this, SLOT(checkStatus(int)));
 
     mupen64proc->setWorkingDirectory(QFileInfo(mupen64File).dir().canonicalPath());
+    mupen64proc->setProcessChannelMode(QProcess::MergedChannels);
     mupen64proc->start(mupen64Path, args);
 }
 
@@ -1793,6 +1847,21 @@ void Mupen64PlusQt::setGridBackground()
 }
 
 
+void Mupen64PlusQt::setupProgressDialog(QStringList item)
+{
+    progress = new QProgressDialog("Loading ROMs...", "Cancel", 0, item.size(), this);
+#if QT_VERSION >= 0x050000
+    progress->setWindowFlags(progress.windowFlags() & ~Qt::WindowCloseButtonHint);
+    progress->setWindowFlags(progress.windowFlags() & ~Qt::WindowMinimizeButtonHint);
+    progress->setWindowFlags(progress.windowFlags() & ~Qt::WindowContextHelpButtonHint);
+#else
+    progress->setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+#endif
+    progress->setCancelButton(0);
+    progress->setWindowModality(Qt::WindowModal);
+}
+
+
 void Mupen64PlusQt::stopEmulator()
 {
     mupen64proc->terminate();
@@ -1811,7 +1880,7 @@ void Mupen64PlusQt::toggleMenus(bool active)
     gridView->setEnabled(active);
     listView->setEnabled(active);
 
-    if (romTree->currentItem() == NULL && gridCurrent == false && listCurrent == false) {
+    if (romTree->currentItem() == NULL && !gridCurrent && !listCurrent) {
         downloadAction->setEnabled(false);
         startAction->setEnabled(false);
     }
