@@ -64,6 +64,6 @@ One or the other is sent to Mupen64Plus based on the "Save Options" checkbox und
 
 ## Game Information
 
-Mupen64Plus-Qt supports downloading game information and cover images from [thegamesdb.net](http://thegamesdb.net/). This can be enabled under the Other tab. It's recommended you have the data directory set (under Paths) before using this. Once enabled, you'll need to refresh your ROMs list to download the information. Afterwords, images and other information about the game can be added to the layouts.
+Mupen64Plus-Qt supports downloading game information and cover images from [thegamesdb.net](http://thegamesdb.net/). This can be enabled under the Other tab. It's recommended you have the data directory set (under Paths) before using this. Once enabled, you'll need to refresh your ROMs list to download the information. Afterwards, images and other information about the game can be added to the layouts.
 
 If a game is not found, Mupen64Plus-Qt supports refreshing information for a single ROM. Just select the rom and go to File->Download/Update Info. From here you can enter a different search or the specific ID of the game (from the URL of the game on thegamesdb.net).
