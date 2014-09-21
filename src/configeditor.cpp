@@ -47,9 +47,14 @@ ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent
     editorArea->setWordWrapMode(QTextOption::NoWrap);
 
     QFont font;
+#ifdef Q_OS_LINUX
     font.setFamily("Monospace");
-    font.setFixedPitch(true);
     font.setPointSize(9);
+#else
+    font.setFamily("Courier");
+    font.setPointSize(10);
+#endif
+    font.setFixedPitch(true);
     editorArea->setFont(font);
 
     highlighter = new ConfigHighlighter(editorArea->document());

@@ -115,7 +115,7 @@ protected:
 
 private:
     void addToGridView(Rom *currentRom, int count);
-    void addToListView(Rom *currentRom);
+    void addToListView(Rom *currentRom, int count);
     void addToTableView(Rom *currentRom);
     void autoloadSettings();
     void cacheGameInfo(QString identifier, QString searchName, QString gameID = "", bool force = false);

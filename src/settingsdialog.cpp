@@ -38,6 +38,9 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 {
     ui->setupUi(this);
     ui->tabWidget->setCurrentIndex(activeTab);
+#ifdef Q_OS_OSX //OSX needs a larger window to look correct
+    setMinimumSize(600, 550);
+#endif
 
 
     //Populate Paths tab
