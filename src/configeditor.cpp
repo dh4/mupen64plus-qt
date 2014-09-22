@@ -102,9 +102,9 @@ ConfigHighlighter::ConfigHighlighter(QTextDocument *parent) : QSyntaxHighlighter
     rule.format = variableFormat;
     rules.append(rule);
 
-    variableFormat.setForeground(Qt::blue);
+    valueFormat.setForeground(Qt::blue);
     rule.pattern = QRegExp("=[^\\n]+");
-    rule.format = variableFormat;
+    rule.format = valueFormat;
     rules.append(rule);
 
     separatorFormat.setFontWeight(QFont::Bold);
