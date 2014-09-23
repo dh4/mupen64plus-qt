@@ -37,16 +37,14 @@ RESOURCES += resources/mupen64plusqt.qrc
 
 FORMS += src/settingsdialog.ui
 
-unix {
-    LIBS += -lquazip
-}
-
-win32 {
+win32|macx {
     CONFIG += staticlib
     DEFINES += QUAZIP_STATIC
 
-    #Download quazip source and copy to quazip directory to project
+    #Download quazip source and copy the quazip directory to project
     SOURCES += quazip/*.cpp
     SOURCES += quazip/*.c
     HEADERS += quazip/*.h
+} else {
+    LIBS += -lquazip
 }

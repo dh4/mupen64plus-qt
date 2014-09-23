@@ -409,7 +409,7 @@ void Mupen64PlusQt::addToListView(Rom *currentRom, int count)
         if (i == 0 && SETTINGS.value("List/firstitemheader","true") == "true")
             addition += "</h2>";
 
-        if (addition != "<b>" + current + ":</b> <br />" && addition != "<b>" + current + ":</b> ")
+        if (addition != "<b>" + current + ":</b> <br />")
             listText += addition;
 
         i++;
