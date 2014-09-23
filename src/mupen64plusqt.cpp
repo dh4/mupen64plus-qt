@@ -41,6 +41,7 @@ Mupen64PlusQt::Mupen64PlusQt(QWidget *parent) : QMainWindow(parent)
     setWindowTitle(tr("Mupen64Plus-Qt"));
     setWindowIcon(QIcon(":/images/mupen64plus.png"));
 
+    setupDatabase();
     autoloadSettings();
 
     romPath = SETTINGS.value("Paths/roms","").toString();
@@ -71,11 +72,34 @@ Mupen64PlusQt::Mupen64PlusQt(QWidget *parent) : QMainWindow(parent)
 }
 
 
+Rom Mupen64PlusQt::addRom(QString fileName, QString zipFile, qint64 size, QSqlQuery query)
+{
+    Rom currentRom;
+
+    currentRom.fileName = fileName;
+    currentRom.internalName = QString(romData->mid(32, 20)).trimmed();
+    currentRom.romMD5 = QString(QCryptographicHash::hash(*romData,
+                                QCryptographicHash::Md5).toHex());
+    currentRom.zipFile = zipFile;
+    currentRom.sortSize = (int)size;
+
+    query.bindValue(":filename",      currentRom.fileName);
+    query.bindValue(":internal_name", currentRom.internalName);
+    query.bindValue(":md5",           currentRom.romMD5);
+    query.bindValue(":zip_file",      currentRom.zipFile);
+    query.bindValue(":size",	      currentRom.sortSize);
+    query.exec();
+
+    initializeRom(&currentRom, false);
+
+    return currentRom;
+}
+
+
 void Mupen64PlusQt::addRoms()
 {
     QList<Rom> roms;
 
-    SETTINGS.setValue("ROMs/cache", "");
     QStringList tableVisible = SETTINGS.value("Table/columns", "Filename|Size").toString().split("|");
     resetLayouts(tableVisible);
 
@@ -89,47 +113,73 @@ void Mupen64PlusQt::addRoms()
 
     if (romPath != "") {
         if (romDir.exists()) {
-            QStringList files = romDir.entryList(QStringList() << "*.z64" << "*.n64" << "*.v64",
+            QStringList files = romDir.entryList(QStringList() << "*.z64" << "*.n64" << "*.v64" << "*.zip",
                                                  QDir::Files | QDir::NoSymLinks);
 
             if (files.size() > 0) {
-                setupProgressDialog(files);
+                database.open();
+
+                QSqlQuery query("DELETE FROM rom_collection", database);
+                query.prepare(QString("INSERT INTO rom_collection ")
+                              + "(filename, internal_name, md5, zip_file, size) "
+                              + "VALUES (:filename, :internal_name, :md5, :zip_file, :size)");
+
+                setupProgressDialog(files.size());
 
                 int count = 0;
                 foreach (QString fileName, files)
                 {
-                    Rom currentRom;
+                    QString completeFileName = romDir.absoluteFilePath(fileName);
+                    QFile file(completeFileName);
 
-                    QFile file(romDir.absoluteFilePath(fileName));
+                    //If file is a zip file, extract info from any zipped ROMs
+                    if (QFileInfo(file).suffix().toLower() == "zip") {
+                        QuaZip zipFile(completeFileName);
+                        zipFile.open(QuaZip::mdUnzip);
 
-                    file.open(QIODevice::ReadOnly);
-                    romData = new QByteArray(file.readAll());
-                    file.close();
+                        foreach(QString zippedFile, zipFile.getFileNameList())
+                        {
+                            QString ext = zippedFile.right(4).toLower();
 
-                    *romData = byteswap(*romData);
+                            //check for zip files
+                            if (ext == ".z64" || ext == ".n64" || ext == ".v64") {
+                                QuaZipFile zippedRomFile(completeFileName, zippedFile);
 
-                    currentRom.fileName = fileName;
-                    currentRom.internalName = QString(romData->mid(32, 20)).trimmed();
-                    currentRom.romMD5 = QString(QCryptographicHash::hash(*romData,
-                                                QCryptographicHash::Md5).toHex());
+                                zippedRomFile.open(QIODevice::ReadOnly);
+                                romData = new QByteArray(zippedRomFile.readAll());
+                                qint64 size = zippedRomFile.usize();
+                                zippedRomFile.close();
 
-                    delete romData;
+                                *romData = byteswap(*romData);
 
-                    initializeRom(&currentRom, false);
-                    roms.append(currentRom);
+                                if (romData->left(4).toHex() == "80371240") //Else invalid
+                                    roms.append(addRom(zippedFile, fileName, size, query));
 
-                    QString currentSetting = SETTINGS.value("ROMs/cache", "").toString();
-                    QString newSetting = currentSetting
-                                         + currentRom.fileName + "|"
-                                         + currentRom.internalName + "|"
-                                         + currentRom.romMD5 + "||";
+                                delete romData;
+                            }
+                        }
 
-                    SETTINGS.setValue("ROMs/cache", newSetting);
+                        zipFile.close();
+                    } else { //Just a normal ROM file
+                        file.open(QIODevice::ReadOnly);
+                        romData = new QByteArray(file.readAll());
+                        file.close();
+
+                        *romData = byteswap(*romData);
+
+                        qint64 size = QFileInfo(file).size();
+
+                        if (romData->left(4).toHex() == "80371240") //Else invalid
+                            roms.append(addRom(fileName, "", size, query));
+
+                        delete romData;
+                    }
 
                     count++;
                     progress->setValue(count);
                 }
 
+                database.close();
                 progress->close();
             } else {
             QMessageBox::warning(this, "Warning", "No ROMs found.");
@@ -144,11 +194,11 @@ void Mupen64PlusQt::addRoms()
     int i = 0;
     foreach (Rom currentRom, roms)
     {
-        if (SETTINGS.value("View/layout","Table View") == "Table View")
+        if (SETTINGS.value("View/layout", "None") == "Table View")
             addToTableView(&currentRom);
-        else if (SETTINGS.value("View/layout","Table View") == "Grid View")
+        else if (SETTINGS.value("View/layout", "None") == "Grid View")
             addToGridView(&currentRom, i);
-        else if (SETTINGS.value("View/layout","Table View") == "List View")
+        else if (SETTINGS.value("View/layout", "None") == "List View")
             addToListView(&currentRom, i);
 
         i++;
@@ -174,12 +224,13 @@ void Mupen64PlusQt::addToGridView(Rom *currentRom, int count)
     gameGridItem->setGraphicsEffect(getShadow(false));
 
     //Assign ROM data to widget for use in click events
-    gameGridItem->setProperty("fileName",currentRom->fileName);
+    gameGridItem->setProperty("fileName", currentRom->fileName);
     if (currentRom->goodName == "Unknown ROM" || currentRom->goodName == "Requires catalog file")
-        gameGridItem->setProperty("search",currentRom->internalName);
+        gameGridItem->setProperty("search", currentRom->internalName);
     else
-        gameGridItem->setProperty("search",currentRom->goodName);
-    gameGridItem->setProperty("romMD5",currentRom->romMD5);
+        gameGridItem->setProperty("search", currentRom->goodName);
+    gameGridItem->setProperty("romMD5", currentRom->romMD5);
+    gameGridItem->setProperty("zipFile", currentRom->zipFile);
 
     QGridLayout *gameGridLayout = new QGridLayout(gameGridItem);
     gameGridLayout->setColumnStretch(0, 1);
@@ -258,7 +309,7 @@ void Mupen64PlusQt::addToListView(Rom *currentRom, int count)
 {
     QStringList visible = SETTINGS.value("List/columns", "Filename|Internal Name|Size").toString().split("|");
 
-    if (visible.join("") == "" && SETTINGS.value("List/displaycover", "true") != "true")
+    if (visible.join("") == "" && SETTINGS.value("List/displaycover", "") != "true")
         //Otherwise no columns, so don't bother populating
         return;
 
@@ -266,12 +317,13 @@ void Mupen64PlusQt::addToListView(Rom *currentRom, int count)
     gameListItem->setContentsMargins(0, 0, 20, 0);
 
     //Assign ROM data to widget for use in click events
-    gameListItem->setProperty("fileName",currentRom->fileName);
+    gameListItem->setProperty("fileName", currentRom->fileName);
     if (currentRom->goodName == "Unknown ROM" || currentRom->goodName == "Requires catalog file")
-        gameListItem->setProperty("search",currentRom->internalName);
+        gameListItem->setProperty("search", currentRom->internalName);
     else
-        gameListItem->setProperty("search",currentRom->goodName);
-    gameListItem->setProperty("romMD5",currentRom->romMD5);
+        gameListItem->setProperty("search", currentRom->goodName);
+    gameListItem->setProperty("romMD5", currentRom->romMD5);
+    gameListItem->setProperty("zipFile", currentRom->zipFile);
 
     QGridLayout *gameListLayout = new QGridLayout(gameListItem);
     gameListLayout->setColumnStretch(3, 1);
@@ -427,7 +479,10 @@ void Mupen64PlusQt::addToTableView(Rom *currentRom)
     //MD5 for cache info
     fileItem->setText(2, currentRom->romMD5.toLower());
 
-    int i = 3, c = 0;
+    //Zip file
+    fileItem->setText(3, currentRom->zipFile);
+
+    int i = 4, c = 0;
     bool addImage = false;
 
     foreach (QString current, visible)
@@ -590,7 +645,7 @@ void Mupen64PlusQt::autoloadSettings()
 
 #ifdef Q_OS_WIN
         //Check for Mupen64Plus within the same directory
-        QString currentDir = QDir::currentPath();
+        QString currentDir = QCoreApplication::applicationDirPath();
 
         if (QFileInfo(currentDir+"/mupen64plus.exe").exists())
             SETTINGS.setValue("Paths/mupen64plus", currentDir+"/mupen64plus.exe");
@@ -604,7 +659,7 @@ void Mupen64PlusQt::autoloadSettings()
 
 #ifdef Q_OS_OSX
         //Check for Mupen64Plus App within the same directory
-        QString currentDir = QDir::currentPath();
+        QString currentDir = QCoreApplication::applicationDirPath();
 
         QString mupen64App = currentDir+"/mupen64plus.app/Contents";
         if (QFileInfo(mupen64App+"/MacOS/mupen64plus").exists()) {
@@ -634,148 +689,6 @@ QByteArray Mupen64PlusQt::byteswap(QByteArray romData)
 }
 
 
-void Mupen64PlusQt::cacheGameInfo(QString identifier, QString searchName, QString gameID, bool force)
-{
-    if (identifier != "") {
-        bool updated = false;
-
-        QString gameCache = getCacheLocation() + "/" + identifier;
-        QDir cache(gameCache);
-
-        if (!cache.exists()) {
-            cache.mkpath(gameCache);
-        }
-
-        //Get game XML info from thegamesdb.net
-        QString dataFile = gameCache + "/data.xml";
-        QFile file(dataFile);
-
-        if (!file.exists() || file.size() == 0 || force) {
-            QUrl url;
-
-            //Remove [!], (U), etc. from GoodName for searching
-            searchName.remove(QRegExp("\\W*(\\(|\\[).+(\\)|\\])\\W*"));
-
-            //Few game specific hacks
-            //TODO: Contact thegamesdb.net and see if these can be fixed on their end
-            if (searchName == "Legend of Zelda, The - Majora's Mask")
-                searchName = "Majora's Mask";
-            else if (searchName == "Legend of Zelda, The - Ocarina of Time - Master Quest")
-                searchName = "Master Quest";
-            else if (searchName.toLower() == "f-zero x")
-                gameID = "10836";
-
-            //If user submits gameID, use that
-            if (gameID != "")
-                url.setUrl("http://thegamesdb.net/api/GetGame.php?id="
-                           + gameID + "&platform=Nintendo 64");
-            else
-                url.setUrl("http://thegamesdb.net/api/GetGame.php?name="
-                           + searchName + "&platform=Nintendo 64");
-
-            QString dom = getUrlContents(url);
-
-            QDomDocument xml;
-            xml.setContent(dom);
-            QDomNode node = xml.elementsByTagName("Data").at(0).firstChildElement("Game");
-
-            int count = 0, found = 0;
-
-            while(!node.isNull())
-            {
-                QDomElement element = node.firstChildElement("GameTitle").toElement();
-
-                if (force) { //from user dialog
-                    QDomElement date = node.firstChildElement("ReleaseDate").toElement();
-
-                    QString check = "Game: " + element.text();
-                    check.remove(QRegExp(QString("[^A-Za-z 0-9 \\.,\\?'""!@#\\$%\\^&\\*\\")
-                                         + "(\\)-_=\\+;:<>\\/\\\\|\\}\\{\\[\\]`~]*"));
-                    if (date.text() != "") check += "\nReleased on: " + date.text();
-                    check += "\n\nDoes this look correct?";
-
-                    int answer = QMessageBox::question(this, tr("Game Information Download"),
-                                                       check, QMessageBox::Yes | QMessageBox::No);
-
-                    if (answer == QMessageBox::Yes) {
-                        found = count;
-                        updated = true;
-                        break;
-                    }
-                } else {
-                    //We only want one game, so search for a perfect match in the GameTitle element.
-                    //Otherwise this will default to 0 (the first game found)
-                    if(element.text() == searchName)
-                        found = count;
-                }
-
-                node = node.nextSibling();
-                count++;
-            }
-
-            if (!force || updated) {
-                file.open(QIODevice::WriteOnly);
-                QTextStream stream(&file);
-
-                QDomNodeList gameList = xml.elementsByTagName("Game");
-                gameList.at(found).save(stream, QDomNode::EncodingFromDocument);
-
-                file.close();
-            }
-
-            if (force && !updated) {
-                QString message;
-
-                if (count == 0)
-                    message = tr("No results found.");
-                else
-                    message = tr("No more results found.");
-
-                QMessageBox::information(this, tr("Game Information Download"), message);
-            }
-        }
-
-
-        //Get front cover
-        QString boxartURL = "";
-        QString coverFile = gameCache + "/boxart-front.jpg";
-        QFile cover(coverFile);
-
-        if (!cover.exists() || (force && updated)) {
-            file.open(QIODevice::ReadOnly);
-            QString dom = file.readAll();
-            file.close();
-
-            QDomDocument xml;
-            xml.setContent(dom);
-            QDomNode node = xml.elementsByTagName("Game").at(0).firstChildElement("Images").firstChild();
-
-            while(!node.isNull())
-            {
-                QDomElement element = node.toElement();
-                if(element.tagName() == "boxart" && element.attribute("side") == "front")
-                    boxartURL = element.attribute("thumb");
-
-                node = node.nextSibling();
-            }
-
-            if (boxartURL != "") {
-                QUrl url("http://thegamesdb.net/banners/" + boxartURL);
-
-                cover.open(QIODevice::WriteOnly);
-                cover.write(getUrlContents(url));
-                cover.close();
-            }
-        }
-
-        if (updated) {
-            QMessageBox::information(this, tr("Game Information Download"), tr("Download Complete!"));
-            cachedRoms();
-        }
-    }
-}
-
-
 void Mupen64PlusQt::cachedRoms(bool imageUpdated)
 {
     QList<Rom> roms;
@@ -791,46 +704,47 @@ void Mupen64PlusQt::cachedRoms(bool imageUpdated)
     QStringList tableVisible = SETTINGS.value("Table/columns", "Filename|Size").toString().split("|");
     resetLayouts(tableVisible, imageUpdated);
 
-    QString cache = SETTINGS.value("ROMs/cache", "").toString();
-    QStringList cachedRoms = cache.split("||");
-
     int count = 0;
     bool showProgress = false;
     QTime checkPerformance;
 
-    foreach (QString current, cachedRoms)
+    database.open();
+    QSqlQuery query("SELECT filename, md5, internal_name, zip_file, size FROM rom_collection", database);
+    QSqlRecord record = query.record();
+
+    while (query.next())
     {
-        QStringList romInfo = current.split("|");
+        Rom currentRom;
 
-        if (romInfo.size() == 3) {
-            Rom currentRom;
+        currentRom.fileName = query.value(0).toString();
+        currentRom.romMD5 = query.value(1).toString();
+        currentRom.internalName = query.value(2).toString();
+        currentRom.zipFile = query.value(3).toString();
+        currentRom.sortSize = query.value(4).toInt();
 
-            currentRom.fileName = romInfo[0];
-            currentRom.romMD5 = romInfo[2];
-            currentRom.internalName = romInfo[1];
+        //Check performance of adding first item to see if progress dialog needs to be shown
+        if (count == 0) checkPerformance.start();
 
-            //Check performance of adding first item to see if progress dialog needs to be shown
-            if (count == 0) checkPerformance.start();
+        initializeRom(&currentRom, true);
+        roms.append(currentRom);
 
-            initializeRom(&currentRom, true);
-            roms.append(currentRom);
+        if (count == 0) {
+            int runtime = checkPerformance.elapsed();
 
-            if (count == 0) {
-                int runtime = checkPerformance.elapsed();
-
-                //check if operation expected to take longer than two seconds
-                if (runtime * cachedRoms.size() > 2000) {
-                    setupProgressDialog(cachedRoms);
-                    showProgress = true;
-                }
+            //check if operation expected to take longer than two seconds
+            if (runtime * record.count() > 2000) {
+                setupProgressDialog(record.count());
+                showProgress = true;
             }
-
-            count++;
-
-            if (showProgress)
-                progress->setValue(count);
         }
+
+        count++;
+
+        if (showProgress)
+            progress->setValue(count);
     }
+
+    database.close();
 
     if (showProgress)
         progress->close();
@@ -840,11 +754,11 @@ void Mupen64PlusQt::cachedRoms(bool imageUpdated)
     int i = 0;
     foreach (Rom currentRom, roms)
     {
-        if (SETTINGS.value("View/layout","Table View") == "Table View")
+        if (SETTINGS.value("View/layout", "None") == "Table View")
             addToTableView(&currentRom);
-        else if (SETTINGS.value("View/layout","Table View") == "Grid View")
+        else if (SETTINGS.value("View/layout", "None") == "Grid View")
             addToGridView(&currentRom, i);
-        else if (SETTINGS.value("View/layout","Table View") == "List View")
+        else if (SETTINGS.value("View/layout", "None") == "List View")
             addToListView(&currentRom, i);
 
         i++;
@@ -864,6 +778,12 @@ void Mupen64PlusQt::checkStatus(int status)
     if (status > 0)
         QMessageBox::warning(this, "Warning",
             "Mupen64Plus quit unexpectedly. Check to make sure you are using a valid ROM.");
+}
+
+
+void Mupen64PlusQt::cleanTemp()
+{
+    QFile::remove(QDir::tempPath() + "/mupen64plus-qt/temp.n64");
 }
 
 
@@ -930,7 +850,7 @@ void Mupen64PlusQt::createMenu()
     QStringList layouts;
     layouts << "None" << "Table View" << "Grid View" << "List View";
 
-    QString layoutValue = SETTINGS.value("View/layout","Table View").toString();
+    QString layoutValue = SETTINGS.value("View/layout", "None").toString();
 
     foreach (QString layoutName, layouts)
     {
@@ -1071,16 +991,16 @@ void Mupen64PlusQt::createRomView()
     currentListRom = 0;
 
 
-    QString visibleLayout = SETTINGS.value("View/layout", "Table View").toString();
+    QString visibleLayout = SETTINGS.value("View/layout", "None").toString();
 
-    if (visibleLayout == "None")
-        emptyView->setHidden(false);
-    else if (visibleLayout == "Table View")
+    if (visibleLayout == "Table View")
         romTree->setHidden(false);
     else if (visibleLayout == "Grid View")
         gridView->setHidden(false);
     else if (visibleLayout == "List View")
         listView->setHidden(false);
+    else
+        emptyView->setHidden(false);
 
     cachedRoms();
 
@@ -1091,24 +1011,166 @@ void Mupen64PlusQt::createRomView()
 }
 
 
+void Mupen64PlusQt::downloadGameInfo(QString identifier, QString searchName, QString gameID, bool force)
+{
+    if (identifier != "") {
+        bool updated = false;
+
+        QString gameCache = getDataLocation() + "/cache/" + identifier;
+        QDir cache(gameCache);
+
+        if (!cache.exists()) {
+            cache.mkpath(gameCache);
+        }
+
+        //Get game XML info from thegamesdb.net
+        QString dataFile = gameCache + "/data.xml";
+        QFile file(dataFile);
+
+        if (!file.exists() || file.size() == 0 || force) {
+            QUrl url;
+
+            //Remove [!], (U), etc. from GoodName for searching
+            searchName.remove(QRegExp("\\W*(\\(|\\[).+(\\)|\\])\\W*"));
+
+            //Few game specific hacks
+            //TODO: Contact thegamesdb.net and see if these can be fixed on their end
+            if (searchName == "Legend of Zelda, The - Majora's Mask")
+                searchName = "Majora's Mask";
+            else if (searchName == "Legend of Zelda, The - Ocarina of Time - Master Quest")
+                searchName = "Master Quest";
+            else if (searchName.toLower() == "f-zero x")
+                gameID = "10836";
+
+            //If user submits gameID, use that
+            if (gameID != "")
+                url.setUrl("http://thegamesdb.net/api/GetGame.php?id="
+                           + gameID + "&platform=Nintendo 64");
+            else
+                url.setUrl("http://thegamesdb.net/api/GetGame.php?name="
+                           + searchName + "&platform=Nintendo 64");
+
+            QString dom = getUrlContents(url);
+
+            QDomDocument xml;
+            xml.setContent(dom);
+            QDomNode node = xml.elementsByTagName("Data").at(0).firstChildElement("Game");
+
+            int count = 0, found = 0;
+
+            while(!node.isNull())
+            {
+                QDomElement element = node.firstChildElement("GameTitle").toElement();
+
+                if (force) { //from user dialog
+                    QDomElement date = node.firstChildElement("ReleaseDate").toElement();
+
+                    QString check = "Game: " + element.text();
+                    check.remove(QRegExp(QString("[^A-Za-z 0-9 \\.,\\?'""!@#\\$%\\^&\\*\\")
+                                         + "(\\)-_=\\+;:<>\\/\\\\|\\}\\{\\[\\]`~]*"));
+                    if (date.text() != "") check += "\nReleased on: " + date.text();
+                    check += "\n\nDoes this look correct?";
+
+                    int answer = QMessageBox::question(this, tr("Game Information Download"),
+                                                       check, QMessageBox::Yes | QMessageBox::No);
+
+                    if (answer == QMessageBox::Yes) {
+                        found = count;
+                        updated = true;
+                        break;
+                    }
+                } else {
+                    //We only want one game, so search for a perfect match in the GameTitle element.
+                    //Otherwise this will default to 0 (the first game found)
+                    if(element.text() == searchName)
+                        found = count;
+                }
+
+                node = node.nextSibling();
+                count++;
+            }
+
+            if (!force || updated) {
+                file.open(QIODevice::WriteOnly);
+                QTextStream stream(&file);
+
+                QDomNodeList gameList = xml.elementsByTagName("Game");
+                gameList.at(found).save(stream, QDomNode::EncodingFromDocument);
+
+                file.close();
+            }
+
+            if (force && !updated) {
+                QString message;
+
+                if (count == 0)
+                    message = tr("No results found.");
+                else
+                    message = tr("No more results found.");
+
+                QMessageBox::information(this, tr("Game Information Download"), message);
+            }
+        }
+
+
+        //Get front cover
+        QString boxartURL = "";
+        QString coverFile = gameCache + "/boxart-front.jpg";
+        QFile cover(coverFile);
+
+        if (!cover.exists() || (force && updated)) {
+            file.open(QIODevice::ReadOnly);
+            QString dom = file.readAll();
+            file.close();
+
+            QDomDocument xml;
+            xml.setContent(dom);
+            QDomNode node = xml.elementsByTagName("Game").at(0).firstChildElement("Images").firstChild();
+
+            while(!node.isNull())
+            {
+                QDomElement element = node.toElement();
+                if(element.tagName() == "boxart" && element.attribute("side") == "front")
+                    boxartURL = element.attribute("thumb");
+
+                node = node.nextSibling();
+            }
+
+            if (boxartURL != "") {
+                QUrl url("http://thegamesdb.net/banners/" + boxartURL);
+
+                cover.open(QIODevice::WriteOnly);
+                cover.write(getUrlContents(url));
+                cover.close();
+            }
+        }
+
+        if (updated) {
+            QMessageBox::information(this, tr("Game Information Download"), tr("Download Complete!"));
+            cachedRoms();
+        }
+    }
+}
+
+
 void Mupen64PlusQt::enableButtons()
 {
     toggleMenus(true);
 }
 
 
-QString Mupen64PlusQt::getCacheLocation()
+QString Mupen64PlusQt::getDataLocation()
 {
 #ifdef Q_OS_WIN
-    return QDir::currentPath() + "/cache";
+    return QCoreApplication::applicationDirPath();
 #else
 
 #if QT_VERSION >= 0x050000
     return QStandardPaths::writableLocation(QStandardPaths::DataLocation)
-                    .replace("Mupen64Plus/Mupen64Plus-Qt","mupen64plus-qt/cache");
+                    .replace("Mupen64Plus/Mupen64Plus-Qt","mupen64plus-qt");
 #else
     return QDesktopServices::storageLocation(QDesktopServices::DataLocation)
-                    .replace("Mupen64Plus/Mupen64Plus-Qt","mupen64plus-qt/cache");
+                    .replace("Mupen64Plus/Mupen64Plus-Qt","mupen64plus-qt");
 #endif
 
 #endif
@@ -1128,11 +1190,9 @@ QString Mupen64PlusQt::getCurrentRomInfo(int index)
             default: infoChar = "";         break;
         }
 
-        QString visibleLayout = SETTINGS.value("View/layout", "Table View").toString();
+        QString visibleLayout = SETTINGS.value("View/layout", "None").toString();
 
-        if (visibleLayout == "None")
-            return "";
-        else if (visibleLayout == "Table View")
+        if (visibleLayout == "Table View")
             return romTree->currentItem()->data(index, 0).toString();
         else if (visibleLayout == "Grid View" && gridCurrent)
             return gridLayout->itemAt(currentGridRom)->widget()->property(infoChar).toString();
@@ -1314,14 +1374,11 @@ void Mupen64PlusQt::initializeRom(Rom *currentRom, bool cached)
         getGoodName = true;
     }
 
-    currentRom->romMD5 = currentRom->romMD5.toUpper();
-
     QFile file(romDir.absoluteFilePath(currentRom->fileName));
-    qint64 size = QFileInfo(file).size();
 
+    currentRom->romMD5 = currentRom->romMD5.toUpper();
     currentRom->baseName = QFileInfo(file).completeBaseName();
-    currentRom->size = tr("%1 MB").arg(int((size + 1023) / 1024 / 1024));
-    currentRom->sortSize = (int)size;
+    currentRom->size = tr("%1 MB").arg((currentRom->sortSize + 1023) / 1024 / 1024);
 
     if (getGoodName) {
         //Join GoodName on ", ", otherwise entries with a comma won't show
@@ -1346,19 +1403,19 @@ void Mupen64PlusQt::initializeRom(Rom *currentRom, bool cached)
 
     if (!cached && SETTINGS.value("Other/downloadinfo", "").toString() == "true") {
         if (currentRom->goodName != "Unknown ROM" && currentRom->goodName != "Requires catalog file") {
-            cacheGameInfo(currentRom->romMD5.toLower(), currentRom->goodName);
+            downloadGameInfo(currentRom->romMD5.toLower(), currentRom->goodName);
         } else {
             //tweak internal name by adding spaces to get better results
             QString search = currentRom->internalName;
             search.replace(QRegExp("([a-z])([A-Z])"),"\\1 \\2");
             search.replace(QRegExp("([^ ])(\\d)"),"\\1 \\2");
-            cacheGameInfo(currentRom->romMD5.toLower(), search);
+            downloadGameInfo(currentRom->romMD5.toLower(), search);
         }
 
     }
 
     if (SETTINGS.value("Other/downloadinfo", "").toString() == "true") {
-        QString cacheDir = getCacheLocation();
+        QString cacheDir = getDataLocation() + "/cache";
 
         QString dataFile = cacheDir + "/" + currentRom->romMD5.toLower() + "/data.xml";
         QFile file(dataFile);
@@ -1407,7 +1464,8 @@ void Mupen64PlusQt::initializeRom(Rom *currentRom, bool cached)
         currentRom->developer = game.firstChildElement("Developer").text();
         currentRom->rating = game.firstChildElement("Rating").text();
 
-        QString imageFile = getCacheLocation() + "/" + currentRom->romMD5.toLower() + "/boxart-front.jpg";
+        QString imageFile = getDataLocation() + "/cache/"
+                            + currentRom->romMD5.toLower() + "/boxart-front.jpg";
         QFile cover(imageFile);
 
         if (cover.exists()) {
@@ -1570,10 +1628,73 @@ void Mupen64PlusQt::openOptions()
 
 void Mupen64PlusQt::openRom()
 {
-    QString path = QFileDialog::getOpenFileName(this, tr("Open ROM File"), romPath,
-                                                tr("N64 ROMs (*.z64 *.n64 *.v64);;All Files (*)"));
-    if (path != "")
-        runEmulator(path);
+    openPath = QFileDialog::getOpenFileName(this, tr("Open ROM File"), romPath,
+                                                tr("N64 ROMs (*.z64 *.n64 *.v64 *.zip);;All Files (*)"));
+    if (openPath != "") {
+        if (QFileInfo(openPath).suffix() == "zip") {
+            QuaZip zipFile(openPath);
+            zipFile.open(QuaZip::mdUnzip);
+
+            QStringList zippedFiles = zipFile.getFileNameList();
+
+            QString last;
+            int count = 0;
+
+            foreach (QString file, zippedFiles) {
+                QString ext = file.right(4);
+
+                if (ext == ".z64" || ext == ".n64" || ext == ".v64") {
+                    last = file;
+                    count++;
+                }
+            }
+
+            if (count == 0)
+                QMessageBox::information(this, tr("No ROMs"), tr("No ROMs found in ZIP file."));
+            else if (count == 1)
+                runEmulator(last, openPath);
+            else { //More than one ROM in zip file, so let user select
+                openZipDialog(zippedFiles);
+            }
+        } else
+            runEmulator(openPath);
+    }
+}
+
+
+void Mupen64PlusQt::openZipDialog(QStringList zippedFiles)
+{
+    zipDialog = new QDialog(this);
+    zipDialog->setWindowTitle(tr("Select ROM"));
+    zipDialog->setMinimumSize(200, 150);
+    zipDialog->resize(300, 150);
+
+    zipLayout = new QGridLayout(zipDialog);
+    zipLayout->setContentsMargins(5, 10, 5, 10);
+
+    zipList = new QListWidget(zipDialog);
+    foreach (QString file, zippedFiles) {
+        QString ext = file.right(4);
+
+        if (ext == ".z64" || ext == ".n64")
+            zipList->addItem(file);
+    }
+    zipList->setCurrentRow(0);
+
+    zipButtonBox = new QDialogButtonBox(Qt::Horizontal, zipDialog);
+    zipButtonBox->addButton(tr("Launch"), QDialogButtonBox::AcceptRole);
+    zipButtonBox->addButton(QDialogButtonBox::Cancel);
+
+    zipLayout->addWidget(zipList, 0, 0);
+    zipLayout->addWidget(zipButtonBox, 1, 0);
+
+    connect(zipList, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(runEmulatorFromZip()));
+    connect(zipButtonBox, SIGNAL(accepted()), this, SLOT(runEmulatorFromZip()));
+    connect(zipButtonBox, SIGNAL(rejected()), zipDialog, SLOT(close()));
+
+    zipDialog->setLayout(zipLayout);
+
+    zipDialog->exec();
 }
 
 
@@ -1585,13 +1706,13 @@ void Mupen64PlusQt::readMupen64PlusOutput()
 
 void Mupen64PlusQt::resetLayouts(QStringList tableVisible, bool imageUpdated)
 {
-    int hidden = 3;
+    int hidden = 4;
 
     saveColumnWidths();
     QStringList widths = SETTINGS.value("Table/width", "").toString().split("|");
 
     headerLabels.clear();
-    headerLabels << "" << "" << "" << tableVisible; //First three blank for hidden columns
+    headerLabels << "" << "" << "" << "" << tableVisible; //First 4 blank for hidden columns
 
     //Remove Game Cover title for aesthetics
     for (int i = 0; i < headerLabels.size(); i++)
@@ -1626,6 +1747,7 @@ void Mupen64PlusQt::resetLayouts(QStringList tableVisible, bool imageUpdated)
     romTree->setColumnHidden(0, true); //Hidden filename for launching emulator
     romTree->setColumnHidden(1, true); //Hidden goodname for searching
     romTree->setColumnHidden(2, true); //Hidden md5 for cache info
+    romTree->setColumnHidden(3, true); //Hidden column for zip file
 
     int i = hidden;
     foreach (QString current, tableVisible)
@@ -1707,14 +1829,39 @@ void Mupen64PlusQt::resetLayouts(QStringList tableVisible, bool imageUpdated)
 void Mupen64PlusQt::runDownloader()
 {
     downloadDialog->close();
-    cacheGameInfo(getCurrentRomInfo(2).toLower(), gameNameField->text(), gameIDField->text(), true);
+    downloadGameInfo(getCurrentRomInfo(2).toLower(), gameNameField->text(), gameIDField->text(), true);
 
     delete downloadDialog;
 }
 
 
-void Mupen64PlusQt::runEmulator(QString completeRomPath)
+void Mupen64PlusQt::runEmulator(QString romFileName, QString zipFileName)
 {
+    QString completeRomPath;
+    bool zip = false;
+
+    if (zipFileName != "") { //If zipped file, extract and write to temp location for loading
+        zip = true;
+
+        QString zipFile = romDir.absoluteFilePath(zipFileName);
+        QuaZipFile zippedFile(zipFile, romFileName);
+
+        zippedFile.open(QIODevice::ReadOnly);
+        QByteArray romData;
+        romData.append(zippedFile.readAll());
+        zippedFile.close();
+
+        QString tempDir = QDir::tempPath() + "/mupen64plus-qt";
+        QDir().mkdir(tempDir);
+        completeRomPath = tempDir + "/temp.n64";
+
+        QFile tempRom(completeRomPath);
+        tempRom.open(QIODevice::WriteOnly);
+        tempRom.write(romData);
+        tempRom.close();
+    } else
+        completeRomPath = romDir.absoluteFilePath(romFileName);
+
     QString mupen64Path = SETTINGS.value("Paths/mupen64plus", "").toString();
     QString dataPath = SETTINGS.value("Paths/data", "").toString();
     QString configPath = SETTINGS.value("Paths/config", "").toString();
@@ -1735,15 +1882,30 @@ void Mupen64PlusQt::runEmulator(QString completeRomPath)
     QFile mupen64File(mupen64Path);
     QFile romFile(completeRomPath);
 
+
+    //Sanity checks
     if(!mupen64File.exists() || QFileInfo(mupen64File).isDir() || !QFileInfo(mupen64File).isExecutable()) {
         QMessageBox::warning(this, "Warning", "Mupen64Plus executable not found.");
+        if (zip) cleanTemp();
         return;
     }
 
     if(!romFile.exists() || QFileInfo(romFile).isDir()) {
         QMessageBox::warning(this, "Warning", "ROM file not found.");
+        if (zip) cleanTemp();
         return;
     }
+
+    romFile.open(QIODevice::ReadOnly);
+    QByteArray romCheck = romFile.read(4);
+    romFile.close();
+
+    if (romCheck.toHex() != "80371240" && romCheck.toHex() != "37804012") {
+        QMessageBox::warning(this, "Warning", "Not a valid ROM File.");
+        if (zip) cleanTemp();
+        return;
+    }
+
 
     QStringList args;
 
@@ -1793,6 +1955,9 @@ void Mupen64PlusQt::runEmulator(QString completeRomPath)
     connect(mupen64proc, SIGNAL(finished(int)), this, SLOT(enableButtons()));
     connect(mupen64proc, SIGNAL(finished(int)), this, SLOT(checkStatus(int)));
 
+    if (zip)
+        connect(mupen64proc, SIGNAL(finished(int)), this, SLOT(cleanTemp()));
+
     mupen64proc->setWorkingDirectory(QFileInfo(mupen64File).dir().canonicalPath());
     mupen64proc->setProcessChannelMode(QProcess::MergedChannels);
     mupen64proc->start(mupen64Path, args);
@@ -1803,9 +1968,7 @@ void Mupen64PlusQt::runEmulatorFromMenu()
 {
     QString visibleLayout = layoutGroup->checkedAction()->data().toString();
 
-    if (visibleLayout == "None")
-        return;
-    else if (visibleLayout == "Table View")
+    if (visibleLayout == "Table View")
         runEmulatorFromRomTree();
     else if (visibleLayout == "Grid View" && gridCurrent)
         runEmulatorFromWidget(gridLayout->itemAt(currentGridRom)->widget());
@@ -1816,17 +1979,26 @@ void Mupen64PlusQt::runEmulatorFromMenu()
 
 void Mupen64PlusQt::runEmulatorFromRomTree()
 {
-    QString completeRomFileName = QVariant(romTree->currentItem()->data(0, 0)).toString();
-    QString completeRomPath = romDir.absoluteFilePath(completeRomFileName);
-    runEmulator(completeRomPath);
+    QString romFileName = QVariant(romTree->currentItem()->data(0, 0)).toString();
+    QString zipFileName = QVariant(romTree->currentItem()->data(3, 0)).toString();
+    runEmulator(romFileName, zipFileName);
 }
 
 
 void Mupen64PlusQt::runEmulatorFromWidget(QWidget *current)
 {
-    QString completeRomFileName = current->property("fileName").toString();
-    QString completeRomPath = romDir.absoluteFilePath(completeRomFileName);
-    runEmulator(completeRomPath);
+    QString romFileName = current->property("fileName").toString();
+    QString zipFileName = current->property("zipFile").toString();
+    runEmulator(romFileName, zipFileName);
+}
+
+
+void Mupen64PlusQt::runEmulatorFromZip()
+{
+    QString fileName = zipList->currentItem()->text();
+    zipDialog->close();
+
+    runEmulator(fileName, openPath);
 }
 
 
@@ -1834,7 +2006,7 @@ void Mupen64PlusQt::saveColumnWidths()
 {
     QStringList widths;
 
-    for (int i = 3; i < romTree->columnCount(); i++)
+    for (int i = 4; i < romTree->columnCount(); i++)
     {
         widths << QString::number(romTree->columnWidth(i));
     }
@@ -1876,9 +2048,29 @@ void Mupen64PlusQt::setGridBackground()
 }
 
 
-void Mupen64PlusQt::setupProgressDialog(QStringList item)
+void Mupen64PlusQt::setupDatabase()
 {
-    progress = new QProgressDialog("Loading ROMs...", "Cancel", 0, item.size(), this);
+    database = QSqlDatabase::addDatabase("QSQLITE");
+    database.setDatabaseName(getDataLocation() + "/mupen64plus-qt.sqlite");
+
+    database.open();
+
+    QSqlQuery query(QString()
+                    + "CREATE TABLE IF NOT EXISTS rom_collection ("
+                        + "rom_id INTEGER PRIMARY KEY ASC, "
+                        + "filename TEXT NOT NULL, "
+                        + "md5 TEXT NOT NULL, "
+                        + "internal_name TEXT, "
+                        + "zip_file TEXT, "
+                        + "size INTEGER)", database);
+
+    database.close();
+}
+
+
+void Mupen64PlusQt::setupProgressDialog(int size)
+{
+    progress = new QProgressDialog("Loading ROMs...", "Cancel", 0, size, this);
 #if QT_VERSION >= 0x050000
     progress->setWindowFlags(progress->windowFlags() & ~Qt::WindowCloseButtonHint);
     progress->setWindowFlags(progress->windowFlags() & ~Qt::WindowMinimizeButtonHint);
@@ -1931,14 +2123,14 @@ void Mupen64PlusQt::updateLayoutSetting()
 
     cachedRoms();
 
-    if (visibleLayout == "None")
-        emptyView->setHidden(false);
-    else if (visibleLayout == "Table View")
+    if (visibleLayout == "Table View")
         romTree->setHidden(false);
     else if (visibleLayout == "Grid View")
         gridView->setHidden(false);
     else if (visibleLayout == "List View")
         listView->setHidden(false);
+    else
+        emptyView->setHidden(false);
 
     startAction->setEnabled(false);
     downloadAction->setEnabled(false);
@@ -1948,7 +2140,7 @@ void Mupen64PlusQt::updateLayoutSetting()
 bool romSorter(const Rom &firstRom, const Rom &lastRom) {
     QString sort, direction;
 
-    QString layout = SETTINGS.value("View/layout", "Table View").toString();
+    QString layout = SETTINGS.value("View/layout", "None").toString();
     if (layout == "Grid View") {
         sort = SETTINGS.value("Grid/sort", "Filename").toString();
         direction = SETTINGS.value("Grid/sortdirection", "ascending").toString();
