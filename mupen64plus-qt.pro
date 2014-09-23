@@ -42,6 +42,11 @@ unix {
 }
 
 win32 {
-    LIBS += quazip.dll
     CONFIG += staticlib
+    DEFINES += QUAZIP_STATIC
+
+    #Download quazip source and copy to quazip directory to project
+    SOURCES += quazip/*.cpp
+    SOURCES += quazip/*.c
+    HEADERS += quazip/*.h
 }
