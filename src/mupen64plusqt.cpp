@@ -687,6 +687,19 @@ void Mupen64PlusQt::cachedRoms(bool imageUpdated)
     startAction->setEnabled(false);
     stopAction->setEnabled(false);
 
+
+    positionx = 0;
+    positiony = 0;
+
+    if (SETTINGS.value("View/layout", "None") == "Grid View") {
+        positionx = gridView->horizontalScrollBar()->value();
+        positiony = gridView->verticalScrollBar()->value();
+    } else if (SETTINGS.value("View/layout", "None") == "List View") {
+        positionx = listView->horizontalScrollBar()->value();
+        positiony = listView->verticalScrollBar()->value();
+    }
+
+
     QStringList tableVisible = SETTINGS.value("Table/columns", "Filename|Size").toString().split("|");
     resetLayouts(tableVisible, imageUpdated);
 
@@ -756,6 +769,16 @@ void Mupen64PlusQt::cachedRoms(bool imageUpdated)
 
         gridView->setEnabled(true);
         listView->setEnabled(true);
+
+        QTimer *timer = new QTimer(this);
+        timer->setSingleShot(true);
+        timer->setInterval(0);
+        timer->start();
+
+        if (SETTINGS.value("View/layout", "None") == "Grid View")
+            connect(timer, SIGNAL(timeout()), this, SLOT(setGridPosition()));
+        else if (SETTINGS.value("View/layout", "None") == "List View")
+            connect(timer, SIGNAL(timeout()), this, SLOT(setListPosition()));
     }
 }
 
@@ -2038,6 +2061,20 @@ void Mupen64PlusQt::setGridBackground()
                 + "} #gridWidget { background: transparent; } "
             );
     }
+}
+
+
+void Mupen64PlusQt::setGridPosition()
+{
+    gridView->horizontalScrollBar()->setValue(positionx);
+    gridView->verticalScrollBar()->setValue(positiony);
+}
+
+
+void Mupen64PlusQt::setListPosition()
+{
+    listView->horizontalScrollBar()->setValue(positionx);
+    listView->verticalScrollBar()->setValue(positiony);
 }
 
 
