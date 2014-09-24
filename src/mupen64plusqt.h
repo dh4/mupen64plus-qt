@@ -67,7 +67,6 @@
 #include <QtNetwork/QNetworkReply>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
-#include <QtSql/QSqlRecord>
 #include <QtXml/QDomDocument>
 
 #include <quazip/quazip.h>

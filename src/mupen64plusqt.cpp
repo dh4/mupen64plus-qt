@@ -559,6 +559,18 @@ QByteArray Mupen64PlusQt::byteswap(QByteArray romData)
 
 void Mupen64PlusQt::cachedRoms(bool imageUpdated)
 {
+    database.open();
+    QSqlQuery query("SELECT filename, md5, internal_name, zip_file, size FROM rom_collection", database);
+
+    query.last();
+    int romCount = query.at() + 1;
+    query.seek(-1);
+
+    if (romCount == -1) { //Nothing cached so try adding ROMs instead
+        addRoms();
+        return;
+    }
+
     QList<Rom> roms;
 
     romTree->setEnabled(false);
@@ -593,10 +605,6 @@ void Mupen64PlusQt::cachedRoms(bool imageUpdated)
     bool showProgress = false;
     QTime checkPerformance;
 
-    database.open();
-    QSqlQuery query("SELECT filename, md5, internal_name, zip_file, size FROM rom_collection", database);
-    QSqlRecord record = query.record();
-
     while (query.next())
     {
         Rom currentRom;
@@ -617,8 +625,8 @@ void Mupen64PlusQt::cachedRoms(bool imageUpdated)
             int runtime = checkPerformance.elapsed();
 
             //check if operation expected to take longer than two seconds
-            if (runtime * record.count() > 2000) {
-                setupProgressDialog(record.count());
+            if (runtime * romCount > 2000) {
+                setupProgressDialog(romCount);
                 showProgress = true;
             }
         }
