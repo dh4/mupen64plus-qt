@@ -261,20 +261,7 @@ void Mupen64PlusQt::addToGridView(Rom *currentRom, int count)
         QString text = "";
         QString labelText = SETTINGS.value("Grid/labeltext","Filename").toString();
 
-        if (labelText == "Filename")
-            text = currentRom->baseName;
-        else if (labelText == "Filename (extension)")
-            text = currentRom->fileName;
-        else if (labelText == "GoodName")
-            text = currentRom->goodName;
-        else if (labelText == "Internal Name")
-            text = currentRom->internalName;
-        else if (labelText == "Game Title")
-            text = currentRom->gameTitle;
-        else if (labelText == "Release Date")
-            text = currentRom->releaseDate;
-        else if (labelText == "Genre")
-            text = currentRom->genre;
+        text = getRomInfo(labelText, currentRom);
 
         gridTextLabel->setText(text);
 
@@ -348,68 +335,25 @@ void Mupen64PlusQt::addToListView(Rom *currentRom, int count)
 
     //Create text label
     QLabel *listTextLabel = new QLabel("", gameListItem);
-    QString listText = "<style>h2 { margin: 0; }</style>";
+    QString listText = "";
 
     int i = 0;
 
     foreach (QString current, visible)
     {
-        QString addition = "";
+        QString addition = "<style>h2 { margin: 0; }</style>";
 
         if (i == 0 && SETTINGS.value("List/firstitemheader","true") == "true")
             addition += "<h2>";
         else
             addition += "<b>" + current + ":</b> ";
 
-        if (current == "GoodName") {
-            if (currentRom->goodName != "Unknown ROM" && currentRom->goodName != "Requires catalog file")
-                addition += currentRom->goodName;
-        } else if (current == "Filename")
-            addition += currentRom->baseName;
-        else if (current == "Filename (extension)")
-            addition += currentRom->fileName;
-        else if (current == "Zip File")
-            addition += currentRom->zipFile;
-        else if (current == "Internal Name")
-            addition += currentRom->internalName;
-        else if (current == "Size")
-            addition += currentRom->size;
-        else if (current == "MD5")
-            addition += currentRom->romMD5.toLower();
-        else if (current == "CRC1")
-            addition += currentRom->CRC1.toLower();
-        else if (current == "CRC2")
-            addition += currentRom->CRC2.toLower();
-        else if (current == "Players")
-            addition += currentRom->players;
-        else if (current == "Rumble")
-            addition += currentRom->rumble;
-        else if (current == "Save Type")
-            addition += currentRom->saveType;
-        else if (current == "Game Title") {
-            if (currentRom->gameTitle != "Not found")
-                addition += currentRom->gameTitle;
-        } else if (current == "Release Date")
-            addition += currentRom->releaseDate;
-        else if (current == "Overview")
-            addition += currentRom->overview;
-        else if (current == "ESRB")
-            addition += currentRom->esrb;
-        else if (current == "Genre")
-            addition += currentRom->genre;
-        else if (current == "Publisher")
-            addition += currentRom->publisher;
-        else if (current == "Developer")
-            addition += currentRom->developer;
-        else if (current == "Rating")
-            addition += currentRom->rating;
-
-        addition += "<br />";
+        addition += getRomInfo(current, currentRom, true) + "<br />";
 
         if (i == 0 && SETTINGS.value("List/firstitemheader","true") == "true")
             addition += "</h2>";
 
-        if (addition != "<b>" + current + ":</b> <br />")
+        if (addition != "<style>h2 { margin: 0; }</style><b>" + current + ":</b> <br />")
             listText += addition;
 
         i++;
@@ -470,99 +414,37 @@ void Mupen64PlusQt::addToTableView(Rom *currentRom)
 
     foreach (QString current, visible)
     {
-        if (current == "GoodName") {
-            fileItem->setText(i, currentRom->goodName);
-            if (currentRom->goodName == "Unknown ROM" || currentRom->goodName == "Requires catalog file") {
+        QString text = getRomInfo(current, currentRom);
+        fileItem->setText(i, text);
+
+        if (current == "GoodName" || current == "Game Title") {
+            if (text == "Unknown ROM" || text == "Requires catalog file" || text == "Not found") {
                 fileItem->setForeground(i, QBrush(Qt::gray));
                 fileItem->setData(i, Qt::UserRole, "ZZZ"); //end of sorting
             } else
-                fileItem->setData(i, Qt::UserRole, currentRom->goodName);
+                fileItem->setData(i, Qt::UserRole, text);
         }
-        else if (current == "Filename") {
-            fileItem->setText(i, currentRom->baseName);
-        }
-        else if (current == "Filename (extension)") {
-            fileItem->setText(i, currentRom->fileName);
-        }
-        else if (current == "Zip File") {
-            fileItem->setText(i, currentRom->zipFile);
-        }
-        else if (current == "Internal Name") {
-            fileItem->setText(i, currentRom->internalName);
-        }
-        else if (current == "Size") {
-            fileItem->setText(i, currentRom->size);
+
+        if (current == "Size")
             fileItem->setData(i, Qt::UserRole, currentRom->sortSize);
-            fileItem->setTextAlignment(i, Qt::AlignRight | Qt::AlignVCenter);
-        }
-        else if (current == "MD5") {
-            fileItem->setText(i, currentRom->romMD5.toLower());
-            fileItem->setTextAlignment(i, Qt::AlignHCenter | Qt::AlignVCenter);
-        }
-        else if (current == "CRC1") {
-            fileItem->setText(i, currentRom->CRC1.toLower());
-            fileItem->setTextAlignment(i, Qt::AlignHCenter | Qt::AlignVCenter);
-        }
-        else if (current == "CRC2") {
-            fileItem->setText(i, currentRom->CRC2.toLower());
-            fileItem->setTextAlignment(i, Qt::AlignHCenter | Qt::AlignVCenter);
-        }
-        else if (current == "Players") {
-            fileItem->setText(i, currentRom->players);
-            fileItem->setTextAlignment(i, Qt::AlignRight | Qt::AlignVCenter);
-        }
-        else if (current == "Rumble") {
-            fileItem->setText(i, currentRom->rumble);
-            fileItem->setTextAlignment(i, Qt::AlignHCenter | Qt::AlignVCenter);
-        }
-        else if (current == "Save Type") {
-            fileItem->setText(i, currentRom->saveType);
-            fileItem->setTextAlignment(i, Qt::AlignRight | Qt::AlignVCenter);
-        }
-        else if (current == "Game Title") {
-            fileItem->setText(i, currentRom->gameTitle);
-            if (currentRom->gameTitle == "Not found") {
-                fileItem->setForeground(i, QBrush(Qt::gray));
-                fileItem->setData(i, Qt::UserRole, "ZZZ"); //end of sorting
-            } else
-                fileItem->setData(i, Qt::UserRole, currentRom->gameTitle);
-        }
-        else if (current == "Release Date") {
-            fileItem->setText(i, currentRom->releaseDate);
+
+        if (current == "Release Date")
             fileItem->setData(i, Qt::UserRole, currentRom->sortDate);
-            fileItem->setTextAlignment(i, Qt::AlignRight | Qt::AlignVCenter);
-        }
-        else if (current == "Overview") {
-            fileItem->setText(i, currentRom->overview);
-        }
-        else if (current == "ESRB") {
-            fileItem->setText(i, currentRom->esrb);
-            fileItem->setTextAlignment(i, Qt::AlignHCenter | Qt::AlignVCenter);
-        }
-        else if (current == "Genre") {
-            fileItem->setText(i, currentRom->genre);
-            fileItem->setTextAlignment(i, Qt::AlignHCenter | Qt::AlignVCenter);
-        }
-        else if (current == "Publisher") {
-            fileItem->setText(i, currentRom->publisher);
-            fileItem->setTextAlignment(i, Qt::AlignHCenter | Qt::AlignVCenter);
-        }
-        else if (current == "Developer") {
-            fileItem->setText(i, currentRom->developer);
-            fileItem->setTextAlignment(i, Qt::AlignHCenter | Qt::AlignVCenter);
-        }
-        else if (current == "Rating") {
-            fileItem->setText(i, currentRom->rating);
-            fileItem->setTextAlignment(i, Qt::AlignRight | Qt::AlignVCenter);
-        }
-        else if (current == "Game Cover") {
-            //fileItem->setIcon(i, QIcon(image));
-            fileItem->setText(i, "");
+
+        if (current == "Game Cover") {
             c = i;
             addImage = true;
         }
-        else //Invalid column name in config file
-            fileItem->setText(i, "");
+
+        QStringList center, right;
+
+        center << "MD5" << "CRC1" << "CRC2" << "Rumble" << "ESRB" << "Genre" << "Publisher" << "Developer";
+        right << "Size" << "Players" << "Save Type" << "Release Date" << "Rating";
+
+        if (center.contains(current))
+            fileItem->setTextAlignment(i, Qt::AlignHCenter | Qt::AlignVCenter);
+        else if (right.contains(current))
+            fileItem->setTextAlignment(i, Qt::AlignRight | Qt::AlignVCenter);
 
         i++;
     }
@@ -1305,6 +1187,63 @@ QSize Mupen64PlusQt::getImageSize(QString view)
 }
 
 
+QString Mupen64PlusQt::getRomInfo(QString identifier, const Rom *rom, bool removeWarn, bool sort)
+{
+    QString text = "";
+
+    if (identifier == "GoodName")
+        text = rom->goodName;
+    else if (identifier == "Filename")
+        text = rom->baseName;
+    else if (identifier == "Filename (extension)")
+        text = rom->fileName;
+    else if (identifier == "Zip File")
+        text = rom->zipFile;
+    else if (identifier == "Internal Name")
+        text = rom->internalName;
+    else if (identifier == "Size")
+        text = rom->size;
+    else if (identifier == "MD5")
+        text = rom->romMD5.toLower();
+    else if (identifier == "CRC1")
+        text = rom->CRC1.toLower();
+    else if (identifier == "CRC2")
+        text = rom->CRC2.toLower();
+    else if (identifier == "Players")
+        text = rom->players;
+    else if (identifier == "Rumble")
+        text = rom->rumble;
+    else if (identifier == "Save Type")
+        text = rom->saveType;
+    else if (identifier == "Game Title")
+        text = rom->gameTitle;
+    else if (identifier == "Release Date")
+        text = rom->releaseDate;
+    else if (identifier == "Overview")
+        text = rom->overview;
+    else if (identifier == "ESRB")
+        text = rom->esrb;
+    else if (identifier == "Genre")
+        text = rom->genre;
+    else if (identifier == "Publisher")
+        text = rom->publisher;
+    else if (identifier == "Developer")
+        text = rom->developer;
+    else if (identifier == "Rating")
+        text = rom->rating;
+
+    if (!removeWarn)
+        return text;
+    else if (text == "Unknown ROM" || text == "Requires catalog file" || text == "Not found") {
+        if (sort)
+            return "ZZZ"; //Sort warnings at the end
+        else
+            return "";
+    } else
+        return text;
+}
+
+
 QGraphicsDropShadowEffect *Mupen64PlusQt::getShadow(bool active)
 {
     QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect;
@@ -1430,7 +1369,7 @@ void Mupen64PlusQt::initializeRom(Rom *currentRom, bool cached)
             //tweak internal name by adding spaces to get better results
             QString search = currentRom->internalName;
             search.replace(QRegExp("([a-z])([A-Z])"),"\\1 \\2");
-            search.replace(QRegExp("([^ ])(\\d)"),"\\1 \\2");
+            search.replace(QRegExp("([^ \\d])(\\d)"),"\\1 \\2");
             downloadGameInfo(currentRom->romMD5.toLower(), search);
         }
 
@@ -2096,7 +2035,9 @@ void Mupen64PlusQt::setupDatabase()
     database = QSqlDatabase::addDatabase("QSQLITE");
     database.setDatabaseName(getDataLocation() + "/mupen64plus-qt.sqlite");
 
-    database.open();
+    if (!database.open())
+        QMessageBox::warning(this, "Database Not Loaded",
+                             "Could not connect to Sqlite database. Application my misbehave.");
 
     QSqlQuery query(QString()
                     + "CREATE TABLE IF NOT EXISTS rom_collection ("
@@ -2123,6 +2064,8 @@ void Mupen64PlusQt::setupProgressDialog(int size)
 #endif
     progress->setCancelButton(0);
     progress->setWindowModality(Qt::WindowModal);
+
+    progress->show();
 }
 
 
@@ -2193,84 +2136,35 @@ bool romSorter(const Rom &firstRom, const Rom &lastRom) {
     } else //just return sort by filename
         return firstRom.fileName < lastRom.fileName;
 
-    if (direction == "ascending") {
-        if (sort == "Filename") {
-            return firstRom.fileName < lastRom.fileName;
-        } else if (sort == "GoodName") {
-            return firstRom.goodName < lastRom.goodName;
-        } else if (sort == "Internal Name") {
-            return firstRom.internalName < lastRom.internalName;
-        } else if (sort == "Size") {
-            if (firstRom.sortSize != lastRom.sortSize)
-                return firstRom.sortSize < lastRom.sortSize;
-        } else if (sort == "Game Title") {
-            return firstRom.gameTitle < lastRom.gameTitle;
-        } else if (sort == "Release Date") {
-            return firstRom.sortDate < lastRom.sortDate;
-        } else if (sort == "ESRB") {
-            if (firstRom.esrb != lastRom.esrb)
-                return firstRom.esrb < lastRom.esrb;
-        } else if (sort == "Genre") {
-            if (firstRom.genre != lastRom.genre)
-                return firstRom.genre < lastRom.genre;
-        } else if (sort == "Publisher") {
-            if (firstRom.publisher != lastRom.publisher)
-                return firstRom.publisher < lastRom.publisher;
-        } else if (sort == "Developer") {
-            if (firstRom.developer != lastRom.developer)
-                return firstRom.developer < lastRom.developer;
-        } else if (sort == "Rating") {
-            if (firstRom.rating != lastRom.rating)
-                return firstRom.rating < lastRom.rating;
-        }
 
-        //If values are equal, sort based on name of game
-        if (firstRom.gameTitle != "" && lastRom.gameTitle != "")
-            return firstRom.gameTitle < lastRom.gameTitle;
-        else if (firstRom.goodName != "" && lastRom.goodName != "")
-            return firstRom.goodName < lastRom.goodName;
+    QString sortFirst = "", sortLast = "";
+
+    if (sort == "Size") {
+        int firstSize = firstRom.sortSize;
+        int lastSize = lastRom.sortSize;
+
+        if (direction == "descending")
+            return firstSize > lastSize;
         else
-            return firstRom.fileName < lastRom.fileName;
-
-    } else if (direction == "descending") {
-        if (sort == "Filename") {
-            return firstRom.fileName > lastRom.fileName;
-        } else if (sort == "GoodName") {
-            return firstRom.goodName > lastRom.goodName;
-        } else if (sort == "Internal Name") {
-            return firstRom.internalName > lastRom.internalName;
-        } else if (sort == "Size") {
-            if (firstRom.sortSize != lastRom.sortSize)
-                return firstRom.sortSize > lastRom.sortSize;
-        } else if (sort == "Game Title") {
-            return firstRom.gameTitle > lastRom.gameTitle;
-        } else if (sort == "Release Date") {
-            return firstRom.sortDate > lastRom.sortDate;
-        } else if (sort == "ESRB") {
-            if (firstRom.esrb != lastRom.esrb)
-                return firstRom.esrb > lastRom.esrb;
-        } else if (sort == "Genre") {
-            if (firstRom.genre != lastRom.genre)
-                return firstRom.genre > lastRom.genre;
-        } else if (sort == "Publisher") {
-            if (firstRom.publisher != lastRom.publisher)
-                return firstRom.publisher > lastRom.publisher;
-        } else if (sort == "Developer") {
-            if (firstRom.developer != lastRom.developer)
-                return firstRom.developer > lastRom.developer;
-        } else if (sort == "Rating") {
-            if (firstRom.rating != lastRom.rating)
-                return firstRom.rating > lastRom.rating;
-        }
-
-        //If values are equal, sort based on name of game
-        if (firstRom.gameTitle != "" && lastRom.gameTitle != "")
-            return firstRom.gameTitle > lastRom.gameTitle;
-        else if (firstRom.goodName != "" && lastRom.goodName != "")
-            return firstRom.goodName > lastRom.goodName;
-        else
-            return firstRom.fileName > lastRom.fileName;
+            return firstSize < lastSize;
+    } else if (sort == "Release Date") {
+        sortFirst = firstRom.sortDate;
+        sortLast = lastRom.sortDate;
+    } else {
+        sortFirst = Mupen64PlusQt::getRomInfo(sort, &firstRom, true, true);
+        sortLast = Mupen64PlusQt::getRomInfo(sort, &lastRom, true, true);
     }
 
+    if (sortFirst == sortLast) { //Equal so sort on filename
+        sortFirst = firstRom.fileName;
+        sortLast = lastRom.fileName;
+    }
+
+    if (direction == "descending")
+        return sortFirst > sortLast;
+    else
+        return sortFirst < sortLast;
+
+    //Catch all
     return firstRom.fileName < lastRom.fileName;
 }

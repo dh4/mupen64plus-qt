@@ -119,6 +119,7 @@ class Mupen64PlusQt : public QMainWindow
 
 public:
     Mupen64PlusQt(QWidget *parent = 0);
+    static QString getRomInfo(QString identifier, const Rom *rom, bool removeWarn = false, bool sort = false);
 
 protected:
     void closeEvent(QCloseEvent *event);

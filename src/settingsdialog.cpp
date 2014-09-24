@@ -149,9 +149,9 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
         videoDefault = "mupen64plus-video-rice";
 
     int videoIndex = videoPlugins.indexOf(SETTINGS.value("Plugins/video",videoDefault).toString());
-    int audioIndex = videoPlugins.indexOf(SETTINGS.value("Plugins/audio","").toString());
-    int inputIndex = videoPlugins.indexOf(SETTINGS.value("Plugins/input","").toString());
-    int rspIndex = videoPlugins.indexOf(SETTINGS.value("Plugins/rsp","").toString());
+    int audioIndex = audioPlugins.indexOf(SETTINGS.value("Plugins/audio","").toString());
+    int inputIndex = inputPlugins.indexOf(SETTINGS.value("Plugins/input","").toString());
+    int rspIndex = rspPlugins.indexOf(SETTINGS.value("Plugins/rsp","").toString());
 
     if (videoIndex >= 0) ui->videoBox->setCurrentIndex(videoIndex);
     if (audioIndex >= 0) ui->audioBox->setCurrentIndex(audioIndex);
