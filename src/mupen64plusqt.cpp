@@ -2037,7 +2037,7 @@ void Mupen64PlusQt::setupDatabase()
 
     if (!database.open())
         QMessageBox::warning(this, "Database Not Loaded",
-                             "Could not connect to Sqlite database. Application my misbehave.");
+                             "Could not connect to Sqlite database. Application may misbehave.");
 
     QSqlQuery query(QString()
                     + "CREATE TABLE IF NOT EXISTS rom_collection ("
@@ -2164,7 +2164,4 @@ bool romSorter(const Rom &firstRom, const Rom &lastRom) {
         return sortFirst > sortLast;
     else
         return sortFirst < sortLast;
-
-    //Catch all
-    return firstRom.fileName < lastRom.fileName;
 }
