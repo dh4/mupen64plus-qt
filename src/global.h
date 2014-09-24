@@ -33,7 +33,7 @@
 #define GLOBAL_H
 
 
-const QString Version = "1.4";
+const QString Version = "1.5";
 
 #ifdef Q_OS_WIN
     #define SETTINGS QSettings("mupen64plus-qt.ini", QSettings::IniFormat)
