@@ -179,7 +179,6 @@ void Mupen64PlusQt::addRoms()
                     progress->setValue(count);
                 }
 
-                database.close();
                 progress->close();
             } else {
             QMessageBox::warning(this, "Warning", "No ROMs found.");
@@ -211,6 +210,8 @@ void Mupen64PlusQt::addRoms()
         gridView->setEnabled(true);
         listView->setEnabled(true);
     }
+
+    database.close();
 }
 
 
