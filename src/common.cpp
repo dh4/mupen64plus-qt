@@ -413,7 +413,7 @@ QByteArray *getZippedRom(QString romFileName, QString zipFile)
 
 void initializeRom(Rom *currentRom, QDir romDir, bool cached, QWidget *parent)
 {
-    QSettings *romCatalog;
+    QSettings *romCatalog = new QSettings(parent);
 
     QString dataPath = SETTINGS.value("Paths/data", "").toString();
     QDir dataDir(dataPath);
