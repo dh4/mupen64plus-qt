@@ -32,6 +32,8 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#include <QSettings>
+
 
 const QString Version = "1.5";
 

@@ -30,7 +30,6 @@
  ***/
 
 #include "aboutdialog.h"
-#include "global.h"
 
 
 AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)

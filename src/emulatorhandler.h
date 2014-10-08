@@ -29,37 +29,44 @@
  *
  ***/
 
-#include <QApplication>
-#include <QDesktopWidget>
-#include <QSettings>
+#ifndef EMULATORHANDLER_H
+#define EMULATORHANDLER_H
 
-#include "global.h"
+#include <QCryptographicHash>
+#include <QFile>
+#include <QDir>
+#include <QMessageBox>
+#include <QObject>
+#include <QProcess>
+
+#include "common.h"
 #include "mainwindow.h"
 
 
-int main(int argc, char *argv[])
+class MainWindow;
+
+class EmulatorHandler : public QObject
 {
-    QApplication application(argc, argv);
+    Q_OBJECT
+public:
+    explicit EmulatorHandler(MainWindow *parent = 0);
+    void startEmulator(QDir romDir, QString romFileName, QString zipFileName = "");
+    void stopEmulator();
 
-    QCoreApplication::setOrganizationName("Mupen64Plus");
-    QCoreApplication::setApplicationName("Mupen64Plus-Qt");
+    QString lastOutput;
 
-    MainWindow window;
+signals:
+    void finished();
 
+private:
+    QProcess *emulatorProc;
+    MainWindow *main;
 
-    QString maximized = SETTINGS.value("Geometry/maximized", "").toString();
-    QString windowx = SETTINGS.value("Geometry/windowx", "").toString();
-    QString windowy = SETTINGS.value("Geometry/windowy", "").toString();
+private slots:
+    void checkStatus(int status);
+    void cleanTemp();
+    void emitFinished();
+    void readOutput();
+};
 
-    if (maximized == "true") {
-        window.showMaximized();
-    } else {
-        window.show();
-    }
-
-    if (windowx == "" && windowy == "") {
-        window.move(QApplication::desktop()->screen()->rect().center() - window.rect().center());
-    }
-
-    return application.exec();
-}
+#endif // EMULATORHANDLER_H

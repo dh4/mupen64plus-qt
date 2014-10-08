@@ -29,37 +29,36 @@
  *
  ***/
 
-#include <QApplication>
-#include <QDesktopWidget>
-#include <QSettings>
+#ifndef DOWNLOADDIALOG_H
+#define DOWNLOADDIALOG_H
 
-#include "global.h"
-#include "mainwindow.h"
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QLabel>
+#include <QLineEdit>
+
+#include "common.h"
 
 
-int main(int argc, char *argv[])
+class DownloadDialog : public QDialog
 {
-    QApplication application(argc, argv);
+    Q_OBJECT
+public:
+    explicit DownloadDialog(QString fileText, QString defaultText, QString romMD5, QWidget *parent = 0);
 
-    QCoreApplication::setOrganizationName("Mupen64Plus");
-    QCoreApplication::setApplicationName("Mupen64Plus-Qt");
+private:
+    QDialogButtonBox *downloadButtonBox;
+    QGridLayout *downloadLayout;
+    QLabel *fileLabel;
+    QLabel *gameNameLabel;
+    QLabel *gameIDLabel;
+    QLineEdit *gameNameField;
+    QLineEdit *gameIDField;
+    QString md5;
 
-    MainWindow window;
+private slots:
+    void runDownloader();
+};
 
-
-    QString maximized = SETTINGS.value("Geometry/maximized", "").toString();
-    QString windowx = SETTINGS.value("Geometry/windowx", "").toString();
-    QString windowy = SETTINGS.value("Geometry/windowy", "").toString();
-
-    if (maximized == "true") {
-        window.showMaximized();
-    } else {
-        window.show();
-    }
-
-    if (windowx == "" && windowy == "") {
-        window.move(QApplication::desktop()->screen()->rect().center() - window.rect().center());
-    }
-
-    return application.exec();
-}
+#endif // DOWNLOADDIALOG_H

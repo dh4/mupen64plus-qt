@@ -49,9 +49,6 @@ protected:
 signals:
     void singleClicked(QWidget *current);
     void doubleClicked(QWidget *current);
-
-public slots:
-
 };
 
 #endif // CLICKABLEWIDGET_H

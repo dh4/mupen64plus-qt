@@ -29,37 +29,40 @@
  *
  ***/
 
-#include <QApplication>
-#include <QDesktopWidget>
-#include <QSettings>
-
-#include "global.h"
-#include "mainwindow.h"
+#include "logdialog.h"
 
 
-int main(int argc, char *argv[])
+LogDialog::LogDialog(QString lastOutput, QWidget *parent) : QDialog(parent)
 {
-    QApplication application(argc, argv);
+    setWindowTitle(tr("CEN64 Log"));
+    setMinimumSize(600, 400);
 
-    QCoreApplication::setOrganizationName("Mupen64Plus");
-    QCoreApplication::setApplicationName("Mupen64Plus-Qt");
+    logLayout = new QGridLayout(this);
+    logLayout->setContentsMargins(5, 10, 5, 10);
 
-    MainWindow window;
+    logArea = new QTextEdit(this);
+    logArea->setWordWrapMode(QTextOption::NoWrap);
 
+    QFont font;
+#ifdef Q_OS_LINUX
+    font.setFamily("Monospace");
+    font.setPointSize(9);
+#else
+    font.setFamily("Courier");
+    font.setPointSize(10);
+#endif
+    font.setFixedPitch(true);
+    logArea->setFont(font);
 
-    QString maximized = SETTINGS.value("Geometry/maximized", "").toString();
-    QString windowx = SETTINGS.value("Geometry/windowx", "").toString();
-    QString windowy = SETTINGS.value("Geometry/windowy", "").toString();
+    logArea->setPlainText(lastOutput);
 
-    if (maximized == "true") {
-        window.showMaximized();
-    } else {
-        window.show();
-    }
+    logButtonBox = new QDialogButtonBox(Qt::Horizontal, this);
+    logButtonBox->addButton(tr("Close"), QDialogButtonBox::AcceptRole);
 
-    if (windowx == "" && windowy == "") {
-        window.move(QApplication::desktop()->screen()->rect().center() - window.rect().center());
-    }
+    logLayout->addWidget(logArea, 0, 0);
+    logLayout->addWidget(logButtonBox, 1, 0);
 
-    return application.exec();
+    connect(logButtonBox, SIGNAL(accepted()), this, SLOT(close()));
+
+    setLayout(logLayout);
 }

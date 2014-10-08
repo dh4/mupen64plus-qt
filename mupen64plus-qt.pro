@@ -18,20 +18,28 @@ win32:RC_FILE = windows/icon.rc
 
 
 SOURCES += src/main.cpp \
+    src/common.cpp \
+    src/mainwindow.cpp \
     src/aboutdialog.cpp \
-    src/mupen64plusqt.cpp \
     src/settingsdialog.cpp \
     src/treewidgetitem.cpp \
     src/clickablewidget.cpp \
-    src/configeditor.cpp
+    src/configeditor.cpp \
+    src/downloaddialog.cpp \
+    src/logdialog.cpp \
+    src/emulatorhandler.cpp
 
 HEADERS += src/global.h \
+    src/common.h \
+    src/mainwindow.h \
     src/aboutdialog.h \
-    src/mupen64plusqt.h \
     src/settingsdialog.h \
     src/treewidgetitem.h \
     src/clickablewidget.h \
-    src/configeditor.h
+    src/configeditor.h \
+    src/downloaddialog.h \
+    src/logdialog.h \
+    src/emulatorhandler.h
 
 RESOURCES += resources/mupen64plusqt.qrc
 

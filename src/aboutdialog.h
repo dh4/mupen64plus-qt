@@ -38,6 +38,8 @@
 #include <QLabel>
 #include <QPlainTextEdit>
 
+#include "global.h"
+
 
 class AboutDialog : public QDialog
 {

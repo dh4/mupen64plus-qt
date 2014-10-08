@@ -29,37 +29,25 @@
  *
  ***/
 
-#include <QApplication>
-#include <QDesktopWidget>
-#include <QSettings>
+#ifndef LOGDIALOG_H
+#define LOGDIALOG_H
 
-#include "global.h"
-#include "mainwindow.h"
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QTextEdit>
 
 
-int main(int argc, char *argv[])
+class LogDialog : public QDialog
 {
-    QApplication application(argc, argv);
+    Q_OBJECT
+public:
+    explicit LogDialog(QString lastOutput, QWidget *parent = 0);
 
-    QCoreApplication::setOrganizationName("Mupen64Plus");
-    QCoreApplication::setApplicationName("Mupen64Plus-Qt");
+private:
+    QDialogButtonBox *logButtonBox;
+    QGridLayout *logLayout;
+    QTextEdit *logArea;
+};
 
-    MainWindow window;
-
-
-    QString maximized = SETTINGS.value("Geometry/maximized", "").toString();
-    QString windowx = SETTINGS.value("Geometry/windowx", "").toString();
-    QString windowy = SETTINGS.value("Geometry/windowy", "").toString();
-
-    if (maximized == "true") {
-        window.showMaximized();
-    } else {
-        window.show();
-    }
-
-    if (windowx == "" && windowy == "") {
-        window.move(QApplication::desktop()->screen()->rect().center() - window.rect().center());
-    }
-
-    return application.exec();
-}
+#endif // LOGDIALOG_H
