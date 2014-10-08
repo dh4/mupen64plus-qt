@@ -871,6 +871,12 @@ void MainWindow::createRomView()
 }
 
 
+void MainWindow::disableButtons()
+{
+    toggleMenus(false);
+}
+
+
 void MainWindow::enableButtons()
 {
     toggleMenus(true);
@@ -1220,6 +1226,8 @@ void MainWindow::resetLayouts(QStringList tableVisible, bool imageUpdated)
 void MainWindow::runEmulator(QString romFileName, QString zipFileName)
 {
     emulation->startEmulator(romDir, romFileName, zipFileName);
+
+    connect(emulation, SIGNAL(started()), this, SLOT(disableButtons()));
     connect(emulation, SIGNAL(finished()), this, SLOT(enableButtons()));
 }
 

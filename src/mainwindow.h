@@ -58,8 +58,6 @@
 #include "treewidgetitem.h"
 
 
-class EmulatorHandler;
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -147,6 +145,7 @@ private:
 
 private slots:
     void addRoms();
+    void disableButtons();
     void enableButtons();
     void highlightGridWidget(QWidget *current);
     void highlightListWidget(QWidget *current);

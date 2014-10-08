@@ -32,16 +32,15 @@
 #include "emulatorhandler.h"
 
 
-EmulatorHandler::EmulatorHandler(MainWindow *parent) : QObject(parent)
+EmulatorHandler::EmulatorHandler(QObject *parent) : QObject(parent)
 {
-    main = parent;
     lastOutput = "";
 }
 
 void EmulatorHandler::checkStatus(int status)
 {
     if (status > 0)
-        QMessageBox::warning(main, tr("Warning"),
+        QMessageBox::warning(0, tr("Warning"),
             tr("Mupen64Plus quit unexpectedly. Check to make sure you are using a valid ROM."));
 }
 
@@ -114,13 +113,13 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
 
     //Sanity checks
     if(!mupen64File.exists() || QFileInfo(mupen64File).isDir() || !QFileInfo(mupen64File).isExecutable()) {
-        QMessageBox::warning(main, tr("Warning"), tr("Mupen64Plus executable not found."));
+        QMessageBox::warning(0, tr("Warning"), tr("Mupen64Plus executable not found."));
         if (zip) cleanTemp();
         return;
     }
 
     if(!romFile.exists() || QFileInfo(romFile).isDir()) {
-        QMessageBox::warning(main, tr("Warning"), tr("ROM file not found."));
+        QMessageBox::warning(0, tr("Warning"), tr("ROM file not found."));
         if (zip) cleanTemp();
         return;
     }
@@ -130,7 +129,7 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
     romFile.close();
 
     if (romCheck.toHex() != "80371240" && romCheck.toHex() != "37804012") {
-        QMessageBox::warning(main, tr("Warning"), tr("Not a valid ROM File."));
+        QMessageBox::warning(0, tr("Warning"), tr("Not a valid ROM File."));
         if (zip) cleanTemp();
         return;
     }
@@ -177,8 +176,6 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
 
     args << completeRomPath;
 
-    main->toggleMenus(false);
-
     emulatorProc = new QProcess(this);
     connect(emulatorProc, SIGNAL(finished(int)), this, SLOT(readOutput()));
     connect(emulatorProc, SIGNAL(finished(int)), this, SLOT(emitFinished()));
@@ -190,6 +187,8 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
     emulatorProc->setWorkingDirectory(QFileInfo(mupen64File).dir().canonicalPath());
     emulatorProc->setProcessChannelMode(QProcess::MergedChannels);
     emulatorProc->start(mupen64Path, args);
+
+    emit started();
 }
 
 
