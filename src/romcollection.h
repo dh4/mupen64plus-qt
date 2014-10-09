@@ -29,42 +29,52 @@
  *
  ***/
 
-#ifndef EMULATORHANDLER_H
-#define EMULATORHANDLER_H
+#ifndef ROMCOLLECTION_H
+#define ROMCOLLECTION_H
 
 #include <QCryptographicHash>
-#include <QFile>
-#include <QDir>
-#include <QMessageBox>
 #include <QObject>
-#include <QProcess>
+#include <QProgressDialog>
+
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
 
 #include "common.h"
+#include "global.h"
 
 
-class EmulatorHandler : public QObject
+class RomCollection : public QObject
 {
     Q_OBJECT
 public:
-    explicit EmulatorHandler(QWidget *parent = 0);
-    void startEmulator(QDir romDir, QString romFileName, QString zipFileName = "");
-    void stopEmulator();
+    explicit RomCollection(QStringList fileTypes, QString romPath, QWidget *parent = 0);
+    void cachedRoms(bool imageUpdated = false);
+    void updatePath(QString romPath);
 
-    QString lastOutput;
+    QDir romDir;
+    QString romPath;
+    QStringList getFileTypes(bool archives = false);
+
+public slots:
+    void addRoms();
 
 signals:
-    void finished();
-    void started();
+    void romAdded(Rom *currentRom, int count);
+    void updateEnded(int romCount, bool cached = false);
+    void updateStarted(bool imageUpdated = false);
 
 private:
-    QProcess *emulatorProc;
-    QWidget *parent;
+    void initializeRom(Rom *currentRom, QDir romDir, bool cached);
+    void setupDatabase();
+    void setupProgressDialog(int size);
 
-private slots:
-    void checkStatus(int status);
-    void cleanTemp();
-    void emitFinished();
-    void readOutput();
+    Rom addRom(QByteArray *romData, QString fileName, QString zipFile, QSqlQuery query);
+
+    QStringList fileTypes;
+
+    QWidget *parent;
+    QProgressDialog *progress;
+    QSqlDatabase database;
 };
 
-#endif // EMULATORHANDLER_H
+#endif // ROMCOLLECTION_H

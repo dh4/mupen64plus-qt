@@ -32,15 +32,17 @@
 #include "emulatorhandler.h"
 
 
-EmulatorHandler::EmulatorHandler(QObject *parent) : QObject(parent)
+EmulatorHandler::EmulatorHandler(QWidget *parent) : QObject(parent)
 {
+    this->parent = parent;
+
     lastOutput = "";
 }
 
 void EmulatorHandler::checkStatus(int status)
 {
     if (status > 0)
-        QMessageBox::warning(0, tr("Warning"),
+        QMessageBox::warning(parent, tr("Warning"),
             tr("Mupen64Plus quit unexpectedly. Check to make sure you are using a valid ROM."));
 }
 
@@ -113,13 +115,13 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
 
     //Sanity checks
     if(!mupen64File.exists() || QFileInfo(mupen64File).isDir() || !QFileInfo(mupen64File).isExecutable()) {
-        QMessageBox::warning(0, tr("Warning"), tr("Mupen64Plus executable not found."));
+        QMessageBox::warning(parent, tr("Warning"), tr("Mupen64Plus executable not found."));
         if (zip) cleanTemp();
         return;
     }
 
     if(!romFile.exists() || QFileInfo(romFile).isDir()) {
-        QMessageBox::warning(0, tr("Warning"), tr("ROM file not found."));
+        QMessageBox::warning(parent, tr("Warning"), tr("ROM file not found."));
         if (zip) cleanTemp();
         return;
     }
@@ -129,7 +131,7 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
     romFile.close();
 
     if (romCheck.toHex() != "80371240" && romCheck.toHex() != "37804012") {
-        QMessageBox::warning(0, tr("Warning"), tr("Not a valid ROM File."));
+        QMessageBox::warning(parent, tr("Warning"), tr("Not a valid ROM File."));
         if (zip) cleanTemp();
         return;
     }
@@ -190,7 +192,6 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
 
     emit started();
 }
-
 
 
 void EmulatorHandler::stopEmulator()

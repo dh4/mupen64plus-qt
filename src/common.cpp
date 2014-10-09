@@ -238,6 +238,31 @@ QColor getColor(QString color, int transparency)
 }
 
 
+int getDefaultWidth(QString id, int imageWidth)
+{
+    if (id == "Overview")
+        return 400;
+    else if (id == "GoodName" || id.left(8) == "Filename" || id == "Game Title")
+        return 300;
+    else if (id == "MD5")
+        return 250;
+    else if (id == "Internal Name" || id == "Publisher" || id == "Developer")
+        return 200;
+    else if (id == "ESRB" || id == "Genre")
+        return 150;
+    else if (id == "Save Type" || id == "Release Date")
+        return 100;
+    else if (id == "CRC1" || id == "CRC2")
+        return 90;
+    else if (id == "Size" || id == "Rumble" || id == "Players" || id == "Rating")
+        return 75;
+    else if (id == "Game Cover")
+        return imageWidth;
+    else
+        return 100;
+}
+
+
 int getGridSize(QString which)
 {
     QString size = SETTINGS.value("Grid/imagesize","Medium").toString();
@@ -408,126 +433,6 @@ QByteArray *getZippedRom(QString romFileName, QString zipFile)
     zippedFile.close();
 
     return romData;
-}
-
-
-void initializeRom(Rom *currentRom, QDir romDir, bool cached, QWidget *parent)
-{
-    QSettings *romCatalog = new QSettings(parent);
-
-    QString dataPath = SETTINGS.value("Paths/data", "").toString();
-    QDir dataDir(dataPath);
-    QString catalogFile = dataDir.absoluteFilePath("mupen64plus.ini");
-
-    //Default text for GoodName to notify user
-    currentRom->goodName = "Requires catalog file";
-    currentRom->imageExists = false;
-
-    bool getGoodName = false;
-    if (QFileInfo(catalogFile).exists()) {
-        romCatalog = new QSettings(catalogFile, QSettings::IniFormat, parent);
-        getGoodName = true;
-    }
-
-    QFile file(romDir.absoluteFilePath(currentRom->fileName));
-
-    currentRom->romMD5 = currentRom->romMD5.toUpper();
-    currentRom->baseName = QFileInfo(file).completeBaseName();
-    currentRom->size = QObject::tr("%1 MB").arg((currentRom->sortSize + 1023) / 1024 / 1024);
-
-    if (getGoodName) {
-        //Join GoodName on ", ", otherwise entries with a comma won't show
-        QVariant goodNameVariant = romCatalog->value(currentRom->romMD5+"/GoodName","Unknown ROM");
-        currentRom->goodName = goodNameVariant.toStringList().join(", ");
-
-        QStringList CRC = romCatalog->value(currentRom->romMD5+"/CRC","").toString().split(" ");
-
-        if (CRC.size() == 2) {
-            currentRom->CRC1 = CRC[0];
-            currentRom->CRC2 = CRC[1];
-        }
-
-        QString newMD5 = romCatalog->value(currentRom->romMD5+"/RefMD5","").toString();
-        if (newMD5 == "")
-            newMD5 = currentRom->romMD5;
-
-        currentRom->players = romCatalog->value(newMD5+"/Players","").toString();
-        currentRom->saveType = romCatalog->value(newMD5+"/SaveType","").toString();
-        currentRom->rumble = romCatalog->value(newMD5+"/Rumble","").toString();
-    }
-
-    if (!cached && SETTINGS.value("Other/downloadinfo", "").toString() == "true") {
-        if (currentRom->goodName != "Unknown ROM" && currentRom->goodName != "Requires catalog file") {
-            downloadGameInfo(currentRom->romMD5, currentRom->goodName, parent);
-        } else {
-            //tweak internal name by adding spaces to get better results
-            QString search = currentRom->internalName;
-            search.replace(QRegExp("([a-z])([A-Z])"),"\\1 \\2");
-            search.replace(QRegExp("([^ \\d])(\\d)"),"\\1 \\2");
-            downloadGameInfo(currentRom->romMD5, search, parent);
-        }
-
-    }
-
-    if (SETTINGS.value("Other/downloadinfo", "").toString() == "true") {
-        QString cacheDir = getDataLocation() + "/cache";
-
-        QString dataFile = cacheDir + "/" + currentRom->romMD5.toLower() + "/data.xml";
-        QFile file(dataFile);
-
-        file.open(QIODevice::ReadOnly);
-        QString dom = file.readAll();
-        file.close();
-
-        QDomDocument xml;
-        xml.setContent(dom);
-        QDomNode game = xml.elementsByTagName("Game").at(0);
-
-        //Remove any non-standard characters
-        QString regex = "[^A-Za-z 0-9 \\.,\\?'""!@#\\$%\\^&\\*\\(\\)-_=\\+;:<>\\/\\\\|\\}\\{\\[\\]`~]*";
-
-        currentRom->gameTitle = game.firstChildElement("GameTitle").text().remove(QRegExp(regex));
-        if (currentRom->gameTitle == "") currentRom->gameTitle = "Not found";
-
-        currentRom->releaseDate = game.firstChildElement("ReleaseDate").text();
-
-        //Fix missing 0's in date
-        currentRom->releaseDate.replace(QRegExp("^(\\d)/(\\d{2})/(\\d{4})"), "0\\1/\\2/\\3");
-        currentRom->releaseDate.replace(QRegExp("^(\\d{2})/(\\d)/(\\d{4})"), "\\1/0\\2/\\3");
-        currentRom->releaseDate.replace(QRegExp("^(\\d)/(\\d)/(\\d{4})"), "0\\1/0\\2/\\3");
-
-        currentRom->sortDate = currentRom->releaseDate;
-        currentRom->sortDate.replace(QRegExp("(\\d{2})/(\\d{2})/(\\d{4})"), "\\3-\\1-\\2");
-
-        currentRom->overview = game.firstChildElement("Overview").text().remove(QRegExp(regex));
-        currentRom->esrb = game.firstChildElement("ESRB").text();
-
-        int count = 0;
-        QDomNode genreNode = game.firstChildElement("Genres").firstChild();
-        while(!genreNode.isNull())
-        {
-            if (count != 0)
-                currentRom->genre += "/" + genreNode.toElement().text();
-            else
-                currentRom->genre = genreNode.toElement().text();
-
-            genreNode = genreNode.nextSibling();
-            count++;
-        }
-
-        currentRom->publisher = game.firstChildElement("Publisher").text();
-        currentRom->developer = game.firstChildElement("Developer").text();
-        currentRom->rating = game.firstChildElement("Rating").text();
-
-        QString imageFile = getDataLocation() + "/cache/"
-                            + currentRom->romMD5.toLower() + "/boxart-front.jpg";
-        QFile cover(imageFile);
-
-        if (cover.exists()) {
-            currentRom->image.load(imageFile);
-            currentRom->imageExists = true;
-        }
-    }
 }
 
 

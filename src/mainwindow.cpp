@@ -37,15 +37,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setWindowTitle(tr("Mupen64Plus-Qt"));
     setWindowIcon(QIcon(":/images/mupen64plus.png"));
 
-    setupDatabase();
     autoloadSettings();
+
     emulation = new EmulatorHandler(this);
 
-    romPath = SETTINGS.value("Paths/roms","").toString();
-    romDir = QDir(romPath);
+    romCollection = new RomCollection(QStringList() << "*.z64" << "*.v64" << "*.n64" << "*.zip",
+                                      SETTINGS.value("Paths/roms","").toString(), this);
 
-    widget = new QWidget(this);
-    setCentralWidget(widget);
+    connect(romCollection, SIGNAL(updateStarted(bool)), this, SLOT(disableViews(bool)));
+    connect(romCollection, SIGNAL(romAdded(Rom*, int)), this, SLOT(addToView(Rom*, int)));
+    connect(romCollection, SIGNAL(updateEnded(int, bool)), this, SLOT(enableViews(int, bool)));
+
+
+    mainWidget = new QWidget(this);
+    setCentralWidget(mainWidget);
     setGeometry(QRect(SETTINGS.value("Geometry/windowx", 0).toInt(),
                       SETTINGS.value("Geometry/windowy", 0).toInt(),
                       SETTINGS.value("Geometry/width", 900).toInt(),
@@ -54,148 +59,29 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     createMenu();
     createRomView();
 
-    layout = new QVBoxLayout(widget);
-    layout->setMenuBar(menuBar);
+    mainLayout = new QVBoxLayout(mainWidget);
+    mainLayout->setMenuBar(menuBar);
 
-    layout->addWidget(emptyView);
-    layout->addWidget(romTree);
-    layout->addWidget(gridView);
-    layout->addWidget(listView);
+    mainLayout->addWidget(emptyView);
+    mainLayout->addWidget(romTree);
+    mainLayout->addWidget(gridView);
+    mainLayout->addWidget(listView);
 
-    layout->setMargin(0);
+    mainLayout->setMargin(0);
 
-    widget->setLayout(layout);
-    widget->setMinimumSize(300, 200);
+    mainWidget->setLayout(mainLayout);
+    mainWidget->setMinimumSize(300, 200);
 }
 
 
-Rom MainWindow::addRom(QByteArray *romData, QString fileName, QString zipFile, QSqlQuery query)
+void MainWindow::addToView(Rom *currentRom, int count)
 {
-    Rom currentRom;
-
-    currentRom.fileName = fileName;
-    currentRom.internalName = QString(romData->mid(32, 20)).trimmed();
-    currentRom.romMD5 = QString(QCryptographicHash::hash(*romData,
-                                QCryptographicHash::Md5).toHex());
-    currentRom.zipFile = zipFile;
-    currentRom.sortSize = romData->size();
-
-    query.bindValue(":filename",      currentRom.fileName);
-    query.bindValue(":internal_name", currentRom.internalName);
-    query.bindValue(":md5",           currentRom.romMD5);
-    query.bindValue(":zip_file",      currentRom.zipFile);
-    query.bindValue(":size",          currentRom.sortSize);
-    query.exec();
-
-    initializeRom(&currentRom, romDir, false, this);
-
-    return currentRom;
-}
-
-
-void MainWindow::addRoms()
-{
-    database.open();
-
-    QSqlQuery query("DELETE FROM rom_collection", database);
-    query.prepare(QString("INSERT INTO rom_collection ")
-                  + "(filename, internal_name, md5, zip_file, size) "
-                  + "VALUES (:filename, :internal_name, :md5, :zip_file, :size)");
-
-    QList<Rom> roms;
-
-    QStringList tableVisible = SETTINGS.value("Table/columns", "Filename|Size").toString().split("|");
-    resetLayouts(tableVisible);
-
-    romTree->setEnabled(false);
-    gridView->setEnabled(false);
-    listView->setEnabled(false);
-    romTree->clear();
-    downloadAction->setEnabled(false);
-    startAction->setEnabled(false);
-    stopAction->setEnabled(false);
-
-    if (romPath != "") {
-        if (romDir.exists()) {
-            QStringList files = romDir.entryList(QStringList() << "*.z64" << "*.n64" << "*.v64" << "*.zip",
-                                                 QDir::Files | QDir::NoSymLinks);
-
-            if (files.size() > 0) {
-                setupProgressDialog(files.size());
-
-                int count = 0;
-                foreach (QString fileName, files)
-                {
-                    QString completeFileName = romDir.absoluteFilePath(fileName);
-                    QFile file(completeFileName);
-
-                    //If file is a zip file, extract info from any zipped ROMs
-                    if (QFileInfo(file).suffix().toLower() == "zip") {
-                        foreach (QString zippedFile, getZippedFiles(completeFileName))
-                        {
-                            QString ext = zippedFile.right(4).toLower();
-
-                            //check for ROM files
-                            if (ext == ".z64" || ext == ".n64" || ext == ".v64") {
-                                QByteArray *romData = getZippedRom(zippedFile, completeFileName);
-                                *romData = byteswap(*romData);
-
-                                if (romData->left(4).toHex() == "80371240") //Else invalid
-                                    roms.append(addRom(romData, zippedFile, fileName, query));
-
-                                delete romData;
-                            }
-                        }
-                    } else { //Just a normal ROM file
-                        file.open(QIODevice::ReadOnly);
-                        QByteArray *romData = new QByteArray(file.readAll());
-                        file.close();
-
-                        *romData = byteswap(*romData);
-
-                        if (romData->left(4).toHex() == "80371240") //Else invalid
-                            roms.append(addRom(romData, fileName, "", query));
-
-                        delete romData;
-                    }
-
-                    count++;
-                    progress->setValue(count);
-                }
-
-                progress->close();
-            } else {
-            QMessageBox::warning(this, "Warning", "No ROMs found.");
-            }
-        } else {
-            QMessageBox::warning(this, "Warning", "Failed to open ROM directory.");
-        }
-    }
-
-    qSort(roms.begin(), roms.end(), romSorter);
-
-    int i = 0;
-    foreach (Rom currentRom, roms)
-    {
-        if (SETTINGS.value("View/layout", "None") == "Table View")
-            addToTableView(&currentRom);
-        else if (SETTINGS.value("View/layout", "None") == "Grid View")
-            addToGridView(&currentRom, i);
-        else if (SETTINGS.value("View/layout", "None") == "List View")
-            addToListView(&currentRom, i);
-
-        i++;
-    }
-
-    if (roms.size() != 0) {
-        if (tableVisible.join("") != "")
-            romTree->setEnabled(true);
-
-        gridView->setEnabled(true);
-        listView->setEnabled(true);
-    }
-
-    database.close();
+    if (SETTINGS.value("View/layout", "None") == "Table View")
+        addToTableView(currentRom);
+    else if (SETTINGS.value("View/layout", "None") == "Grid View")
+        addToGridView(currentRom, count);
+    else if (SETTINGS.value("View/layout", "None") == "List View")
+        addToListView(currentRom, count);
 }
 
 
@@ -525,128 +411,6 @@ void MainWindow::autoloadSettings()
 }
 
 
-void MainWindow::cachedRoms(bool imageUpdated)
-{
-    database.open();
-    QSqlQuery query("SELECT filename, md5, internal_name, zip_file, size FROM rom_collection", database);
-
-    query.last();
-    int romCount = query.at() + 1;
-    query.seek(-1);
-
-    if (romCount == -1) { //Nothing cached so try adding ROMs instead
-        addRoms();
-        return;
-    }
-
-    QList<Rom> roms;
-
-    romTree->setEnabled(false);
-    gridView->setEnabled(false);
-    listView->setEnabled(false);
-    romTree->clear();
-    downloadAction->setEnabled(false);
-    startAction->setEnabled(false);
-    stopAction->setEnabled(false);
-
-
-    //Save position in current layout
-    positionx = 0;
-    positiony = 0;
-
-    if (SETTINGS.value("View/layout", "None") == "Table View") {
-        positionx = romTree->horizontalScrollBar()->value();
-        positiony = romTree->verticalScrollBar()->value();
-    } else if (SETTINGS.value("View/layout", "None") == "Grid View") {
-        positionx = gridView->horizontalScrollBar()->value();
-        positiony = gridView->verticalScrollBar()->value();
-    } else if (SETTINGS.value("View/layout", "None") == "List View") {
-        positionx = listView->horizontalScrollBar()->value();
-        positiony = listView->verticalScrollBar()->value();
-    }
-
-
-    QStringList tableVisible = SETTINGS.value("Table/columns", "Filename|Size").toString().split("|");
-    resetLayouts(tableVisible, imageUpdated);
-
-    int count = 0;
-    bool showProgress = false;
-    QTime checkPerformance;
-
-    while (query.next())
-    {
-        Rom currentRom;
-
-        currentRom.fileName = query.value(0).toString();
-        currentRom.romMD5 = query.value(1).toString();
-        currentRom.internalName = query.value(2).toString();
-        currentRom.zipFile = query.value(3).toString();
-        currentRom.sortSize = query.value(4).toInt();
-
-        //Check performance of adding first item to see if progress dialog needs to be shown
-        if (count == 0) checkPerformance.start();
-
-        initializeRom(&currentRom, romDir, true, this);
-        roms.append(currentRom);
-
-        if (count == 0) {
-            int runtime = checkPerformance.elapsed();
-
-            //check if operation expected to take longer than two seconds
-            if (runtime * romCount > 2000) {
-                setupProgressDialog(romCount);
-                showProgress = true;
-            }
-        }
-
-        count++;
-
-        if (showProgress)
-            progress->setValue(count);
-    }
-
-    database.close();
-
-    if (showProgress)
-        progress->close();
-
-    qSort(roms.begin(), roms.end(), romSorter);
-
-    int i = 0;
-    foreach (Rom currentRom, roms)
-    {
-        if (SETTINGS.value("View/layout", "None") == "Table View")
-            addToTableView(&currentRom);
-        else if (SETTINGS.value("View/layout", "None") == "Grid View")
-            addToGridView(&currentRom, i);
-        else if (SETTINGS.value("View/layout", "None") == "List View")
-            addToListView(&currentRom, i);
-
-        i++;
-    }
-
-    if (roms.size() != 0) {
-        if (tableVisible.join("") != "")
-            romTree->setEnabled(true);
-
-        gridView->setEnabled(true);
-        listView->setEnabled(true);
-
-        QTimer *timer = new QTimer(this);
-        timer->setSingleShot(true);
-        timer->setInterval(0);
-        timer->start();
-
-        if (SETTINGS.value("View/layout", "None") == "Table View")
-            connect(timer, SIGNAL(timeout()), this, SLOT(setTablePosition()));
-        else if (SETTINGS.value("View/layout", "None") == "Grid View")
-            connect(timer, SIGNAL(timeout()), this, SLOT(setGridPosition()));
-        else if (SETTINGS.value("View/layout", "None") == "List View")
-            connect(timer, SIGNAL(timeout()), this, SLOT(setListPosition()));
-    }
-}
-
-
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     SETTINGS.setValue("Geometry/windowx", geometry().x());
@@ -756,7 +520,7 @@ void MainWindow::createMenu()
     menuDisable << stopAction;
 
     connect(openAction, SIGNAL(triggered()), this, SLOT(openRom()));
-    connect(refreshAction, SIGNAL(triggered()), this, SLOT(addRoms()));
+    connect(refreshAction, SIGNAL(triggered()), romCollection, SLOT(addRoms()));
     connect(downloadAction, SIGNAL(triggered()), this, SLOT(openDownloader()));
     connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(startAction, SIGNAL(triggered()), this, SLOT(runEmulatorFromMenu()));
@@ -780,10 +544,10 @@ void MainWindow::createRomView()
 
     emptyLayout = new QGridLayout(emptyView);
 
-    icon = new QLabel(emptyView);
-    icon->setPixmap(QPixmap(":/images/mupen64plus.png"));
+    emptyIcon = new QLabel(emptyView);
+    emptyIcon->setPixmap(QPixmap(":/images/mupen64plus.png"));
 
-    emptyLayout->addWidget(icon, 1, 1);
+    emptyLayout->addWidget(emptyIcon, 1, 1);
     emptyLayout->setColumnStretch(0, 1);
     emptyLayout->setColumnStretch(2, 1);
     emptyLayout->setRowStretch(0, 1);
@@ -862,7 +626,7 @@ void MainWindow::createRomView()
     else
         emptyView->setHidden(false);
 
-    cachedRoms();
+    romCollection->cachedRoms();
 
     connect(romTree, SIGNAL(clicked(QModelIndex)), this, SLOT(enableButtons()));
     connect(romTree, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(runEmulatorFromRomTree()));
@@ -877,9 +641,66 @@ void MainWindow::disableButtons()
 }
 
 
+void MainWindow::disableViews(bool imageUpdated)
+{
+    resetLayouts(imageUpdated);
+    romTree->clear();
+
+    romTree->setEnabled(false);
+    gridView->setEnabled(false);
+    listView->setEnabled(false);
+    downloadAction->setEnabled(false);
+    startAction->setEnabled(false);
+    stopAction->setEnabled(false);
+
+    //Save position in current layout
+    positionx = 0;
+    positiony = 0;
+
+    if (SETTINGS.value("View/layout", "None") == "Table View") {
+        positionx = romTree->horizontalScrollBar()->value();
+        positiony = romTree->verticalScrollBar()->value();
+    } else if (SETTINGS.value("View/layout", "None") == "Grid View") {
+        positionx = gridView->horizontalScrollBar()->value();
+        positiony = gridView->verticalScrollBar()->value();
+    } else if (SETTINGS.value("View/layout", "None") == "List View") {
+        positionx = listView->horizontalScrollBar()->value();
+        positiony = listView->verticalScrollBar()->value();
+    }
+}
+
+
 void MainWindow::enableButtons()
 {
     toggleMenus(true);
+}
+
+
+void MainWindow::enableViews(int romCount, bool cached)
+{
+    if (romCount != 0) { //else no ROMs, so leave views disabled
+        QStringList tableVisible = SETTINGS.value("Table/columns", "Filename|Size").toString().split("|");
+
+        if (tableVisible.join("") != "")
+            romTree->setEnabled(true);
+
+        gridView->setEnabled(true);
+        listView->setEnabled(true);
+
+        if (cached) {
+            QTimer *timer = new QTimer(this);
+            timer->setSingleShot(true);
+            timer->setInterval(0);
+            timer->start();
+
+            if (SETTINGS.value("View/layout", "None") == "Table View")
+                connect(timer, SIGNAL(timeout()), this, SLOT(setTablePosition()));
+            else if (SETTINGS.value("View/layout", "None") == "Grid View")
+                connect(timer, SIGNAL(timeout()), this, SLOT(setGridPosition()));
+            else if (SETTINGS.value("View/layout", "None") == "List View")
+                connect(timer, SIGNAL(timeout()), this, SLOT(setListPosition()));
+        }
+    }
 }
 
 
@@ -961,7 +782,7 @@ void MainWindow::openDownloader()
     DownloadDialog downloadDialog(getCurrentRomInfo(0), getCurrentRomInfo(1), getCurrentRomInfo(2), this);
     downloadDialog.exec();
 
-    cachedRoms();
+    romCollection->cachedRoms();
 }
 
 
@@ -1013,15 +834,14 @@ void MainWindow::openSettings()
     }
 
     QString romSave = SETTINGS.value("Paths/roms","").toString();
-    if (romPath != romSave) {
-        romPath = romSave;
-        romDir = QDir(romPath);
-        addRoms();
+    if (romCollection->romPath != romSave) {
+        romCollection->updatePath(romSave);
+        romCollection->addRoms();
     } else {
         if (tableImageBefore != tableImageAfter)
-            cachedRoms(true);
+            romCollection->cachedRoms(true);
         else
-            cachedRoms(false);
+            romCollection->cachedRoms(false);
     }
 
     setGridBackground();
@@ -1031,14 +851,14 @@ void MainWindow::openSettings()
 
 void MainWindow::openRom()
 {
-    openPath = QFileDialog::getOpenFileName(this, tr("Open ROM File"), romPath,
-                                                tr("N64 ROMs (*.z64 *.n64 *.v64 *.zip);;All Files (*)"));
+    QString filter = "N64 ROMs (";
+    foreach (QString type, romCollection->getFileTypes(true)) filter += type + " ";
+    filter += ");;All Files (*)";
+
+    openPath = QFileDialog::getOpenFileName(this, tr("Open ROM File"), romCollection->romPath, filter);
     if (openPath != "") {
         if (QFileInfo(openPath).suffix() == "zip") {
-            QuaZip zipFile(openPath);
-            zipFile.open(QuaZip::mdUnzip);
-
-            QStringList zippedFiles = zipFile.getFileNameList();
+            QStringList zippedFiles = getZippedFiles(openPath);
 
             QString last;
             int count = 0;
@@ -1046,7 +866,7 @@ void MainWindow::openRom()
             foreach (QString file, zippedFiles) {
                 QString ext = file.right(4).toLower();
 
-                if (ext == ".z64" || ext == ".n64" || ext == ".v64") {
+                if (romCollection->getFileTypes().contains("*" + ext)) {
                     last = file;
                     count++;
                 }
@@ -1079,7 +899,7 @@ void MainWindow::openZipDialog(QStringList zippedFiles)
     foreach (QString file, zippedFiles) {
         QString ext = file.right(4);
 
-        if (ext == ".z64" || ext == ".n64")
+        if (romCollection->getFileTypes().contains("*" + ext))
             zipList->addItem(file);
     }
     zipList->setCurrentRow(0);
@@ -1101,8 +921,10 @@ void MainWindow::openZipDialog(QStringList zippedFiles)
 }
 
 
-void MainWindow::resetLayouts(QStringList tableVisible, bool imageUpdated)
+void MainWindow::resetLayouts(bool imageUpdated)
 {
+    QStringList tableVisible = SETTINGS.value("Table/columns", "Filename|Size").toString().split("|");
+
     int hidden = 4;
 
     saveColumnWidths();
@@ -1121,12 +943,9 @@ void MainWindow::resetLayouts(QStringList tableVisible, bool imageUpdated)
 
     int height = 0, width = 0;
     if (tableVisible.contains("Game Cover")) {
-        QString size = SETTINGS.value("Table/imagesize","Medium").toString();
-        if (size == "Extra Small") { height = 25;  width = 40;  }
-        if (size == "Small")       { height = 38;  width = 55;  }
-        if (size == "Medium")      { height = 55;  width = 75;  }
-        if (size == "Large")       { height = 80;  width = 110; }
-        if (size == "Extra Large") { height = 110; width = 150; }
+        //Get optimal height/width for cover column
+        height = getImageSize("Table").height() * 1.1;
+        width = getImageSize("Table").width() * 1.2;
 
         romTree->setStyleSheet("QTreeView { border: none; } QTreeView::item { height: "
                                + QString::number(height) + "px; }");
@@ -1151,46 +970,26 @@ void MainWindow::resetLayouts(QStringList tableVisible, bool imageUpdated)
     {
         if (i == hidden) {
             int c = i;
-            if (current == "Game Cover") //If first column is game cover, use next column
-                c++;
+            if (current == "Game Cover") c++; //If first column is game cover, use next column
 
-            if (SETTINGS.value("Table/stretchfirstcolumn", "true") == "true") {
+            if (SETTINGS.value("Table/stretchfirstcolumn", "true") == "true")
 #if QT_VERSION >= 0x050000
                 romTree->header()->setSectionResizeMode(c, QHeaderView::Stretch);
 #else
                 romTree->header()->setResizeMode(c, QHeaderView::Stretch);
 #endif
-            } else {
+            else
 #if QT_VERSION >= 0x050000
                 romTree->header()->setSectionResizeMode(c, QHeaderView::Interactive);
 #else
                 romTree->header()->setResizeMode(c, QHeaderView::Interactive);
 #endif
-            }
         }
 
-        if (widths.size() == tableVisible.size()) {
+        if (widths.size() == tableVisible.size())
             romTree->setColumnWidth(i, widths[i - hidden].toInt());
-        } else {
-            if (current == "Overview")
-                romTree->setColumnWidth(i, 400);
-            else if (current == "GoodName" || current.left(8) == "Filename" || current == "Game Title")
-                romTree->setColumnWidth(i, 300);
-            else if (current == "MD5")
-                romTree->setColumnWidth(i, 250);
-            else if (current == "Internal Name" || current == "Publisher" || current == "Developer")
-                romTree->setColumnWidth(i, 200);
-            else if (current == "ESRB" || current == "Genre")
-                romTree->setColumnWidth(i, 150);
-            else if (current == "Save Type" || current == "Release Date")
-                romTree->setColumnWidth(i, 100);
-            else if (current == "CRC1" || current == "CRC2")
-                romTree->setColumnWidth(i, 90);
-            else if (current == "Size" || current == "Rumble" || current == "Players" || current == "Rating")
-                romTree->setColumnWidth(i, 75);
-            else if (current == "Game Cover")
-                romTree->setColumnWidth(i, width);
-        }
+        else
+            romTree->setColumnWidth(i, getDefaultWidth(current, width));
 
         //Overwrite saved value if switching image sizes
         if (imageUpdated && current == "Game Cover")
@@ -1225,7 +1024,7 @@ void MainWindow::resetLayouts(QStringList tableVisible, bool imageUpdated)
 
 void MainWindow::runEmulator(QString romFileName, QString zipFileName)
 {
-    emulation->startEmulator(romDir, romFileName, zipFileName);
+    emulation->startEmulator(QDir(romCollection->romPath), romFileName, zipFileName);
 
     connect(emulation, SIGNAL(started()), this, SLOT(disableButtons()));
     connect(emulation, SIGNAL(finished()), this, SLOT(enableButtons()));
@@ -1337,45 +1136,6 @@ void MainWindow::setTablePosition()
 }
 
 
-void MainWindow::setupDatabase()
-{
-    database = QSqlDatabase::addDatabase("QSQLITE");
-    database.setDatabaseName(getDataLocation() + "/mupen64plus-qt.sqlite");
-
-    if (!database.open())
-        QMessageBox::warning(this, "Database Not Loaded",
-                             "Could not connect to Sqlite database. Application may misbehave.");
-
-    QSqlQuery query(QString()
-                    + "CREATE TABLE IF NOT EXISTS rom_collection ("
-                        + "rom_id INTEGER PRIMARY KEY ASC, "
-                        + "filename TEXT NOT NULL, "
-                        + "md5 TEXT NOT NULL, "
-                        + "internal_name TEXT, "
-                        + "zip_file TEXT, "
-                        + "size INTEGER)", database);
-
-    database.close();
-}
-
-
-void MainWindow::setupProgressDialog(int size)
-{
-    progress = new QProgressDialog("Loading ROMs...", "Cancel", 0, size, this);
-#if QT_VERSION >= 0x050000
-    progress->setWindowFlags(progress->windowFlags() & ~Qt::WindowCloseButtonHint);
-    progress->setWindowFlags(progress->windowFlags() & ~Qt::WindowMinimizeButtonHint);
-    progress->setWindowFlags(progress->windowFlags() & ~Qt::WindowContextHelpButtonHint);
-#else
-    progress->setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
-#endif
-    progress->setCancelButton(0);
-    progress->setWindowModality(Qt::WindowModal);
-
-    progress->show();
-}
-
-
 void MainWindow::stopEmulator()
 {
     emulation->stopEmulator();
@@ -1414,7 +1174,7 @@ void MainWindow::updateLayoutSetting()
     gridView->setHidden(true);
     listView->setHidden(true);
 
-    cachedRoms();
+    romCollection->cachedRoms();
 
     if (visibleLayout == "Table View")
         romTree->setHidden(false);

@@ -92,9 +92,9 @@ typedef struct {
 
 void downloadGameInfo(QString identifier, QString searchName, QWidget *parent = 0, QString gameID = "",
                       bool force = false);
-void initializeRom(Rom *currentRom, QDir romDir, bool cached, QWidget *parent = 0);
 
 bool romSorter(const Rom &firstRom, const Rom &lastRom);
+int getDefaultWidth(QString id, int imageWidth);
 int getGridSize(QString which);
 
 QByteArray byteswap(QByteArray romData);
