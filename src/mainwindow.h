@@ -72,7 +72,6 @@ private:
     void createRomView();
     void openZipDialog(QStringList zippedFiles);
     void resetLayouts(bool imageUpdated = false);
-    void runEmulator(QString romFileName, QString zipFileName = "");
     void saveColumnWidths();
     void setGridBackground();
     void toggleMenus(bool active);
@@ -118,7 +117,7 @@ private:
     QScrollArea *emptyView;
     QScrollArea *listView;
     QScrollArea *gridView;
-    QTreeWidget *romTree;
+    QTreeWidget *tableView;
     QVBoxLayout *listLayout;
     QVBoxLayout *mainLayout;
     QWidget *gridWidget;
@@ -137,16 +136,16 @@ private slots:
     void enableViews(int romCount, bool cached);
     void highlightGridWidget(QWidget *current);
     void highlightListWidget(QWidget *current);
+    void launchRomFromMenu();
+    void launchRomFromTable();
+    void launchRomFromWidget(QWidget *current);
+    void launchRomFromZip();
     void openAbout();
     void openDownloader();
     void openEditor();
     void openLog();
     void openSettings();
     void openRom();
-    void runEmulatorFromMenu();
-    void runEmulatorFromRomTree();
-    void runEmulatorFromWidget(QWidget *current);
-    void runEmulatorFromZip();
     void saveSortOrder(int column, Qt::SortOrder order);
     void setGridPosition();
     void setListPosition();
