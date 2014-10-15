@@ -55,7 +55,8 @@ private:
     QLabel *gameIDLabel;
     QLineEdit *gameNameField;
     QLineEdit *gameIDField;
-    QString md5;
+    QString romMD5;
+    QWidget *parent;
 
 private slots:
     void runDownloader();

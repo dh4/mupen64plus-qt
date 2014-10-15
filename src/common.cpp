@@ -51,6 +51,8 @@ QByteArray byteswap(QByteArray romData)
 
 void downloadGameInfo(QString identifier, QString searchName, QWidget *parent, QString gameID, bool force)
 {
+    if (force) parent->setEnabled(false);
+
     if (identifier != "") {
         bool updated = false;
 
@@ -187,6 +189,8 @@ void downloadGameInfo(QString identifier, QString searchName, QWidget *parent, Q
             QMessageBox::information(parent, QObject::tr("Game Information Download"),
                                      QObject::tr("Download Complete!"));
     }
+
+    if (force) parent->setEnabled(true);
 }
 
 
@@ -404,11 +408,30 @@ QByteArray getUrlContents(QUrl url)
     request.setRawHeader("User-Agent", "CEN64-Qt");
     QNetworkReply *reply = manager->get(request);
 
+    QTimer timer;
+    timer.setSingleShot(true);
+
     QEventLoop loop;
     QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    QObject::connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
+    timer.start(5000);
     loop.exec();
 
-    return reply->readAll();
+    if(timer.isActive()) { //Got reply
+        timer.stop();
+
+        if(reply->error() > 0)
+            QMessageBox::information(0, QObject::tr("Network Error"), reply->errorString());
+        else
+            return reply->readAll();
+    } else { //Request timed out
+        QObject::disconnect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+
+        QMessageBox::information(0, QObject::tr("Network Error"),
+                                 "Request timed out. Check your network settings.");
+    }
+
+    return QByteArray();
 }
 
 

@@ -38,7 +38,6 @@
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QStatusBar>
-#include <QTimer>
 
 #include "aboutdialog.h"
 #include "clickablewidget.h"

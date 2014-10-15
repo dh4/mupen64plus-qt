@@ -44,6 +44,7 @@
 #include <QSize>
 #include <QString>
 #include <QTextStream>
+#include <QTimer>
 #include <QUrl>
 
 #include <QtNetwork/QNetworkAccessManager>

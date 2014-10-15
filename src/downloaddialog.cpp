@@ -35,7 +35,8 @@
 DownloadDialog::DownloadDialog(QString fileText, QString defaultText, QString romMD5, QWidget *parent)
     : QDialog(parent)
 {
-    md5 = romMD5;
+    this->romMD5 = romMD5;
+    this->parent = parent;
 
     setWindowTitle(tr("Search Game Information"));
 
@@ -79,5 +80,5 @@ DownloadDialog::DownloadDialog(QString fileText, QString defaultText, QString ro
 void DownloadDialog::runDownloader()
 {
     close();
-    downloadGameInfo(md5, gameNameField->text(), this, gameIDField->text(), true);
+    downloadGameInfo(romMD5, gameNameField->text(), parent, gameIDField->text(), true);
 }
