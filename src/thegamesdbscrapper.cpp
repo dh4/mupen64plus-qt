@@ -202,7 +202,7 @@ QByteArray TheGamesDBScrapper::getUrlContents(QUrl url)
     QEventLoop loop;
     connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
     connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
-    timer.start(5000);
+    timer.start(10000);
     loop.exec();
 
     if(timer.isActive()) { //Got reply
