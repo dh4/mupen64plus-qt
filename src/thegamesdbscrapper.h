@@ -29,55 +29,29 @@
  *
  ***/
 
-#ifndef ROMCOLLECTION_H
-#define ROMCOLLECTION_H
+#ifndef THEGAMESDBSCRAPPER_H
+#define THEGAMESDBSCRAPPER_H
 
-#include <QCryptographicHash>
 #include <QObject>
-#include <QProgressDialog>
-
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlQuery>
 
 #include "common.h"
 #include "global.h"
-#include "thegamesdbscrapper.h"
 
 
-class RomCollection : public QObject
+class TheGamesDBScrapper : public QObject
 {
     Q_OBJECT
 public:
-    explicit RomCollection(QStringList fileTypes, QString romPath, QWidget *parent = 0);
-    void cachedRoms(bool imageUpdated = false);
-    void updatePath(QString romPath);
-
-    QDir romDir;
-    QString romPath;
-    QStringList getFileTypes(bool archives = false);
-
-public slots:
-    void addRoms();
-
-signals:
-    void romAdded(Rom *currentRom, int count);
-    void updateEnded(int romCount, bool cached = false);
-    void updateStarted(bool imageUpdated = false);
+    explicit TheGamesDBScrapper(QWidget *parent = 0, bool force = false);
+    void downloadGameInfo(QString identifier, QString searchName, QString gameID = "");
 
 private:
-    void initializeRom(Rom *currentRom, QDir romDir, bool cached);
-    void setupDatabase();
-    void setupProgressDialog(int size);
+    QByteArray getUrlContents(QUrl url);
+    void showError(QString error);
 
-    Rom addRom(QByteArray *romData, QString fileName, QString zipFile, QSqlQuery query);
-
-    QStringList fileTypes;
-
+    bool force;
+    bool keepGoing;
     QWidget *parent;
-    QProgressDialog *progress;
-    QSqlDatabase database;
-
-    TheGamesDBScrapper *scrapper;
 };
 
-#endif // ROMCOLLECTION_H
+#endif // THEGAMESDBSCRAPPER_H

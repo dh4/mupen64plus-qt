@@ -39,6 +39,7 @@
 #include <QLineEdit>
 
 #include "common.h"
+#include "thegamesdbscrapper.h"
 
 
 class DownloadDialog : public QDialog
@@ -57,6 +58,8 @@ private:
     QLineEdit *gameIDField;
     QString romMD5;
     QWidget *parent;
+
+    TheGamesDBScrapper *scrapper;
 
 private slots:
     void runDownloader();

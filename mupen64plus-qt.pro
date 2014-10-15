@@ -28,7 +28,8 @@ SOURCES += src/main.cpp \
     src/downloaddialog.cpp \
     src/logdialog.cpp \
     src/emulatorhandler.cpp \
-    src/romcollection.cpp
+    src/romcollection.cpp \
+    src/thegamesdbscrapper.cpp
 
 HEADERS += src/global.h \
     src/common.h \
@@ -41,7 +42,8 @@ HEADERS += src/global.h \
     src/downloaddialog.h \
     src/logdialog.h \
     src/emulatorhandler.h \
-    src/romcollection.h
+    src/romcollection.h \
+    src/thegamesdbscrapper.h
 
 RESOURCES += resources/mupen64plusqt.qrc
 

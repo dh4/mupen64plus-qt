@@ -80,5 +80,7 @@ DownloadDialog::DownloadDialog(QString fileText, QString defaultText, QString ro
 void DownloadDialog::runDownloader()
 {
     close();
-    downloadGameInfo(romMD5, gameNameField->text(), parent, gameIDField->text(), true);
+
+    scrapper = new TheGamesDBScrapper(parent, true);
+    scrapper->downloadGameInfo(romMD5, gameNameField->text(), gameIDField->text());
 }

@@ -91,15 +91,11 @@ typedef struct {
     bool imageExists;
 } Rom;
 
-void downloadGameInfo(QString identifier, QString searchName, QWidget *parent = 0, QString gameID = "",
-                      bool force = false);
-
 bool romSorter(const Rom &firstRom, const Rom &lastRom);
 int getDefaultWidth(QString id, int imageWidth);
 int getGridSize(QString which);
 
 QByteArray byteswap(QByteArray romData);
-QByteArray getUrlContents(QUrl url);
 QStringList getZippedFiles(QString completeFileName);
 QByteArray *getZippedRom(QString romFileName, QString zipFile);
 QColor getColor(QString color, int transparency = 255);

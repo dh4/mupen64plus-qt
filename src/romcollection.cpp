@@ -79,6 +79,8 @@ void RomCollection::addRoms()
                   + "(filename, internal_name, md5, zip_file, size) "
                   + "VALUES (:filename, :internal_name, :md5, :zip_file, :size)");
 
+    scrapper = new TheGamesDBScrapper(parent);
+
     QList<Rom> roms;
 
     if (romPath != "") {
@@ -139,6 +141,8 @@ void RomCollection::addRoms()
             QMessageBox::warning(parent, "Warning", "Failed to open ROM directory.");
         }
     }
+
+    delete scrapper;
 
     database.close();
 
@@ -276,13 +280,13 @@ void RomCollection::initializeRom(Rom *currentRom, QDir romDir, bool cached)
 
     if (!cached && SETTINGS.value("Other/downloadinfo", "").toString() == "true") {
         if (currentRom->goodName != "Unknown ROM" && currentRom->goodName != "Requires catalog file") {
-            downloadGameInfo(currentRom->romMD5, currentRom->goodName, parent);
+            scrapper->downloadGameInfo(currentRom->romMD5, currentRom->goodName);
         } else {
             //tweak internal name by adding spaces to get better results
             QString search = currentRom->internalName;
             search.replace(QRegExp("([a-z])([A-Z])"),"\\1 \\2");
             search.replace(QRegExp("([^ \\d])(\\d)"),"\\1 \\2");
-            downloadGameInfo(currentRom->romMD5, search, parent);
+            scrapper->downloadGameInfo(currentRom->romMD5, search);
         }
 
     }
