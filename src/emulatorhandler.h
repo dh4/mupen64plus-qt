@@ -38,6 +38,7 @@
 #include <QMessageBox>
 #include <QObject>
 #include <QProcess>
+#include <QTextEdit>
 
 #include "common.h"
 
@@ -54,9 +55,12 @@ public:
 
 signals:
     void finished();
+    void showLog();
     void started();
 
 private:
+    QStringList parseArgString(QString argString);
+
     QProcess *emulatorProc;
     QWidget *parent;
 

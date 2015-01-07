@@ -43,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     connect(emulation, SIGNAL(started()), this, SLOT(disableButtons()));
     connect(emulation, SIGNAL(finished()), this, SLOT(enableButtons()));
+    connect(emulation, SIGNAL(showLog()), this, SLOT(openLog()));
 
 
     romCollection = new RomCollection(QStringList() << "*.z64" << "*.v64" << "*.n64" << "*.zip",

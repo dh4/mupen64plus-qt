@@ -284,6 +284,8 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     if (SETTINGS.value("saveoptions", "").toString() == "true")
         ui->saveOption->setChecked(true);
 
+    ui->parametersLine->setText(SETTINGS.value("Other/parameters", "").toString());
+
     connect(ui->downloadOption, SIGNAL(toggled(bool)), this, SLOT(toggleDownload(bool)));
     connect(ui->downloadOption, SIGNAL(toggled(bool)), this, SLOT(populateTableAndListTab(bool)));
 
@@ -491,6 +493,8 @@ void SettingsDialog::editSettings()
         SETTINGS.setValue("saveoptions", true);
     else
         SETTINGS.setValue("saveoptions", "");
+
+    SETTINGS.setValue("Other/parameters", ui->parametersLine->text());
 
     close();
 }
