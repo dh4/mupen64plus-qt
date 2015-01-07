@@ -1084,7 +1084,7 @@
          <item row="2" column="1" colspan="2">
           <widget class="QLineEdit" name="parametersLine">
            <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use to pass additional parameters to Mupen64Plus. See &lt;a href=&quot;https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage&lt;/span&gt;&lt;/a&gt; for more information,&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use to pass additional parameters to Mupen64Plus (cheats, etc.). See &lt;a href=&quot;https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage&lt;/span&gt;&lt;/a&gt; for more information,&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
