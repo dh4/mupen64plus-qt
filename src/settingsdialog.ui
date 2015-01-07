@@ -1043,9 +1043,6 @@
          </item>
          <item row="1" column="2">
           <widget class="QCheckBox" name="saveOption">
-           <property name="toolTip">
-            <string extracomment="If checked, CEN64's output will be redirected to CEN64-Qt so you can view the VI/s or debug information."/>
-           </property>
            <property name="text">
             <string/>
            </property>

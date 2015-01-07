@@ -849,7 +849,7 @@ void MainWindow::openEditor()
 void MainWindow::openLog()
 {
     if (emulation->lastOutput == "") {
-        QMessageBox::information(this, "No Output", QString("There is no log. Either CEN64 has not ")
+        QMessageBox::information(this, "No Output", QString("There is no log. Either Mupen64Plus has not ")
                                  + "yet run or there was no output from the last run.");
     } else {
         LogDialog logDialog(emulation->lastOutput, this);

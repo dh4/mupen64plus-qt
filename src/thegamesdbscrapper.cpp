@@ -191,7 +191,7 @@ QByteArray TheGamesDBScrapper::getUrlContents(QUrl url)
 
     QNetworkRequest request;
     request.setUrl(url);
-    request.setRawHeader("User-Agent", "CEN64-Qt");
+    request.setRawHeader("User-Agent", "Mupen64Plus-Qt");
     QNetworkReply *reply = manager->get(request);
 
     QTimer timer;

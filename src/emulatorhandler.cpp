@@ -57,7 +57,7 @@ void EmulatorHandler::checkStatus(int status)
 
 void EmulatorHandler::cleanTemp()
 {
-    QFile::remove(QDir::tempPath() + "/cen64-qt/temp.z64");
+    QFile::remove(QDir::tempPath() + "/mupen64plus-qt/temp.z64");
 }
 
 
