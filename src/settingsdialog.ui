@@ -1148,6 +1148,39 @@
   <tabstop>audioBox</tabstop>
   <tabstop>inputBox</tabstop>
   <tabstop>rspBox</tabstop>
+  <tabstop>tableAvailableList</tabstop>
+  <tabstop>tableAddButton</tabstop>
+  <tabstop>tableRemoveButton</tabstop>
+  <tabstop>tableCurrentList</tabstop>
+  <tabstop>tableSortDownButton</tabstop>
+  <tabstop>tableSortUpButton</tabstop>
+  <tabstop>tableSizeBox</tabstop>
+  <tabstop>tableStretchOption</tabstop>
+  <tabstop>gridSizeBox</tabstop>
+  <tabstop>columnCountBox</tabstop>
+  <tabstop>shadowInactiveBox</tabstop>
+  <tabstop>shadowActiveBox</tabstop>
+  <tabstop>labelOption</tabstop>
+  <tabstop>labelTextBox</tabstop>
+  <tabstop>labelColorBox</tabstop>
+  <tabstop>backgroundPath</tabstop>
+  <tabstop>backgroundButton</tabstop>
+  <tabstop>gridSortBox</tabstop>
+  <tabstop>gridDescendingOption</tabstop>
+  <tabstop>listAvailableList</tabstop>
+  <tabstop>listAddButton</tabstop>
+  <tabstop>listRemoveButton</tabstop>
+  <tabstop>listCurrentList</tabstop>
+  <tabstop>listSortDownButton</tabstop>
+  <tabstop>listSortUpButton</tabstop>
+  <tabstop>listCoverOption</tabstop>
+  <tabstop>listHeaderOption</tabstop>
+  <tabstop>listSizeBox</tabstop>
+  <tabstop>listSortBox</tabstop>
+  <tabstop>listDescendingOption</tabstop>
+  <tabstop>downloadOption</tabstop>
+  <tabstop>saveOption</tabstop>
+  <tabstop>parametersLine</tabstop>
  </tabstops>
  <resources/>
  <connections/>
