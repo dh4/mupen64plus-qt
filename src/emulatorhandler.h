@@ -38,7 +38,6 @@
 #include <QMessageBox>
 #include <QObject>
 #include <QProcess>
-#include <QTextEdit>
 
 #include "common.h"
 
