@@ -386,7 +386,9 @@ void MainWindow::autoloadSettings()
         //Check for Mupen64Plus within the same directory
         QString currentDir = QCoreApplication::applicationDirPath();
 
-        if (QFileInfo(currentDir+"/mupen64plus.exe").exists())
+        if (QFileInfo(currentDir+"/mupen64plus-ui-console.exe").exists())
+            SETTINGS.setValue("Paths/mupen64plus", currentDir+"/mupen64plus-ui-console.exe");
+        else if (QFileInfo(currentDir+"/mupen64plus.exe").exists())
             SETTINGS.setValue("Paths/mupen64plus", currentDir+"/mupen64plus.exe");
 
         if (QFileInfo(currentDir+"/mupen64plus-video-rice.dll").exists())
