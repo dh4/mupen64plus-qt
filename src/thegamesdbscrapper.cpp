@@ -146,10 +146,13 @@ void TheGamesDBScrapper::downloadGameInfo(QString identifier, QString searchName
 
         //Get front cover
         QString boxartURL = "";
-        QString coverFile = gameCache + "/boxart-front.jpg";
-        QFile cover(coverFile);
+        QString boxartExt = "";
+        QString coverFile = gameCache + "/boxart-front.";
 
-        if (!cover.exists() || (force && updated)) {
+        QFile coverJPG(coverFile + "jpg");
+        QFile coverPNG(coverFile + "png");
+
+        if ((!coverJPG.exists() && !coverPNG.exists()) || (force && updated)) {
             file.open(QIODevice::ReadOnly);
             QString dom = file.readAll();
             file.close();
@@ -169,6 +172,10 @@ void TheGamesDBScrapper::downloadGameInfo(QString identifier, QString searchName
 
             if (boxartURL != "") {
                 QUrl url("http://thegamesdb.net/banners/" + boxartURL);
+
+                //Check to save as JPG or PNG
+                boxartExt = QFileInfo(boxartURL).completeSuffix().toLower();
+                QFile cover(coverFile + boxartExt);
 
                 cover.open(QIODevice::WriteOnly);
                 cover.write(getUrlContents(url));

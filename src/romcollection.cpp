@@ -341,13 +341,16 @@ void RomCollection::initializeRom(Rom *currentRom, QDir romDir, bool cached)
         currentRom->developer = game.firstChildElement("Developer").text();
         currentRom->rating = game.firstChildElement("Rating").text();
 
-        QString imageFile = getDataLocation() + "/cache/"
-                            + currentRom->romMD5.toLower() + "/boxart-front.jpg";
-        QFile cover(imageFile);
+        foreach (QString ext, QStringList() << "jpg" << "png")
+        {
+            QString imageFile = getDataLocation() + "/cache/"
+                                + currentRom->romMD5.toLower() + "/boxart-front." + ext;
+            QFile cover(imageFile);
 
-        if (cover.exists()) {
-            currentRom->image.load(imageFile);
-            currentRom->imageExists = true;
+            if (cover.exists()&& currentRom->image.load(imageFile)) {
+                currentRom->imageExists = true;
+                break;
+            }
         }
     }
 }
