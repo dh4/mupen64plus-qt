@@ -351,11 +351,18 @@ void MainWindow::autoloadSettings()
     QString mupen64Path = SETTINGS.value("Paths/mupen64plus", "").toString();
     QString dataPath = SETTINGS.value("Paths/data", "").toString();
     QString pluginPath = SETTINGS.value("Paths/plugins", "").toString();
+    QString configPath = SETTINGS.value("Paths/config", "").toString();
 
-    if (mupen64Path == "" && dataPath == "" && pluginPath == "") {
+    if (mupen64Path == "" && dataPath == "" && pluginPath == "" && configPath == "") {
+#if QT_VERSION >= 0x050000
+        QString homeDir = QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first();
+#else
+        QString homeDir = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#endif
+
 #ifdef Q_OS_LINUX
         //If user has not entered any settings, check common locations for them
-        QStringList mupen64Check, dataCheck, pluginCheck;
+        QStringList mupen64Check, dataCheck, pluginCheck, configCheck;
 
         mupen64Check << "/usr/games/mupen64plus"
                      << "/usr/bin/mupen64plus";
@@ -367,6 +374,8 @@ void MainWindow::autoloadSettings()
 
         dataCheck    << "/usr/share/mupen64plus"
                      << "/usr/share/games/mupen64plus";
+
+        configCheck  << homeDir + "/.config/mupen64plus";
 
 
         foreach (QString check, mupen64Check)
@@ -380,6 +389,10 @@ void MainWindow::autoloadSettings()
         foreach (QString check, dataCheck)
             if (QFileInfo(check+"/mupen64plus.ini").exists())
                 SETTINGS.setValue("Paths/data", check);
+
+        foreach (QString check, configCheck)
+            if (QFileInfo(check+"/mupen64plus.cfg").exists())
+                SETTINGS.setValue("Paths/config", check);
 #endif
 
 #ifdef Q_OS_WIN
@@ -396,6 +409,9 @@ void MainWindow::autoloadSettings()
 
         if (QFileInfo(currentDir+"/mupen64plus.ini").exists())
             SETTINGS.setValue("Paths/data", currentDir);
+
+        if (QFileInfo(homeDir+"/AppData/Roaming/Mupen64Plus/mupen64plus.cfg").exists())
+            SETTINGS.setValue("Paths/config", homeDir+"/AppData/Roaming/Mupen64Plus);
 #endif
 
 #ifdef Q_OS_OSX
@@ -408,6 +424,9 @@ void MainWindow::autoloadSettings()
             SETTINGS.setValue("Paths/plugins", mupen64App+"/MacOS");
             SETTINGS.setValue("Paths/data", mupen64App+"/Resources");
         }
+
+        if (QFileInfo(homeDir+"/.config/mupen64plus/mupen64plus.cfg").exists())
+            SETTINGS.setValue("Paths/config", homeDir+"/.config/mupen64plus");
 #endif
     }
 }
