@@ -1,0 +1,63 @@
+.\" Copyright (c) 2013-2015, Presence
+.\" All rights reserved.
+.\"
+.\" %%%LICENSE_START(BSD_3_CLAUSE)
+.\" Redistribution and use in source and binary forms, with or without
+.\" modification, are permitted provided that the following conditions
+.\" are met:
+.\" * Redistributions of source code must retain the above copyright
+.\"   notice, this list of conditions and the following disclaimer.
+.\" * Redistributions in binary form must reproduce the above copyright
+.\"   notice, this list of conditions and the following disclaimer in
+.\"   the documentation and/or other materials provided with the
+.\"   distribution.
+.\" * Neither the name of the organization nor the names of its
+.\"   contributors may be used to endorse or promote products derived 
+.\"   from this software without specific prior written permission.
+.\"
+.\" THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+.\" ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+.\" LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+.\" FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+.\" IN NO EVENT SHALL THE THE COPYRIGHT HOLDER OR CONTRIBUTORS
+.\" BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
+.\" OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+.\" OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+.\" OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+.\" LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+.\" NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+.\" SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+.\" %%%LICENSE_END
+.TH "Mupen64Plus-Qt" "1" "May 2015" "Mupen64Plus-Qt" "User Commands"
+.SH "NAME"
+Mupen64Plus-Qt \- a basic launcher for Mupen64Plus
+.SH "DESCRIPTION"
+mupen64plus-qt [option ...]
+.SH "OPTIONS"
+.TP 
+\fB\-\-noosd\fR / \fB\-\-osd\fR
+One or the other is sent to Mupen64Plus based on whether the "On Screen Display" checkbox is checked under the graphics tab.
+.TP 
+\fB\-\-fullscreen\fR / \fB\-\-windowed\fR
+Similarly, one or the other is sent based on the "Fullscreen" checkbox underneath the graphics tab.
+.TP 
+\fB\-\-resolution\fR
+This can be configured with the "Resolution" combo box underneath the graphics tab. The list is generated based on common resolutions smaller than your current desktop resolution. If you require a resolution not in the list, just set the "default" option which will not send the --resolution parameter to Mupen64Plus (Mupen64Plus will read from whatever setting is within it's configuration file in this case).
+.TP 
+\fB\-\-configdir\fR
+This is configured under the paths tab. This is entirely optional, but allows you to specific a different directory to load the mupen64plus.cfg file from (useful if you want to say, load different input settings at different times).
+.TP 
+\fB\-\-datadir\fR
+This is set underneath the paths tab. Mupen64Plus-Qt will also make use of the data directory setting to load the GoodName text and other information from the mupen64plus.ini file, so make sure this directory contains that file. It's usually /usr/share/mupen64plus on Linux or the same directory as the executable on Windows. 
+.TP 
+\fB\-\-plugindir\fR
+The plugin directory is usually /usr/lib/mupen64plus or within the same directory as the executable on Windows. Mupen64Plus-Qt also makes use of this directory setting to populate the options on the plugins tab (you must click Ok first before they will populate).
+.TP 
+\fB\-\-gfx\fR / \fB\-\-audio\fR / \fB\-\-input\fR / \fB\-\-rsp\fR
+These are configured under the plugins tab once the plugin directory has been set.
+.TP 
+\fB\-\-emumode\fR
+This is configured under the emulation tab.
+.TP 
+\fB\-\-saveoptions\fR / \fB\-\-nosaveoptions\fR
+One or the other is sent to Mupen64Plus based on the "Save Options" checkbox underneath the other tab. If --saveoptions is set, then Mupen64Plus will save whatever settings are passed to it into its configuration file (mupen64plus.cfg)
