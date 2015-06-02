@@ -411,7 +411,7 @@ void MainWindow::autoloadSettings()
             SETTINGS.setValue("Paths/data", currentDir);
 
         if (QFileInfo(homeDir+"/AppData/Roaming/Mupen64Plus/mupen64plus.cfg").exists())
-            SETTINGS.setValue("Paths/config", homeDir+"/AppData/Roaming/Mupen64Plus);
+            SETTINGS.setValue("Paths/config", homeDir+"/AppData/Roaming/Mupen64Plus");
 #endif
 
 #ifdef Q_OS_OSX
