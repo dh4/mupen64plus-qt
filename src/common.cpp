@@ -1,5 +1,5 @@
 /***
- * Copyright (c) 2013, Presence
+ * Copyright (c) 2013, Dan Hasting
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
