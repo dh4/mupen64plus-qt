@@ -14,22 +14,27 @@ You'll need to make sure you have qmake, g++, the Qt development libraries and t
 # apt-get install qt4-qmake g++ libqt4-dev libquazip-dev libqt4-sql-sqlite
 ```
 
-Or, if you want to use Qt 5:
-
-```
-# apt-get install qt5-qmake g++ qtbase5-dev libquazip-qt5-dev libqt5sql5-sqlite
-```
-
 Once the needed packages are installed, create the Makefile with qmake and then build with make:
 
 ```
-$ qmake
+$ qmake-qt4
 $ make
 ```
 
 #### Building with Qt5
 
-If you're building with Qt5 instead of Qt4 on a Debian-based distribution and have libquazip-qt5-dev installed, you'll need to change -lquazip to -lquazip-qt5 near the end of mupen64plus-qt.pro.
+Install the Qt5 dependencies instead:
+
+```
+# apt-get install qt5-qmake g++ qtbase5-dev libquazip-qt5-dev libqt5sql5-sqlite
+```
+
+On a Debian-based distribution with libquazip-qt5-dev installed, you'll need to change -lquazip to -lquazip-qt5 near the end of mupen64plus-qt.pro.
+
+```
+$ qmake-qt5
+$ make
+```
 
 ## Usage
 
