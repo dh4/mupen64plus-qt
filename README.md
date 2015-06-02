@@ -21,6 +21,10 @@ $ qmake
 $ make
 ```
 
+#### Building with Qt5
+
+If you're building with Qt5 instead of Qt4 on a Debian-based distribution and have libquazip-qt5-dev installed, you'll need to change -lquazip to -lquazip-qt5 near the end of mupen64plus-qt.pro.
+
 ## Usage
 
 Mupen64Plus-Qt utilizes the console UI to launch games. It contains support for most of the command line parameters. These can be viewed by running Mupen64Plus from a terminal with the --help parameter or [here](https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage).
