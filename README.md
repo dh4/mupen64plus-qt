@@ -14,6 +14,12 @@ You'll need to make sure you have qmake, g++, the Qt development libraries and t
 # apt-get install qt4-qmake g++ libqt4-dev libquazip-dev libqt4-sql-sqlite
 ```
 
+Or, if you want to use Qt 5:
+
+```
+# apt-get install qt5-qmake g++ qtbase5-dev libquazip-qt5-dev libqt5sql5-sqlite
+```
+
 Once the needed packages are installed, create the Makefile with qmake and then build with make:
 
 ```
