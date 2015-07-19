@@ -116,14 +116,23 @@ void MainWindow::addToGridView(Rom *currentRom, int count)
     gridImageLabel->setMinimumWidth(getImageSize("Grid").width());
     QPixmap image;
 
-    if (currentRom->imageExists)
-        image = currentRom->image.scaled(getImageSize("Grid"), Qt::IgnoreAspectRatio,
-                                        Qt::SmoothTransformation);
-    else
+    if (currentRom->imageExists) {
+        //Use uniform aspect ratio to account for fluctuations in TheGamesDB box art
+        Qt::AspectRatioMode aspectRatioMode = Qt::IgnoreAspectRatio;
+
+        //Don't warp aspect ratio though if image is too far away from standard size (JP box art)
+        float aspectRatio = float(currentRom->image.width()) / currentRom->image.height();
+
+        if (aspectRatio < 1.1 || aspectRatio > 1.8)
+            aspectRatioMode = Qt::KeepAspectRatio;
+
+        image = currentRom->image.scaled(getImageSize("Grid"), aspectRatioMode, Qt::SmoothTransformation);
+    } else
         image = QPixmap(":/images/not-found.png").scaled(getImageSize("Grid"), Qt::IgnoreAspectRatio,
                                                          Qt::SmoothTransformation);
 
     gridImageLabel->setPixmap(image);
+    gridImageLabel->setAlignment(Qt::AlignCenter);
     gameGridLayout->addWidget(gridImageLabel, 1, 1);
 
     if (SETTINGS.value("Grid/label","true") == "true") {
@@ -189,6 +198,8 @@ void MainWindow::addToListView(Rom *currentRom, int count)
     //Add image
     if (SETTINGS.value("List/displaycover", "") == "true") {
         QLabel *listImageLabel = new QLabel(gameListItem);
+        listImageLabel->setMinimumHeight(getImageSize("List").height());
+        listImageLabel->setMinimumWidth(getImageSize("List").width());
 
         QPixmap image;
 
@@ -200,7 +211,7 @@ void MainWindow::addToListView(Rom *currentRom, int count)
                                                              Qt::SmoothTransformation);
 
         listImageLabel->setPixmap(image);
-
+        listImageLabel->setAlignment(Qt::AlignCenter);
         gameListLayout->addWidget(listImageLabel, 0, 1);
     }
 
