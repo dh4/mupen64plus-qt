@@ -237,6 +237,14 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
     if (zip)
         connect(emulatorProc, SIGNAL(finished(int)), this, SLOT(cleanTemp()));
 
+    // GLideN64 workaround. Can be removed if workaround is no longer needed
+    // See: https://github.com/gonetz/GLideN64/issues/454#issuecomment-126853972
+    if (SETTINGS.value("Other/forcegl33", "").toString() == "true") {
+        QProcessEnvironment emulatorEnv = QProcessEnvironment::systemEnvironment();
+        emulatorEnv.insert("MESA_GL_VERSION_OVERRIDE", "3.3COMPAT");
+        emulatorProc->setProcessEnvironment(emulatorEnv);
+    }
+
     emulatorProc->setWorkingDirectory(QFileInfo(mupen64File).dir().canonicalPath());
     emulatorProc->setProcessChannelMode(QProcess::MergedChannels);
     emulatorProc->start(mupen64Path, args);
