@@ -81,4 +81,39 @@ One or the other is sent to Mupen64Plus based on the "Save Options" checkbox und
 
 Mupen64Plus-Qt supports downloading game information and cover images from [thegamesdb.net](http://thegamesdb.net/). This can be enabled under the Other tab. It's recommended you have the data directory set (under Paths) before using this. Once enabled, you'll need to refresh your ROMs list to download the information. Afterwards, images and other information about the game can be added to the layouts.
 
-If a game is not found, Mupen64Plus-Qt supports refreshing information for a single ROM. Just select the rom and go to File->Download/Update Info. From here you can enter a different search or the specific ID of the game (from the URL of the game on thegamesdb.net).
+### Updating Game Information
+
+If a game is not found or is incorrect, Mupen64Plus-Qt supports refreshing information for a single ROM. Just select the rom and go to File->Download/Update Info. From here you can enter a different search or the specific ID of the game (from the URL of the game on thegamesdb.net).
+
+#### Manually Updating Information
+
+If desired, you can also manually update the information from TheGamesDB. Note that if any information is incorrect, it's best to create an account on TheGamesDB and fix it there so all users can benefit.
+
+The information cache can be found here:
+Linux: ~/.local/share/mupen64plus-qt/cache/<MD5 of game>/
+Windows: cache folder in same directory as executable -> MD5 of game
+OSX: ~/Library/Application Support/mupen64plus-qt/cache/<MD5 of game>/
+
+You can find the MD5 of a game by using the table or list view and adding "MD5" to the current information.
+
+Edit data.xml with a text editor and replace any information you want to change. You can also replace boxart-front.{jpg,png} with an image of your choosing.
+
+### Deleting Game Information
+
+You can delete the game information fetched from TheGamesDB by using File->Delete Current Info. Note that if you are deleting a game's information because the game doesn't exist on TheGamesDB and Mupen64Plus-Qt pulled the information for different game, it's better to create an account on TheGamesDB and add the game so other users can benefit as well.
+
+This will cause Mupen64Plus-Qt to not update the information for this game until you force it with "Download/Update Info..."
+
+
+## Mupen64Plus Config Editor
+
+Mupen64Plus-Qt contains an editor with syntax highlighting for mupen64plus.cfg. To use it, make sure you have your config directory set under Settings->Configure->Paths. Mupen64Plus-Qt should auto-detect this setting for you. If it doesn't, the default location is:
+
+Linux: /home/<user>/.config/mupen64plus/
+Windows: C:/Users/<user>/AppData/Roaming/Mupen64Plus/
+OSX: /Users/<user>/.config/mupen64plus/
+
+
+## Linux: GLideN64 Workaround
+
+Mupen64Plus-Qt contains support for [this](https://github.com/gonetz/GLideN64/issues/454#issuecomment-126853972) workaround for GLideN64 on Linux. There is no graphical option for this as it's more of a hack and should be fixed on GLideN64's end. Edit your configuration file at ~/.config/mupen64plus/mupen64plus-qt.conf and add "forcegl33=true" under [Other].
