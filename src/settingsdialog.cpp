@@ -41,16 +41,21 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
     //Populate Paths tab
     ui->mupen64Path->setText(SETTINGS.value("Paths/mupen64plus", "").toString());
-    ui->romPath->setText(SETTINGS.value("Paths/roms", "").toString());
     ui->pluginPath->setText(SETTINGS.value("Paths/plugins", "").toString());
     ui->dataPath->setText(SETTINGS.value("Paths/data", "").toString());
     ui->configPath->setText(SETTINGS.value("Paths/config", "").toString());
+
+    QStringList romDirectories = SETTINGS.value("Paths/roms", "").toString().split("|");
+    romDirectories.removeAll("");
+    foreach (QString directory, romDirectories)
+        ui->romList->addItem(directory);
 
     connect(ui->mupen64Button, SIGNAL(clicked()), this, SLOT(browseMupen64()));
     connect(ui->pluginButton, SIGNAL(clicked()), this, SLOT(browsePlugin()));
     connect(ui->dataButton, SIGNAL(clicked()), this, SLOT(browseData()));
     connect(ui->configButton, SIGNAL(clicked()), this, SLOT(browseConfig()));
-    connect(ui->romButton, SIGNAL(clicked()), this, SLOT(browseROM()));
+    connect(ui->romAddButton, SIGNAL(clicked()), this, SLOT(addRomDirectory()));
+    connect(ui->romRemoveButton, SIGNAL(clicked()), this, SLOT(removeRomDirectory()));
 
 
     //Populate Emulation tab
@@ -312,6 +317,22 @@ void SettingsDialog::addColumn(QListWidget *currentList, QListWidget *availableL
 }
 
 
+void SettingsDialog::addRomDirectory()
+{
+    QString path = QFileDialog::getExistingDirectory(this, tr("ROM Directory"));
+    if (path != "") {
+        //check for duplicates
+        bool found = false;
+        foreach (QListWidgetItem *item, ui->romList->findItems("*", Qt::MatchWildcard))
+            if (path == item->text())
+                found = true;
+
+        if (!found)
+            ui->romList->addItem(path);
+    }
+}
+
+
 void SettingsDialog::browseBackground()
 {
     QString path = QFileDialog::getOpenFileName(this, tr("Background Image"));
@@ -362,14 +383,6 @@ void SettingsDialog::browseConfig()
 }
 
 
-void SettingsDialog::browseROM()
-{
-    QString path = QFileDialog::getExistingDirectory(this, tr("ROM Directory"));
-    if (path != "")
-        ui->romPath->setText(path);
-}
-
-
 void SettingsDialog::editSettings()
 {
     //Set download option first
@@ -384,10 +397,15 @@ void SettingsDialog::editSettings()
 
     //Paths tab
     SETTINGS.setValue("Paths/mupen64plus", ui->mupen64Path->text());
-    SETTINGS.setValue("Paths/roms", ui->romPath->text());
     SETTINGS.setValue("Paths/plugins", ui->pluginPath->text());
     SETTINGS.setValue("Paths/data", ui->dataPath->text());
     SETTINGS.setValue("Paths/config", ui->configPath->text());
+
+    QStringList romDirectories;
+    foreach (QListWidgetItem *item, ui->romList->findItems("*", Qt::MatchWildcard))
+        romDirectories << item->text();
+
+    SETTINGS.setValue("Paths/roms", romDirectories.join("|"));
 
 
     //Emulation tab
@@ -657,6 +675,16 @@ void SettingsDialog::removeColumn(QListWidget *currentList, QListWidget *availab
         availableList->sortItems();
     }
 }
+
+
+void SettingsDialog::removeRomDirectory()
+{
+    int row = ui->romList->currentRow();
+
+    if (row >= 0)
+        delete ui->romList->takeItem(row);
+}
+
 
 
 void SettingsDialog::sortDown(QListWidget *currentList)

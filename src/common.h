@@ -60,6 +60,7 @@
 
 typedef struct {
     QString fileName;
+    QString directory;
     QString romMD5;
     QString internalName;
     QString zipFile;

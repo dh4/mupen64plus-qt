@@ -13,7 +13,7 @@
   <property name="minimumSize">
    <size>
     <width>550</width>
-    <height>450</height>
+    <height>500</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>7</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pathsWidget">
       <attribute name="title">
@@ -44,95 +44,87 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
-        <layout class="QGridLayout" name="pathsLayout">
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="mupen64Path"/>
-         </item>
-         <item row="0" column="2">
-          <widget class="QPushButton" name="mupen64Button">
-           <property name="text">
-            <string>Browse...</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="2">
-          <widget class="QPushButton" name="dataButton">
-           <property name="text">
-            <string>Browse...</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="romPath"/>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="romButton">
-           <property name="text">
-            <string>Browse...</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="dataPathLabel">
-           <property name="text">
-            <string>Data directory:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLineEdit" name="dataPath"/>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="pluginPathLabel">
-           <property name="text">
-            <string>Plugins directory:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QPushButton" name="pluginButton">
-           <property name="text">
-            <string>Browse...</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="mupen64PathLabel">
-           <property name="text">
-            <string>Mupen64Plus executable: </string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="romPathLabel">
-           <property name="text">
-            <string>ROM directory</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="pluginPath"/>
-         </item>
-         <item row="4" column="2">
-          <widget class="QPushButton" name="configButton">
-           <property name="text">
-            <string>Browse...</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QLineEdit" name="configPath"/>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="configPathLabel">
-           <property name="text">
-            <string>Config directory:</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QGroupBox" name="paths">
+         <property name="title">
+          <string>Mupen64Plus Files</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="pathsLayout">
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="dataPath"/>
+            </item>
+            <item row="2" column="2">
+             <widget class="QPushButton" name="dataButton">
+              <property name="text">
+               <string>Browse...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QPushButton" name="configButton">
+              <property name="text">
+               <string>Browse...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="pluginPath"/>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="configPath"/>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="configPathLabel">
+              <property name="text">
+               <string>Config directory:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QPushButton" name="mupen64Button">
+              <property name="text">
+               <string>Browse...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="pluginPathLabel">
+              <property name="text">
+               <string>Plugins directory:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QPushButton" name="pluginButton">
+              <property name="text">
+               <string>Browse...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="mupen64PathLabel">
+              <property name="text">
+               <string>Mupen64Plus executable: </string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="mupen64Path"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="dataPathLabel">
+              <property name="text">
+               <string>Data directory:</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <spacer name="pathsSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -144,6 +136,76 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="roms">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>120</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>ROM Directories</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="romLayout">
+            <item row="0" column="0">
+             <widget class="QListWidget" name="romList">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
+              <property name="baseSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Mupen64Plus-Qt will search for all .z64, .v64, .n64, and .zip files in these directories</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QWidget" name="listActionWidget" native="true">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>80</height>
+               </size>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout">
+               <item>
+                <widget class="QPushButton" name="romAddButton">
+                 <property name="text">
+                  <string>Add...</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="romRemoveButton">
+                 <property name="text">
+                  <string>Remove</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -711,7 +773,16 @@
           </item>
           <item row="0" column="0">
            <layout class="QGridLayout" name="gridImageLayout" rowstretch="0,0,0,0" columnstretch="0,0" columnminimumwidth="150,0">
-            <property name="margin">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
              <number>0</number>
             </property>
             <item row="2" column="0">
@@ -1123,18 +1194,18 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>buttonBox</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>mupen64Path</tabstop>
-  <tabstop>romPath</tabstop>
   <tabstop>pluginPath</tabstop>
   <tabstop>dataPath</tabstop>
   <tabstop>configPath</tabstop>
   <tabstop>mupen64Button</tabstop>
-  <tabstop>romButton</tabstop>
   <tabstop>pluginButton</tabstop>
   <tabstop>dataButton</tabstop>
   <tabstop>configButton</tabstop>
+  <tabstop>romList</tabstop>
+  <tabstop>romAddButton</tabstop>
+  <tabstop>romRemoveButton</tabstop>
   <tabstop>pureButton</tabstop>
   <tabstop>cachedButton</tabstop>
   <tabstop>dynamicButton</tabstop>

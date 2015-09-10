@@ -47,7 +47,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 
     romCollection = new RomCollection(QStringList() << "*.z64" << "*.v64" << "*.n64" << "*.zip",
-                                      SETTINGS.value("Paths/roms","").toString(), this);
+                                      QStringList() << SETTINGS.value("Paths/roms","").toString().split("|"),
+                                      this);
 
     connect(romCollection, SIGNAL(updateStarted(bool)), this, SLOT(disableViews(bool)));
     connect(romCollection, SIGNAL(romAdded(Rom*, int)), this, SLOT(addToView(Rom*, int)));
@@ -99,6 +100,7 @@ void MainWindow::addToGridView(Rom *currentRom, int count)
 
     //Assign ROM data to widget for use in click events
     gameGridItem->setProperty("fileName", currentRom->fileName);
+    gameGridItem->setProperty("directory", currentRom->directory);
     if (currentRom->goodName == "Unknown ROM" || currentRom->goodName == "Requires catalog file")
         gameGridItem->setProperty("search", currentRom->internalName);
     else
@@ -185,6 +187,7 @@ void MainWindow::addToListView(Rom *currentRom, int count)
 
     //Assign ROM data to widget for use in click events
     gameListItem->setProperty("fileName", currentRom->fileName);
+    gameListItem->setProperty("directory", currentRom->directory);
     if (currentRom->goodName == "Unknown ROM" || currentRom->goodName == "Requires catalog file")
         gameListItem->setProperty("search", currentRom->internalName);
     else
@@ -279,19 +282,22 @@ void MainWindow::addToTableView(Rom *currentRom)
     //Filename for launching ROM
     fileItem->setText(0, currentRom->fileName);
 
+    //Directory ROM is located in
+    fileItem->setText(1, currentRom->directory);
+
     //GoodName or Internal Name for searching
     if (currentRom->goodName == "Unknown ROM" || currentRom->goodName == "Requires catalog file")
-        fileItem->setText(1, currentRom->internalName);
+        fileItem->setText(2, currentRom->internalName);
     else
-        fileItem->setText(1, currentRom->goodName);
+        fileItem->setText(2, currentRom->goodName);
 
     //MD5 for cache info
-    fileItem->setText(2, currentRom->romMD5.toLower());
+    fileItem->setText(3, currentRom->romMD5.toLower());
 
     //Zip file
-    fileItem->setText(3, currentRom->zipFile);
+    fileItem->setText(4, currentRom->zipFile);
 
-    int i = 4, c = 0;
+    int i = 5, c = 0;
     bool addImage = false;
 
     foreach (QString current, visible)
@@ -819,16 +825,18 @@ void MainWindow::launchRomFromMenu()
 void MainWindow::launchRomFromTable()
 {
     QString romFileName = QVariant(tableView->currentItem()->data(0, 0)).toString();
-    QString zipFileName = QVariant(tableView->currentItem()->data(3, 0)).toString();
-    emulation->startEmulator(QDir(romCollection->romPath), romFileName, zipFileName);
+    QString romDirName = QVariant(tableView->currentItem()->data(1, 0)).toString();
+    QString zipFileName = QVariant(tableView->currentItem()->data(4, 0)).toString();
+    emulation->startEmulator(QDir(romDirName), romFileName, zipFileName);
 }
 
 
 void MainWindow::launchRomFromWidget(QWidget *current)
 {
     QString romFileName = current->property("fileName").toString();
+    QString romDirName = current->property("directory").toString();
     QString zipFileName = current->property("zipFile").toString();
-    emulation->startEmulator(QDir(romCollection->romPath), romFileName, zipFileName);
+    emulation->startEmulator(QDir(romDirName), romFileName, zipFileName);
 }
 
 
@@ -837,7 +845,7 @@ void MainWindow::launchRomFromZip()
     QString fileName = zipList->currentItem()->text();
     zipDialog->close();
 
-    emulation->startEmulator(QDir(romCollection->romPath), fileName, openPath);
+    emulation->startEmulator(QDir(), fileName, openPath);
 }
 
 
@@ -908,9 +916,9 @@ void MainWindow::openSettings()
         tableView->setHeaderLabels(QStringList(""));
     }
 
-    QString romSave = SETTINGS.value("Paths/roms","").toString();
-    if (romCollection->romPath != romSave) {
-        romCollection->updatePath(romSave);
+    QStringList romSave = SETTINGS.value("Paths/roms","").toString().split("|");
+    if (romCollection->romPaths != romSave) {
+        romCollection->updatePaths(romSave);
         romCollection->addRoms();
     } else if (downloadBefore == "" && downloadAfter == "true") {
         romCollection->addRoms();
@@ -932,7 +940,7 @@ void MainWindow::openRom()
     foreach (QString type, romCollection->getFileTypes(true)) filter += type + " ";
     filter += ");;All Files (*)";
 
-    openPath = QFileDialog::getOpenFileName(this, tr("Open ROM File"), romCollection->romPath, filter);
+    openPath = QFileDialog::getOpenFileName(this, tr("Open ROM File"), romCollection->romPaths.at(0), filter);
     if (openPath != "") {
         if (QFileInfo(openPath).suffix() == "zip") {
             QStringList zippedFiles = getZippedFiles(openPath);
@@ -952,12 +960,12 @@ void MainWindow::openRom()
             if (count == 0)
                 QMessageBox::information(this, tr("No ROMs"), tr("No ROMs found in ZIP file."));
             else if (count == 1)
-                emulation->startEmulator(QDir(romCollection->romPath), last, openPath);
+                emulation->startEmulator(QDir(QFileInfo(openPath).dir()), last, openPath);
             else { //More than one ROM in zip file, so let user select
                 openZipDialog(zippedFiles);
             }
         } else
-            emulation->startEmulator(QDir(romCollection->romPath), openPath);
+            emulation->startEmulator(QDir(QFileInfo(openPath).dir()), openPath);
     }
 }
 
@@ -1002,13 +1010,13 @@ void MainWindow::resetLayouts(bool imageUpdated)
 {
     QStringList tableVisible = SETTINGS.value("Table/columns", "Filename|Size").toString().split("|");
 
-    int hidden = 4;
+    int hidden = 5;
 
     saveColumnWidths();
     QStringList widths = SETTINGS.value("Table/width", "").toString().split("|");
 
     headerLabels.clear();
-    headerLabels << "" << "" << "" << "" << tableVisible; //First 4 blank for hidden columns
+    headerLabels << "" << "" << "" << "" << "" << tableVisible; //First 5 blank for hidden columns
 
     //Remove Game Cover title for aesthetics
     for (int i = 0; i < headerLabels.size(); i++)
@@ -1038,9 +1046,10 @@ void MainWindow::resetLayouts(bool imageUpdated)
     }
 
     tableView->setColumnHidden(0, true); //Hidden filename for launching emulator
-    tableView->setColumnHidden(1, true); //Hidden goodname for searching
-    tableView->setColumnHidden(2, true); //Hidden md5 for cache info
-    tableView->setColumnHidden(3, true); //Hidden column for zip file
+    tableView->setColumnHidden(1, true); //Hidden directory of ROM location
+    tableView->setColumnHidden(2, true); //Hidden goodname for searching
+    tableView->setColumnHidden(3, true); //Hidden md5 for cache info
+    tableView->setColumnHidden(4, true); //Hidden column for zip file
 
     int i = hidden;
     foreach (QString current, tableVisible)
@@ -1103,7 +1112,7 @@ void MainWindow::saveColumnWidths()
 {
     QStringList widths;
 
-    for (int i = 4; i < tableView->columnCount(); i++)
+    for (int i = 5; i < tableView->columnCount(); i++)
     {
         widths << QString::number(tableView->columnWidth(i));
     }
