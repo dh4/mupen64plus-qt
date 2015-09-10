@@ -91,9 +91,9 @@ If desired, you can also manually update the information from TheGamesDB. Note t
 
 The information cache can be found here:
 
-Linux: ~/.local/share/mupen64plus-qt/cache/<MD5 of game>/  
+Linux: ~/.local/share/mupen64plus-qt/cache/\<MD5 of game\>/  
 Windows: cache folder in same directory as executable -> MD5 of game  
-OSX: ~/Library/Application Support/mupen64plus-qt/cache/<MD5 of game>/
+OSX: ~/Library/Application Support/mupen64plus-qt/cache/\<MD5 of game\>/
 
 You can find the MD5 of a game by using the table or list view and adding "MD5" to the current information.
 
@@ -110,9 +110,9 @@ This will cause Mupen64Plus-Qt to not update the information for this game until
 
 Mupen64Plus-Qt contains an editor with syntax highlighting for mupen64plus.cfg. To use it, make sure you have your config directory set under Settings->Configure->Paths. Mupen64Plus-Qt should auto-detect this setting for you. If it doesn't, the default location is:
 
-Linux: /home/<user>/.config/mupen64plus/  
-Windows: C:/Users/<user>/AppData/Roaming/Mupen64Plus/  
-OSX: /Users/<user>/.config/mupen64plus/
+Linux: /home/\<user\>/.config/mupen64plus/  
+Windows: C:/Users/\<user\>/AppData/Roaming/Mupen64Plus/  
+OSX: /Users/\<user\>/.config/mupen64plus/
 
 
 ## Linux: GLideN64 Workaround
