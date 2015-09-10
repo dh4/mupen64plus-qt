@@ -43,6 +43,7 @@ class TheGamesDBScrapper : public QObject
     Q_OBJECT
 public:
     explicit TheGamesDBScrapper(QWidget *parent = 0, bool force = false);
+    void deleteGameInfo(QString fileName, QString identifier);
     void downloadGameInfo(QString identifier, QString searchName, QString gameID = "");
 
 private:

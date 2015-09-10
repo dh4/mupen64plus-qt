@@ -40,6 +40,53 @@ TheGamesDBScrapper::TheGamesDBScrapper(QWidget *parent, bool force) : QObject(pa
 }
 
 
+void TheGamesDBScrapper::deleteGameInfo(QString fileName, QString identifier)
+{
+    QString text;
+    text = QString("<b>NOTE:</b> If you are deleting this game's information because the game doesn't exist ")
+                 + "on TheGamesDB and Mupen64Plus-Qt pulled the information for different game, it's better "
+                 + "to create an account on <a href=\"http://thegamesdb.net/\">TheGamesDB</a> and add the "
+                 + "game so other users can benefit as well."
+                 + "<br /><br />"
+                 + "This will cause Mupen64Plus-Qt to not update the information for this game until you "
+                 + "force it with \"Download/Update Info...\""
+                 + "<br /><br />"
+                 + "Delete the current information for <b>" + fileName + "</b>?";
+
+    int answer = QMessageBox::question(parent, tr("Delete Game Information"), text,
+                                       QMessageBox::Yes | QMessageBox::No);
+
+    if (answer == QMessageBox::Yes) {
+        QString gameCache = getDataLocation() + "/cache/" + identifier.toLower();
+
+        QString dataFile = gameCache + "/data.xml";
+        QFile file(dataFile);
+
+        // Remove game information
+        file.open(QIODevice::WriteOnly);
+        QTextStream stream(&file);
+        stream << "NULL";
+        file.close();
+
+        // Remove cover image
+        QString coverFile = gameCache + "/boxart-front.";
+
+        QFile coverJPG(coverFile + "jpg");
+        QFile coverPNG(coverFile + "png");
+
+        if (coverJPG.exists())
+            coverJPG.remove();
+        if (coverPNG.exists())
+            coverPNG.remove();
+
+        coverJPG.open(QIODevice::WriteOnly);
+        QTextStream streamImage(&coverJPG);
+        streamImage << "";
+        coverJPG.close();
+    }
+}
+
+
 void TheGamesDBScrapper::downloadGameInfo(QString identifier, QString searchName, QString gameID)
 {
     if (keepGoing && identifier != "") {

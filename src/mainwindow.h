@@ -88,6 +88,7 @@ private:
 
     QAction *aboutAction;
     QAction *configureAction;
+    QAction *deleteAction;
     QAction *downloadAction;
     QAction *editorAction;
     QAction *logAction;
@@ -125,6 +126,7 @@ private:
 
     EmulatorHandler *emulation;
     RomCollection *romCollection;
+    TheGamesDBScrapper *scrapper;
     TreeWidgetItem *fileItem;
 
 private slots:
@@ -140,6 +142,7 @@ private slots:
     void launchRomFromWidget(QWidget *current);
     void launchRomFromZip();
     void openAbout();
+    void openDeleteDialog();
     void openDownloader();
     void openEditor();
     void openLog();
