@@ -50,7 +50,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 
     QString description = "<b>Mupen64Plus-Qt</b><br />Version " + Version + "<br /><br />";
     description += tr("A basic launcher for Mupen64Plus using Qt.");
-    QString mupen64 = "<a href=\"https://code.google.com/p/mupen64plus/\">Mupen64Plus website</a>";
+    QString mupen64 = "<a href=\"http://www.mupen64plus.org/\">Mupen64Plus website</a>";
     QString github = "<a href=\"https://github.com/dh4/mupen64plus-qt\">Github repository</a>";
 
     descriptionLabel = new QLabel(description, this);
