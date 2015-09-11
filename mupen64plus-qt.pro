@@ -62,7 +62,7 @@ win32|macx {
         LIBS += -lquazip
     } else {
         # Debian distributions use a different library name for Qt5 quazip
-        system("uname -a | grep -E 'Debian|Ubuntu'") {
+        system("uname -a | grep -E 'Debian|Ubuntu' > /dev/null") {
             LIBS += -lquazip-qt5
         } else {
             LIBS += -lquazip5
