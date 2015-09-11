@@ -79,6 +79,14 @@ This is configured under the emulation tab.
 
 One or the other is sent to Mupen64Plus based on the "Save Options" checkbox underneath the other tab. If --saveoptions is set, then Mupen64Plus will save whatever settings are passed to it into its configuration file (mupen64plus.cfg)
 
+### Additional Parameters (Cheat Support)
+
+Mupen64Plus-Qt also supports specifying additional parameters under Settings->Configure->Other->Additional Parameters. You can specify any other parameters that the console UI supports here.
+
+The main use of this is specifying cheats. For example, filling this with `--cheats 'list'` will allow you to double click on a ROM and then view the log for a list of cheats for that game (remove it to be able to launch games again). You can then specify what cheats you want with `--cheats 1,2-1,3`, etc.
+
+Be aware that if this contains anything that Mupen64Plus doesn't support, the emulator will not be able to launch.
+
 
 ## Game Information
 
