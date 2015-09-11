@@ -58,5 +58,14 @@ win32|macx {
     SOURCES += quazip/*.c
     HEADERS += quazip/*.h
 } else {
-    LIBS += -lquazip
+    lessThan(QT_MAJOR_VERSION, 5) {
+        LIBS += -lquazip
+    } else {
+        # Debian distributions use a different library name for Qt5 quazip
+        system("uname -a | grep -E 'Debian|Ubuntu'") {
+            LIBS += -lquazip-qt5
+        } else {
+            LIBS += -lquazip5
+        }
+    }
 }
