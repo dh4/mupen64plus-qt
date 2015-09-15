@@ -1,0 +1,40 @@
+language: cpp
+sudo: required
+env:
+  matrix:
+  - BUILD=windows
+  - BUILD=native
+os:
+- linux
+- osx
+matrix:
+  exclude:
+  - os: osx
+    env: BUILD=windows
+install:
+- "./build-scripts/travis-ci.sh setup_qt"
+- "./build-scripts/travis-ci.sh get_quazip"
+script:
+- "./build-scripts/travis-ci.sh build"
+before_deploy:
+- "./build-scripts/travis-ci.sh package"
+deploy:
+- provider: s3
+  access_key_id:
+    secure: FLIdybRxjnMyhP7wfvWmQywYms61ZnX5yfABZs6cBE33MdDrJVnL9PqauBuyQ+1VZu81uz1VGvnVyQlnTYIncwlyxLGFPJ4Mi5yPsrVKh/OQ6kgiHHZHwLJB5S8RKF8Rtwp9p5DhxCBzuqCuuMKkaQmkefGGR0TRdEzcoxQx6uLhx+VCaCLoXEFJx7izV4lbDdBb8j3g1z+Se7kZSroMJRWB/ph//PpUQXiGHM3vsNDGXDtkn0s5gd40Ua89VL/kqfkQhNrmsmRlq3z5eUSzbRF5r1W1xBkaphVDTEmpFwv3HQZt1jbmPUckB1TSw1eG0kxqZ/zZPwgY3MwgXuS7dgxRN8sCfUmrWRyQjIv/pJ55clcKnt4Ql1kzKP2lkTWF2nInMl8DhHmFehgxLqLZg4+Ro6fHsrMZoM6nbGUfbR2eMDvbFVUz9yLaIp4mikcAYozdRQ1zlrD7226QzfjblLKuxfUlO8OF2OhF3jIPGAY4WjLq95jLX7MrWiOwXsv2fRNmAC4x40HT+Etufgz3f6BRZ4EUTqmfUTU3eNV7URiScBynqtVkRswy/FL1r1HnSatMDwF4Gfr79mMVHbVnPAApBrJPtlFsqNLqYit0kYqz2INLd54VmwELYVfGuR2woFMAgylyydRW99bDvr8USRVIHpfU3bV7QqRIJpqz08Q=
+  secret_access_key:
+    secure: WcQgb6f5iJWfoGKE9+URj62a7QvHekbE1RLIOaqXm0rQDnfkFcWc1I/oRLNmMel9yd+L4VwM+G4bTdwDYcdLU5KnEh808UK7Nq49K4zimHFeQdUyj0K1wSPMOP1jfImSCyTOU4e1x7JYNBlRrP0hGrVFDGqm3aoI7Qpcfj67jN5/psWoPZkOtQJ8Nse138v6x2OdlF7x+TmRKi7g7WD8eSIth+lJ5Tda7TMv7k42VgMr8z+RKUCfvOUEymSSYEODRPqUrulFYWugEM8pUlc+cyr2PgzBIYz4SYirbeRdIZLI3iRmGRqKq9Tz8szEsXnfJ/egvD3VmDHSal4EA6iFRp3/mDNJoupQP7dpKT71ti9ZhFm2Sfk6NE9wKYZG1NpAeobGCyysxhFVMQ1PA1x/GmmH9dWdUIjIAi10ud+T7L0g09uQe836MDhXexjU4dRx2/oXHfMC5RYLi+ebGUPlWmEreXIN0t2YxGKjykjPQf+l6TDG6ICeFBjMA/1xxToQbtKGBXIUghDYr9HDmpTiso05ML9/S3weo7+YVoqruUb57Jl11v7Mokejt4eqtLYKM9kiQsEL9QyYQj1lf1QEI3Y5/CkAPzq5Z52cQ1s84AVtUR8b8IOPhuhhqRRbvltTapHYarN1fgVNApFTsn+5uFedMv0lzKRQHEfZlEBuwkg=
+  bucket: dh4
+  skip_cleanup: true
+  local_dir: build
+  upload-dir: mupen64plus-qt/latest
+  on:
+    branch: master
+- provider: releases
+  api_key:
+    secure: P/QbvYtOmGixPZLFozvpEHOrIFb0TisCN9kQOrhpXY3lA6hxdZK0wUDkvI/R8xQLZf8Z6s1D3WMJR6S5ifEciLo3bi+arNUOierYw4+WaLi5LT1Jbj9cEUiuKOnPFJU23H2LHruAk03L2m5D7uqWj9CFiBg8PDRf3Xd1Ek8sIqms4yAvoN5OtFnLgYSn2gYR7fnVAqY3SBw7NTgCr4aB0jqWhqQprXIPpsbp/ZkyFA0ej27fyi8NLTY0fmpqXU4CxgR3PxhY+v+n7HZVt5Dafrf2WyJptGC7pUA6a0TQos8UIeBXluyA6BgvIJrApwU0RxeXQyC6wLtlabSWDQSMkL0UnT6yFGJYKwufSKlVdKLKsB4p21/YasL60o0Xd5FwOX96nh3510VbWrGWWxtp5hpHgVEdc8Dty1wjTq1DinVlGyJywZ1trwIdYDa2J+FWYHJmgq1xxhhBkcFR0C9oa2d9pIuqG3SrFmAmTC34bFj4lWb0OFJsgbTfO31RZhq2ENG+HiIyTVDcUxfr9G0Vv2p/xqDNvPrJBztBoNEcymItCXrPSpoZinzH8Fk4Ov+kD4XlAtQXQvaU7qR7LFWipSKojYIO2R1NFOSTMwW/8CoPTWrtV9A6P54EYGaHuGp5prVtf7k6d/UuFfdsfH96wQGpJi8pe6LG60tBVnwu2/g=
+  skip_cleanup: true
+  file_glob: true
+  file: build/mupen64plus-qt_*
+  on:
+    tags: true

@@ -49,7 +49,7 @@ RESOURCES += resources/mupen64plusqt.qrc
 
 FORMS += src/settingsdialog.ui
 
-win32|macx {
+win32|macx|linux_quazip_static {
     CONFIG += staticlib
     DEFINES += QUAZIP_STATIC
 
