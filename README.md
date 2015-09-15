@@ -2,7 +2,7 @@
 
 A basic cross-platform launcher. This was adapted from CEN64-Qt to work with Mupen64Plus.
 
-A discussion thread as well as links to binary downloads can be found [here](http://www.emutalk.net/threads/54976-Mupen64Plus-Qt).
+A discussion thread can be found [here](http://www.emutalk.net/threads/54976-Mupen64Plus-Qt).
 
 ![Mupen64Plus-Qt Grid View](https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/github.jpg)
 
