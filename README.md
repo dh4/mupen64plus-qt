@@ -1,8 +1,27 @@
-# Mupen64Plus-Qt
+# Mupen64Plus-Qt [![Build Status](https://travis-ci.org/dh4/mupen64plus-qt.svg?branch=master)](https://travis-ci.org/dh4/mupen64plus-qt)
 
 A basic cross-platform launcher. This was adapted from CEN64-Qt to work with Mupen64Plus.
 
 A discussion thread as well as links to binary downloads can be found [here](http://www.emutalk.net/threads/54976-Mupen64Plus-Qt).
+
+![Mupen64Plus-Qt Grid View](https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/github.jpg)
+
+
+## Getting Mupen64Plus-Qt
+
+### Stable
+
+Stable releases can be found on the [releases](https://github.com/dh4/mupen64plus-qt/releases) page.
+
+### Development
+
+Automatic builds of the latest git commit can be downloaded here:  
+Linux: [mupen64plus-qt_linux_git-latest.tar.gz](https://s3.amazonaws.com/dh4/mupen64plus-qt/latest/mupen64plus-qt_linux_git-latest.tar.gz)  
+Windows: [mupen64plus-qt_win_git-latest.zip](https://s3.amazonaws.com/dh4/mupen64plus-qt/latest/mupen64plus-qt_win_git-latest.zip)  
+OSX: [mupen64plus-qt_osx_git-latest.dmg](https://s3.amazonaws.com/dh4/mupen64plus-qt/latest/mupen64plus-qt_osx_git-latest.dmg)
+
+Be aware that these may contain bugs not present in the stable releases.
+
 
 ## Building
 
@@ -38,6 +57,17 @@ $ qmake-qt4
 $ make
 ```
 
+#### Compiling QuaZIP statically
+
+You also have the option to compile QuaZIP statically. Download the QuaZIP sources from Sourceforge. Place the contents of `quazip-<version>/quazip/` in `quazip/` within the project directory. Then run:
+
+```
+$ qmake CONFIG+=linux_quazip_static
+$ make
+```
+
+You will see warnings after the qmake step if the QuaZIP sources are in the wrong place.
+
 
 ## Usage
 
@@ -61,7 +91,7 @@ This is configured under the paths tab. This is entirely optional, but allows yo
 
 ### --datadir
 
-This is set underneath the paths tab. Mupen64Plus-Qt will also make use of the data directory setting to load the GoodName text and other information from the mupen64plus.ini file, so make sure this directory contains that file. It's usually /usr/share/mupen64plus on Linux or the same directory as the executable on Windows. 
+This is set underneath the paths tab. Mupen64Plus-Qt will also make use of the data directory setting to load the GoodName text and other information from the mupen64plus.ini file, so make sure this directory contains that file. It's usually /usr/share/mupen64plus on Linux or the same directory as the executable on Windows.
 
 ### --plugindir
 
