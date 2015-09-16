@@ -12,7 +12,7 @@ case "$1" in
         if [[ $BUILD_MXE_QT ]]; then
             # Build Qt with mxe
             sudo apt-get update -qq
-            apt-get install \
+            sudo apt-get install \
                 autoconf automake autopoint bash bison bzip2 cmake flex \
                 gettext git g++ gperf intltool libffi-dev libtool \
                 libltdl-dev libssl-dev libxml-parser-perl make openssl \
