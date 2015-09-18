@@ -127,9 +127,9 @@ You can specify ROM directories under Settings->Configure->Paths. Mupen64Plus-Qt
 
 Mupen64Plus-Qt contains three options for displaying your ROMs: a table view, grid view and list view. The view can be changed under Settings->Layout. These can be configured under Settings->Configure.
 
-<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/table-view.jpg" alt="Table View" height="175" />
-<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/grid-view.jpg" alt="Grid View" height="175" />
-<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/list-view.jpg" alt="List View" height="175" />
+<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/table-view.jpg" alt="Table View" height="150" />
+<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/grid-view.jpg" alt="Grid View" height="150" />
+<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/list-view.jpg" alt="List View" height="150" />
 
 In each of the views, you can simply double click a game to launch it, or single click to select it and use Emulation->Start.
 
