@@ -4,14 +4,43 @@ A basic cross-platform launcher. This was adapted from CEN64-Qt to work with [Mu
 
 A discussion thread can be found [here](http://www.emutalk.net/threads/54976-Mupen64Plus-Qt).
 
-![Mupen64Plus-Qt Grid View](https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/github.jpg)
+![Mupen64Plus-Qt](https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/github.jpg)
+
+
+## Table of Contents
+
+* [Getting Mupen64Plus-Qt](#getting-mupen64plus-qt)
+    * [Stable Builds](#stable-builds)
+    * [Development Builds](#development-builds)
+    * [Building (Linux)](#building-linux)
+* [First Launch and Setup](#first-launch-and-setup)
+    * [Linux](#linux)
+    * [Windows](#windows)
+    * [OSX](#osx)
+* [ROM Collection](#rom-collection)
+    * [Views](#views)
+* [Game Information from TheGamesDB](#game-information-from-thegamesdb)
+    * [Updating Game Information](#updating-game-information)
+    * [Deleting Game Information](#deleting-game-information)
+    * [Manually Updating Information](#manually-updating-information)
+* [Editor For mupen64plus.cfg](#editor-for-mupen64pluscfg)
+* [Mupen64Plus Log Viewer](#mupen64plus-log-viewer)
+* [Configuration File](#configuration-file)
+* [Comparison to Console UI](#comparison-to-console-ui)
+    * [Additional Parameters (Cheat Support)](#additional-parameters-cheat-support)
+* [Linux: GLideN64 Workaround](#linux-gliden64-workaround)
 
 
 ## Getting Mupen64Plus-Qt
 
 ### Stable Builds
 
-Stable releases can be found on the [releases](https://github.com/dh4/mupen64plus-qt/releases) page.
+Stable releases for Linux, Windows and OSX can be found on the [releases](https://github.com/dh4/mupen64plus-qt/releases) page.
+
+Note the Linux release is just a tar.gz archive containing an executable. It's a 64-bit executable that is linked to Qt4, so you'll need Qt4 installed to run it. If you have issues with it, see the section below on building.
+
+##### Linux Distributions
+Arch Linux: [https://aur.archlinux.org/packages/mupen64plus-qt/](https://aur.archlinux.org/packages/mupen64plus-qt/)  
 
 ### Development Builds
 
@@ -94,12 +123,20 @@ If you place it somewhere else, simply select mupen64plus.app as the executable 
 
 You can specify ROM directories under Settings->Configure->Paths. Mupen64Plus-Qt will search for any .z64, .v64 or .n64 files within these directories and also check within .zip files. After adding or removing directories to this list, it will automatically refresh your ROM list. You can manually refresh your list with File->Refresh List.
 
+#### Views
+
 Mupen64Plus-Qt contains three options for displaying your ROMs: a table view, grid view and list view. The view can be changed under Settings->Layout. These can be configured under Settings->Configure.
 
+<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/table-view.jpg" alt="Table View" height="175" />
+<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/grid-view.jpg" alt="Grid View" height="175" />
+<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/list-view.jpg" alt="List View" height="175" />
 
-## Game Information
+In each of the views, you can simply double click a game to launch it, or single click to select it and use Emulation->Start.
 
-Mupen64Plus-Qt supports downloading game information and cover images from [thegamesdb.net](http://thegamesdb.net/). This can be enabled under Settings->Configure->Other. It's recommended you have the data directory set (under Paths) before using this. Once enabled, you'll need to refresh your ROMs list to download the information. Afterwards, images and other information about the game can be added to the layouts.
+
+## Game Information from TheGamesDB
+
+Mupen64Plus-Qt supports downloading game information and cover images from [thegamesdb.net](http://thegamesdb.net/). This can be enabled under Settings->Configure->Other. It's recommended you have the data directory set (under Paths) before using this. Once enabled, you'll need to refresh your ROMs list to download the information. Afterwards, images and other information about the game can be added to the views.
 
 #### Updating Game Information
 
@@ -128,7 +165,9 @@ You can find the MD5 of a game by using the table or list view and adding "MD5" 
 Edit data.xml with a text editor and replace any information you want to change. You can also replace boxart-front.{jpg,png} with an image of your choosing.
 
 
-## Mupen64Plus Config Editor
+## Editor For mupen64plus.cfg
+
+<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/config-editor.jpg" alt="Table View" height="200" />
 
 Mupen64Plus-Qt contains an editor with syntax highlighting for mupen64plus.cfg. To use it, make sure you have your config directory set under Settings->Configure->Paths. Mupen64Plus-Qt should auto-detect this setting for you. If it doesn't, the default location is:
 
@@ -137,7 +176,7 @@ Windows: C:/Users/\<user\>/AppData/Roaming/Mupen64Plus/
 OSX: /Users/\<user\>/.config/mupen64plus/
 
 
-## Mupen64Plus Log
+## Mupen64Plus Log Viewer
 
 Mupen64Plus-Qt allows you to view the output from the Mupen64Plus console UI. Select Emulation->View Log after Mupen64Plus has quit to see the output from the last run.
 
