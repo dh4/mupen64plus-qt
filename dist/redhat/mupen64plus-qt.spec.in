@@ -1,0 +1,46 @@
+%define _name   mupen64plus-qt
+
+Name:           mupen64plus-qt-rpm
+Version:        @@VERSION@@
+Release:        1
+Summary:        A basic launcher for Mupen64Plus
+Group:          Applications/Emulators
+License:        BSD
+URL:            https://github.com/dh4/mupen64plus-qt
+Source0:        https://github.com/dh4/%{_name}/archive/%{version}.tar.gz
+BuildRequires:  qt5-qtbase-devel, quazip-qt5-devel, gcc-c++
+Requires:       qt5-qtbase, quazip-qt5
+
+%description
+Mupen64Plus-Qt is a basic launcher for the mupen64plus-ui-console frontend. It
+was adapted from CEN64-Qt to work with Mupen64Plus.
+
+See the README at https://www.github.com/dh4/mupen64plus-qt for a detailed
+description of its features and usage.
+
+%prep
+%autosetup -n %{_name}-%{version}
+
+%build
+sed -i 's#include <quazip/#include <quazip5/#g' src/common.h
+
+qmake-qt5
+make %{?_smp_mflags}
+
+%install
+install -Dm755 "mupen64plus-qt"                     "%{buildroot}%{_bindir}/mupen64plus-qt"
+install -Dm644 "resources/mupen64plus-qt.desktop"   "%{buildroot}%{_datadir}/applications/mupen64plus-qt.desktop"
+install -Dm644 "resources/images/mupen64plus.png"   "%{buildroot}%{_datadir}/icons/hicolor/128x128/apps/mupen64plus-qt.png"
+install -Dm644 "resources/mupen64plus-qt.1"         "%{buildroot}%{_mandir}/man1/mupen64plus-qt.1"
+
+%files
+%license LICENSE
+%doc README.md
+%{_bindir}/mupen64plus-qt
+%{_datadir}/applications/mupen64plus-qt.desktop
+%{_datadir}/icons/hicolor/128x128/apps/mupen64plus-qt.png
+%{_mandir}/man1/mupen64plus-qt.1*
+
+%changelog
+* Tue Oct 06 2015 Dan Hasting
+- initial spec file

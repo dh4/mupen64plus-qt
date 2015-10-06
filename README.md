@@ -40,7 +40,16 @@ Stable releases for Linux, Windows and OSX can be found on the [releases](https:
 Note the Linux release is just a tar.gz archive containing an executable. It's a 64-bit executable that is linked to Qt4, so you'll need Qt4 installed to run it. If you have issues with it, see the section below on building.
 
 ##### Linux Distributions
-Arch Linux: [https://aur.archlinux.org/packages/mupen64plus-qt/](https://aur.archlinux.org/packages/mupen64plus-qt/)  
+_Arch Linux:_ [https://aur.archlinux.org/packages/mupen64plus-qt/](https://aur.archlinux.org/packages/mupen64plus-qt/)
+
+_Redhat/Fedora:_ You can build an rpm package using the spec file found in dist/rpm:
+```
+$ sudo dnf install rpmdevtools git qt5-qtbase-devel quazip-qt5-devel gcc-c++
+$ ./dist/rpm/rpm-build.sh
+$ sudo rpm -i ~/rpmbuild/RPMS/<ARCH>/mupen64plus-qt-rpm-<VERSION>.<ARCH>.rpm
+```
+Note the resulting package is named mupen64plus-qt-rpm to avoid conflicts with some third-party mupen64plus RPMs.
+
 
 ### Development Builds
 
