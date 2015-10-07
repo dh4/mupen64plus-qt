@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git show-ref --tags | grep "`git log -n 1 --pretty='%H'`"
+git show-ref --tags | grep "`git log -n 1 --pretty='%H'`" > /dev/null
 
 if [[ $? == 1 ]]; then
     REVISION=$(git log -n 1 --pretty='%h')
