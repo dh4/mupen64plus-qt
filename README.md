@@ -103,7 +103,7 @@ You will see warnings after the qmake step if the QuaZIP sources are in the wron
 You can build and install a debian package using the files found in dist/debian:
 
 ```
-$ sudo apt-get install build-essential devscripts debhelper git qt5-qmake qtbase5-dev libquazip-qt5-dev libqt5sql5-sqlite
+$ sudo apt-get install build-essential devscripts debhelper qt5-qmake qtbase5-dev libquazip-qt5-dev libqt5sql5-sqlite
 $ ./dist/debian/deb-build.sh
 $ sudo dpkg -i mupen64plus-qt_<VERSION>-1.<ARCH>.deb
 ```
@@ -112,7 +112,7 @@ $ sudo dpkg -i mupen64plus-qt_<VERSION>-1.<ARCH>.deb
 
 You can build and install an RPM package using the spec file found in dist/redhat:
 ```
-$ sudo dnf install rpmdevtools git qt5-qtbase-devel quazip-qt5-devel gcc-c++
+$ sudo dnf install rpmdevtools qt5-qtbase-devel quazip-qt5-devel gcc-c++
 $ ./dist/redhat/rpm-build.sh
 $ sudo rpm -i ~/rpmbuild/RPMS/<ARCH>/mupen64plus-qt-rpm-<VERSION>.<ARCH>.rpm
 ```
