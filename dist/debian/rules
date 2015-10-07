@@ -8,5 +8,4 @@
 	dh $@
 
 override_dh_auto_configure:
-	./build-scripts/revision.sh
 	QT_SELECT=qt5 dh_auto_configure

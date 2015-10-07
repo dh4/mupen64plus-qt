@@ -48,7 +48,7 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
     license->setReadOnly(true);
     licenseFile.close();
 
-    QString description = "<b>Mupen64Plus-Qt</b><br />Version " + Version + "<br /><br />";
+    QString description = "<b>Mupen64Plus-Qt</b><br />Version " + getVersion() + "<br /><br />";
     description += tr("A basic launcher for Mupen64Plus using Qt.");
     QString mupen64 = "<a href=\"http://www.mupen64plus.org/\">Mupen64Plus website</a>";
     QString github = "<a href=\"https://github.com/dh4/mupen64plus-qt\">Github repository</a>";

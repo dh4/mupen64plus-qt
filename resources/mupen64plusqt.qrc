@@ -3,5 +3,6 @@
         <file>images/mupen64plus.png</file>
         <file>other/LICENSE</file>
         <file>images/not-found.png</file>
+        <file>other/VERSION</file>
     </qresource>
 </RCC>

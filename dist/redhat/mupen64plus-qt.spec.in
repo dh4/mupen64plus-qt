@@ -24,7 +24,6 @@ description of its features and usage.
 %build
 sed -i 's#include <quazip/#include <quazip5/#g' src/common.h
 
-./build-scripts/revision.sh
 qmake-qt5
 make %{?_smp_mflags}
 

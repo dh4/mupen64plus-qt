@@ -104,5 +104,6 @@ QGraphicsDropShadowEffect *getShadow(bool active);
 QSize getImageSize(QString view);
 QString getDataLocation();
 QString getRomInfo(QString identifier, const Rom *rom, bool removeWarn = false, bool sort = false);
+QString getVersion();
 
 #endif // COMMON_H

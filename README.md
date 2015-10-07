@@ -105,7 +105,7 @@ You can build and install a debian package using the files found in dist/debian:
 ```
 $ sudo apt-get install build-essential devscripts debhelper git qt5-qmake qtbase5-dev libquazip-qt5-dev libqt5sql5-sqlite
 $ ./dist/debian/deb-build.sh
-$ sudo dpkg -i ../mupen64plus-qt_<VERSION>-1.<ARCH>.deb
+$ sudo dpkg -i mupen64plus-qt_<VERSION>-1.<ARCH>.deb
 ```
 
 #### Creating a .rpm package (Redhat/Fedora)

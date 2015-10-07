@@ -1,10 +1,10 @@
 #!/bin/bash
 
-git show-ref --tags | grep "`git log -n 1 --pretty='%H'`" > /dev/null
+git show-ref --tags | grep "`git log -n 1 --pretty='%H'`" > /dev/null 2>&1
 
 if [[ $? == 1 ]]; then
-    REVISION=$(git log -n 1 --pretty='%h')
-    [[ $REVISION ]] && sed -i -e "s/Version = \"\([0-9.]*\)\"/Version = \"\1~git:$REVISION\"/g" src/global.h
+    REVISION=$(git log -n 1 --pretty='%h' 2> /dev/null)
+    [[ $REVISION ]] && sed -i -e "s/\([0-9.]*\)/\1~git:$REVISION/g" VERSION
 fi
 
-cat src/global.h | grep Version | awk '{print $(NF)}' | sed -e 's/[";~]//g' -e 's/:/-/g'
+cat VERSION

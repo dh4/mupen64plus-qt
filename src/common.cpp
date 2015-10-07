@@ -254,6 +254,17 @@ QGraphicsDropShadowEffect *getShadow(bool active)
 }
 
 
+QString getVersion()
+{
+    QFile versionFile(":/other/VERSION");
+    versionFile.open(QIODevice::ReadOnly);
+    QString version = versionFile.readAll();
+    versionFile.close();
+
+    return version;
+}
+
+
 QStringList getZippedFiles(QString completeFileName)
 {
     QuaZip zipFile(completeFileName);

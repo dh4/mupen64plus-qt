@@ -38,6 +38,7 @@
 #include <QLabel>
 #include <QPlainTextEdit>
 
+#include "common.h"
 #include "global.h"
 
 

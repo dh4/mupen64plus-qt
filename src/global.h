@@ -35,8 +35,6 @@
 #include <QSettings>
 
 
-const QString Version = "1.8";
-
 #ifdef Q_OS_WIN
     #define SETTINGS QSettings("mupen64plus-qt.ini", QSettings::IniFormat)
 #else
