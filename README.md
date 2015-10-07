@@ -40,15 +40,9 @@ Stable releases for Linux, Windows and OSX can be found on the [releases](https:
 Note the Linux release is just a tar.gz archive containing an executable. It's a 64-bit executable that is linked to Qt4, so you'll need Qt4 installed to run it. If you have issues with it, see the section below on building.
 
 ##### Linux Distributions
-_Arch Linux:_ [https://aur.archlinux.org/packages/mupen64plus-qt/](https://aur.archlinux.org/packages/mupen64plus-qt/)
-
-_Redhat/Fedora:_ You can build an rpm package using the spec file found in dist/redhat:
-```
-$ sudo dnf install rpmdevtools git qt5-qtbase-devel quazip-qt5-devel gcc-c++
-$ ./dist/redhat/rpm-build.sh
-$ sudo rpm -i ~/rpmbuild/RPMS/<ARCH>/mupen64plus-qt-rpm-<VERSION>.<ARCH>.rpm
-```
-Note the resulting package is named mupen64plus-qt-rpm to avoid conflicts with some third-party mupen64plus RPMs.
+_Debian/Ubuntu:_ See the section below on [creating a .deb package](#creating-a-deb-package-debianubuntu).  
+_Arch Linux:_ [https://aur.archlinux.org/packages/mupen64plus-qt/](https://aur.archlinux.org/packages/mupen64plus-qt/)  
+_Redhat/Fedora:_ See the section below on [creating a .rpm package](#creating-a-rpm-package-redhatfedora).
 
 
 ### Development Builds
@@ -103,6 +97,26 @@ $ make
 ```
 
 You will see warnings after the qmake step if the QuaZIP sources are in the wrong place.
+
+#### Creating a .deb package (Debian/Ubuntu)
+
+You can build and install a debian package using the files found in dist/debian:
+
+```
+$ sudo apt-get install build-essential devscripts debhelper git qt5-qmake qtbase5-dev libquazip-qt5-dev libqt5sql5-sqlite
+$ ./dist/debian/deb-build.sh
+$ sudo dpkg -i ../mupen64plus-qt_<VERSION>-1.<ARCH>.deb
+```
+
+#### Creating a .rpm package (Redhat/Fedora)
+
+You can build and install an RPM package using the spec file found in dist/redhat:
+```
+$ sudo dnf install rpmdevtools git qt5-qtbase-devel quazip-qt5-devel gcc-c++
+$ ./dist/redhat/rpm-build.sh
+$ sudo rpm -i ~/rpmbuild/RPMS/<ARCH>/mupen64plus-qt-rpm-<VERSION>.<ARCH>.rpm
+```
+Note the resulting package is named mupen64plus-qt-rpm to avoid conflicts with some third-party mupen64plus RPMs.
 
 
 ## First Launch and Setup

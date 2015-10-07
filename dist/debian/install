@@ -1,0 +1,4 @@
+mupen64plus-qt                      usr/games
+resources/mupen64plus-qt.desktop    usr/share/applications
+resources/mupen64plus-qt.6          usr/share/man/man6
+resources/images/mupen64plus.png    usr/share/icons/hicolor/128x128/apps/mupen64plus-qt.png
