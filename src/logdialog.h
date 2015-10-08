@@ -37,6 +37,8 @@
 #include <QGridLayout>
 #include <QTextEdit>
 
+#include "global.h"
+
 
 class LogDialog : public QDialog
 {

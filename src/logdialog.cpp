@@ -44,7 +44,7 @@ LogDialog::LogDialog(QString lastOutput, QWidget *parent) : QDialog(parent)
     logArea->setWordWrapMode(QTextOption::NoWrap);
 
     QFont font;
-#ifdef Q_OS_LINUX
+#ifdef OS_LINUX_OR_BSD
     font.setFamily("Monospace");
     font.setPointSize(9);
 #else

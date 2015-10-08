@@ -370,7 +370,7 @@ void MainWindow::autoloadSettings()
     QString pluginPath = SETTINGS.value("Paths/plugins", "").toString();
 
     if (mupen64Path == "" && dataPath == "" && pluginPath == "") {
-#ifdef Q_OS_LINUX
+#ifdef OS_LINUX_OR_BSD
         //If user has not entered any settings, check common locations for them
         QStringList mupen64Check, dataCheck, pluginCheck;
 

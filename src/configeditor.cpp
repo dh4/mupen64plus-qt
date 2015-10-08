@@ -30,7 +30,6 @@
  ***/
 
 #include "configeditor.h"
-#include "global.h"
 
 
 ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent)
@@ -47,7 +46,7 @@ ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent
     editorArea->setWordWrapMode(QTextOption::NoWrap);
 
     QFont font;
-#ifdef Q_OS_LINUX
+#ifdef OS_LINUX_OR_BSD
     font.setFamily("Monospace");
     font.setPointSize(9);
 #else

@@ -41,6 +41,8 @@
 #include <QSyntaxHighlighter>
 #include <QTextEdit>
 
+#include "global.h"
+
 
 class ConfigHighlighter : public QSyntaxHighlighter
 {

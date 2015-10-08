@@ -35,6 +35,10 @@
 #include <QSettings>
 
 
+#if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD) || defined(Q_OS_OPENBSD) || defined(Q_OS_NETBSD)
+    #define OS_LINUX_OR_BSD
+#endif
+
 #ifdef Q_OS_WIN
     #define SETTINGS QSettings("mupen64plus-qt.ini", QSettings::IniFormat)
 #else
