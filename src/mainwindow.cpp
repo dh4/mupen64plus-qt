@@ -374,16 +374,21 @@ void MainWindow::autoloadSettings()
         //If user has not entered any settings, check common locations for them
         QStringList mupen64Check, dataCheck, pluginCheck;
 
-        mupen64Check << "/usr/games/mupen64plus"
-                     << "/usr/bin/mupen64plus";
+        mupen64Check << "/usr/bin/mupen64plus"
+                     << "/usr/games/mupen64plus"
+                     << "/usr/local/bin/mupen64plus";
 
         pluginCheck  << "/usr/lib/mupen64plus"
+                     << "/usr/lib64/mupen64plus"
                      << "/usr/lib/x86_64-linux-gnu/mupen64plus"
                      << "/usr/lib/i386-linux-gnu/mupen64plus"
-                     << "/usr/lib/mupen64plus/mupen64plus";
+                     << "/usr/lib/mupen64plus/mupen64plus"
+                     << "/usr/lib64/mupen64plus/mupen64plus/"
+                     << "/usr/local/lib/mupen64plus";
 
         dataCheck    << "/usr/share/mupen64plus"
-                     << "/usr/share/games/mupen64plus";
+                     << "/usr/share/games/mupen64plus"
+                     << "/usr/local/share/mupen64plus";
 
 
         foreach (QString check, mupen64Check)
