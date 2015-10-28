@@ -31,6 +31,10 @@
 
 #include "logdialog.h"
 
+#if QT_VERSION >= 0x050200
+#include <QFontDatabase>
+#endif
+
 
 LogDialog::LogDialog(QString lastOutput, QWidget *parent) : QDialog(parent)
 {
@@ -43,15 +47,12 @@ LogDialog::LogDialog(QString lastOutput, QWidget *parent) : QDialog(parent)
     logArea = new QTextEdit(this);
     logArea->setWordWrapMode(QTextOption::NoWrap);
 
-    QFont font;
-#ifdef OS_LINUX_OR_BSD
-    font.setFamily("Monospace");
-    font.setPointSize(9);
+#if QT_VERSION >= 0x050200
+    QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
 #else
-    font.setFamily("Courier");
-    font.setPointSize(10);
+    QFont font("Monospace");
+    font.setStyleHint(QFont::TypeWriter);
 #endif
-    font.setFixedPitch(true);
     logArea->setFont(font);
 
     logArea->setPlainText(lastOutput);

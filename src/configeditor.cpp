@@ -31,6 +31,10 @@
 
 #include "configeditor.h"
 
+#if QT_VERSION >= 0x050200
+#include <QFontDatabase>
+#endif
+
 
 ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent)
 {
@@ -45,15 +49,12 @@ ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent
     editorArea = new QTextEdit(this);
     editorArea->setWordWrapMode(QTextOption::NoWrap);
 
-    QFont font;
-#ifdef OS_LINUX_OR_BSD
-    font.setFamily("Monospace");
-    font.setPointSize(9);
+#if QT_VERSION >= 0x050200
+    QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
 #else
-    font.setFamily("Courier");
-    font.setPointSize(10);
+    QFont font("Monospace");
+    font.setStyleHint(QFont::TypeWriter);
 #endif
-    font.setFixedPitch(true);
     editorArea->setFont(font);
 
     highlighter = new ConfigHighlighter(editorArea->document());
