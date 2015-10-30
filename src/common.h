@@ -32,33 +32,15 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#include <QColor>
-#include <QCoreApplication>
-#include <QDesktopServices>
-#include <QDir>
-#include <QEventLoop>
-#include <QFile>
 #include <QGraphicsDropShadowEffect>
-#include <QMessageBox>
-#include <QObject>
-#include <QSize>
 #include <QString>
-#include <QTextStream>
-#include <QTimer>
-#include <QUrl>
+#include <QPixmap>
 
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkRequest>
-#include <QtNetwork/QNetworkReply>
-#include <QtXml/QDomDocument>
-
-#include <quazip/quazip.h>
-#include <quazip/quazipfile.h>
-
-#include "global.h"
+class QColor;
+class QSize;
 
 
-typedef struct {
+struct Rom {
     QString fileName;
     QString directory;
     QString romMD5;
@@ -90,7 +72,7 @@ typedef struct {
 
     int count;
     bool imageExists;
-} Rom;
+};
 
 bool romSorter(const Rom &firstRom, const Rom &lastRom);
 int getDefaultWidth(QString id, int imageWidth);

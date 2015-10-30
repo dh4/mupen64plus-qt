@@ -30,6 +30,11 @@
  ***/
 
 #include "configeditor.h"
+#include "global.h"
+
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QTextEdit>
 
 #if QT_VERSION >= 0x050200
 #include <QFontDatabase>

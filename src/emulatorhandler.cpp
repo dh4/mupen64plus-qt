@@ -30,6 +30,16 @@
  ***/
 
 #include "emulatorhandler.h"
+#include "common.h"
+#include "global.h"
+
+#include <QDir>
+#include <QFile>
+#include <QMessageBox>
+#include <QProcess>
+
+#include <quazip/quazip.h>
+#include <quazip/quazipfile.h>
 
 
 EmulatorHandler::EmulatorHandler(QWidget *parent) : QObject(parent)

@@ -32,16 +32,13 @@
 #ifndef ROMCOLLECTION_H
 #define ROMCOLLECTION_H
 
-#include <QCryptographicHash>
 #include <QObject>
-#include <QProgressDialog>
-
+#include <QStringList>
 #include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlQuery>
 
-#include "common.h"
-#include "global.h"
-#include "thegamesdbscrapper.h"
+class QProgressDialog;
+class TheGamesDBScrapper;
+struct Rom;
 
 
 class RomCollection : public QObject

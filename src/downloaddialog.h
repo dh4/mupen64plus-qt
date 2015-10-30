@@ -33,13 +33,12 @@
 #define DOWNLOADDIALOG_H
 
 #include <QDialog>
-#include <QDialogButtonBox>
-#include <QGridLayout>
-#include <QLabel>
-#include <QLineEdit>
 
-#include "common.h"
-#include "thegamesdbscrapper.h"
+class QDialogButtonBox;
+class QGridLayout;
+class QLabel;
+class QLineEdit;
+class TheGamesDBScrapper;
 
 
 class DownloadDialog : public QDialog

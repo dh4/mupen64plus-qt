@@ -30,6 +30,13 @@
  ***/
 
 #include "aboutdialog.h"
+#include "common.h"
+#include "global.h"
+
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QLabel>
+#include <QPlainTextEdit>
 
 
 AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)

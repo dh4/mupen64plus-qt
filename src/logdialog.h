@@ -33,11 +33,10 @@
 #define LOGDIALOG_H
 
 #include <QDialog>
-#include <QDialogButtonBox>
-#include <QGridLayout>
-#include <QTextEdit>
 
-#include "global.h"
+class QDialogButtonBox;
+class QGridLayout;
+class QTextEdit;
 
 
 class LogDialog : public QDialog

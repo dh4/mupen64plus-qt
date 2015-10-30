@@ -32,10 +32,9 @@
 #ifndef THEGAMESDBSCRAPPER_H
 #define THEGAMESDBSCRAPPER_H
 
-#include <QObject>
+#include <QWidget>
 
-#include "common.h"
-#include "global.h"
+class QUrl;
 
 
 class TheGamesDBScrapper : public QObject

@@ -32,8 +32,9 @@
 #ifndef CLICKABLEWIDGET_H
 #define CLICKABLEWIDGET_H
 
-#include <QMouseEvent>
 #include <QWidget>
+
+class QMouseEvent;
 
 
 class ClickableWidget : public QWidget

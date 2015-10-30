@@ -31,6 +31,8 @@
 
 #include "clickablewidget.h"
 
+#include <QMouseEvent>
+
 
 ClickableWidget::ClickableWidget(QWidget *parent) : QWidget(parent)
 {

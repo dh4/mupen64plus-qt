@@ -30,6 +30,19 @@
  ***/
 
 #include "romcollection.h"
+#include "common.h"
+#include "global.h"
+#include "thegamesdbscrapper.h"
+
+#include <QCoreApplication>
+#include <QCryptographicHash>
+#include <QDir>
+#include <QMessageBox>
+#include <QProgressDialog>
+#include <QTime>
+
+#include <QtSql/QSqlQuery>
+#include <QtXml/QDomDocument>
 
 
 RomCollection::RomCollection(QStringList fileTypes, QStringList romPaths, QWidget *parent) : QObject(parent)

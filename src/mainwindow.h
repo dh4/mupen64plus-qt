@@ -32,24 +32,24 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QHeaderView>
-#include <QMainWindow>
-#include <QMenuBar>
-#include <QScrollArea>
-#include <QScrollBar>
-#include <QStatusBar>
 
-#include "aboutdialog.h"
-#include "clickablewidget.h"
-#include "common.h"
-#include "configeditor.h"
-#include "downloaddialog.h"
-#include "emulatorhandler.h"
-#include "global.h"
-#include "logdialog.h"
-#include "romcollection.h"
-#include "settingsdialog.h"
-#include "treewidgetitem.h"
+#include <QMainWindow>
+
+class QActionGroup;
+class QDialogButtonBox;
+class QHeaderView;
+class QGridLayout;
+class QLabel;
+class QListWidget;
+class QMenuBar;
+class QScrollArea;
+class QTreeWidget;
+class QVBoxLayout;
+class EmulatorHandler;
+class RomCollection;
+class TheGamesDBScrapper;
+class TreeWidgetItem;
+struct Rom;
 
 
 class MainWindow : public QMainWindow

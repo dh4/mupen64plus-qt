@@ -32,11 +32,11 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include <QDesktopWidget>
-#include <QFileDialog>
-#include <QListWidget>
+#include <QDialog>
+#include <QDir>
 
-#include "global.h"
+class QDesktopWidget;
+class QListWidget;
 
 
 namespace Ui {

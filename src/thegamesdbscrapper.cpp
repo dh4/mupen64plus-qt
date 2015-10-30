@@ -30,6 +30,20 @@
  ***/
 
 #include "thegamesdbscrapper.h"
+#include "common.h"
+#include "global.h"
+
+#include <QDir>
+#include <QEventLoop>
+#include <QMessageBox>
+#include <QTextStream>
+#include <QTimer>
+#include <QUrl>
+
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkReply>
+#include <QtNetwork/QNetworkRequest>
+#include <QtXml/QDomDocument>
 
 
 TheGamesDBScrapper::TheGamesDBScrapper(QWidget *parent, bool force) : QObject(parent)

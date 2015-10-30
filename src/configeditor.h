@@ -33,15 +33,13 @@
 #define CONFIGEDITOR_H
 
 #include <QDialog>
-#include <QDialogButtonBox>
-#include <QDir>
-#include <QGridLayout>
-#include <QMessageBox>
-#include <QSettings>
+#include <QFile>
 #include <QSyntaxHighlighter>
-#include <QTextEdit>
 
-#include "global.h"
+class QDialogButtonBox;
+class QGridLayout;
+class QTextCharFormat;
+class QTextEdit;
 
 
 class ConfigHighlighter : public QSyntaxHighlighter

@@ -30,6 +30,22 @@
  ***/
 
 #include "common.h"
+#include "global.h"
+
+#include <QColor>
+#include <QDir>
+#include <QEventLoop>
+#include <QFile>
+#include <QSize>
+
+#include <quazip/quazip.h>
+#include <quazip/quazipfile.h>
+
+#ifdef Q_OS_WIN
+#include <QCoreApplication>
+#else
+#include <QDesktopServices>
+#endif
 
 
 QByteArray byteswap(QByteArray romData)

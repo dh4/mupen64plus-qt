@@ -30,6 +30,13 @@
  ***/
 
 #include "downloaddialog.h"
+#include "common.h"
+#include "thegamesdbscrapper.h"
+
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QLabel>
+#include <QLineEdit>
 
 
 DownloadDialog::DownloadDialog(QString fileText, QString defaultText, QString romMD5, QWidget *parent)

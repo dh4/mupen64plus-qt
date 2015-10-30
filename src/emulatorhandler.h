@@ -32,14 +32,10 @@
 #ifndef EMULATORHANDLER_H
 #define EMULATORHANDLER_H
 
-#include <QCryptographicHash>
-#include <QFile>
-#include <QDir>
-#include <QMessageBox>
 #include <QObject>
-#include <QProcess>
 
-#include "common.h"
+class QDir;
+class QProcess;
 
 
 class EmulatorHandler : public QObject

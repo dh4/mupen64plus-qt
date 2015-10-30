@@ -31,6 +31,11 @@
 
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
+#include "global.h"
+
+#include <QDesktopWidget>
+#include <QFileDialog>
+#include <QListWidget>
 
 
 SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent), ui(new Ui::SettingsDialog)
