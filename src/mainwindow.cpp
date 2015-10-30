@@ -58,6 +58,10 @@
 #include <QTimer>
 #include <QVBoxLayout>
 
+#if defined(Q_OS_WIN) || defined(Q_OS_OSX)
+#include <QCoreApplication>
+#endif
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
