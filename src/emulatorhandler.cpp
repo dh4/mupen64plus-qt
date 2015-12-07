@@ -169,6 +169,14 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
     QFile mupen64File(mupen64Path);
     QFile romFile(completeRomPath);
 
+    QString gameVideoPlugin = SETTINGS.value(romFileName+"/video", "").toString();
+    QString gameAudioPlugin = SETTINGS.value(romFileName+"/audio", "").toString();
+    QString gameInputPlugin = SETTINGS.value(romFileName+"/input", "").toString();
+    QString gameRSPPlugin = SETTINGS.value(romFileName+"/rsp", "").toString();
+
+    QString gameConfigPath = SETTINGS.value(romFileName+"/config", "").toString();
+    QDir gameConfigDir(gameConfigPath);
+
 
     //Sanity checks
     if(!mupen64File.exists() || QFileInfo(mupen64File).isDir() || !QFileInfo(mupen64File).isExecutable()) {
@@ -203,7 +211,9 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
 
     if (dataPath != "" && dataDir.exists())
         args << "--datadir" << dataPath;
-    if (configPath != "" && configDir.exists())
+    if (gameConfigPath != "" && gameConfigDir.exists())
+        args << "--configdir" << gameConfigPath;
+    else if (configPath != "" && configDir.exists())
         args << "--configdir" << configPath;
     if (pluginPath != "" && pluginDir.exists())
         args << "--plugindir" << pluginPath;
@@ -224,18 +234,30 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
     if (resolution != "")
         args << "--resolution" << resolution;
 
-    if (videoPlugin != "")
+    if (gameVideoPlugin != "")
+        args << "--gfx" << gameVideoPlugin;
+    else if (videoPlugin != "")
         args << "--gfx" << videoPlugin;
-    if (audioPlugin != "")
+    if (gameAudioPlugin != "")
+        args << "--audio" << gameAudioPlugin;
+    else if (audioPlugin != "")
         args << "--audio" << audioPlugin;
-    if (inputPlugin != "")
+    if (gameInputPlugin != "")
+        args << "--input" << gameInputPlugin;
+    else if (inputPlugin != "")
         args << "--input" << inputPlugin;
-    if (rspPlugin != "")
+    if (gameRSPPlugin != "")
+        args << "--rsp" << gameRSPPlugin;
+    else if (rspPlugin != "")
         args << "--rsp" << rspPlugin;
 
     QString otherParameters = SETTINGS.value("Other/parameters", "").toString();
     if (otherParameters != "")
         args.append(parseArgString(otherParameters));
+
+    QString gameParameters = SETTINGS.value(romFileName+"/parameters").toString();
+    if (gameParameters != "")
+        args.append(parseArgString(gameParameters));
 
     args << completeRomPath;
 

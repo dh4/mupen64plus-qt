@@ -232,7 +232,9 @@ This can be configured with the "Resolution" combo box underneath the graphics t
 
 ##### --configdir
 
-This is configured under the paths tab. This is entirely optional, but allows you to specific a different directory to load the mupen64plus.cfg file from (useful if you want to say, load different input settings at different times).
+This is configured under the paths tab. It's entirely optional, but allows you to specify a different directory to load the mupen64plus.cfg file from (useful if you want to say, load different input settings at different times).
+
+You can also specify the config directory on a per-game basis under Settings->Configure Game.
 
 ##### --datadir
 
@@ -244,9 +246,9 @@ The plugin directory is usually /usr/lib/mupen64plus or within the same director
 
 ##### --gfx/--audio/--input/--rsp
 
-These are configured under the plugins tab once the plugin directory has been set.
+These are configured under the plugins tab once the plugin directory has been set. You can also configure plugins on a per-game basis under Settings->Configure Game.
 
-##### ---emumode
+##### --emumode
 
 This is configured under the emulation tab.
 
@@ -256,9 +258,9 @@ One or the other is sent to Mupen64Plus based on the "Save Options" checkbox und
 
 #### Additional Parameters (Cheat Support)
 
-Mupen64Plus-Qt also supports specifying additional parameters under Settings->Configure->Other->Additional Parameters. You can specify any other parameters that the console UI supports here.
+Mupen64Plus-Qt also supports specifying additional parameters both globally under Settings->Configure->Other->Additional Parameters and on a per-game basis under Settings->Configure Game->Other Parameters. You can specify any other parameters that the console UI supports here.
 
-The main use of this is specifying cheats. For example, filling this with `--cheats 'list'` will allow you to double click on a ROM and then view the log for a list of cheats for that game (remove it to be able to launch games again). You can then specify what cheats you want with `--cheats 1,2-1,3`, etc.
+The main use of this is specifying cheats. For example, filling this with `--cheats 'list'` will allow you to double click on a ROM and then view the log for a list of cheats for that game (remove it to be able to launch the game again). You can then specify what cheats you want with `--cheats 1,2-1,3`, etc.
 
 Be aware that if this contains anything that Mupen64Plus doesn't support, the emulator will not be able to launch.
 

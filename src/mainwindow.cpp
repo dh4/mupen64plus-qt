@@ -36,6 +36,7 @@
 #include "configeditor.h"
 #include "downloaddialog.h"
 #include "emulatorhandler.h"
+#include "gamesettingsdialog.h"
 #include "global.h"
 #include "logdialog.h"
 #include "romcollection.h"
@@ -568,11 +569,15 @@ void MainWindow::createMenu()
     }
 
     editorAction = settingsMenu->addAction(tr("Edit mupen64plus.cfg..."));
+    settingsMenu->addSeparator();
+    configureGameAction = settingsMenu->addAction(tr("Configure &Game..."));
 #ifndef Q_OS_OSX //OSX does not show the configure action so the separator is unneeded
     settingsMenu->addSeparator();
 #endif
     configureAction = settingsMenu->addAction(tr("&Configure..."));
     configureAction->setIcon(QIcon::fromTheme("preferences-other"));
+
+    configureGameAction->setEnabled(false);
 
     menuBar->addMenu(settingsMenu);
 
@@ -591,6 +596,7 @@ void MainWindow::createMenu()
                << downloadAction
                << deleteAction
                << configureAction
+               << configureGameAction
                << editorAction
                << quitAction;
 
@@ -606,6 +612,7 @@ void MainWindow::createMenu()
     connect(stopAction, SIGNAL(triggered()), this, SLOT(stopEmulator()));
     connect(logAction, SIGNAL(triggered()), this, SLOT(openLog()));
     connect(configureAction, SIGNAL(triggered()), this, SLOT(openSettings()));
+    connect(configureGameAction, SIGNAL(triggered()), this, SLOT(openGameSettings()));
     connect(editorAction, SIGNAL(triggered()), this, SLOT(openEditor()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(openAbout()));
     connect(layoutGroup, SIGNAL(triggered(QAction*)), this, SLOT(updateLayoutSetting()));
@@ -728,6 +735,7 @@ void MainWindow::disableViews(bool imageUpdated)
     tableView->setEnabled(false);
     gridView->setEnabled(false);
     listView->setEnabled(false);
+    configureGameAction->setEnabled(false);
     downloadAction->setEnabled(false);
     deleteAction->setEnabled(false);
     startAction->setEnabled(false);
@@ -933,6 +941,23 @@ void MainWindow::openEditor()
         ConfigEditor configEditor(configFile, this);
         configEditor.exec();
     }
+}
+
+
+void MainWindow::openGameSettings()
+{
+    QString romFileName;
+    QString visibleLayout = layoutGroup->checkedAction()->data().toString();
+
+    if (visibleLayout == "Table View")
+        romFileName = QVariant(tableView->currentItem()->data(0, 0)).toString();
+    else if (visibleLayout == "Grid View" && gridCurrent)
+        romFileName = gridLayout->itemAt(currentGridRom)->widget()->property("fileName").toString();
+    else if (visibleLayout == "List View" && listCurrent)
+        romFileName = listLayout->itemAt(currentListRom)->widget()->property("fileName").toString();
+
+    GameSettingsDialog gameSettingsDialog(romFileName, this);
+    gameSettingsDialog.exec();
 }
 
 
@@ -1246,6 +1271,7 @@ void MainWindow::toggleMenus(bool active)
     listView->setEnabled(active);
 
     if (tableView->currentItem() == NULL && !gridCurrent && !listCurrent) {
+        configureGameAction->setEnabled(false);
         downloadAction->setEnabled(false);
         deleteAction->setEnabled(false);
         startAction->setEnabled(false);
@@ -1279,6 +1305,7 @@ void MainWindow::updateLayoutSetting()
         emptyView->setHidden(false);
 
     startAction->setEnabled(false);
+    configureGameAction->setEnabled(false);
     downloadAction->setEnabled(false);
     deleteAction->setEnabled(false);
 }

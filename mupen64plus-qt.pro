@@ -22,6 +22,7 @@ SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutdialog.cpp \
     src/settingsdialog.cpp \
+    src/gamesettingsdialog.cpp \
     src/treewidgetitem.cpp \
     src/clickablewidget.cpp \
     src/configeditor.cpp \
@@ -36,6 +37,7 @@ HEADERS += src/global.h \
     src/mainwindow.h \
     src/aboutdialog.h \
     src/settingsdialog.h \
+    src/gamesettingsdialog.h \
     src/treewidgetitem.h \
     src/clickablewidget.h \
     src/configeditor.h \
@@ -47,7 +49,8 @@ HEADERS += src/global.h \
 
 RESOURCES += resources/mupen64plusqt.qrc
 
-FORMS += src/settingsdialog.ui
+FORMS += src/settingsdialog.ui \
+    src/gamesettingsdialog.ui
 
 win32|macx|linux_quazip_static {
     CONFIG += staticlib
