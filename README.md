@@ -57,13 +57,15 @@ Be aware that these may contain bugs not present in the stable releases.
 
 ### Building (Linux)
 
+First, obtain the source code for Mupen64Plus-Qt. You can either clone the repository with git or download an archive of the source code for a specific release from the [releases](https://github.com/dh4/mupen64plus-qt/releases) page.
+
 You'll need to make sure you have qmake, g++, the Qt development libraries and the QuaZIP development files installed. On Debian/Ubuntu, this can be accomplished by:
 
 ```
 # apt-get install qt5-qmake g++ qtbase5-dev libquazip-qt5-dev libqt5sql5-sqlite
 ```
 
-Once the needed packages are installed, create the Makefile with qmake and then build with make:
+Once the needed packages are installed, create the Makefile with qmake and then build with make. Run the following commands from the directory that contains mupen64plus-qt.pro:
 
 ```
 $ qmake
@@ -80,7 +82,7 @@ Install the Qt4 dependencies instead. On Debian/Ubuntu:
 # apt-get install qt4-qmake g++ libqt4-dev libquazip-dev libqt4-sql-sqlite
 ```
 
-Then create the Makefile with qmake and build with make:
+Then create the Makefile with qmake and build with make. Run the following commands from the directory that contains mupen64plus-qt.pro:
 
 ```
 $ qmake-qt4
