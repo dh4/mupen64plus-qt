@@ -31,11 +31,13 @@
 
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
+#include "common.h"
 #include "global.h"
 
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QListWidget>
+#include <QTranslator>
 
 
 SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent), ui(new Ui::SettingsDialog)
@@ -169,12 +171,15 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
 
     //Populate Table tab
-    QStringList sizes;
-    sizes << "Extra Small"
-          << "Small"
-          << "Medium"
-          << "Large"
-          << "Extra Large";
+    int tableSizeIndex = 0;
+    QString currentTableSize = SETTINGS.value("Table/imagesize","Medium").toString();
+
+    QList<QStringList> sizes;
+    sizes << (QStringList() << tr("Extra Small") << "Extra Small")
+          << (QStringList() << tr("Small")       << "Small")
+          << (QStringList() << tr("Medium")      << "Medium")
+          << (QStringList() << tr("Large")       << "Large")
+          << (QStringList() << tr("Extra Large") << "Extra Large");
 
     if (SETTINGS.value("Other/downloadinfo", "").toString() == "true")
         populateTableAndListTab(true);
@@ -184,8 +189,12 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     if (SETTINGS.value("Table/stretchfirstcolumn", "true").toString() == "true")
         ui->tableStretchOption->setChecked(true);
 
-    ui->tableSizeBox->insertItems(0, sizes);
-    int tableSizeIndex = sizes.indexOf(SETTINGS.value("Table/imagesize","Medium").toString());
+    for (int i = 0; i < sizes.length(); i++)
+    {
+        ui->tableSizeBox->insertItem(i, sizes.at(i).at(0), sizes.at(i).at(1));
+        if (currentTableSize == sizes.at(i).at(1))
+            tableSizeIndex = i;
+    }
     if (tableSizeIndex >= 0) ui->tableSizeBox->setCurrentIndex(tableSizeIndex);
 
     connect(ui->tableAddButton, SIGNAL(clicked()), this, SLOT(tableAddColumn()));
@@ -195,35 +204,55 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
 
     //Populate Grid tab
-    QStringList colors;
-    colors << "Black"
-           << "White"
-           << "Light Gray"
-           << "Dark Gray"
-           << "Green"
-           << "Cyan"
-           << "Blue"
-           << "Purple"
-           << "Red"
-           << "Pink"
-           << "Orange"
-           << "Yellow"
-           << "Brown";
+    int gridSizeIndex = 0, activeIndex = 0, inactiveIndex = 0, labelColorIndex = 0;
+    QString currentGridSize = SETTINGS.value("Grid/imagesize","Medium").toString();
+    QString currentActiveColor = SETTINGS.value("Grid/activecolor","Cyan").toString();
+    QString currentInactiveColor = SETTINGS.value("Grid/inactivecolor","Black").toString();
+    QString currentLabelColor = SETTINGS.value("Grid/labelcolor","White").toString();
 
-    ui->gridSizeBox->insertItems(0, sizes);
-    int gridSizeIndex = sizes.indexOf(SETTINGS.value("Grid/imagesize","Medium").toString());
+    QList<QStringList> colors;
+    colors << (QStringList() << tr("Black")      << "Black")
+           << (QStringList() << tr("White")      << "White")
+           << (QStringList() << tr("Light Gray") << "Light Gray")
+           << (QStringList() << tr("Dark Gray")  << "Dark Gray")
+           << (QStringList() << tr("Green")      << "Green")
+           << (QStringList() << tr("Cyan")       << "Cyan")
+           << (QStringList() << tr("Blue")       << "Blue")
+           << (QStringList() << tr("Purple")     << "Purple")
+           << (QStringList() << tr("Red")        << "Red")
+           << (QStringList() << tr("Pink")       << "Pink")
+           << (QStringList() << tr("Orange")     << "Orange")
+           << (QStringList() << tr("Yellow")     << "Yellow")
+           << (QStringList() << tr("Brown")      << "Brown");
+
+    for (int i = 0; i < sizes.length(); i++)
+    {
+        ui->gridSizeBox->insertItem(i, sizes.at(i).at(0), sizes.at(i).at(1));
+        if (currentGridSize == sizes.at(i).at(1))
+            gridSizeIndex = i;
+    }
     if (gridSizeIndex >= 0) ui->gridSizeBox->setCurrentIndex(gridSizeIndex);
 
     int gridColumnCount = SETTINGS.value("Grid/columncount","4").toInt();
     ui->columnCountBox->setValue(gridColumnCount);
 
-    ui->shadowActiveBox->insertItems(0, colors);
-    int activeIndex = colors.indexOf(SETTINGS.value("Grid/activecolor","Cyan").toString());
-    if (activeIndex >= 0) ui->shadowActiveBox->setCurrentIndex(activeIndex);
+    for (int i = 0; i < colors.length(); i++)
+    {
+        ui->shadowActiveBox->insertItem(i, colors.at(i).at(0), colors.at(i).at(1));
+        if (currentActiveColor == colors.at(i).at(1))
+            activeIndex = i;
 
-    ui->shadowInactiveBox->insertItems(0, colors);
-    int inactiveIndex = colors.indexOf(SETTINGS.value("Grid/inactivecolor","Black").toString());
+        ui->shadowInactiveBox->insertItem(i, colors.at(i).at(0), colors.at(i).at(1));
+        if (currentInactiveColor == colors.at(i).at(1))
+            inactiveIndex = i;
+
+        ui->labelColorBox->insertItem(i, colors.at(i).at(0), colors.at(i).at(1));
+        if (currentLabelColor == colors.at(i).at(1))
+            labelColorIndex = i;
+    }
+    if (activeIndex >= 0) ui->shadowActiveBox->setCurrentIndex(activeIndex);
     if (inactiveIndex >= 0) ui->shadowInactiveBox->setCurrentIndex(inactiveIndex);
+    if (labelColorIndex >= 0) ui->labelColorBox->setCurrentIndex(labelColorIndex);
 
     //Widgets to enable when label active
     labelEnable << ui->labelTextLabel
@@ -237,10 +266,6 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     } else
         toggleLabel(false);
 
-    ui->labelColorBox->insertItems(0, colors);
-    int labelColorIndex = colors.indexOf(SETTINGS.value("Grid/labelcolor","White").toString());
-    if (labelColorIndex >= 0) ui->labelColorBox->setCurrentIndex(labelColorIndex);
-
     ui->backgroundPath->setText(SETTINGS.value("Grid/background", "").toString());
 
     if (SETTINGS.value("Grid/sortdirection", "ascending").toString() == "descending")
@@ -251,6 +276,9 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
 
     //Populate List tab
+    int listSizeIndex = 0;
+    QString currentListSize = SETTINGS.value("List/imagesize","Medium").toString();
+
     listCoverEnable << ui->listSizeLabel
                     << ui->listSizeBox;
 
@@ -263,8 +291,12 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     if (SETTINGS.value("List/firstitemheader", "true").toString() == "true")
         ui->listHeaderOption->setChecked(true);
 
-    ui->listSizeBox->insertItems(0, sizes);
-    int listSizeIndex = sizes.indexOf(SETTINGS.value("List/imagesize","Medium").toString());
+    for (int i = 0; i < sizes.length(); i++)
+    {
+        ui->listSizeBox->insertItem(i, sizes.at(i).at(0), sizes.at(i).at(1));
+        if (currentListSize == sizes.at(i).at(1))
+            listSizeIndex = i;
+    }
     if (listSizeIndex >= 0) ui->listSizeBox->setCurrentIndex(listSizeIndex);
 
     if (SETTINGS.value("List/sortdirection", "ascending").toString() == "descending")
@@ -279,6 +311,13 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
 
     //Populate Other tab
+    int languageIndex = 0;
+    QString currentLanguage = SETTINGS.value("language", "EN").toString();
+
+    QList<QStringList> languages;
+    languages << (QStringList() << QString::fromUtf8("English")  << "EN")
+              << (QStringList() << QString::fromUtf8("Français") << "FR");
+
     downloadEnable << ui->tableSizeLabel
                    << ui->tableSizeBox
                    << ui->listCoverOption
@@ -296,8 +335,19 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
     ui->parametersLine->setText(SETTINGS.value("Other/parameters", "").toString());
 
+    for (int i = 0; i < languages.length(); i++)
+    {
+        ui->languageBox->insertItem(i, languages.at(i).at(0), languages.at(i).at(1));
+        if (currentLanguage == languages.at(i).at(1))
+            languageIndex = i;
+    }
+    ui->languageBox->setCurrentIndex(languageIndex);
+
+    ui->languageInfoLabel->setHidden(true);
+
     connect(ui->downloadOption, SIGNAL(toggled(bool)), this, SLOT(toggleDownload(bool)));
     connect(ui->downloadOption, SIGNAL(toggled(bool)), this, SLOT(populateTableAndListTab(bool)));
+    connect(ui->languageBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateLanguageInfo()));
 
 
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(editSettings()));
@@ -315,10 +365,8 @@ void SettingsDialog::addColumn(QListWidget *currentList, QListWidget *availableL
 {
     int row = availableList->currentRow();
 
-    if (row >= 0) {
-        currentList->addItem(availableList->currentItem()->text());
-        delete availableList->takeItem(row);
-    }
+    if (row >= 0)
+        currentList->addItem(availableList->takeItem(row));
 }
 
 
@@ -449,8 +497,8 @@ void SettingsDialog::editSettings()
     //Table tab
     QStringList tableVisibleItems;
     foreach (QListWidgetItem *item, ui->tableCurrentList->findItems("*", Qt::MatchWildcard))
-        if (available.contains(item->text()))
-            tableVisibleItems << item->text();
+        if (available.contains(item->data(Qt::UserRole).toString()))
+            tableVisibleItems << item->data(Qt::UserRole).toString();
 
     SETTINGS.setValue("Table/columns", tableVisibleItems.join("|"));
 
@@ -459,14 +507,14 @@ void SettingsDialog::editSettings()
     else
         SETTINGS.setValue("Table/stretchfirstcolumn", "");
 
-    SETTINGS.setValue("Table/imagesize", ui->tableSizeBox->currentText());
+    SETTINGS.setValue("Table/imagesize", ui->tableSizeBox->itemData(ui->tableSizeBox->currentIndex()));
 
 
     //Grid tab
-    SETTINGS.setValue("Grid/imagesize", ui->gridSizeBox->currentText());
+    SETTINGS.setValue("Grid/imagesize", ui->gridSizeBox->itemData(ui->gridSizeBox->currentIndex()));
     SETTINGS.setValue("Grid/columncount", ui->columnCountBox->value());
-    SETTINGS.setValue("Grid/inactivecolor", ui->shadowInactiveBox->currentText());
-    SETTINGS.setValue("Grid/activecolor", ui->shadowActiveBox->currentText());
+    SETTINGS.setValue("Grid/inactivecolor", ui->shadowInactiveBox->itemData(ui->shadowInactiveBox->currentIndex()));
+    SETTINGS.setValue("Grid/activecolor", ui->shadowActiveBox->itemData(ui->shadowActiveBox->currentIndex()));
     SETTINGS.setValue("Grid/background", ui->backgroundPath->text());
 
     if (ui->labelOption->isChecked())
@@ -474,9 +522,9 @@ void SettingsDialog::editSettings()
     else
         SETTINGS.setValue("Grid/label", "");
 
-    SETTINGS.setValue("Grid/labeltext", ui->labelTextBox->currentText());
-    SETTINGS.setValue("Grid/labelcolor", ui->labelColorBox->currentText());
-    SETTINGS.setValue("Grid/sort", ui->gridSortBox->currentText());
+    SETTINGS.setValue("Grid/labeltext", ui->labelTextBox->itemData(ui->labelTextBox->currentIndex()));
+    SETTINGS.setValue("Grid/labelcolor", ui->labelColorBox->itemData(ui->labelColorBox->currentIndex()));
+    SETTINGS.setValue("Grid/sort", ui->gridSortBox->itemData(ui->gridSortBox->currentIndex()));
 
     if (ui->gridDescendingOption->isChecked())
         SETTINGS.setValue("Grid/sortdirection", "descending");
@@ -487,8 +535,8 @@ void SettingsDialog::editSettings()
     //List tab
     QStringList listVisibleItems;
     foreach (QListWidgetItem *item, ui->listCurrentList->findItems("*", Qt::MatchWildcard))
-        if (available.contains(item->text()))
-            listVisibleItems << item->text();
+        if (available.contains(item->data(Qt::UserRole).toString()))
+            listVisibleItems << item->data(Qt::UserRole).toString();
 
     SETTINGS.setValue("List/columns", listVisibleItems.join("|"));
 
@@ -502,8 +550,8 @@ void SettingsDialog::editSettings()
     else
         SETTINGS.setValue("List/displaycover", "");
 
-    SETTINGS.setValue("List/imagesize", ui->listSizeBox->currentText());
-    SETTINGS.setValue("List/sort", ui->listSortBox->currentText());
+    SETTINGS.setValue("List/imagesize", ui->listSizeBox->itemData(ui->listSizeBox->currentIndex()));
+    SETTINGS.setValue("List/sort", ui->listSortBox->itemData(ui->listSortBox->currentIndex()));
 
     if (ui->listDescendingOption->isChecked())
         SETTINGS.setValue("List/sortdirection", "descending");
@@ -518,6 +566,7 @@ void SettingsDialog::editSettings()
         SETTINGS.setValue("saveoptions", "");
 
     SETTINGS.setValue("Other/parameters", ui->parametersLine->text());
+    SETTINGS.setValue("language", ui->languageBox->itemData(ui->languageBox->currentIndex()));
 
     close();
 }
@@ -622,22 +671,48 @@ void SettingsDialog::populateTableAndListTab(bool downloadItems)
     }
 
     ui->tableAvailableList->clear();
-    ui->tableAvailableList->addItems(tableAvailable);
+    foreach (QString listItem, tableAvailable)
+    {
+        QListWidgetItem *item = new QListWidgetItem;
+        item->setText(getTranslation(listItem));
+        item->setData(Qt::UserRole, listItem);
+
+        ui->tableAvailableList->addItem(item);
+    }
     ui->tableAvailableList->sortItems();
 
     ui->tableCurrentList->clear();
-    ui->tableCurrentList->addItems(tableCurrent);
+    foreach (QString listItem, tableCurrent)
+    {
+        QListWidgetItem *item = new QListWidgetItem;
+        item->setText(getTranslation(listItem));
+        item->setData(Qt::UserRole, listItem);
+
+        ui->tableCurrentList->addItem(item);
+    }
 
 
     //Grid sort field and label text
+    int labelTextIndex = 0, gridSortIndex = 0;
+    QString currentLabelText = SETTINGS.value("Grid/labeltext","Filename").toString();
+    QString currentGridSort = SETTINGS.value("Grid/sort","Filename").toString();
+
     ui->labelTextBox->clear();
-    ui->labelTextBox->insertItems(0, labelOptions);
-    int labelTextIndex = labelOptions.indexOf(SETTINGS.value("Grid/labeltext","Filename").toString());
+    for (int i = 0; i < labelOptions.length(); i++)
+    {
+        ui->labelTextBox->insertItem(i, getTranslation(labelOptions.at(i)), labelOptions.at(i));
+        if (currentLabelText == labelOptions.at(i))
+            labelTextIndex = i;
+    }
     if (labelTextIndex >= 0) ui->labelTextBox->setCurrentIndex(labelTextIndex);
 
     ui->gridSortBox->clear();
-    ui->gridSortBox->insertItems(0, sortOptions);
-    int gridSortIndex = sortOptions.indexOf(SETTINGS.value("Grid/sort","Filename").toString());
+    for (int i = 0; i < sortOptions.length(); i++)
+    {
+        ui->gridSortBox->insertItem(i, getTranslation(sortOptions.at(i)), sortOptions.at(i));
+        if (currentGridSort == sortOptions.at(i))
+            gridSortIndex = i;
+    }
     if (gridSortIndex >= 0) ui->gridSortBox->setCurrentIndex(gridSortIndex);
 
 
@@ -656,15 +731,36 @@ void SettingsDialog::populateTableAndListTab(bool downloadItems)
     }
 
     ui->listAvailableList->clear();
-    ui->listAvailableList->addItems(listAvailable);
+    foreach (QString listItem, listAvailable)
+    {
+        QListWidgetItem *item = new QListWidgetItem;
+        item->setText(getTranslation(listItem));
+        item->setData(Qt::UserRole, listItem);
+
+        ui->listAvailableList->addItem(item);
+    }
     ui->listAvailableList->sortItems();
 
     ui->listCurrentList->clear();
-    ui->listCurrentList->addItems(listCurrent);
+    foreach (QString listItem, listCurrent)
+    {
+        QListWidgetItem *item = new QListWidgetItem;
+        item->setText(getTranslation(listItem));
+        item->setData(Qt::UserRole, listItem);
+
+        ui->listCurrentList->addItem(item);
+    }
+
+    int listSortIndex = 0;
+    QString currentListSort = SETTINGS.value("List/sort","Filename").toString();
 
     ui->listSortBox->clear();
-    ui->listSortBox->insertItems(0, sortOptions);
-    int listSortIndex = sortOptions.indexOf(SETTINGS.value("List/sort","Filename").toString());
+    for (int i = 0; i < sortOptions.length(); i++)
+    {
+        ui->listSortBox->insertItem(i, getTranslation(sortOptions.at(i)), sortOptions.at(i));
+        if (currentListSort == sortOptions.at(i))
+            listSortIndex = i;
+    }
     if (listSortIndex >= 0) ui->listSortBox->setCurrentIndex(listSortIndex);
 }
 
@@ -674,9 +770,7 @@ void SettingsDialog::removeColumn(QListWidget *currentList, QListWidget *availab
     int row = currentList->currentRow();
 
     if (row >= 0) {
-        availableList->addItem(currentList->currentItem()->text());
-        delete currentList->takeItem(row);
-
+        availableList->addItem(currentList->takeItem(row));
         availableList->sortItems();
     }
 }
@@ -761,4 +855,21 @@ void SettingsDialog::toggleListCover(bool active)
 {
     foreach (QWidget *next, listCoverEnable)
         next->setEnabled(active);
+}
+
+
+void SettingsDialog::updateLanguageInfo()
+{
+    ui->languageInfoLabel->setHidden(false);
+
+    const char *sourceText = "<b>Note:</b> Language changes will not take place until application restart.";
+
+    QTranslator translator;
+    QString language = ui->languageBox->itemData(ui->languageBox->currentIndex()).toString().toLower();
+    QString resource = ":/locale/cen64-qt_"+language+".qm";
+    if (QFileInfo(resource).exists()) {
+        translator.load(resource);
+        ui->languageInfoLabel->setText(translator.translate("SettingsDialog", sourceText));
+    } else
+        ui->languageInfoLabel->setText(sourceText);
 }

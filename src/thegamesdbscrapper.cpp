@@ -57,15 +57,15 @@ TheGamesDBScrapper::TheGamesDBScrapper(QWidget *parent, bool force) : QObject(pa
 void TheGamesDBScrapper::deleteGameInfo(QString fileName, QString identifier)
 {
     QString text;
-    text = QString("<b>NOTE:</b> If you are deleting this game's information because the game doesn't exist ")
-                 + "on TheGamesDB and Mupen64Plus-Qt pulled the information for different game, it's better "
-                 + "to create an account on <a href=\"http://thegamesdb.net/\">TheGamesDB</a> and add the "
-                 + "game so other users can benefit as well."
+    text = QString(tr("<b>NOTE:</b> If you are deleting this game's information because the game doesn't "))
+                 + tr("exist on TheGamesDB and Mupen64Plus-Qt pulled the information for different game, it's ")
+                 + tr("better to create an account on")+" <a href=\"http://thegamesdb.net/\">TheGamesDB</a> "
+                 + tr("and add the game so other users can benefit as well.")
                  + "<br /><br />"
-                 + "This will cause Mupen64Plus-Qt to not update the information for this game until you "
-                 + "force it with \"Download/Update Info...\""
+                 + tr("This will cause Mupen64Plus-Qt to not update the information for this game until you ")
+                 + tr("force it with \"Download/Update Info...\"")
                  + "<br /><br />"
-                 + "Delete the current information for <b>" + fileName + "</b>?";
+                 + tr("Delete the current information for") + " <b>" + fileName + "</b>?";
 
     int answer = QMessageBox::question(parent, tr("Delete Game Information"), text,
                                        QMessageBox::Yes | QMessageBox::No);
@@ -160,8 +160,8 @@ void TheGamesDBScrapper::downloadGameInfo(QString identifier, QString searchName
                     QString check = "Game: " + element.text();
                     check.remove(QRegExp(QString("[^A-Za-z 0-9 \\.,\\?'""!@#\\$%\\^&\\*\\")
                                          + "(\\)-_=\\+;:<>\\/\\\\|\\}\\{\\[\\]`~]*"));
-                    if (date.text() != "") check += "\nReleased on: " + date.text();
-                    check += "\n\nDoes this look correct?";
+                    if (date.text() != "") check += "\n" + tr("Released on: ") + date.text();
+                    check += "\n\n" + tr("Does this look correct?");
 
                     int answer = QMessageBox::question(parent, QObject::tr("Game Information Download"),
                                                        check, QMessageBox::Yes | QMessageBox::No);
@@ -280,7 +280,7 @@ QByteArray TheGamesDBScrapper::getUrlContents(QUrl url)
             return reply->readAll();
 
     } else //Request timed out
-        showError("Request timed out. Check your network settings.");
+        showError(tr("Request timed out. Check your network settings."));
 
     return QByteArray();
 }
@@ -288,7 +288,7 @@ QByteArray TheGamesDBScrapper::getUrlContents(QUrl url)
 
 void TheGamesDBScrapper::showError(QString error)
 {
-    QString question = "\n\nContinue scraping information?";
+    QString question = "\n\n" + tr("Continue scraping information?");
 
     if (force)
         QMessageBox::information(parent, tr("Network Error"), error);

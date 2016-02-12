@@ -4,5 +4,6 @@
         <file>other/LICENSE</file>
         <file>images/not-found.png</file>
         <file>other/VERSION</file>
+        <file>locale/mupen64plus-qt_fr.qm</file>
     </qresource>
 </RCC>

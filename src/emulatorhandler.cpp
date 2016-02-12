@@ -57,7 +57,7 @@ void EmulatorHandler::checkStatus(int status)
         exitDialog.setText(tr("Mupen64Plus quit unexpectedly. Check the log for more information."));
         exitDialog.setIcon(QMessageBox::Warning);
         exitDialog.addButton(QMessageBox::Ok);
-        exitDialog.addButton("View Log...", QMessageBox::HelpRole);
+        exitDialog.addButton(tr("View Log..."), QMessageBox::HelpRole);
 
         int ret = exitDialog.exec();
         if (ret == 0) emit showLog();

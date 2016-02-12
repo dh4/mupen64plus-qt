@@ -1152,6 +1152,16 @@
            </property>
           </widget>
          </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="languageLabel">
+           <property name="text">
+            <string>Language:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1" colspan="2">
+          <widget class="QComboBox" name="languageBox"/>
+         </item>
          <item row="2" column="1" colspan="2">
           <widget class="QLineEdit" name="parametersLine">
            <property name="toolTip">
@@ -1161,7 +1171,7 @@
          </item>
         </layout>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <spacer name="otherVSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -1186,6 +1196,16 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QLabel" name="languageInfoLabel">
+         <property name="text">
+          <string>&lt;b&gt;Note:&lt;/b&gt; Language changes will not take place until application restart.</string>
+         </property>
+         <property name="indent">
+          <number>10</number>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

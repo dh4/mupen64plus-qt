@@ -90,6 +90,7 @@ private slots:
     void toggleDownload(bool active);
     void toggleLabel(bool active);
     void toggleListCover(bool active);
+    void updateLanguageInfo();
 };
 
 #endif // SETTINGSDIALOG_H

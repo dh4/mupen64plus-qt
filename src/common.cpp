@@ -242,7 +242,9 @@ QString getRomInfo(QString identifier, const Rom *rom, bool removeWarn, bool sor
 
     if (!removeWarn)
         return text;
-    else if (text == "Unknown ROM" || text == "Requires catalog file" || text == "Not found") {
+    else if (text == getTranslation("Unknown ROM") ||
+             text == getTranslation("Requires catalog file") ||
+             text == getTranslation("Not found")) {
         if (sort)
             return "ZZZ"; //Sort warnings at the end
         else
@@ -267,6 +269,36 @@ QGraphicsDropShadowEffect *getShadow(bool active)
     }
 
     return shadow;
+}
+
+
+QString getTranslation(QString text)
+{
+    if (text == "GoodName")                     return QObject::tr("GoodName");
+    else if (text == "Filename")                return QObject::tr("Filename");
+    else if (text == "Filename (extension)")    return QObject::tr("Filename (extension)");
+    else if (text == "Zip File")                return QObject::tr("Zip File");
+    else if (text == "Internal Name")           return QObject::tr("Internal Name");
+    else if (text == "Size")                    return QObject::tr("Size");
+    else if (text == "MD5")                     return QObject::tr("MD5");
+    else if (text == "CRC1")                    return QObject::tr("CRC1");
+    else if (text == "CRC2")                    return QObject::tr("CRC2");
+    else if (text == "Players")                 return QObject::tr("Players");
+    else if (text == "Rumble")                  return QObject::tr("Rumble");
+    else if (text == "Save Type")               return QObject::tr("Save Type");
+    else if (text == "Game Title")              return QObject::tr("Game Title");
+    else if (text == "Release Date")            return QObject::tr("Release Date");
+    else if (text == "Overview")                return QObject::tr("Overview");
+    else if (text == "ESRB")                    return QObject::tr("ESRB");
+    else if (text == "Genre")                   return QObject::tr("Genre");
+    else if (text == "Publisher")               return QObject::tr("Publisher");
+    else if (text == "Developer")               return QObject::tr("Developer");
+    else if (text == "Rating")                  return QObject::tr("Rating");
+    else if (text == "Unknown ROM")             return QObject::tr("Unknown ROM");
+    else if (text == "Requires catalog file")   return QObject::tr("Requires catalog file");
+    else if (text == "Not found")               return QObject::tr("Not found");
+
+    return text;
 }
 
 

@@ -114,11 +114,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 void MainWindow::addToView(Rom *currentRom, int count)
 {
-    if (SETTINGS.value("View/layout", "None") == "Table View")
+    if (SETTINGS.value("View/layout", "none") == "table")
         addToTableView(currentRom);
-    else if (SETTINGS.value("View/layout", "None") == "Grid View")
+    else if (SETTINGS.value("View/layout", "none") == "grid")
         addToGridView(currentRom, count);
-    else if (SETTINGS.value("View/layout", "None") == "List View")
+    else if (SETTINGS.value("View/layout", "none") == "list")
         addToListView(currentRom, count);
 }
 
@@ -133,7 +133,8 @@ void MainWindow::addToGridView(Rom *currentRom, int count)
     //Assign ROM data to widget for use in click events
     gameGridItem->setProperty("fileName", currentRom->fileName);
     gameGridItem->setProperty("directory", currentRom->directory);
-    if (currentRom->goodName == "Unknown ROM" || currentRom->goodName == "Requires catalog file")
+    if (currentRom->goodName == getTranslation("Unknown ROM") ||
+        currentRom->goodName == getTranslation("Requires catalog file"))
         gameGridItem->setProperty("search", currentRom->internalName);
     else
         gameGridItem->setProperty("search", currentRom->goodName);
@@ -220,7 +221,8 @@ void MainWindow::addToListView(Rom *currentRom, int count)
     //Assign ROM data to widget for use in click events
     gameListItem->setProperty("fileName", currentRom->fileName);
     gameListItem->setProperty("directory", currentRom->directory);
-    if (currentRom->goodName == "Unknown ROM" || currentRom->goodName == "Requires catalog file")
+    if (currentRom->goodName == getTranslation("Unknown ROM") ||
+        currentRom->goodName == getTranslation("Requires catalog file"))
         gameListItem->setProperty("search", currentRom->internalName);
     else
         gameListItem->setProperty("search", currentRom->goodName);
@@ -318,7 +320,8 @@ void MainWindow::addToTableView(Rom *currentRom)
     fileItem->setText(1, currentRom->directory);
 
     //GoodName or Internal Name for searching
-    if (currentRom->goodName == "Unknown ROM" || currentRom->goodName == "Requires catalog file")
+    if (currentRom->goodName == getTranslation("Unknown ROM") ||
+        currentRom->goodName == getTranslation("Requires catalog file"))
         fileItem->setText(2, currentRom->internalName);
     else
         fileItem->setText(2, currentRom->goodName);
@@ -338,7 +341,9 @@ void MainWindow::addToTableView(Rom *currentRom)
         fileItem->setText(i, text);
 
         if (current == "GoodName" || current == "Game Title") {
-            if (text == "Unknown ROM" || text == "Requires catalog file" || text == "Not found") {
+            if (text == getTranslation("Unknown ROM") ||
+                text == getTranslation("Requires catalog file") ||
+                text == getTranslation("Not found")) {
                 fileItem->setForeground(i, QBrush(Qt::gray));
                 fileItem->setData(i, Qt::UserRole, "ZZZ"); //end of sorting
             } else
@@ -549,22 +554,25 @@ void MainWindow::createMenu()
     layoutMenu = settingsMenu->addMenu(tr("&Layout"));
     layoutGroup = new QActionGroup(this);
 
-    QStringList layouts;
-    layouts << "None" << "Table View" << "Grid View" << "List View";
+    QList<QStringList> layouts;
+    layouts << (QStringList() << tr("None")       << "none")
+            << (QStringList() << tr("Table View") << "table")
+            << (QStringList() << tr("Grid View")  << "grid")
+            << (QStringList() << tr("List View")  << "list");
 
-    QString layoutValue = SETTINGS.value("View/layout", "None").toString();
+    QString layoutValue = SETTINGS.value("View/layout", "none").toString();
 
-    foreach (QString layoutName, layouts)
+    foreach (QStringList layoutName, layouts)
     {
-        QAction *layoutItem = layoutMenu->addAction(layoutName);
-        layoutItem->setData(layoutName);
+        QAction *layoutItem = layoutMenu->addAction(layoutName.at(0));
+        layoutItem->setData(layoutName.at(1));
         layoutItem->setCheckable(true);
         layoutGroup->addAction(layoutItem);
 
         //Only enable layout changes when Mupen64Plus is not running
         menuEnable << layoutItem;
 
-        if(layoutValue == layoutName)
+        if(layoutValue == layoutName.at(1))
             layoutItem->setChecked(true);
     }
 
@@ -701,13 +709,13 @@ void MainWindow::createRomView()
     currentListRom = 0;
 
 
-    QString visibleLayout = SETTINGS.value("View/layout", "None").toString();
+    QString visibleLayout = SETTINGS.value("View/layout", "none").toString();
 
-    if (visibleLayout == "Table View")
+    if (visibleLayout == "table")
         tableView->setHidden(false);
-    else if (visibleLayout == "Grid View")
+    else if (visibleLayout == "grid")
         gridView->setHidden(false);
-    else if (visibleLayout == "List View")
+    else if (visibleLayout == "list")
         listView->setHidden(false);
     else
         emptyView->setHidden(false);
@@ -745,13 +753,13 @@ void MainWindow::disableViews(bool imageUpdated)
     positionx = 0;
     positiony = 0;
 
-    if (SETTINGS.value("View/layout", "None") == "Table View") {
+    if (SETTINGS.value("View/layout", "none") == "table") {
         positionx = tableView->horizontalScrollBar()->value();
         positiony = tableView->verticalScrollBar()->value();
-    } else if (SETTINGS.value("View/layout", "None") == "Grid View") {
+    } else if (SETTINGS.value("View/layout", "none") == "grid") {
         positionx = gridView->horizontalScrollBar()->value();
         positiony = gridView->verticalScrollBar()->value();
-    } else if (SETTINGS.value("View/layout", "None") == "List View") {
+    } else if (SETTINGS.value("View/layout", "none") == "list") {
         positionx = listView->horizontalScrollBar()->value();
         positiony = listView->verticalScrollBar()->value();
     }
@@ -781,11 +789,11 @@ void MainWindow::enableViews(int romCount, bool cached)
             timer->setInterval(0);
             timer->start();
 
-            if (SETTINGS.value("View/layout", "None") == "Table View")
+            if (SETTINGS.value("View/layout", "none") == "table")
                 connect(timer, SIGNAL(timeout()), this, SLOT(setTablePosition()));
-            else if (SETTINGS.value("View/layout", "None") == "Grid View")
+            else if (SETTINGS.value("View/layout", "none") == "grid")
                 connect(timer, SIGNAL(timeout()), this, SLOT(setGridPosition()));
-            else if (SETTINGS.value("View/layout", "None") == "List View")
+            else if (SETTINGS.value("View/layout", "none") == "list")
                 connect(timer, SIGNAL(timeout()), this, SLOT(setListPosition()));
         }
     }
@@ -805,13 +813,13 @@ QString MainWindow::getCurrentRomInfo(int index)
             default: infoChar = "";         table = 0; break;
         }
 
-        QString visibleLayout = SETTINGS.value("View/layout", "None").toString();
+        QString visibleLayout = SETTINGS.value("View/layout", "none").toString();
 
-        if (visibleLayout == "Table View")
+        if (visibleLayout == "table")
             return tableView->currentItem()->data(table, 0).toString();
-        else if (visibleLayout == "Grid View" && gridCurrent)
+        else if (visibleLayout == "grid" && gridCurrent)
             return gridLayout->itemAt(currentGridRom)->widget()->property(infoChar).toString();
-        else if (visibleLayout == "List View" && listCurrent)
+        else if (visibleLayout == "list" && listCurrent)
             return listLayout->itemAt(currentListRom)->widget()->property(infoChar).toString();
     }
 
@@ -863,11 +871,11 @@ void MainWindow::launchRomFromMenu()
 {
     QString visibleLayout = layoutGroup->checkedAction()->data().toString();
 
-    if (visibleLayout == "Table View")
+    if (visibleLayout == "table")
         launchRomFromTable();
-    else if (visibleLayout == "Grid View" && gridCurrent)
+    else if (visibleLayout == "grid" && gridCurrent)
         launchRomFromWidget(gridLayout->itemAt(currentGridRom)->widget());
-    else if (visibleLayout == "List View" && listCurrent)
+    else if (visibleLayout == "list" && listCurrent)
         launchRomFromWidget(listLayout->itemAt(currentListRom)->widget());
 }
 
@@ -933,9 +941,9 @@ void MainWindow::openEditor()
     QFile config(configFile);
 
     if (configPath == "" || !config.exists()) {
-        QMessageBox::information(this, "Not Found", QString("Editor requires config directory to be ")
-                                 + "set to a directory with mupen64plus.cfg.\n\n"
-                                 + "See here for the default config location:\n"
+        QMessageBox::information(this, tr("Not Found"), QString(tr("Editor requires config directory to be "))
+                                 + tr("set to a directory with mupen64plus.cfg.") + "\n\n"
+                                 + tr("See here for the default config location:") + "\n"
                                  + "https://code.google.com/p/mupen64plus/wiki/FileLocations");
     } else {
         ConfigEditor configEditor(configFile, this);
@@ -949,11 +957,11 @@ void MainWindow::openGameSettings()
     QString romFileName;
     QString visibleLayout = layoutGroup->checkedAction()->data().toString();
 
-    if (visibleLayout == "Table View")
+    if (visibleLayout == "table")
         romFileName = QVariant(tableView->currentItem()->data(0, 0)).toString();
-    else if (visibleLayout == "Grid View" && gridCurrent)
+    else if (visibleLayout == "grid" && gridCurrent)
         romFileName = gridLayout->itemAt(currentGridRom)->widget()->property("fileName").toString();
-    else if (visibleLayout == "List View" && listCurrent)
+    else if (visibleLayout == "list" && listCurrent)
         romFileName = listLayout->itemAt(currentListRom)->widget()->property("fileName").toString();
 
     GameSettingsDialog gameSettingsDialog(romFileName, this);
@@ -964,8 +972,8 @@ void MainWindow::openGameSettings()
 void MainWindow::openLog()
 {
     if (emulation->lastOutput == "") {
-        QMessageBox::information(this, "No Output", QString("There is no log. Either Mupen64Plus has not ")
-                                 + "yet run or there was no output from the last run.");
+        QMessageBox::information(this, tr("No Output"),
+            tr("There is no log. Either Mupen64Plus has not yet run or there was no output from the last run."));
     } else {
         LogDialog logDialog(emulation->lastOutput, this);
         logDialog.exec();
@@ -1015,7 +1023,7 @@ void MainWindow::openRom()
 {
     QString filter = "N64 ROMs (";
     foreach (QString type, romCollection->getFileTypes(true)) filter += type + " ";
-    filter += ");;All Files (*)";
+    filter += ");;" + tr("All Files") + " (*)";
 
     openPath = QFileDialog::getOpenFileName(this, tr("Open ROM File"), romCollection->romPaths.at(0), filter);
     if (openPath != "") {
@@ -1087,17 +1095,20 @@ void MainWindow::resetLayouts(bool imageUpdated)
 {
     QStringList tableVisible = SETTINGS.value("Table/columns", "Filename|Size").toString().split("|");
 
+    QStringList translations;
+    foreach (QString header, tableVisible) translations << getTranslation(header);
+
     int hidden = 5;
 
     saveColumnWidths();
     QStringList widths = SETTINGS.value("Table/width", "").toString().split("|");
 
     headerLabels.clear();
-    headerLabels << "" << "" << "" << "" << "" << tableVisible; //First 5 blank for hidden columns
+    headerLabels << "" << "" << "" << "" << "" << translations; //First 5 blank for hidden columns
 
     //Remove Game Cover title for aesthetics
     for (int i = 0; i < headerLabels.size(); i++)
-        if (headerLabels.at(i) == "Game Cover") headerLabels.replace(i, "");
+        if (headerLabels.at(i) == getTranslation("Game Cover")) headerLabels.replace(i, "");
 
     tableView->setColumnCount(headerLabels.size());
     tableView->setHeaderLabels(headerLabels);
@@ -1295,11 +1306,11 @@ void MainWindow::updateLayoutSetting()
 
     romCollection->cachedRoms();
 
-    if (visibleLayout == "Table View")
+    if (visibleLayout == "table")
         tableView->setHidden(false);
-    else if (visibleLayout == "Grid View")
+    else if (visibleLayout == "grid")
         gridView->setHidden(false);
-    else if (visibleLayout == "List View")
+    else if (visibleLayout == "list")
         listView->setHidden(false);
     else
         emptyView->setHidden(false);
