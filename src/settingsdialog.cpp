@@ -866,7 +866,7 @@ void SettingsDialog::updateLanguageInfo()
 
     QTranslator translator;
     QString language = ui->languageBox->itemData(ui->languageBox->currentIndex()).toString().toLower();
-    QString resource = ":/locale/cen64-qt_"+language+".qm";
+    QString resource = ":/locale/mupen64plus-qt_"+language+".qm";
     if (QFileInfo(resource).exists()) {
         translator.load(resource);
         ui->languageInfoLabel->setText(translator.translate("SettingsDialog", sourceText));

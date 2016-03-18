@@ -36,7 +36,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="pathsWidget">
       <attribute name="title">
@@ -553,17 +553,17 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="3">
-          <widget class="QCheckBox" name="tableStretchOption">
-           <property name="text">
-            <string>Stretch First Column</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0" colspan="2">
           <widget class="QLabel" name="tableAvailableLabel">
            <property name="text">
             <string>Available Columns:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3" colspan="2">
+          <widget class="QCheckBox" name="tableStretchOption">
+           <property name="text">
+            <string>Stretch First Column</string>
            </property>
           </widget>
          </item>
@@ -908,13 +908,6 @@
          <property name="topMargin">
           <number>0</number>
          </property>
-         <item row="2" column="3">
-          <widget class="QCheckBox" name="listHeaderOption">
-           <property name="text">
-            <string>First Item as Header</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="3">
           <widget class="QLabel" name="listCurrentLabel">
            <property name="text">
@@ -1021,16 +1014,6 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
-          <widget class="QComboBox" name="listSizeBox"/>
-         </item>
-         <item row="2" column="0" colspan="2">
-          <widget class="QCheckBox" name="listCoverOption">
-           <property name="text">
-            <string>Display Cover Image</string>
-           </property>
-          </widget>
-         </item>
          <item row="3" column="0">
           <widget class="QLabel" name="listSizeLabel">
            <property name="text">
@@ -1061,6 +1044,23 @@
             </size>
            </property>
           </widget>
+         </item>
+         <item row="2" column="3" colspan="2">
+          <widget class="QCheckBox" name="listHeaderOption">
+           <property name="text">
+            <string>First Item as Header</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" colspan="3">
+          <widget class="QCheckBox" name="listCoverOption">
+           <property name="text">
+            <string>Display Cover Image</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1" colspan="2">
+          <widget class="QComboBox" name="listSizeBox"/>
          </item>
         </layout>
        </item>
@@ -1201,6 +1201,9 @@
         <widget class="QLabel" name="languageInfoLabel">
          <property name="text">
           <string>&lt;b&gt;Note:&lt;/b&gt; Language changes will not take place until application restart.</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
          </property>
          <property name="indent">
           <number>10</number>
