@@ -36,6 +36,7 @@
 #include <QStringList>
 #include <QtSql/QSqlDatabase>
 
+class QDir;
 class QProgressDialog;
 class TheGamesDBScrapper;
 struct Rom;
@@ -68,6 +69,7 @@ private:
     Rom addRom(QByteArray *romData, QString fileName, QString directory, QString zipFile, QSqlQuery query);
 
     QStringList fileTypes;
+    QStringList scanDirectory(QDir romDir);
 
     QWidget *parent;
     QProgressDialog *progress;

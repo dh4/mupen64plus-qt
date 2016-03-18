@@ -94,7 +94,7 @@ void RomCollection::addRoms()
         QDir romDir(romPath);
 
         if (romDir.exists()) {
-            QStringList files = romDir.entryList(fileTypes, QDir::Files | QDir::NoSymLinks);
+            QStringList files = scanDirectory(romDir);
             totalCount += files.size();
         }
     }
@@ -116,7 +116,7 @@ void RomCollection::addRoms()
         foreach (QString romPath, romPaths)
         {
             QDir romDir(romPath);
-            QStringList files = romDir.entryList(fileTypes, QDir::Files | QDir::NoSymLinks);
+            QStringList files = scanDirectory(romDir);
 
             int romCount = 0;
 
@@ -392,6 +392,22 @@ void RomCollection::initializeRom(Rom *currentRom, bool cached)
             }
         }
     }
+}
+
+
+QStringList RomCollection::scanDirectory(QDir romDir)
+{
+    QStringList files = romDir.entryList(fileTypes, QDir::Files | QDir::NoSymLinks);
+
+    QStringList dirs = romDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::NoSymLinks);
+    foreach (QString dir, dirs)
+    {
+        QString subDir = romDir.absolutePath() + "/" + dir;
+        QStringList subFiles = QDir(subDir).entryList(fileTypes, QDir::Files | QDir::NoSymLinks);
+        foreach (QString subFile, subFiles) files << dir + "/" + subFile;
+    }
+
+    return files;
 }
 
 
