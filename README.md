@@ -146,7 +146,7 @@ If you place it somewhere else, simply select mupen64plus.app as the executable 
 
 ## ROM Collection
 
-You can specify ROM directories under Settings->Configure->Paths. Mupen64Plus-Qt will search for any .z64, .v64 or .n64 files within these directories and also check within .zip files. After adding or removing directories to this list, it will automatically refresh your ROM list. You can manually refresh your list with File->Refresh List.
+You can specify ROM directories under Settings->Configure->Paths. Mupen64Plus-Qt will search for any .z64, .v64 or .n64 files within these directories and also check within .zip files and subdirectories (one level deep). After adding or removing directories to this list, it will automatically refresh your ROM list. You can manually refresh your list with File->Refresh List.
 
 #### Views
 
