@@ -16,7 +16,7 @@
     <message>
         <location filename="../../src/aboutdialog.cpp" line="59"/>
         <source>A basic launcher for Mupen64Plus using Qt.</source>
-        <translation>Une interface graphique simple et élémentaire pour Mupen64Plus.</translation>
+        <translation>Une interface élémentaire pour Mupen64Plus.</translation>
     </message>
     <message>
         <location filename="../../src/aboutdialog.cpp" line="60"/>
@@ -34,12 +34,12 @@
     <message>
         <location filename="../../src/configeditor.cpp" line="48"/>
         <source>Mupen64Plus Config Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeur de configuration Mupen64Plus</translation>
     </message>
     <message>
         <location filename="../../src/configeditor.cpp" line="72"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder</translation>
     </message>
 </context>
 <context>
@@ -98,7 +98,7 @@
     <message>
         <location filename="../../src/emulatorhandler.cpp" line="199"/>
         <source>Not a valid ROM File.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier ROM invalide.</translation>
     </message>
     <message>
         <location filename="../../src/emulatorhandler.cpp" line="183"/>
@@ -116,42 +116,42 @@
     <message>
         <location filename="../../src/gamesettingsdialog.ui" line="20"/>
         <source>Game Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres du jeu</translation>
     </message>
     <message>
         <location filename="../../src/gamesettingsdialog.ui" line="26"/>
         <source>Game settings for: </source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres du jeu pour :</translation>
     </message>
     <message>
         <location filename="../../src/gamesettingsdialog.ui" line="33"/>
         <source>These settings will override any global settings. If there&apos;s a setting you want to modify for this game, but it doesn&apos;t appear here, add the parameter for it to &quot;Other Parameters.&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ces paramètres prévaleront sur tous les paramètres généraux. Si vous souhaitez modifier un paramètre pour ce jeu, mais qu&apos;il n&apos;apparaît pas ici, ajoutez-le dans &quot;Autres paramètres.&quot;</translation>
     </message>
     <message>
         <location filename="../../src/gamesettingsdialog.ui" line="43"/>
         <source>Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugins</translation>
     </message>
     <message>
         <location filename="../../src/gamesettingsdialog.ui" line="57"/>
         <source>Audio Plugin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin audio :</translation>
     </message>
     <message>
         <location filename="../../src/gamesettingsdialog.ui" line="64"/>
         <source>Input Plugin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin d&apos;entrée :</translation>
     </message>
     <message>
         <location filename="../../src/gamesettingsdialog.ui" line="71"/>
         <source>RSP Plugin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin RSP :</translation>
     </message>
     <message>
         <location filename="../../src/gamesettingsdialog.ui" line="78"/>
         <source>Video Plugin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin vidéo :</translation>
     </message>
     <message>
         <location filename="../../src/gamesettingsdialog.ui" line="86"/>
@@ -159,22 +159,22 @@
         <location filename="../../src/gamesettingsdialog.ui" line="104"/>
         <location filename="../../src/gamesettingsdialog.ui" line="113"/>
         <source>default</source>
-        <translation type="unfinished"></translation>
+        <translation>Défaut</translation>
     </message>
     <message>
         <location filename="../../src/gamesettingsdialog.ui" line="126"/>
         <source>Additional Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres supplémentaires</translation>
     </message>
     <message>
         <location filename="../../src/gamesettingsdialog.ui" line="137"/>
         <source>Config Directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossier de configuration :</translation>
     </message>
     <message>
         <location filename="../../src/gamesettingsdialog.ui" line="144"/>
         <source>Other Parameters:</source>
-        <translation type="unfinished"></translation>
+        <translation>Autres paramètres :</translation>
     </message>
     <message>
         <location filename="../../src/gamesettingsdialog.ui" line="151"/>
@@ -184,7 +184,7 @@
     <message>
         <location filename="../../src/gamesettingsdialog.cpp" line="106"/>
         <source>Config Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossier de configuration</translation>
     </message>
 </context>
 <context>
@@ -265,12 +265,12 @@
     <message>
         <location filename="../../src/mainwindow.cpp" line="579"/>
         <source>Edit mupen64plus.cfg...</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditer mupen64plus.cfg...</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="581"/>
         <source>Configure &amp;Game...</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurer le &amp;jeu...</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="585"/>
@@ -315,17 +315,17 @@
     <message>
         <location filename="../../src/mainwindow.cpp" line="944"/>
         <source>Not Found</source>
-        <translation type="unfinished"></translation>
+        <translation>Non trouvé</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="944"/>
         <source>Editor requires config directory to be </source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;éditeur nécessite que le dossier de configuration soit </translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="945"/>
         <source>set to a directory with mupen64plus.cfg.</source>
-        <translation type="unfinished"></translation>
+        <translation>un dossier contenant mupen64plus.cfg.</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="946"/>
@@ -378,7 +378,6 @@
     <message>
         <location filename="../../src/common.cpp" line="277"/>
         <source>GoodName</source>
-        <translatorcomment>me</translatorcomment>
         <translation>GoodName</translation>
     </message>
     <message>
@@ -419,7 +418,7 @@
     <message>
         <location filename="../../src/common.cpp" line="285"/>
         <source>CRC2</source>
-        <translation></translation>
+        <translation>CRC2</translation>
     </message>
     <message>
         <location filename="../../src/common.cpp" line="286"/>
@@ -612,22 +611,22 @@
     <message>
         <location filename="../../src/settingsdialog.ui" line="80"/>
         <source>Config directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossier de configuration :</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="94"/>
         <source>Plugins directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossier des plugins :</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="118"/>
         <source>Data directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossier des données :</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="175"/>
         <source>Mupen64Plus-Qt will search for all .z64, .v64, .n64, and .zip files in these directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Mupen64Plus-Qt cherchera tous les fichiers z64, v64, n64 et zip dans ces dossiers</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="225"/>
@@ -642,12 +641,12 @@
     <message>
         <location filename="../../src/settingsdialog.ui" line="239"/>
         <source>Dynamic Recompiler</source>
-        <translation type="unfinished"></translation>
+        <translation>Recompilation dynamique</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="275"/>
         <source>Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Graphique</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="286"/>
@@ -657,37 +656,37 @@
     <message>
         <location filename="../../src/settingsdialog.ui" line="293"/>
         <source>Fullscreen:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plein écran :</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="300"/>
         <source>Resolution:</source>
-        <translation type="unfinished"></translation>
+        <translation>Résolution :</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="360"/>
         <source>Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugins</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="368"/>
         <source>Video Plugin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin vidéo :</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="375"/>
         <source>Audio Plugin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin audio :</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="382"/>
         <source>Input Plugin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin d&apos;entrée :</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="389"/>
         <source>RSP Plugin:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin RSP :</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="424"/>
@@ -704,10 +703,10 @@
         <location filename="../../src/settingsdialog.ui" line="485"/>
         <location filename="../../src/settingsdialog.ui" line="527"/>
         <location filename="../../src/settingsdialog.ui" line="537"/>
-        <location filename="../../src/settingsdialog.ui" line="939"/>
-        <location filename="../../src/settingsdialog.ui" line="949"/>
-        <location filename="../../src/settingsdialog.ui" line="985"/>
-        <location filename="../../src/settingsdialog.ui" line="995"/>
+        <location filename="../../src/settingsdialog.ui" line="932"/>
+        <location filename="../../src/settingsdialog.ui" line="942"/>
+        <location filename="../../src/settingsdialog.ui" line="978"/>
+        <location filename="../../src/settingsdialog.ui" line="988"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -717,12 +716,12 @@
         <translation>Colonnes utilisées :</translation>
     </message>
     <message>
-        <location filename="../../src/settingsdialog.ui" line="559"/>
+        <location filename="../../src/settingsdialog.ui" line="566"/>
         <source>Stretch First Column</source>
         <translation>Étendre la première colonne</translation>
     </message>
     <message>
-        <location filename="../../src/settingsdialog.ui" line="566"/>
+        <location filename="../../src/settingsdialog.ui" line="559"/>
         <source>Available Columns:</source>
         <translation>Colonnes disponibles :</translation>
     </message>
@@ -764,13 +763,13 @@
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="726"/>
-        <location filename="../../src/settingsdialog.ui" line="1051"/>
+        <location filename="../../src/settingsdialog.ui" line="1034"/>
         <source>Sorting:</source>
         <translation>Classement :</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="736"/>
-        <location filename="../../src/settingsdialog.ui" line="1044"/>
+        <location filename="../../src/settingsdialog.ui" line="1027"/>
         <source>Descending</source>
         <translation>Descendant</translation>
     </message>
@@ -796,7 +795,7 @@
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="812"/>
-        <location filename="../../src/settingsdialog.ui" line="1037"/>
+        <location filename="../../src/settingsdialog.ui" line="1020"/>
         <source>Image Size:</source>
         <translation>Taille des images :</translation>
     </message>
@@ -806,34 +805,34 @@
         <translation>Liste</translation>
     </message>
     <message>
-        <location filename="../../src/settingsdialog.ui" line="914"/>
+        <location filename="../../src/settingsdialog.ui" line="1051"/>
         <source>First Item as Header</source>
         <translation>Premier intitulé comme en-tête</translation>
     </message>
     <message>
-        <location filename="../../src/settingsdialog.ui" line="921"/>
+        <location filename="../../src/settingsdialog.ui" line="914"/>
         <source>Current Items:</source>
         <translation>Intitulé actuel :</translation>
     </message>
     <message>
-        <location filename="../../src/settingsdialog.ui" line="1020"/>
+        <location filename="../../src/settingsdialog.ui" line="1013"/>
         <source>Available Items:</source>
         <translation>Intitulés disponibles :</translation>
     </message>
     <message>
-        <location filename="../../src/settingsdialog.ui" line="1030"/>
+        <location filename="../../src/settingsdialog.ui" line="1058"/>
         <source>Display Cover Image</source>
         <translation>Afficher les vignettes</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="1131"/>
         <source>Additional Parameters:</source>
-        <translation>Paramètres supplémentaires : </translation>
+        <translation>Paramètres supplémentaires :</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="1151"/>
         <source>Save Options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder les options :</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="1144"/>
@@ -848,12 +847,12 @@
     <message>
         <location filename="../../src/settingsdialog.ui" line="1168"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use to pass additional parameters to Mupen64Plus (cheats, etc.). See &lt;a href=&quot;https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage&lt;/span&gt;&lt;/a&gt; for more information.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;À utiliser pour ajouter des paramètres supplémentaires (cheats, etc.). Voir &lt;a href=&quot;https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage&lt;/span&gt;&lt;/a&gt; pour plus d&apos;informations.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="1203"/>
         <source>&lt;b&gt;Note:&lt;/b&gt; Language changes will not take place until application restart.</source>
-        <translation>&lt;b&gt;Remarque : &lt;/b&gt;Le changement de langue ne prendra effet qu&apos;après le redémarrage du programme.</translation>
+        <translation>&lt;b&gt;Remarque :&lt;/b&gt; Le changement de langue ne prendra effet qu&apos;après le redémarrage du programme.</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.cpp" line="178"/>
@@ -953,17 +952,17 @@
     <message>
         <location filename="../../src/settingsdialog.cpp" line="416"/>
         <source>Plugin Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossier des plugins</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.cpp" line="425"/>
         <source>Data Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossier des données</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.cpp" line="433"/>
         <source>Config Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Dossier de configuration</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.cpp" line="391"/>
@@ -986,7 +985,7 @@
     <message>
         <location filename="../../src/thegamesdbscrapper.cpp" line="61"/>
         <source>exist on TheGamesDB and Mupen64Plus-Qt pulled the information for different game, it&apos;s </source>
-        <translation>n’est pas dans TheGamesDB et que Mupen64PlusQt vous propose des informations pour un autre jeu,</translation>
+        <translation>n’est pas dans TheGamesDB et que Mupen64Plus-Qt vous propose des informations pour un autre jeu,</translation>
     </message>
     <message>
         <location filename="../../src/thegamesdbscrapper.cpp" line="62"/>
@@ -1043,7 +1042,7 @@
         <location filename="../../src/thegamesdbscrapper.cpp" line="296"/>
         <source>Network Error</source>
         <translatorcomment>Erreur réseau</translatorcomment>
-        <translation></translation>
+        <translation>Erreur réseau</translation>
     </message>
 </context>
 </TS>
