@@ -31,7 +31,7 @@ make %{?_smp_mflags}
 install -Dm755 "mupen64plus-qt"                     "%{buildroot}%{_bindir}/mupen64plus-qt"
 install -Dm644 "resources/mupen64plus-qt.desktop"   "%{buildroot}%{_datadir}/applications/mupen64plus-qt.desktop"
 install -Dm644 "resources/images/mupen64plus.png"   "%{buildroot}%{_datadir}/icons/hicolor/128x128/apps/mupen64plus-qt.png"
-install -Dm644 "resources/mupen64plus-qt.1"         "%{buildroot}%{_mandir}/man1/mupen64plus-qt.1"
+install -Dm644 "resources/mupen64plus-qt.6"         "%{buildroot}%{_mandir}/man6/mupen64plus-qt.6"
 
 %files
 %license LICENSE
@@ -39,7 +39,7 @@ install -Dm644 "resources/mupen64plus-qt.1"         "%{buildroot}%{_mandir}/man1
 %{_bindir}/mupen64plus-qt
 %{_datadir}/applications/mupen64plus-qt.desktop
 %{_datadir}/icons/hicolor/128x128/apps/mupen64plus-qt.png
-%{_mandir}/man1/mupen64plus-qt.1*
+%{_mandir}/man6/mupen64plus-qt.6*
 
 %changelog
 * Tue Oct 06 2015 Dan Hasting
