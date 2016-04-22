@@ -131,6 +131,9 @@ void TheGamesDBScrapper::downloadGameInfo(QString identifier, QString searchName
                 searchName = "Majora's Mask";
             else if (searchName == "Legend of Zelda, The - Ocarina of Time - Master Quest")
                 searchName = "Master Quest";
+            else if (searchName == "Legend of Zelda, The - Ocarina of Time" ||
+                     searchName == "THE LEGEND OF ZELDA")
+                searchName = "Ocarina of Time";
             else if (searchName.toLower() == "f-zero x")
                 gameID = "10836";
 
