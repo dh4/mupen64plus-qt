@@ -342,10 +342,10 @@ bool romSorter(const Rom &firstRom, const Rom &lastRom)
     QString sort, direction;
 
     QString layout = SETTINGS.value("View/layout", "None").toString();
-    if (layout == "Grid View") {
+    if (layout == "grid") {
         sort = SETTINGS.value("Grid/sort", "Filename").toString();
         direction = SETTINGS.value("Grid/sortdirection", "ascending").toString();
-    } else if (layout == "List View") {
+    } else if (layout == "list") {
         sort = SETTINGS.value("List/sort", "Filename").toString();
         direction = SETTINGS.value("List/sortdirection", "ascending").toString();
     } else //just return sort by filename
