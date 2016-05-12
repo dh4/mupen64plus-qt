@@ -942,9 +942,10 @@ void MainWindow::openEditor()
 
     if (configPath == "" || !config.exists()) {
         QMessageBox::information(this, tr("Not Found"), QString(tr("Editor requires config directory to be "))
-                                 + tr("set to a directory with mupen64plus.cfg.") + "\n\n"
-                                 + tr("See here for the default config location:") + "\n"
-                                 + "https://code.google.com/p/mupen64plus/wiki/FileLocations");
+                                 + tr("set to a directory with mupen64plus.cfg.") + "<br /><br />"
+                                 + tr("See here for the default config location:") + "<br />"
+                                 + "<a href=\"http://mupen64plus.org/wiki/index.php?title=FileLocations\">"
+                                 + "http://mupen64plus.org/wiki/index.php?title=FileLocations</a>");
     } else {
         ConfigEditor configEditor(configFile, this);
         configEditor.exec();

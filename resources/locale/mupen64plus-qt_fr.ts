@@ -333,42 +333,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="975"/>
+        <location filename="../../src/mainwindow.cpp" line="976"/>
         <source>No Output</source>
         <translation>Pas de sortie</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="976"/>
+        <location filename="../../src/mainwindow.cpp" line="977"/>
         <source>There is no log. Either Mupen64Plus has not yet run or there was no output from the last run.</source>
         <translation>Il n&apos;y a pas de journaux. Soit Mupen64Plus n’a pas encore été lancé, soit il n’y a pas de données concernant le dernier démarrage. </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1026"/>
+        <location filename="../../src/mainwindow.cpp" line="1027"/>
         <source>All Files</source>
         <translation>Tous les fichiers</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1028"/>
+        <location filename="../../src/mainwindow.cpp" line="1029"/>
         <source>Open ROM File</source>
         <translation>Ouvrir un fichier ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1046"/>
+        <location filename="../../src/mainwindow.cpp" line="1047"/>
         <source>No ROMs</source>
         <translation>Aucune ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1046"/>
+        <location filename="../../src/mainwindow.cpp" line="1047"/>
         <source>No ROMs found in ZIP file.</source>
         <translation>Aucune ROM trouvée dans le fichier ZIP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1061"/>
+        <location filename="../../src/mainwindow.cpp" line="1062"/>
         <source>Select ROM</source>
         <translation>Choisir une ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1078"/>
+        <location filename="../../src/mainwindow.cpp" line="1079"/>
         <source>Launch</source>
         <translation>Lancer</translation>
     </message>
@@ -496,24 +496,24 @@
         <translation>%1 - MB</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="166"/>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="203"/>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="248"/>
+        <location filename="../../src/thegamesdbscrapper.cpp" line="169"/>
+        <location filename="../../src/thegamesdbscrapper.cpp" line="206"/>
+        <location filename="../../src/thegamesdbscrapper.cpp" line="251"/>
         <source>Game Information Download</source>
         <translation>Télécharger des informations sur le jeu</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="199"/>
+        <location filename="../../src/thegamesdbscrapper.cpp" line="202"/>
         <source>No results found.</source>
         <translation>Aucun résultat.</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="201"/>
+        <location filename="../../src/thegamesdbscrapper.cpp" line="204"/>
         <source>No more results found.</source>
         <translation>Pas d&apos;autre résultat.</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="249"/>
+        <location filename="../../src/thegamesdbscrapper.cpp" line="252"/>
         <source>Download Complete!</source>
         <translation>Téléchargement terminé !</translation>
     </message>
@@ -846,8 +846,8 @@
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="1168"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use to pass additional parameters to Mupen64Plus (cheats, etc.). See &lt;a href=&quot;https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage&lt;/span&gt;&lt;/a&gt; for more information.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;À utiliser pour ajouter des paramètres supplémentaires (cheats, etc.). Voir &lt;a href=&quot;https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage&lt;/span&gt;&lt;/a&gt; pour plus d&apos;informations.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use to pass additional parameters to Mupen64Plus (cheats, etc.). See &lt;a href=&quot;http://mupen64plus.org/wiki/index.php?title=UIConsoleUsage&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://mupen64plus.org/wiki/index.php?title=UIConsoleUsage&lt;/span&gt;&lt;/a&gt; for more information.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;À utiliser pour ajouter des paramètres supplémentaires (cheats, etc.). Voir &lt;a href=&quot;http://mupen64plus.org/wiki/index.php?title=UIConsoleUsage&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://mupen64plus.org/wiki/index.php?title=UIConsoleUsage&lt;/span&gt;&lt;/a&gt; pour plus d&apos;informations.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../src/settingsdialog.ui" line="1203"/>
@@ -1018,28 +1018,28 @@
         <translation>Effacer les informations du jeu</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="163"/>
+        <location filename="../../src/thegamesdbscrapper.cpp" line="166"/>
         <source>Released on: </source>
         <translation>Publié le :</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="164"/>
+        <location filename="../../src/thegamesdbscrapper.cpp" line="167"/>
         <source>Does this look correct?</source>
         <translation>Ces informations vous semblent-elles correctes ?</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="283"/>
+        <location filename="../../src/thegamesdbscrapper.cpp" line="286"/>
         <source>Request timed out. Check your network settings.</source>
         <translation>Temps dépassé. Vérifier vos paramètres de connexion.</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="291"/>
+        <location filename="../../src/thegamesdbscrapper.cpp" line="294"/>
         <source>Continue scraping information?</source>
         <translation>Continuer à récolter des informations ?</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="294"/>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="296"/>
+        <location filename="../../src/thegamesdbscrapper.cpp" line="297"/>
+        <location filename="../../src/thegamesdbscrapper.cpp" line="299"/>
         <source>Network Error</source>
         <translatorcomment>Erreur réseau</translatorcomment>
         <translation>Erreur réseau</translation>
