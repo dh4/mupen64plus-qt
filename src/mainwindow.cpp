@@ -1026,7 +1026,15 @@ void MainWindow::openRom()
     foreach (QString type, romCollection->getFileTypes(true)) filter += type + " ";
     filter += ");;" + tr("All Files") + " (*)";
 
-    openPath = QFileDialog::getOpenFileName(this, tr("Open ROM File"), romCollection->romPaths.at(0), filter);
+#if QT_VERSION >= 0x050000
+    QString searchPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first();
+#else
+    QString searchPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#endif
+    if (romCollection->romPaths.count() > 0)
+        searchPath = romCollection->romPaths.at(0);
+
+    openPath = QFileDialog::getOpenFileName(this, tr("Open ROM File"), searchPath, filter);
     if (openPath != "") {
         if (QFileInfo(openPath).suffix() == "zip") {
             QStringList zippedFiles = getZippedFiles(openPath);
