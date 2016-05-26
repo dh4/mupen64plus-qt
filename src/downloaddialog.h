@@ -38,7 +38,7 @@ class QDialogButtonBox;
 class QGridLayout;
 class QLabel;
 class QLineEdit;
-class TheGamesDBScrapper;
+class TheGamesDBScraper;
 
 
 class DownloadDialog : public QDialog
@@ -58,7 +58,7 @@ private:
     QString romMD5;
     QWidget *parent;
 
-    TheGamesDBScrapper *scrapper;
+    TheGamesDBScraper *scraper;
 
 private slots:
     void runDownloader();

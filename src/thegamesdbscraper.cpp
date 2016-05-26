@@ -29,7 +29,7 @@
  *
  ***/
 
-#include "thegamesdbscrapper.h"
+#include "thegamesdbscraper.h"
 #include "common.h"
 #include "global.h"
 
@@ -46,7 +46,7 @@
 #include <QtXml/QDomDocument>
 
 
-TheGamesDBScrapper::TheGamesDBScrapper(QWidget *parent, bool force) : QObject(parent)
+TheGamesDBScraper::TheGamesDBScraper(QWidget *parent, bool force) : QObject(parent)
 {
     this->parent = parent;
     this->force = force;
@@ -54,7 +54,7 @@ TheGamesDBScrapper::TheGamesDBScrapper(QWidget *parent, bool force) : QObject(pa
 }
 
 
-void TheGamesDBScrapper::deleteGameInfo(QString fileName, QString identifier)
+void TheGamesDBScraper::deleteGameInfo(QString fileName, QString identifier)
 {
     QString text;
     text = QString(tr("<b>NOTE:</b> If you are deleting this game's information because the game doesn't "))
@@ -101,7 +101,7 @@ void TheGamesDBScrapper::deleteGameInfo(QString fileName, QString identifier)
 }
 
 
-void TheGamesDBScrapper::downloadGameInfo(QString identifier, QString searchName, QString gameID)
+void TheGamesDBScraper::downloadGameInfo(QString identifier, QString searchName, QString gameID)
 {
     if (keepGoing && identifier != "") {
         if (force) parent->setEnabled(false);
@@ -256,7 +256,7 @@ void TheGamesDBScrapper::downloadGameInfo(QString identifier, QString searchName
 }
 
 
-QByteArray TheGamesDBScrapper::getUrlContents(QUrl url)
+QByteArray TheGamesDBScraper::getUrlContents(QUrl url)
 {
     QNetworkAccessManager *manager = new QNetworkAccessManager;
 
@@ -289,7 +289,7 @@ QByteArray TheGamesDBScrapper::getUrlContents(QUrl url)
 }
 
 
-void TheGamesDBScrapper::showError(QString error)
+void TheGamesDBScraper::showError(QString error)
 {
     QString question = "\n\n" + tr("Continue scraping information?");
 

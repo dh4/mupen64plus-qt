@@ -348,27 +348,27 @@
         <translation>Tous les fichiers</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1029"/>
+        <location filename="../../src/mainwindow.cpp" line="1037"/>
         <source>Open ROM File</source>
         <translation>Ouvrir un fichier ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1047"/>
+        <location filename="../../src/mainwindow.cpp" line="1055"/>
         <source>No ROMs</source>
         <translation>Aucune ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1047"/>
+        <location filename="../../src/mainwindow.cpp" line="1055"/>
         <source>No ROMs found in ZIP file.</source>
         <translation>Aucune ROM trouvée dans le fichier ZIP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1062"/>
+        <location filename="../../src/mainwindow.cpp" line="1070"/>
         <source>Select ROM</source>
         <translation>Choisir une ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="1079"/>
+        <location filename="../../src/mainwindow.cpp" line="1087"/>
         <source>Launch</source>
         <translation>Lancer</translation>
     </message>
@@ -496,24 +496,24 @@
         <translation>%1 - MB</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="169"/>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="206"/>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="251"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="169"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="206"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="251"/>
         <source>Game Information Download</source>
         <translation>Télécharger des informations sur le jeu</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="202"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="202"/>
         <source>No results found.</source>
         <translation>Aucun résultat.</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="204"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="204"/>
         <source>No more results found.</source>
         <translation>Pas d&apos;autre résultat.</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="252"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="252"/>
         <source>Download Complete!</source>
         <translation>Téléchargement terminé !</translation>
     </message>
@@ -976,70 +976,70 @@
     </message>
 </context>
 <context>
-    <name>TheGamesDBScrapper</name>
+    <name>TheGamesDBScraper</name>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="60"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="60"/>
         <source>&lt;b&gt;NOTE:&lt;/b&gt; If you are deleting this game&apos;s information because the game doesn&apos;t </source>
         <translation>&lt;b&gt;Remarque :&lt;/b&gt; Si vous effacez les informations de ce jeu parce que le jeu</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="61"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="61"/>
         <source>exist on TheGamesDB and Mupen64Plus-Qt pulled the information for different game, it&apos;s </source>
         <translation>n’est pas dans TheGamesDB et que Mupen64Plus-Qt vous propose des informations pour un autre jeu,</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="62"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="62"/>
         <source>better to create an account on</source>
         <translation>il est préférable de créer un compte</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="63"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="63"/>
         <source>and add the game so other users can benefit as well.</source>
         <translation>et d’ajouter le jeu afin d’en faire profiter également les autres utilisateurs.</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="65"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="65"/>
         <source>This will cause Mupen64Plus-Qt to not update the information for this game until you </source>
         <translation>Mupen64Plus-QT ne mettra pas à jour les informations jusqu&apos;à ce que vous</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="66"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="66"/>
         <source>force it with &quot;Download/Update Info...&quot;</source>
         <translation>relanciez le téléchargement/la mise à jour des informations...</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="68"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="68"/>
         <source>Delete the current information for</source>
         <translation>Effacer les informations actuelles pour</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="70"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="70"/>
         <source>Delete Game Information</source>
         <translation>Effacer les informations du jeu</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="166"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="166"/>
         <source>Released on: </source>
         <translation>Publié le :</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="167"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="167"/>
         <source>Does this look correct?</source>
         <translation>Ces informations vous semblent-elles correctes ?</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="286"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="286"/>
         <source>Request timed out. Check your network settings.</source>
         <translation>Temps dépassé. Vérifier vos paramètres de connexion.</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="294"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="294"/>
         <source>Continue scraping information?</source>
         <translation>Continuer à récolter des informations ?</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="297"/>
-        <location filename="../../src/thegamesdbscrapper.cpp" line="299"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="297"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="299"/>
         <source>Network Error</source>
         <translatorcomment>Erreur réseau</translatorcomment>
         <translation>Erreur réseau</translation>

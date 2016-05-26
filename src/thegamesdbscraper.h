@@ -29,19 +29,19 @@
  *
  ***/
 
-#ifndef THEGAMESDBSCRAPPER_H
-#define THEGAMESDBSCRAPPER_H
+#ifndef THEGAMESDBSCRAPER_H
+#define THEGAMESDBSCRAPER_H
 
 #include <QWidget>
 
 class QUrl;
 
 
-class TheGamesDBScrapper : public QObject
+class TheGamesDBScraper : public QObject
 {
     Q_OBJECT
 public:
-    explicit TheGamesDBScrapper(QWidget *parent = 0, bool force = false);
+    explicit TheGamesDBScraper(QWidget *parent = 0, bool force = false);
     void deleteGameInfo(QString fileName, QString identifier);
     void downloadGameInfo(QString identifier, QString searchName, QString gameID = "");
 
@@ -54,4 +54,4 @@ private:
     QWidget *parent;
 };
 
-#endif // THEGAMESDBSCRAPPER_H
+#endif // THEGAMESDBSCRAPER_H

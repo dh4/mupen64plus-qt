@@ -32,7 +32,7 @@
 #include "romcollection.h"
 #include "common.h"
 #include "global.h"
-#include "thegamesdbscrapper.h"
+#include "thegamesdbscraper.h"
 
 #include <QCoreApplication>
 #include <QCryptographicHash>
@@ -111,7 +111,7 @@ void RomCollection::addRoms()
                       + "(filename, directory, internal_name, md5, zip_file, size) "
                       + "VALUES (:filename, :directory, :internal_name, :md5, :zip_file, :size)");
 
-        scrapper = new TheGamesDBScrapper(parent);
+        scraper = new TheGamesDBScraper(parent);
 
         foreach (QString romPath, romPaths)
         {
@@ -171,7 +171,7 @@ void RomCollection::addRoms()
                 QMessageBox::warning(parent, tr("Warning"), tr("No ROMs found in ") + romPath + ".");
         }
 
-        delete scrapper;
+        delete scraper;
         database.close();
         progress->close();
     } else if (romPaths.size() != 0) {
@@ -319,13 +319,13 @@ void RomCollection::initializeRom(Rom *currentRom, bool cached)
     if (!cached && SETTINGS.value("Other/downloadinfo", "").toString() == "true") {
         if (currentRom->goodName != getTranslation("Unknown ROM") &&
             currentRom->goodName != getTranslation("Requires catalog file")) {
-            scrapper->downloadGameInfo(currentRom->romMD5, currentRom->goodName);
+            scraper->downloadGameInfo(currentRom->romMD5, currentRom->goodName);
         } else {
             //tweak internal name by adding spaces to get better results
             QString search = currentRom->internalName;
             search.replace(QRegExp("([a-z])([A-Z])"),"\\1 \\2");
             search.replace(QRegExp("([^ \\d])(\\d)"),"\\1 \\2");
-            scrapper->downloadGameInfo(currentRom->romMD5, search);
+            scraper->downloadGameInfo(currentRom->romMD5, search);
         }
 
     }

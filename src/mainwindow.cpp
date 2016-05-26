@@ -41,7 +41,7 @@
 #include "logdialog.h"
 #include "romcollection.h"
 #include "settingsdialog.h"
-#include "thegamesdbscrapper.h"
+#include "thegamesdbscraper.h"
 #include "treewidgetitem.h"
 
 #include <QCloseEvent>
@@ -916,9 +916,9 @@ void MainWindow::openAbout()
 
 void MainWindow::openDeleteDialog()
 {
-    scrapper = new TheGamesDBScrapper(this);
-    scrapper->deleteGameInfo(getCurrentRomInfo(0), getCurrentRomInfo(2));
-    delete scrapper;
+    scraper = new TheGamesDBScraper(this);
+    scraper->deleteGameInfo(getCurrentRomInfo(0), getCurrentRomInfo(2));
+    delete scraper;
 
     romCollection->cachedRoms();
 }
