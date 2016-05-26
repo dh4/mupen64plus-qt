@@ -312,7 +312,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
     //Populate Other tab
     int languageIndex = 0;
-    QString currentLanguage = SETTINGS.value("language", "EN").toString();
+    QString currentLanguage = SETTINGS.value("language", getDefaultLanguage()).toString();
 
     QList<QStringList> languages;
     languages << (QStringList() << QString::fromUtf8("English")  << "EN")

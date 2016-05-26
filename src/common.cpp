@@ -36,6 +36,7 @@
 #include <QDir>
 #include <QEventLoop>
 #include <QFile>
+#include <QLocale>
 #include <QSize>
 
 #include <quazip/quazip.h>
@@ -110,6 +111,18 @@ QColor getColor(QString color, int transparency)
     }
 
     return QColor(0, 0, 0, 255);
+}
+
+
+QString getDefaultLanguage()
+{
+    QString systemLanguage = QLocale::system().name().left(2);
+
+    //Add other languages here as translations are done
+    if (systemLanguage == "fr")
+        return "FR";
+    else
+        return "EN";
 }
 
 

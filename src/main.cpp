@@ -29,6 +29,7 @@
  *
  ***/
 
+#include "common.h"
 #include "global.h"
 #include "mainwindow.h"
 
@@ -43,7 +44,7 @@ int main(int argc, char *argv[])
     QApplication application(argc, argv);
 
     QTranslator translator;
-    QString language = SETTINGS.value("language", "EN").toString();
+    QString language = SETTINGS.value("language", getDefaultLanguage()).toString();
 
     if (language != "EN") {
         QString resource = ":/locale/mupen64plus-qt_"+language.toLower()+".qm";

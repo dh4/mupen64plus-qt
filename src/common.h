@@ -82,6 +82,7 @@ QByteArray byteswap(QByteArray romData);
 QStringList getZippedFiles(QString completeFileName);
 QByteArray *getZippedRom(QString romFileName, QString zipFile);
 QColor getColor(QString color, int transparency = 255);
+QString getDefaultLanguage();
 QString getTranslation(QString text);
 QGraphicsDropShadowEffect *getShadow(bool active);
 QSize getImageSize(QString view);
