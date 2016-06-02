@@ -47,14 +47,14 @@ class RomCollection : public QObject
     Q_OBJECT
 public:
     explicit RomCollection(QStringList fileTypes, QStringList romPaths, QWidget *parent = 0);
-    void cachedRoms(bool imageUpdated = false);
+    int cachedRoms(bool imageUpdated = false);
     void updatePaths(QStringList romPaths);
 
     QStringList getFileTypes(bool archives = false);
     QStringList romPaths;
 
 public slots:
-    void addRoms();
+    int addRoms();
 
 signals:
     void romAdded(Rom *currentRom, int count);

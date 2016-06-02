@@ -104,6 +104,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     mainLayout->addWidget(tableView);
     mainLayout->addWidget(gridView);
     mainLayout->addWidget(listView);
+    mainLayout->addWidget(disabledView);
 
     mainLayout->setMargin(0);
 
@@ -709,6 +710,23 @@ void MainWindow::createRomView()
     currentListRom = 0;
 
 
+    //Create disabled view
+    disabledView = new QWidget(this);
+    disabledView->setHidden(true);
+    disabledView->setDisabled(true);
+
+    disabledLayout = new QVBoxLayout(disabledView);
+    disabledLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+    disabledView->setLayout(disabledLayout);
+
+    QString disabledText = QString("Add a directory containing ROMs under ")
+                         + "Settings->Configure->Paths to use this view.";
+    disabledLabel = new QLabel(disabledText, disabledView);
+    disabledLabel->setWordWrap(true);
+    disabledLabel->setAlignment(Qt::AlignCenter);
+    disabledLayout->addWidget(disabledLabel);
+
+
     QString visibleLayout = SETTINGS.value("View/layout", "none").toString();
 
     if (visibleLayout == "table")
@@ -783,6 +801,21 @@ void MainWindow::enableViews(int romCount, bool cached)
         gridView->setEnabled(true);
         listView->setEnabled(true);
 
+        //Check if disabled view is showing. If it is, re-enabled the selected view
+        if (!disabledView->isHidden()) {
+            disabledView->setHidden(true);
+
+            QString visibleLayout = SETTINGS.value("View/layout", "none").toString();
+            if (visibleLayout == "table")
+                tableView->setHidden(false);
+            else if (visibleLayout == "grid")
+                gridView->setHidden(false);
+            else if (visibleLayout == "list")
+                listView->setHidden(false);
+            else
+                emptyView->setHidden(false);
+        }
+
         if (cached) {
             QTimer *timer = new QTimer(this);
             timer->setSingleShot(true);
@@ -795,6 +828,13 @@ void MainWindow::enableViews(int romCount, bool cached)
                 connect(timer, SIGNAL(timeout()), this, SLOT(setGridPosition()));
             else if (SETTINGS.value("View/layout", "none") == "list")
                 connect(timer, SIGNAL(timeout()), this, SLOT(setListPosition()));
+        }
+    } else {
+        if (SETTINGS.value("View/layout", "none") != "none") {
+            tableView->setHidden(true);
+            gridView->setHidden(true);
+            listView->setHidden(true);
+            disabledView->setHidden(false);
         }
     }
 }
@@ -1303,6 +1343,7 @@ void MainWindow::toggleMenus(bool active)
     }
 }
 
+
 void MainWindow::updateLayoutSetting()
 {
     QString visibleLayout = layoutGroup->checkedAction()->data().toString();
@@ -1312,17 +1353,20 @@ void MainWindow::updateLayoutSetting()
     tableView->setHidden(true);
     gridView->setHidden(true);
     listView->setHidden(true);
+    disabledView->setHidden(true);
 
-    romCollection->cachedRoms();
+    int romCount = romCollection->cachedRoms();
 
-    if (visibleLayout == "table")
-        tableView->setHidden(false);
-    else if (visibleLayout == "grid")
-        gridView->setHidden(false);
-    else if (visibleLayout == "list")
-        listView->setHidden(false);
-    else
-        emptyView->setHidden(false);
+    if (romCount > 0 || visibleLayout == "none") {
+        if (visibleLayout == "table")
+            tableView->setHidden(false);
+        else if (visibleLayout == "grid")
+            gridView->setHidden(false);
+        else if (visibleLayout == "list")
+            listView->setHidden(false);
+        else
+            emptyView->setHidden(false);
+    }
 
     startAction->setEnabled(false);
     configureGameAction->setEnabled(false);

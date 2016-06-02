@@ -106,6 +106,7 @@ private:
     QGridLayout *zipLayout;
     QHeaderView *headerView;
     QLabel *emptyIcon;
+    QLabel *disabledLabel;
     QList<QAction*> menuEnable;
     QList<QAction*> menuDisable;
     QListWidget *zipList;
@@ -119,8 +120,10 @@ private:
     QScrollArea *listView;
     QScrollArea *gridView;
     QTreeWidget *tableView;
+    QVBoxLayout *disabledLayout;
     QVBoxLayout *listLayout;
     QVBoxLayout *mainLayout;
+    QWidget *disabledView;
     QWidget *gridWidget;
     QWidget *listWidget;
     QWidget *mainWidget;
