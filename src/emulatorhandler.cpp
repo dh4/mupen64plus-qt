@@ -118,7 +118,7 @@ QStringList EmulatorHandler::parseArgString(QString argString)
 
 void EmulatorHandler::readOutput()
 {
-    lastOutput = emulatorProc->readAllStandardOutput();
+    lastOutput.append(emulatorProc->readAllStandardOutput());
 }
 
 
@@ -280,6 +280,23 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
     emulatorProc->setWorkingDirectory(QFileInfo(mupen64File).dir().canonicalPath());
     emulatorProc->setProcessChannelMode(QProcess::MergedChannels);
     emulatorProc->start(mupen64Path, args);
+
+    //Add command to log
+    QString executable = mupen64Path;
+    if (executable.contains(" "))
+        executable = '"' + executable + '"';
+
+    QString argString;
+    foreach(QString arg, args)
+    {
+        if (arg.contains(" "))
+            argString += " \"" + arg + "\"";
+        else
+            argString += " " + arg;
+    }
+
+    lastOutput = executable + argString + "\n\n";
+
 
     emit started();
 }
