@@ -285,6 +285,23 @@ QGraphicsDropShadowEffect *getShadow(bool active)
 }
 
 
+int getTableDataIndexFromName(QString infoName)
+{
+    if (infoName == "fileName")
+        return 0;
+    else if (infoName == "dirName")
+        return 1;
+    else if (infoName == "search")
+        return 2;
+    else if (infoName == "romMD5")
+        return 3;
+    else if (infoName == "zipFile")
+        return 4;
+
+    return 0;
+}
+
+
 QString getTranslation(QString text)
 {
     if (text == "GoodName")                     return QObject::tr("GoodName");

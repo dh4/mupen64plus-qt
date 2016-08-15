@@ -29,66 +29,43 @@
  *
  ***/
 
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef TABLEVIEW_H
+#define TABLEVIEW_H
 
-#include <QGraphicsDropShadowEffect>
-#include <QString>
-#include <QPixmap>
+#include <QTreeWidget>
 
-class QColor;
-class QSize;
+class TreeWidgetItem;
+struct Rom;
 
 
-struct Rom {
-    QString fileName;
-    QString directory;
-    QString romMD5;
-    QString internalName;
-    QString zipFile;
+class TableView : public QTreeWidget
+{
+    Q_OBJECT
 
-    QString baseName;
-    QString size;
-    int sortSize;
+public:
+    explicit TableView(QWidget *parent = 0);
+    void addNoCartRow();
+    void addToTableView(Rom *currentRom);
+    QString getCurrentRomInfo(QString infoName);
+    bool hasSelectedRom();
+    void resetView(bool imageUpdated);
+    void saveColumnWidths();
+    void saveTablePosition();
 
-    QString goodName;
-    QString CRC1;
-    QString CRC2;
-    QString players;
-    QString saveType;
-    QString rumble;
+signals:
 
-    QString gameTitle;
-    QString releaseDate;
-    QString sortDate;
-    QString overview;
-    QString esrb;
-    QString genre;
-    QString publisher;
-    QString developer;
-    QString rating;
+private:
+    int positionx;
+    int positiony;
+    QStringList headerLabels;
+    QHeaderView *headerView;
+    QWidget *parent;
+    TreeWidgetItem *fileItem;
 
-    QPixmap image;
+private slots:
+    void saveSortOrder(int column, Qt::SortOrder order);
+    void setTablePosition();
 
-    int count;
-    bool imageExists;
 };
 
-bool romSorter(const Rom &firstRom, const Rom &lastRom);
-int getDefaultWidth(QString id, int imageWidth);
-int getGridSize(QString which);
-int getTableDataIndexFromName(QString infoName);
-
-QByteArray byteswap(QByteArray romData);
-QStringList getZippedFiles(QString completeFileName);
-QByteArray *getZippedRom(QString romFileName, QString zipFile);
-QColor getColor(QString color, int transparency = 255);
-QString getDefaultLanguage();
-QString getTranslation(QString text);
-QGraphicsDropShadowEffect *getShadow(bool active);
-QSize getImageSize(QString view);
-QString getDataLocation();
-QString getRomInfo(QString identifier, const Rom *rom, bool removeWarn = false, bool sort = false);
-QString getVersion();
-
-#endif // COMMON_H
+#endif // TABLEVIEW_H

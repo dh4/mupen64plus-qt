@@ -29,66 +29,46 @@
  *
  ***/
 
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef LISTVIEW_H
+#define LISTVIEW_H
 
-#include <QGraphicsDropShadowEffect>
-#include <QString>
-#include <QPixmap>
+#include <QScrollArea>
 
-class QColor;
-class QSize;
+class QVBoxLayout;
+struct Rom;
 
 
-struct Rom {
-    QString fileName;
-    QString directory;
-    QString romMD5;
-    QString internalName;
-    QString zipFile;
+class ListView : public QScrollArea
+{
+    Q_OBJECT
 
-    QString baseName;
-    QString size;
-    int sortSize;
+public:
+    explicit ListView(QWidget *parent = 0);
+    void addToListView(Rom *currentRom, int count, bool ddEnabled);
+    int getCurrentRom();
+    QString getCurrentRomInfo(QString infoName);
+    QWidget *getCurrentRomWidget();
+    bool hasSelectedRom();
+    void resetView();
+    void saveListPosition();
 
-    QString goodName;
-    QString CRC1;
-    QString CRC2;
-    QString players;
-    QString saveType;
-    QString rumble;
+signals:
+    void listItemSelected(bool active);
 
-    QString gameTitle;
-    QString releaseDate;
-    QString sortDate;
-    QString overview;
-    QString esrb;
-    QString genre;
-    QString publisher;
-    QString developer;
-    QString rating;
+private:
+    int currentListRom;
+    bool listCurrent;
+    int positionx;
+    int positiony;
 
-    QPixmap image;
+    QVBoxLayout *listLayout;
+    QWidget *listWidget;
+    QWidget *parent;
 
-    int count;
-    bool imageExists;
+private slots:
+    void highlightListWidget(QWidget *current);
+    void setListPosition();
+
 };
 
-bool romSorter(const Rom &firstRom, const Rom &lastRom);
-int getDefaultWidth(QString id, int imageWidth);
-int getGridSize(QString which);
-int getTableDataIndexFromName(QString infoName);
-
-QByteArray byteswap(QByteArray romData);
-QStringList getZippedFiles(QString completeFileName);
-QByteArray *getZippedRom(QString romFileName, QString zipFile);
-QColor getColor(QString color, int transparency = 255);
-QString getDefaultLanguage();
-QString getTranslation(QString text);
-QGraphicsDropShadowEffect *getShadow(bool active);
-QSize getImageSize(QString view);
-QString getDataLocation();
-QString getRomInfo(QString identifier, const Rom *rom, bool removeWarn = false, bool sort = false);
-QString getVersion();
-
-#endif // COMMON_H
+#endif // LISTVIEW_H

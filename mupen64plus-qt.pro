@@ -23,14 +23,17 @@ SOURCES += src/main.cpp \
     src/aboutdialog.cpp \
     src/settingsdialog.cpp \
     src/gamesettingsdialog.cpp \
-    src/treewidgetitem.cpp \
-    src/clickablewidget.cpp \
     src/configeditor.cpp \
     src/downloaddialog.cpp \
     src/logdialog.cpp \
     src/emulatorhandler.cpp \
     src/romcollection.cpp \
-    src/thegamesdbscraper.cpp
+    src/thegamesdbscraper.cpp \
+    src/views/clickablewidget.cpp \
+    src/views/gridview.cpp \
+    src/views/listview.cpp \
+    src/views/tableview.cpp \
+    src/views/treewidgetitem.cpp
 
 HEADERS += src/global.h \
     src/common.h \
@@ -38,14 +41,17 @@ HEADERS += src/global.h \
     src/aboutdialog.h \
     src/settingsdialog.h \
     src/gamesettingsdialog.h \
-    src/treewidgetitem.h \
-    src/clickablewidget.h \
     src/configeditor.h \
     src/downloaddialog.h \
     src/logdialog.h \
     src/emulatorhandler.h \
     src/romcollection.h \
-    src/thegamesdbscraper.h
+    src/thegamesdbscraper.h \
+    src/views/clickablewidget.h \
+    src/views/gridview.h \
+    src/views/listview.h \
+    src/views/tableview.h \
+    src/views/treewidgetitem.h
 
 RESOURCES += resources/mupen64plusqt.qrc
 

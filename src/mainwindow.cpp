@@ -31,7 +31,6 @@
 
 #include "mainwindow.h"
 #include "aboutdialog.h"
-#include "clickablewidget.h"
 #include "common.h"
 #include "configeditor.h"
 #include "downloaddialog.h"
@@ -42,20 +41,19 @@
 #include "romcollection.h"
 #include "settingsdialog.h"
 #include "thegamesdbscraper.h"
-#include "treewidgetitem.h"
+#include "views/gridview.h"
+#include "views/listview.h"
+#include "views/tableview.h"
 
 #include <QCloseEvent>
 #include <QDesktopServices>
 #include <QDialogButtonBox>
 #include <QFileDialog>
 #include <QGridLayout>
-#include <QHeaderView>
 #include <QLabel>
 #include <QListWidget>
 #include <QMenuBar>
 #include <QMessageBox>
-#include <QScrollArea>
-#include <QScrollBar>
 #include <QTimer>
 #include <QVBoxLayout>
 
@@ -72,19 +70,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     autoloadSettings();
 
     emulation = new EmulatorHandler(this);
+    romCollection = new RomCollection(QStringList() << "*.z64" << "*.v64" << "*.n64" << "*.zip",
+                                      QStringList() << SETTINGS.value("Paths/roms","").toString().split("|"),
+                                      this);
+    createMenu();
+    createRomView();
 
     connect(emulation, SIGNAL(started()), this, SLOT(disableButtons()));
     connect(emulation, SIGNAL(finished()), this, SLOT(enableButtons()));
     connect(emulation, SIGNAL(showLog()), this, SLOT(openLog()));
 
-
-    romCollection = new RomCollection(QStringList() << "*.z64" << "*.v64" << "*.n64" << "*.zip",
-                                      QStringList() << SETTINGS.value("Paths/roms","").toString().split("|"),
-                                      this);
-
     connect(romCollection, SIGNAL(updateStarted(bool)), this, SLOT(disableViews(bool)));
     connect(romCollection, SIGNAL(romAdded(Rom*, int)), this, SLOT(addToView(Rom*, int)));
     connect(romCollection, SIGNAL(updateEnded(int, bool)), this, SLOT(enableViews(int, bool)));
+
+    romCollection->cachedRoms();
 
 
     mainWidget = new QWidget(this);
@@ -93,9 +93,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                       SETTINGS.value("Geometry/windowy", 0).toInt(),
                       SETTINGS.value("Geometry/width", 900).toInt(),
                       SETTINGS.value("Geometry/height", 600).toInt()));
-
-    createMenu();
-    createRomView();
 
     mainLayout = new QVBoxLayout(mainWidget);
     mainLayout->setMenuBar(menuBar);
@@ -115,289 +112,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 void MainWindow::addToView(Rom *currentRom, int count)
 {
-    if (SETTINGS.value("View/layout", "none") == "table")
-        addToTableView(currentRom);
-    else if (SETTINGS.value("View/layout", "none") == "grid")
-        addToGridView(currentRom, count);
-    else if (SETTINGS.value("View/layout", "none") == "list")
-        addToListView(currentRom, count);
-}
-
-
-void MainWindow::addToGridView(Rom *currentRom, int count)
-{
-    ClickableWidget *gameGridItem = new ClickableWidget(gridWidget);
-    gameGridItem->setMinimumWidth(getGridSize("width"));
-    gameGridItem->setMaximumWidth(getGridSize("width"));
-    gameGridItem->setGraphicsEffect(getShadow(false));
-
-    //Assign ROM data to widget for use in click events
-    gameGridItem->setProperty("fileName", currentRom->fileName);
-    gameGridItem->setProperty("directory", currentRom->directory);
-    if (currentRom->goodName == getTranslation("Unknown ROM") ||
-        currentRom->goodName == getTranslation("Requires catalog file"))
-        gameGridItem->setProperty("search", currentRom->internalName);
-    else
-        gameGridItem->setProperty("search", currentRom->goodName);
-    gameGridItem->setProperty("romMD5", currentRom->romMD5);
-    gameGridItem->setProperty("zipFile", currentRom->zipFile);
-
-    QGridLayout *gameGridLayout = new QGridLayout(gameGridItem);
-    gameGridLayout->setColumnStretch(0, 1);
-    gameGridLayout->setColumnStretch(3, 1);
-    gameGridLayout->setRowMinimumHeight(1, getImageSize("Grid").height());
-
-    QLabel *gridImageLabel = new QLabel(gameGridItem);
-    gridImageLabel->setMinimumHeight(getImageSize("Grid").height());
-    gridImageLabel->setMinimumWidth(getImageSize("Grid").width());
-    QPixmap image;
-
-    if (currentRom->imageExists) {
-        //Use uniform aspect ratio to account for fluctuations in TheGamesDB box art
-        Qt::AspectRatioMode aspectRatioMode = Qt::IgnoreAspectRatio;
-
-        //Don't warp aspect ratio though if image is too far away from standard size (JP box art)
-        float aspectRatio = float(currentRom->image.width()) / currentRom->image.height();
-
-        if (aspectRatio < 1.1 || aspectRatio > 1.8)
-            aspectRatioMode = Qt::KeepAspectRatio;
-
-        image = currentRom->image.scaled(getImageSize("Grid"), aspectRatioMode, Qt::SmoothTransformation);
-    } else
-        image = QPixmap(":/images/not-found.png").scaled(getImageSize("Grid"), Qt::IgnoreAspectRatio,
-                                                         Qt::SmoothTransformation);
-
-    gridImageLabel->setPixmap(image);
-    gridImageLabel->setAlignment(Qt::AlignCenter);
-    gameGridLayout->addWidget(gridImageLabel, 1, 1);
-
-    if (SETTINGS.value("Grid/label","true") == "true") {
-        QLabel *gridTextLabel = new QLabel(gameGridItem);
-
-        //Don't allow label to be wider than image
-        gridTextLabel->setMaximumWidth(getImageSize("Grid").width());
-
-        QString text = "";
-        QString labelText = SETTINGS.value("Grid/labeltext","Filename").toString();
-
-        text = getRomInfo(labelText, currentRom);
-
-        gridTextLabel->setText(text);
-
-        QString textHex = getColor(SETTINGS.value("Grid/labelcolor","White").toString()).name();
-        int fontSize = getGridSize("font");
-
-        gridTextLabel->setStyleSheet("QLabel { font-weight: bold; color: " + textHex + "; font-size: "
-                                     + QString::number(fontSize) + "px; }");
-        gridTextLabel->setWordWrap(true);
-        gridTextLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
-
-        gameGridLayout->addWidget(gridTextLabel, 2, 1);
-    }
-
-    gameGridItem->setLayout(gameGridLayout);
-
-    gameGridItem->setMinimumHeight(gameGridItem->sizeHint().height());
-
-    int columnCount = SETTINGS.value("Grid/columncount", "4").toInt();
-    gridLayout->addWidget(gameGridItem, count / columnCount + 1, count % columnCount + 1);
-    gridWidget->adjustSize();
-
-    connect(gameGridItem, SIGNAL(singleClicked(QWidget*)), this, SLOT(highlightGridWidget(QWidget*)));
-    connect(gameGridItem, SIGNAL(doubleClicked(QWidget*)), this, SLOT(launchRomFromWidget(QWidget*)));
-}
-
-
-void MainWindow::addToListView(Rom *currentRom, int count)
-{
-    QStringList visible = SETTINGS.value("List/columns", "Filename|Internal Name|Size").toString().split("|");
-
-    if (visible.join("") == "" && SETTINGS.value("List/displaycover", "") != "true")
-        //Otherwise no columns, so don't bother populating
-        return;
-
-    ClickableWidget *gameListItem = new ClickableWidget(listWidget);
-    gameListItem->setContentsMargins(0, 0, 20, 0);
-
-    //Assign ROM data to widget for use in click events
-    gameListItem->setProperty("fileName", currentRom->fileName);
-    gameListItem->setProperty("directory", currentRom->directory);
-    if (currentRom->goodName == getTranslation("Unknown ROM") ||
-        currentRom->goodName == getTranslation("Requires catalog file"))
-        gameListItem->setProperty("search", currentRom->internalName);
-    else
-        gameListItem->setProperty("search", currentRom->goodName);
-    gameListItem->setProperty("romMD5", currentRom->romMD5);
-    gameListItem->setProperty("zipFile", currentRom->zipFile);
-
-    QGridLayout *gameListLayout = new QGridLayout(gameListItem);
-    gameListLayout->setColumnStretch(3, 1);
-
-    //Add image
-    if (SETTINGS.value("List/displaycover", "") == "true") {
-        QLabel *listImageLabel = new QLabel(gameListItem);
-        listImageLabel->setMinimumHeight(getImageSize("List").height());
-        listImageLabel->setMinimumWidth(getImageSize("List").width());
-
-        QPixmap image;
-
-        if (currentRom->imageExists)
-            image = currentRom->image.scaled(getImageSize("List"), Qt::KeepAspectRatio,
-                                            Qt::SmoothTransformation);
-        else
-            image = QPixmap(":/images/not-found.png").scaled(getImageSize("List"), Qt::KeepAspectRatio,
-                                                             Qt::SmoothTransformation);
-
-        listImageLabel->setPixmap(image);
-        listImageLabel->setAlignment(Qt::AlignCenter);
-        gameListLayout->addWidget(listImageLabel, 0, 1);
-    }
-
-    //Create text label
-    QLabel *listTextLabel = new QLabel("", gameListItem);
-    QString listText = "";
-
-    int i = 0;
-
-    foreach (QString current, visible)
-    {
-        QString addition = "<style>h2 { margin: 0; }</style>";
-
-        if (i == 0 && SETTINGS.value("List/firstitemheader","true") == "true")
-            addition += "<h2>";
-        else
-            addition += "<b>" + current + ":</b> ";
-
-        addition += getRomInfo(current, currentRom, true) + "<br />";
-
-        if (i == 0 && SETTINGS.value("List/firstitemheader","true") == "true")
-            addition += "</h2>";
-
-        if (addition != "<style>h2 { margin: 0; }</style><b>" + current + ":</b> <br />")
-            listText += addition;
-
-        i++;
-    }
-
-    //Remove last break tag
-    listText.remove(QRegExp("<br />$"));
-
-    listTextLabel->setText(listText);
-    listTextLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-    listTextLabel->setWordWrap(true);
-    gameListLayout->addWidget(listTextLabel, 0, 3);
-
-    gameListLayout->setColumnMinimumWidth(0, 20);
-    gameListLayout->setColumnMinimumWidth(2, 10);
-    gameListItem->setLayout(gameListLayout);
-
-    if (count != 0) {
-        QFrame *separator = new QFrame();
-        separator->setFrameShape(QFrame::HLine);
-        separator->setStyleSheet("margin:0;padding:0;");
-        listLayout->addWidget(separator);
-    }
-
-    listLayout->addWidget(gameListItem);
-
-    connect(gameListItem, SIGNAL(singleClicked(QWidget*)), this, SLOT(highlightListWidget(QWidget*)));
-    connect(gameListItem, SIGNAL(doubleClicked(QWidget*)), this, SLOT(launchRomFromWidget(QWidget*)));
-}
-
-
-void MainWindow::addToTableView(Rom *currentRom)
-{
-    QStringList visible = SETTINGS.value("Table/columns", "Filename|Size").toString().split("|");
-
-    if (visible.join("") == "") //Otherwise no columns, so don't bother populating
-        return;
-
-    fileItem = new TreeWidgetItem(tableView);
-
-    //Filename for launching ROM
-    fileItem->setText(0, currentRom->fileName);
-
-    //Directory ROM is located in
-    fileItem->setText(1, currentRom->directory);
-
-    //GoodName or Internal Name for searching
-    if (currentRom->goodName == getTranslation("Unknown ROM") ||
-        currentRom->goodName == getTranslation("Requires catalog file"))
-        fileItem->setText(2, currentRom->internalName);
-    else
-        fileItem->setText(2, currentRom->goodName);
-
-    //MD5 for cache info
-    fileItem->setText(3, currentRom->romMD5.toLower());
-
-    //Zip file
-    fileItem->setText(4, currentRom->zipFile);
-
-    int i = 5, c = 0;
-    bool addImage = false;
-
-    foreach (QString current, visible)
-    {
-        QString text = getRomInfo(current, currentRom);
-        fileItem->setText(i, text);
-
-        if (current == "GoodName" || current == "Game Title") {
-            if (text == getTranslation("Unknown ROM") ||
-                text == getTranslation("Requires catalog file") ||
-                text == getTranslation("Not found")) {
-                fileItem->setForeground(i, QBrush(Qt::gray));
-                fileItem->setData(i, Qt::UserRole, "ZZZ"); //end of sorting
-            } else
-                fileItem->setData(i, Qt::UserRole, text);
-        }
-
-        if (current == "Size")
-            fileItem->setData(i, Qt::UserRole, currentRom->sortSize);
-
-        if (current == "Release Date")
-            fileItem->setData(i, Qt::UserRole, currentRom->sortDate);
-
-        if (current == "Game Cover") {
-            c = i;
-            addImage = true;
-        }
-
-        QStringList center, right;
-
-        center << "MD5" << "CRC1" << "CRC2" << "Rumble" << "ESRB" << "Genre" << "Publisher" << "Developer";
-        right << "Size" << "Players" << "Save Type" << "Release Date" << "Rating";
-
-        if (center.contains(current))
-            fileItem->setTextAlignment(i, Qt::AlignHCenter | Qt::AlignVCenter);
-        else if (right.contains(current))
-            fileItem->setTextAlignment(i, Qt::AlignRight | Qt::AlignVCenter);
-
-        i++;
-    }
-
-    tableView->addTopLevelItem(fileItem);
-
-
-    if (currentRom->imageExists && addImage) {
-        QPixmap image(currentRom->image.scaled(getImageSize("Table"), Qt::KeepAspectRatio,
-                                              Qt::SmoothTransformation));
-
-        QWidget *imageContainer = new QWidget(tableView);
-        QGridLayout *imageGrid = new QGridLayout(imageContainer);
-        QLabel *imageLabel = new QLabel(imageContainer);
-
-        imageLabel->setPixmap(image);
-        imageGrid->addWidget(imageLabel, 1, 1);
-        imageGrid->setColumnStretch(0, 1);
-        imageGrid->setColumnStretch(2, 1);
-        imageGrid->setRowStretch(0, 1);
-        imageGrid->setRowStretch(2, 1);
-        imageGrid->setContentsMargins(0,0,0,0);
-
-        imageContainer->setLayout(imageGrid);
-
-        tableView->setItemWidget(fileItem, c, imageContainer);
-    }
+    QString visibleLayout = SETTINGS.value("View/layout", "none").toString();
+
+    if (visibleLayout == "table")
+        tableView->addToTableView(currentRom);
+    else if (visibleLayout == "grid")
+        gridView->addToGridView(currentRom, count, false);
+    else if (visibleLayout == "list")
+        listView->addToListView(currentRom, count, false);
 }
 
 
@@ -504,7 +226,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     else
         SETTINGS.setValue("Geometry/maximized", "");
 
-    saveColumnWidths();
+    tableView->saveColumnWidths();
 
     event->accept();
 }
@@ -515,6 +237,7 @@ void MainWindow::createMenu()
     menuBar = new QMenuBar(this);
 
 
+    //File
     fileMenu = new QMenu(tr("&File"), this);
     openAction = fileMenu->addAction(tr("&Open ROM..."));
     fileMenu->addSeparator();
@@ -535,7 +258,14 @@ void MainWindow::createMenu()
 
     menuBar->addMenu(fileMenu);
 
+    connect(openAction, SIGNAL(triggered()), this, SLOT(openRom()));
+    connect(refreshAction, SIGNAL(triggered()), romCollection, SLOT(addRoms()));
+    connect(downloadAction, SIGNAL(triggered()), this, SLOT(openDownloader()));
+    connect(deleteAction, SIGNAL(triggered()), this, SLOT(openDeleteDialog()));
+    connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
 
+
+    //Emulation
     emulationMenu = new QMenu(tr("&Emulation"), this);
     startAction = emulationMenu->addAction(tr("&Start"));
     stopAction = emulationMenu->addAction(tr("St&op"));
@@ -550,7 +280,12 @@ void MainWindow::createMenu()
 
     menuBar->addMenu(emulationMenu);
 
+    connect(startAction, SIGNAL(triggered()), this, SLOT(launchRomFromMenu()));
+    connect(stopAction, SIGNAL(triggered()), this, SLOT(stopEmulator()));
+    connect(logAction, SIGNAL(triggered()), this, SLOT(openLog()));
 
+
+    //Settings
     settingsMenu = new QMenu(tr("&Settings"), this);
     layoutMenu = settingsMenu->addMenu(tr("&Layout"));
     layoutGroup = new QActionGroup(this);
@@ -590,11 +325,19 @@ void MainWindow::createMenu()
 
     menuBar->addMenu(settingsMenu);
 
+    connect(configureAction, SIGNAL(triggered()), this, SLOT(openSettings()));
+    connect(configureGameAction, SIGNAL(triggered()), this, SLOT(openGameSettings()));
+    connect(editorAction, SIGNAL(triggered()), this, SLOT(openEditor()));
+    connect(layoutGroup, SIGNAL(triggered(QAction*)), this, SLOT(updateLayoutSetting()));
 
+
+    //Help
     helpMenu = new QMenu(tr("&Help"), this);
     aboutAction = helpMenu->addAction(tr("&About"));
     aboutAction->setIcon(QIcon::fromTheme("help-about"));
     menuBar->addMenu(helpMenu);
+
+    connect(aboutAction, SIGNAL(triggered()), this, SLOT(openAbout()));
 
 
     //Create list of actions that are enabled only when Mupen64Plus is not running
@@ -612,19 +355,11 @@ void MainWindow::createMenu()
     //Create list of actions that are disabled when Mupen64Plus is not running
     menuDisable << stopAction;
 
-    connect(openAction, SIGNAL(triggered()), this, SLOT(openRom()));
-    connect(refreshAction, SIGNAL(triggered()), romCollection, SLOT(addRoms()));
-    connect(downloadAction, SIGNAL(triggered()), this, SLOT(openDownloader()));
-    connect(deleteAction, SIGNAL(triggered()), this, SLOT(openDeleteDialog()));
-    connect(quitAction, SIGNAL(triggered()), this, SLOT(close()));
-    connect(startAction, SIGNAL(triggered()), this, SLOT(launchRomFromMenu()));
-    connect(stopAction, SIGNAL(triggered()), this, SLOT(stopEmulator()));
-    connect(logAction, SIGNAL(triggered()), this, SLOT(openLog()));
-    connect(configureAction, SIGNAL(triggered()), this, SLOT(openSettings()));
-    connect(configureGameAction, SIGNAL(triggered()), this, SLOT(openGameSettings()));
-    connect(editorAction, SIGNAL(triggered()), this, SLOT(openEditor()));
-    connect(aboutAction, SIGNAL(triggered()), this, SLOT(openAbout()));
-    connect(layoutGroup, SIGNAL(triggered(QAction*)), this, SLOT(updateLayoutSetting()));
+    //Create list of actions that are only active when a ROM is selected
+    menuRomSelected << startAction
+                    << deleteAction
+                    << downloadAction
+                    << configureGameAction;
 }
 
 
@@ -652,62 +387,19 @@ void MainWindow::createRomView()
 
 
     //Create table view
-    tableView = new QTreeWidget(this);
-    tableView->setWordWrap(false);
-    tableView->setAllColumnsShowFocus(true);
-    tableView->setRootIsDecorated(false);
-    tableView->setSortingEnabled(true);
-    tableView->setStyleSheet("QTreeView { border: none; } QTreeView::item { height: 25px; }");
-
-    headerView = new QHeaderView(Qt::Horizontal, this);
-    tableView->setHeader(headerView);
-    tableView->setHidden(true);
+    tableView = new TableView(this);
+    connect(tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(enableButtons()));
+    connect(tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(launchRomFromTable()));
 
 
     //Create grid view
-    gridView = new QScrollArea(this);
-    gridView->setObjectName("gridView");
-    gridView->setStyleSheet("#gridView { border: none; }");
-    gridView->setBackgroundRole(QPalette::Dark);
-    gridView->setAlignment(Qt::AlignHCenter);
-    gridView->setHidden(true);
-
-    gridView->verticalScrollBar()->setObjectName("vScrollBar");
-    gridView->horizontalScrollBar()->setObjectName("hScrollBar");
-
-    setGridBackground();
-
-
-    gridWidget = new QWidget(gridView);
-    gridWidget->setObjectName("gridWidget");
-    gridView->setWidget(gridWidget);
-
-    gridLayout = new QGridLayout(gridWidget);
-    gridLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
-    gridLayout->setRowMinimumHeight(0, 10);
-
-    gridWidget->setLayout(gridLayout);
-
-    gridCurrent = false;
-    currentGridRom = 0;
+    gridView = new GridView(this);
+    connect(gridView, SIGNAL(gridItemSelected(bool)), this, SLOT(toggleMenus(bool)));
 
 
     //Create list view
-    listView = new QScrollArea(this);
-    listView->setStyleSheet("QScrollArea { border: none; }");
-    listView->setBackgroundRole(QPalette::Base);
-    listView->setWidgetResizable(true);
-    listView->setHidden(true);
-
-    listWidget = new QWidget(listView);
-    listView->setWidget(listWidget);
-
-    listLayout = new QVBoxLayout(listWidget);
-    listLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
-    listWidget->setLayout(listLayout);
-
-    listCurrent = false;
-    currentListRom = 0;
+    listView = new ListView(this);
+    connect(listView, SIGNAL(listItemSelected(bool)), this, SLOT(toggleMenus(bool)));
 
 
     //Create disabled view
@@ -727,23 +419,7 @@ void MainWindow::createRomView()
     disabledLayout->addWidget(disabledLabel);
 
 
-    QString visibleLayout = SETTINGS.value("View/layout", "none").toString();
-
-    if (visibleLayout == "table")
-        tableView->setHidden(false);
-    else if (visibleLayout == "grid")
-        gridView->setHidden(false);
-    else if (visibleLayout == "list")
-        listView->setHidden(false);
-    else
-        emptyView->setHidden(false);
-
-    romCollection->cachedRoms();
-
-    connect(tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(enableButtons()));
-    connect(tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(launchRomFromTable()));
-    connect(headerView, SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
-            this, SLOT(saveSortOrder(int,Qt::SortOrder)));
+    showActiveView();
 }
 
 
@@ -755,32 +431,25 @@ void MainWindow::disableButtons()
 
 void MainWindow::disableViews(bool imageUpdated)
 {
+    QString visibleLayout = SETTINGS.value("View/layout", "none").toString();
+
     resetLayouts(imageUpdated);
     tableView->clear();
 
     tableView->setEnabled(false);
     gridView->setEnabled(false);
     listView->setEnabled(false);
-    configureGameAction->setEnabled(false);
-    downloadAction->setEnabled(false);
-    deleteAction->setEnabled(false);
-    startAction->setEnabled(false);
-    stopAction->setEnabled(false);
+
+    foreach (QAction *next, menuRomSelected)
+        next->setEnabled(false);
 
     //Save position in current layout
-    positionx = 0;
-    positiony = 0;
-
-    if (SETTINGS.value("View/layout", "none") == "table") {
-        positionx = tableView->horizontalScrollBar()->value();
-        positiony = tableView->verticalScrollBar()->value();
-    } else if (SETTINGS.value("View/layout", "none") == "grid") {
-        positionx = gridView->horizontalScrollBar()->value();
-        positiony = gridView->verticalScrollBar()->value();
-    } else if (SETTINGS.value("View/layout", "none") == "list") {
-        positionx = listView->horizontalScrollBar()->value();
-        positiony = listView->verticalScrollBar()->value();
-    }
+    if (visibleLayout == "table")
+        tableView->saveTablePosition();
+    else if (visibleLayout == "grid")
+        gridView->saveGridPosition();
+    else if (visibleLayout == "list")
+        listView->saveListPosition();
 }
 
 
@@ -792,6 +461,8 @@ void MainWindow::enableButtons()
 
 void MainWindow::enableViews(int romCount, bool cached)
 {
+    QString visibleLayout = SETTINGS.value("View/layout", "none").toString();
+
     if (romCount != 0) { //else no ROMs, so leave views disabled
         QStringList tableVisible = SETTINGS.value("Table/columns", "Filename|Size").toString().split("|");
 
@@ -804,16 +475,7 @@ void MainWindow::enableViews(int romCount, bool cached)
         //Check if disabled view is showing. If it is, re-enabled the selected view
         if (!disabledView->isHidden()) {
             disabledView->setHidden(true);
-
-            QString visibleLayout = SETTINGS.value("View/layout", "none").toString();
-            if (visibleLayout == "table")
-                tableView->setHidden(false);
-            else if (visibleLayout == "grid")
-                gridView->setHidden(false);
-            else if (visibleLayout == "list")
-                listView->setHidden(false);
-            else
-                emptyView->setHidden(false);
+            showActiveView();
         }
 
         if (cached) {
@@ -822,15 +484,15 @@ void MainWindow::enableViews(int romCount, bool cached)
             timer->setInterval(0);
             timer->start();
 
-            if (SETTINGS.value("View/layout", "none") == "table")
-                connect(timer, SIGNAL(timeout()), this, SLOT(setTablePosition()));
-            else if (SETTINGS.value("View/layout", "none") == "grid")
-                connect(timer, SIGNAL(timeout()), this, SLOT(setGridPosition()));
-            else if (SETTINGS.value("View/layout", "none") == "list")
-                connect(timer, SIGNAL(timeout()), this, SLOT(setListPosition()));
+            if (visibleLayout == "table")
+                connect(timer, SIGNAL(timeout()), tableView, SLOT(setTablePosition()));
+            else if (visibleLayout == "grid")
+                connect(timer, SIGNAL(timeout()), gridView, SLOT(setGridPosition()));
+            else if (visibleLayout == "list")
+                connect(timer, SIGNAL(timeout()), listView, SLOT(setListPosition()));
         }
     } else {
-        if (SETTINGS.value("View/layout", "none") != "none") {
+        if (visibleLayout != "none") {
             tableView->setHidden(true);
             gridView->setHidden(true);
             listView->setHidden(true);
@@ -840,70 +502,18 @@ void MainWindow::enableViews(int romCount, bool cached)
 }
 
 
-QString MainWindow::getCurrentRomInfo(int index)
+QString MainWindow::getCurrentRomInfoFromView(QString infoName)
 {
-    if (index < 3) {
-        const char *infoChar;
-        int table;
+    QString visibleLayout = SETTINGS.value("View/layout", "none").toString();
 
-        switch (index) {
-            case 0:  infoChar = "fileName"; table = 0; break;
-            case 1:  infoChar = "search";   table = 2; break;
-            case 2:  infoChar = "romMD5";   table = 3; break;
-            default: infoChar = "";         table = 0; break;
-        }
-
-        QString visibleLayout = SETTINGS.value("View/layout", "none").toString();
-
-        if (visibleLayout == "table")
-            return tableView->currentItem()->data(table, 0).toString();
-        else if (visibleLayout == "grid" && gridCurrent)
-            return gridLayout->itemAt(currentGridRom)->widget()->property(infoChar).toString();
-        else if (visibleLayout == "list" && listCurrent)
-            return listLayout->itemAt(currentListRom)->widget()->property(infoChar).toString();
-    }
+    if (visibleLayout == "table")
+        return tableView->getCurrentRomInfo(infoName);
+    else if (visibleLayout == "grid" && gridView->hasSelectedRom())
+        return gridView->getCurrentRomInfo(infoName);
+    else if (visibleLayout == "list" && listView->hasSelectedRom())
+        return listView->getCurrentRomInfo(infoName);
 
     return "";
-}
-
-
-void MainWindow::highlightGridWidget(QWidget *current)
-{
-    //Set all to inactive shadow
-    QLayoutItem *gridItem;
-    for (int item = 0; (gridItem = gridLayout->itemAt(item)) != NULL; item++)
-    {
-        gridItem->widget()->setGraphicsEffect(getShadow(false));
-
-        if (gridItem->widget() == current)
-            currentGridRom = item;
-    }
-
-    //Set current to active shadow
-    current->setGraphicsEffect(getShadow(true));
-
-    gridCurrent = true;
-    toggleMenus(true);
-}
-
-
-void MainWindow::highlightListWidget(QWidget *current)
-{
-    //Reset all margins
-    QLayoutItem *listItem;
-    for (int item = 0; (listItem = listLayout->itemAt(item)) != NULL; item++)
-    {
-        listItem->widget()->setContentsMargins(0, 0, 20, 0);
-
-        if (listItem->widget() == current)
-            currentListRom = item;
-    }
-
-    //Give current left margin to stand out
-    current->setContentsMargins(20, 0, 0, 0);
-
-    listCurrent = true;
-    toggleMenus(true);
 }
 
 
@@ -913,18 +523,18 @@ void MainWindow::launchRomFromMenu()
 
     if (visibleLayout == "table")
         launchRomFromTable();
-    else if (visibleLayout == "grid" && gridCurrent)
-        launchRomFromWidget(gridLayout->itemAt(currentGridRom)->widget());
-    else if (visibleLayout == "list" && listCurrent)
-        launchRomFromWidget(listLayout->itemAt(currentListRom)->widget());
+    else if (visibleLayout == "grid")
+        launchRomFromWidget(gridView->getCurrentRomWidget());
+    else if (visibleLayout == "list")
+        launchRomFromWidget(listView->getCurrentRomWidget());
 }
 
 
 void MainWindow::launchRomFromTable()
 {
-    QString romFileName = QVariant(tableView->currentItem()->data(0, 0)).toString();
-    QString romDirName = QVariant(tableView->currentItem()->data(1, 0)).toString();
-    QString zipFileName = QVariant(tableView->currentItem()->data(4, 0)).toString();
+    QString romFileName = tableView->getCurrentRomInfo("fileName");
+    QString romDirName = tableView->getCurrentRomInfo("dirName");
+    QString zipFileName = tableView->getCurrentRomInfo("zipFile");
     emulation->startEmulator(QDir(romDirName), romFileName, zipFileName);
 }
 
@@ -957,7 +567,7 @@ void MainWindow::openAbout()
 void MainWindow::openDeleteDialog()
 {
     scraper = new TheGamesDBScraper(this);
-    scraper->deleteGameInfo(getCurrentRomInfo(0), getCurrentRomInfo(2));
+    scraper->deleteGameInfo(getCurrentRomInfoFromView("fileName"), getCurrentRomInfoFromView("romMD5"));
     delete scraper;
 
     romCollection->cachedRoms();
@@ -966,7 +576,10 @@ void MainWindow::openDeleteDialog()
 
 void MainWindow::openDownloader()
 {
-    DownloadDialog downloadDialog(getCurrentRomInfo(0), getCurrentRomInfo(1), getCurrentRomInfo(2), this);
+    DownloadDialog downloadDialog(getCurrentRomInfoFromView("fileName"),
+                                  getCurrentRomInfoFromView("search"),
+                                  getCurrentRomInfoFromView("romMD5"),
+                                  this);
     downloadDialog.exec();
 
     romCollection->cachedRoms();
@@ -995,17 +608,7 @@ void MainWindow::openEditor()
 
 void MainWindow::openGameSettings()
 {
-    QString romFileName;
-    QString visibleLayout = layoutGroup->checkedAction()->data().toString();
-
-    if (visibleLayout == "table")
-        romFileName = QVariant(tableView->currentItem()->data(0, 0)).toString();
-    else if (visibleLayout == "grid" && gridCurrent)
-        romFileName = gridLayout->itemAt(currentGridRom)->widget()->property("fileName").toString();
-    else if (visibleLayout == "list" && listCurrent)
-        romFileName = listLayout->itemAt(currentListRom)->widget()->property("fileName").toString();
-
-    GameSettingsDialog gameSettingsDialog(romFileName, this);
+    GameSettingsDialog gameSettingsDialog(getCurrentRomInfoFromView("fileName"), this);
     gameSettingsDialog.exec();
 }
 
@@ -1055,7 +658,7 @@ void MainWindow::openSettings()
             romCollection->cachedRoms(false);
     }
 
-    setGridBackground();
+    gridView->setGridBackground();
     toggleMenus(true);
 }
 
@@ -1142,173 +745,24 @@ void MainWindow::openZipDialog(QStringList zippedFiles)
 
 void MainWindow::resetLayouts(bool imageUpdated)
 {
-    QStringList tableVisible = SETTINGS.value("Table/columns", "Filename|Size").toString().split("|");
-
-    QStringList translations;
-    foreach (QString header, tableVisible) translations << getTranslation(header);
-
-    int hidden = 5;
-
-    saveColumnWidths();
-    QStringList widths = SETTINGS.value("Table/width", "").toString().split("|");
-
-    headerLabels.clear();
-    headerLabels << "" << "" << "" << "" << "" << translations; //First 5 blank for hidden columns
-
-    //Remove Game Cover title for aesthetics
-    for (int i = 0; i < headerLabels.size(); i++)
-        if (headerLabels.at(i) == getTranslation("Game Cover")) headerLabels.replace(i, "");
-
-    tableView->setColumnCount(headerLabels.size());
-    tableView->setHeaderLabels(headerLabels);
-    headerView->setSortIndicatorShown(false);
-
-    int height = 0, width = 0;
-    if (tableVisible.contains("Game Cover")) {
-        //Get optimal height/width for cover column
-        height = getImageSize("Table").height() * 1.1;
-        width = getImageSize("Table").width() * 1.2;
-
-        tableView->setStyleSheet("QTreeView { border: none; } QTreeView::item { height: "
-                               + QString::number(height) + "px; }");
-    } else
-        tableView->setStyleSheet("QTreeView { border: none; } QTreeView::item { height: 25px; }");
-
-    QStringList sort = SETTINGS.value("Table/sort", "").toString().split("|");
-    if (sort.size() == 2) {
-        if (sort[1] == "descending")
-            headerView->setSortIndicator(tableVisible.indexOf(sort[0]) + hidden, Qt::DescendingOrder);
-        else
-            headerView->setSortIndicator(tableVisible.indexOf(sort[0]) + hidden, Qt::AscendingOrder);
-    }
-
-    tableView->setColumnHidden(0, true); //Hidden filename for launching emulator
-    tableView->setColumnHidden(1, true); //Hidden directory of ROM location
-    tableView->setColumnHidden(2, true); //Hidden goodname for searching
-    tableView->setColumnHidden(3, true); //Hidden md5 for cache info
-    tableView->setColumnHidden(4, true); //Hidden column for zip file
-
-    int i = hidden;
-    foreach (QString current, tableVisible)
-    {
-        if (i == hidden) {
-            int c = i;
-            if (current == "Game Cover") c++; //If first column is game cover, use next column
-
-            if (SETTINGS.value("Table/stretchfirstcolumn", "true") == "true")
-#if QT_VERSION >= 0x050000
-                tableView->header()->setSectionResizeMode(c, QHeaderView::Stretch);
-#else
-                tableView->header()->setResizeMode(c, QHeaderView::Stretch);
-#endif
-            else
-#if QT_VERSION >= 0x050000
-                tableView->header()->setSectionResizeMode(c, QHeaderView::Interactive);
-#else
-                tableView->header()->setResizeMode(c, QHeaderView::Interactive);
-#endif
-        }
-
-        if (widths.size() == tableVisible.size())
-            tableView->setColumnWidth(i, widths[i - hidden].toInt());
-        else
-            tableView->setColumnWidth(i, getDefaultWidth(current, width));
-
-        //Overwrite saved value if switching image sizes
-        if (imageUpdated && current == "Game Cover")
-            tableView->setColumnWidth(i, width);
-
-        i++;
-    }
-
-
-    //Reset grid view
-    QLayoutItem *gridItem;
-    while ((gridItem = gridLayout->takeAt(0)) != NULL)
-    {
-        delete gridItem->widget();
-        delete gridItem;
-    }
-
-    gridCurrent = false;
-
-
-    //Reset list view
-    QLayoutItem *listItem;
-    while ((listItem = listLayout->takeAt(0)) != NULL)
-    {
-        delete listItem->widget();
-        delete listItem;
-    }
-
-    listCurrent = false;
+    tableView->resetView(imageUpdated);
+    gridView->resetView();
+    listView->resetView();
 }
 
 
-void MainWindow::saveColumnWidths()
+void MainWindow::showActiveView()
 {
-    QStringList widths;
+    QString visibleLayout = SETTINGS.value("View/layout", "none").toString();
 
-    for (int i = 5; i < tableView->columnCount(); i++)
-    {
-        widths << QString::number(tableView->columnWidth(i));
-    }
-
-    if (widths.size() > 0)
-        SETTINGS.setValue("Table/width", widths.join("|"));
-}
-
-
-void MainWindow::saveSortOrder(int column, Qt::SortOrder order)
-{
-    QString columnName = headerLabels.value(column);
-
-    if (order == Qt::DescendingOrder)
-        SETTINGS.setValue("Table/sort", columnName + "|descending");
+    if (visibleLayout == "table")
+        tableView->setHidden(false);
+    else if (visibleLayout == "grid")
+        gridView->setHidden(false);
+    else if (visibleLayout == "list")
+        listView->setHidden(false);
     else
-        SETTINGS.setValue("Table/sort", columnName + "|ascending");
-}
-
-
-void MainWindow::setGridBackground()
-{
-    gridView->setStyleSheet("#gridView { border: none; }");
-
-    QString background = SETTINGS.value("Grid/background", "").toString();
-    if (background != "") {
-        QFile backgroundFile(background);
-
-        if (backgroundFile.exists() && !QFileInfo(backgroundFile).isDir())
-            gridView->setStyleSheet(QString()
-                + "#gridView { "
-                    + "border: none; "
-                    + "background: url(" + background + "); "
-                    + "background-attachment: fixed; "
-                    + "background-position: top center; "
-                + "} #gridWidget { background: transparent; } "
-            );
-    }
-}
-
-
-void MainWindow::setGridPosition()
-{
-    gridView->horizontalScrollBar()->setValue(positionx);
-    gridView->verticalScrollBar()->setValue(positiony);
-}
-
-
-void MainWindow::setListPosition()
-{
-    listView->horizontalScrollBar()->setValue(positionx);
-    listView->verticalScrollBar()->setValue(positiony);
-}
-
-
-void MainWindow::setTablePosition()
-{
-    tableView->horizontalScrollBar()->setValue(positionx);
-    tableView->verticalScrollBar()->setValue(positiony);
+        emptyView->setHidden(false);
 }
 
 
@@ -1330,11 +784,12 @@ void MainWindow::toggleMenus(bool active)
     gridView->setEnabled(active);
     listView->setEnabled(active);
 
-    if (tableView->currentItem() == NULL && !gridCurrent && !listCurrent) {
-        configureGameAction->setEnabled(false);
-        downloadAction->setEnabled(false);
-        deleteAction->setEnabled(false);
-        startAction->setEnabled(false);
+    if (!tableView->hasSelectedRom() &&
+        !gridView->hasSelectedRom() &&
+        !listView->hasSelectedRom()
+    ) {
+        foreach (QAction *next, menuRomSelected)
+            next->setEnabled(false);
     }
 
     if (SETTINGS.value("Other/downloadinfo", "").toString() == "") {
@@ -1357,19 +812,10 @@ void MainWindow::updateLayoutSetting()
 
     int romCount = romCollection->cachedRoms();
 
-    if (romCount > 0 || visibleLayout == "none") {
-        if (visibleLayout == "table")
-            tableView->setHidden(false);
-        else if (visibleLayout == "grid")
-            gridView->setHidden(false);
-        else if (visibleLayout == "list")
-            listView->setHidden(false);
-        else
-            emptyView->setHidden(false);
-    }
+    if (romCount > 0 || visibleLayout == "none")
+        showActiveView();
 
-    startAction->setEnabled(false);
-    configureGameAction->setEnabled(false);
-    downloadAction->setEnabled(false);
-    deleteAction->setEnabled(false);
+    //View was updated so no ROM will be selected. Update menu items accordingly
+    foreach (QAction *next, menuRomSelected)
+        next->setEnabled(false);
 }

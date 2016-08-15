@@ -29,66 +29,46 @@
  *
  ***/
 
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef GRIDVIEW_H
+#define GRIDVIEW_H
 
-#include <QGraphicsDropShadowEffect>
-#include <QString>
-#include <QPixmap>
+#include <QScrollArea>
 
-class QColor;
-class QSize;
+class QGridLayout;
+struct Rom;
 
 
-struct Rom {
-    QString fileName;
-    QString directory;
-    QString romMD5;
-    QString internalName;
-    QString zipFile;
+class GridView : public QScrollArea
+{
+    Q_OBJECT
 
-    QString baseName;
-    QString size;
-    int sortSize;
+public:
+    explicit GridView(QWidget *parent = 0);
+    void addToGridView(Rom *currentRom, int count, bool ddEnabled);
+    int getCurrentRom();
+    QString getCurrentRomInfo(QString infoName);
+    QWidget *getCurrentRomWidget();
+    bool hasSelectedRom();
+    void resetView();
+    void saveGridPosition();
+    void setGridBackground();
 
-    QString goodName;
-    QString CRC1;
-    QString CRC2;
-    QString players;
-    QString saveType;
-    QString rumble;
+signals:
+    void gridItemSelected(bool active);
 
-    QString gameTitle;
-    QString releaseDate;
-    QString sortDate;
-    QString overview;
-    QString esrb;
-    QString genre;
-    QString publisher;
-    QString developer;
-    QString rating;
+private:
+    int currentGridRom;
+    bool gridCurrent;
+    int positionx;
+    int positiony;
 
-    QPixmap image;
+    QGridLayout *gridLayout;
+    QWidget *gridWidget;
+    QWidget *parent;
 
-    int count;
-    bool imageExists;
+private slots:
+    void highlightGridWidget(QWidget *current);
+    void setGridPosition();
 };
 
-bool romSorter(const Rom &firstRom, const Rom &lastRom);
-int getDefaultWidth(QString id, int imageWidth);
-int getGridSize(QString which);
-int getTableDataIndexFromName(QString infoName);
-
-QByteArray byteswap(QByteArray romData);
-QStringList getZippedFiles(QString completeFileName);
-QByteArray *getZippedRom(QString romFileName, QString zipFile);
-QColor getColor(QString color, int transparency = 255);
-QString getDefaultLanguage();
-QString getTranslation(QString text);
-QGraphicsDropShadowEffect *getShadow(bool active);
-QSize getImageSize(QString view);
-QString getDataLocation();
-QString getRomInfo(QString identifier, const Rom *rom, bool removeWarn = false, bool sort = false);
-QString getVersion();
-
-#endif // COMMON_H
+#endif // GRIDVIEW_H

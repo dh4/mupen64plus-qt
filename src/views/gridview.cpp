@@ -1,0 +1,262 @@
+/***
+ * Copyright (c) 2013, Dan Hasting
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the organization nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ ***/
+
+#include "gridview.h"
+#include "clickablewidget.h"
+#include "../common.h"
+#include "../global.h"
+
+#include <QFile>
+#include <QFileInfo>
+#include <QGridLayout>
+#include <QLabel>
+#include <QScrollArea>
+#include <QScrollBar>
+
+
+GridView::GridView(QWidget *parent) : QScrollArea(parent)
+{
+    this->parent = parent;
+
+    setObjectName("gridView");
+    setStyleSheet("#gridView { border: none; }");
+    setBackgroundRole(QPalette::Dark);
+    setAlignment(Qt::AlignHCenter);
+    setHidden(true);
+
+    verticalScrollBar()->setObjectName("vScrollBar");
+    horizontalScrollBar()->setObjectName("hScrollBar");
+
+    setGridBackground();
+
+
+    gridWidget = new QWidget(this);
+    gridWidget->setObjectName("gridWidget");
+    setWidget(gridWidget);
+
+    gridLayout = new QGridLayout(gridWidget);
+    gridLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+    gridLayout->setRowMinimumHeight(0, 10);
+
+    gridWidget->setLayout(gridLayout);
+
+    gridCurrent = false;
+    currentGridRom = 0;
+}
+
+
+void GridView::addToGridView(Rom *currentRom, int count, bool ddEnabled)
+{
+    if (ddEnabled) // Add place for "No Cart" entry
+        count++;
+
+    ClickableWidget *gameGridItem = new ClickableWidget(gridWidget);
+    gameGridItem->setMinimumWidth(getGridSize("width"));
+    gameGridItem->setMaximumWidth(getGridSize("width"));
+    gameGridItem->setGraphicsEffect(getShadow(false));
+
+    //Assign ROM data to widget for use in click events
+    gameGridItem->setProperty("fileName", currentRom->fileName);
+    gameGridItem->setProperty("directory", currentRom->directory);
+    if (currentRom->goodName == getTranslation("Unknown ROM") ||
+        currentRom->goodName == getTranslation("Requires catalog file"))
+        gameGridItem->setProperty("search", currentRom->internalName);
+    else
+        gameGridItem->setProperty("search", currentRom->goodName);
+    gameGridItem->setProperty("romMD5", currentRom->romMD5);
+    gameGridItem->setProperty("zipFile", currentRom->zipFile);
+
+    QGridLayout *gameGridLayout = new QGridLayout(gameGridItem);
+    gameGridLayout->setColumnStretch(0, 1);
+    gameGridLayout->setColumnStretch(3, 1);
+    gameGridLayout->setRowMinimumHeight(1, getImageSize("Grid").height());
+
+    QLabel *gridImageLabel = new QLabel(gameGridItem);
+    gridImageLabel->setMinimumHeight(getImageSize("Grid").height());
+    gridImageLabel->setMinimumWidth(getImageSize("Grid").width());
+    QPixmap image;
+
+    if (currentRom->imageExists) {
+        //Use uniform aspect ratio to account for fluctuations in TheGamesDB box art
+        Qt::AspectRatioMode aspectRatioMode = Qt::IgnoreAspectRatio;
+
+        //Don't warp aspect ratio though if image is too far away from standard size (JP box art)
+        float aspectRatio = float(currentRom->image.width()) / currentRom->image.height();
+
+        if (aspectRatio < 1.1 || aspectRatio > 1.8)
+            aspectRatioMode = Qt::KeepAspectRatio;
+
+        image = currentRom->image.scaled(getImageSize("Grid"), aspectRatioMode, Qt::SmoothTransformation);
+    } else {
+        if (ddEnabled && count == 0)
+            image = QPixmap(":/images/no-cart.png").scaled(getImageSize("Grid"), Qt::IgnoreAspectRatio,
+                                                             Qt::SmoothTransformation);
+        else
+            image = QPixmap(":/images/not-found.png").scaled(getImageSize("Grid"), Qt::IgnoreAspectRatio,
+                                                             Qt::SmoothTransformation);
+    }
+
+    gridImageLabel->setPixmap(image);
+    gridImageLabel->setAlignment(Qt::AlignCenter);
+    gameGridLayout->addWidget(gridImageLabel, 1, 1);
+
+    if (SETTINGS.value("Grid/label","true") == "true") {
+        QLabel *gridTextLabel = new QLabel(gameGridItem);
+
+        //Don't allow label to be wider than image
+        gridTextLabel->setMaximumWidth(getImageSize("Grid").width());
+
+        QString text = "";
+        QString labelText = SETTINGS.value("Grid/labeltext","Filename").toString();
+
+        text = getRomInfo(labelText, currentRom);
+
+        if (ddEnabled && count == 0)
+            text = tr("No Cart");
+
+        gridTextLabel->setText(text);
+
+        QString textHex = getColor(SETTINGS.value("Grid/labelcolor","White").toString()).name();
+        int fontSize = getGridSize("font");
+
+        gridTextLabel->setStyleSheet("QLabel { font-weight: bold; color: " + textHex + "; font-size: "
+                                     + QString::number(fontSize) + "px; }");
+        gridTextLabel->setWordWrap(true);
+        gridTextLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
+
+        gameGridLayout->addWidget(gridTextLabel, 2, 1);
+    }
+
+    gameGridItem->setLayout(gameGridLayout);
+
+    gameGridItem->setMinimumHeight(gameGridItem->sizeHint().height());
+
+    int columnCount = SETTINGS.value("Grid/columncount", "4").toInt();
+    gridLayout->addWidget(gameGridItem, count / columnCount + 1, count % columnCount + 1);
+    gridWidget->adjustSize();
+
+    connect(gameGridItem, SIGNAL(singleClicked(QWidget*)), this, SLOT(highlightGridWidget(QWidget*)));
+    connect(gameGridItem, SIGNAL(doubleClicked(QWidget*)), parent, SLOT(launchRomFromWidget(QWidget*)));
+}
+
+
+int GridView::getCurrentRom()
+{
+    return currentGridRom;
+}
+
+
+QString GridView::getCurrentRomInfo(QString infoName)
+{
+    const char *property = infoName.toUtf8().constData();
+    return gridLayout->itemAt(currentGridRom)->widget()->property(property).toString();
+}
+
+
+QWidget *GridView::getCurrentRomWidget()
+{
+    return gridLayout->itemAt(currentGridRom)->widget();
+}
+
+
+bool GridView::hasSelectedRom()
+{
+    return gridCurrent;
+}
+
+
+void GridView::highlightGridWidget(QWidget *current)
+{
+    //Set all to inactive shadow
+    QLayoutItem *gridItem;
+    for (int item = 0; (gridItem = gridLayout->itemAt(item)) != NULL; item++)
+    {
+        gridItem->widget()->setGraphicsEffect(getShadow(false));
+
+        if (gridItem->widget() == current)
+            currentGridRom = item;
+    }
+
+    //Set current to active shadow
+    current->setGraphicsEffect(getShadow(true));
+
+    gridCurrent = true;
+    emit gridItemSelected(true);
+}
+
+
+void GridView::resetView()
+{
+    QLayoutItem *gridItem;
+    while ((gridItem = gridLayout->takeAt(0)) != NULL)
+    {
+        delete gridItem->widget();
+        delete gridItem;
+    }
+
+    gridCurrent = false;
+}
+
+
+void GridView::saveGridPosition()
+{
+    positionx = horizontalScrollBar()->value();
+    positiony = verticalScrollBar()->value();
+}
+
+
+void GridView::setGridBackground()
+{
+    setStyleSheet("#gridView { border: none; }");
+
+    QString background = SETTINGS.value("Grid/background", "").toString();
+    if (background != "") {
+        QFile backgroundFile(background);
+
+        if (backgroundFile.exists() && !QFileInfo(backgroundFile).isDir())
+            setStyleSheet(QString()
+                + "#gridView { "
+                    + "border: none; "
+                    + "background: url(" + background + "); "
+                    + "background-attachment: fixed; "
+                    + "background-position: top center; "
+                + "} #gridWidget { background: transparent; } "
+            );
+    }
+}
+
+
+void GridView::setGridPosition()
+{
+    horizontalScrollBar()->setValue(positionx);
+    verticalScrollBar()->setValue(positiony);
+}
+
