@@ -40,6 +40,7 @@
 #include <QLabel>
 #include <QScrollArea>
 #include <QScrollBar>
+#include <QTimer>
 
 
 ListView::ListView(QWidget *parent) : QScrollArea(parent)
@@ -76,6 +77,7 @@ void ListView::addToListView(Rom *currentRom, int count, bool ddEnabled)
 
     ClickableWidget *gameListItem = new ClickableWidget(listWidget);
     gameListItem->setContentsMargins(0, 0, 20, 0);
+    gameListItem->setContextMenuPolicy(Qt::CustomContextMenu);
 
     //Assign ROM data to widget for use in click events
     gameListItem->setProperty("fileName", currentRom->fileName);
@@ -168,6 +170,7 @@ void ListView::addToListView(Rom *currentRom, int count, bool ddEnabled)
 
     connect(gameListItem, SIGNAL(singleClicked(QWidget*)), this, SLOT(highlightListWidget(QWidget*)));
     connect(gameListItem, SIGNAL(doubleClicked(QWidget*)), parent, SLOT(launchRomFromWidget(QWidget*)));
+    connect(gameListItem, SIGNAL(customContextMenuRequested(const QPoint &)), parent, SLOT(showRomMenu(const QPoint &)));
 }
 
 
@@ -198,21 +201,30 @@ bool ListView::hasSelectedRom()
 
 void ListView::highlightListWidget(QWidget *current)
 {
-    //Reset all margins
     QLayoutItem *listItem;
     for (int item = 0; (listItem = listLayout->itemAt(item)) != NULL; item++)
     {
-        listItem->widget()->setContentsMargins(0, 0, 20, 0);
-
         if (listItem->widget() == current)
             currentListRom = item;
     }
 
     //Give current left margin to stand out
-    current->setContentsMargins(20, 0, 0, 0);
+    //Delay with QTimer so right-click menu appears correctly
+    QTimer::singleShot(5, this, SLOT(highlightListWidgetSetMargin()));
 
     listCurrent = true;
     emit listItemSelected(true);
+}
+
+
+void ListView::highlightListWidgetSetMargin()
+{
+    //Reset all margins
+    QLayoutItem *listItem;
+    for (int item = 0; (listItem = listLayout->itemAt(item)) != NULL; item++)
+        listItem->widget()->setContentsMargins(0, 0, 20, 0);
+
+    getCurrentRomWidget()->setContentsMargins(20, 0, 0, 0);
 }
 
 

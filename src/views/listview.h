@@ -67,6 +67,7 @@ private:
 
 private slots:
     void highlightListWidget(QWidget *current);
+    void highlightListWidgetSetMargin();
     void setListPosition();
 
 };

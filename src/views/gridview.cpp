@@ -82,6 +82,7 @@ void GridView::addToGridView(Rom *currentRom, int count, bool ddEnabled)
     gameGridItem->setMinimumWidth(getGridSize("width"));
     gameGridItem->setMaximumWidth(getGridSize("width"));
     gameGridItem->setGraphicsEffect(getShadow(false));
+    gameGridItem->setContextMenuPolicy(Qt::CustomContextMenu);
 
     //Assign ROM data to widget for use in click events
     gameGridItem->setProperty("fileName", currentRom->fileName);
@@ -165,6 +166,7 @@ void GridView::addToGridView(Rom *currentRom, int count, bool ddEnabled)
 
     connect(gameGridItem, SIGNAL(singleClicked(QWidget*)), this, SLOT(highlightGridWidget(QWidget*)));
     connect(gameGridItem, SIGNAL(doubleClicked(QWidget*)), parent, SLOT(launchRomFromWidget(QWidget*)));
+    connect(gameGridItem, SIGNAL(customContextMenuRequested(const QPoint &)), parent, SLOT(showRomMenu(const QPoint &)));
 }
 
 

@@ -41,7 +41,7 @@ ClickableWidget::ClickableWidget(QWidget *parent) : QWidget(parent)
 
 void ClickableWidget::mousePressEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton)
+    if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
         emit singleClicked(this);
 }
 

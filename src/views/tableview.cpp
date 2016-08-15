@@ -50,12 +50,14 @@ TableView::TableView(QWidget *parent) : QTreeWidget(parent)
     setAllColumnsShowFocus(true);
     setRootIsDecorated(false);
     setSortingEnabled(true);
+    setContextMenuPolicy(Qt::CustomContextMenu);
     setStyleSheet("QTreeView { border: none; } QTreeView::item { height: 25px; }");
 
     headerView = new QHeaderView(Qt::Horizontal, this);
     setHeader(headerView);
     setHidden(true);
 
+    connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), parent, SLOT(showRomMenu(const QPoint &)));
     connect(headerView, SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
             this, SLOT(saveSortOrder(int,Qt::SortOrder)));
 }
