@@ -52,7 +52,12 @@ public:
     void saveColumnWidths();
     void saveTablePosition();
 
+protected:
+    void keyPressEvent(QKeyEvent *event);
+
 signals:
+    void downPressed();
+    void enterPressed();
 
 private:
     int positionx;

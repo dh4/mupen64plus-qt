@@ -37,6 +37,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QGridLayout>
+#include <QKeyEvent>
 #include <QLabel>
 #include <QScrollArea>
 #include <QScrollBar>
@@ -166,6 +167,8 @@ void GridView::addToGridView(Rom *currentRom, int count, bool ddEnabled)
 
     connect(gameGridItem, SIGNAL(singleClicked(QWidget*)), this, SLOT(highlightGridWidget(QWidget*)));
     connect(gameGridItem, SIGNAL(doubleClicked(QWidget*)), parent, SLOT(launchRomFromWidget(QWidget*)));
+    connect(gameGridItem, SIGNAL(arrowPressed(QWidget*, QString)), this, SLOT(selectNextRom(QWidget*, QString)));
+    connect(gameGridItem, SIGNAL(enterPressed(QWidget*)), parent, SLOT(launchRomFromWidget(QWidget*)));
     connect(gameGridItem, SIGNAL(customContextMenuRequested(const QPoint &)), parent, SLOT(showRomMenu(const QPoint &)));
 }
 
@@ -200,6 +203,8 @@ bool GridView::hasSelectedRom()
 
 void GridView::highlightGridWidget(QWidget *current)
 {
+    current->setFocus();
+
     //Set all to inactive shadow
     QLayoutItem *gridItem;
     for (int item = 0; (gridItem = gridLayout->itemAt(item)) != NULL; item++)
@@ -216,6 +221,16 @@ void GridView::highlightGridWidget(QWidget *current)
     gridCurrent = true;
     emit gridItemSelected(true);
 }
+
+
+void GridView::keyPressEvent(QKeyEvent *event)
+{
+    if ((event->key() == Qt::Key_Down || event->key() == Qt::Key_Right) && gridLayout->count() > 0)
+        highlightGridWidget(gridLayout->itemAt(0)->widget());
+    else
+        QScrollArea::keyPressEvent(event);
+}
+
 
 
 void GridView::resetView()
@@ -238,6 +253,31 @@ void GridView::saveGridPosition()
 
     savedGridRom = currentGridRom;
     savedGridRomFilename = getCurrentRomInfo("fileName");
+}
+
+
+void GridView::selectNextRom(QWidget* current, QString keypress)
+{
+    int columnCount = SETTINGS.value("Grid/columncount", "4").toInt();
+
+    int offset = 0;
+    if (keypress == "UP")
+        offset = columnCount * -1;
+    else if (keypress == "DOWN")
+        offset = columnCount;
+    else if (keypress == "RIGHT")
+        offset = 1;
+    else if (keypress == "LEFT")
+        offset = -1;
+
+    QLayoutItem *gridItem;
+    for (int item = 0; (gridItem = gridLayout->itemAt(item)) != NULL; item++)
+    {
+        if (gridItem->widget() == current && item + offset >= 0 && gridLayout->itemAt(item + offset) != NULL) {
+            ensureWidgetVisible(gridLayout->itemAt(item + offset)->widget());
+            highlightGridWidget(gridLayout->itemAt(item + offset)->widget());
+        }
+    }
 }
 
 

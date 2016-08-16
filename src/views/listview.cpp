@@ -37,6 +37,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QGridLayout>
+#include <QKeyEvent>
 #include <QLabel>
 #include <QScrollArea>
 #include <QScrollBar>
@@ -170,6 +171,8 @@ void ListView::addToListView(Rom *currentRom, int count, bool ddEnabled)
 
     connect(gameListItem, SIGNAL(singleClicked(QWidget*)), this, SLOT(highlightListWidget(QWidget*)));
     connect(gameListItem, SIGNAL(doubleClicked(QWidget*)), parent, SLOT(launchRomFromWidget(QWidget*)));
+    connect(gameListItem, SIGNAL(arrowPressed(QWidget*, QString)), this, SLOT(selectNextRom(QWidget*, QString)));
+    connect(gameListItem, SIGNAL(enterPressed(QWidget*)), parent, SLOT(launchRomFromWidget(QWidget*)));
     connect(gameListItem, SIGNAL(customContextMenuRequested(const QPoint &)), parent, SLOT(showRomMenu(const QPoint &)));
 }
 
@@ -204,6 +207,8 @@ bool ListView::hasSelectedRom()
 
 void ListView::highlightListWidget(QWidget *current)
 {
+    current->setFocus();
+
     QLayoutItem *listItem;
     for (int item = 0; (listItem = listLayout->itemAt(item)) != NULL; item++)
     {
@@ -231,6 +236,15 @@ void ListView::highlightListWidgetSetMargin()
 }
 
 
+void ListView::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Down && listLayout->count() > 0)
+        highlightListWidget(listLayout->itemAt(0)->widget());
+    else
+        QScrollArea::keyPressEvent(event);
+}
+
+
 void ListView::resetView()
 {
     QLayoutItem *listItem;
@@ -251,6 +265,25 @@ void ListView::saveListPosition()
 
     savedListRom = currentListRom;
     savedListRomFilename = getCurrentRomInfo("fileName");
+}
+
+
+void ListView::selectNextRom(QWidget* current, QString keypress)
+{
+    int offset = 0;
+    if (keypress == "UP" || keypress == "LEFT")
+        offset = -2;
+    else if (keypress == "DOWN" || keypress == "RIGHT")
+        offset = 2;
+
+    QLayoutItem *listItem;
+    for (int item = 0; (listItem = listLayout->itemAt(item)) != NULL; item++)
+    {
+        if (listItem->widget() == current && item + offset >= 0 && listLayout->itemAt(item + offset) != NULL) {
+            ensureWidgetVisible(listLayout->itemAt(item + offset)->widget());
+            highlightListWidget(listLayout->itemAt(item + offset)->widget());
+        }
+    }
 }
 
 

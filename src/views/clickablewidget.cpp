@@ -36,6 +36,24 @@
 
 ClickableWidget::ClickableWidget(QWidget *parent) : QWidget(parent)
 {
+    setFocusPolicy(Qt::StrongFocus);
+}
+
+
+void ClickableWidget::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Up)
+        emit arrowPressed(this, "UP");
+    else if (event->key() == Qt::Key_Down)
+        emit arrowPressed(this, "DOWN");
+    else if (event->key() == Qt::Key_Left)
+        emit arrowPressed(this, "LEFT");
+    else if (event->key() == Qt::Key_Right)
+        emit arrowPressed(this, "RIGHT");
+    else if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
+        emit enterPressed(this);
+    else
+        QWidget::keyPressEvent(event);
 }
 
 
