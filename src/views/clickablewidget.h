@@ -44,10 +44,13 @@ public:
     explicit ClickableWidget(QWidget *parent = 0);
 
 protected:
+    void keyPressEvent(QKeyEvent* event);
     void mousePressEvent(QMouseEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *event);
 
 signals:
+    void arrowPressed(QWidget *current, QString keypress);
+    void enterPressed(QWidget *current);
     void singleClicked(QWidget *current);
     void doubleClicked(QWidget *current);
 };

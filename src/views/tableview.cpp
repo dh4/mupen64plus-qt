@@ -38,6 +38,7 @@
 #include <QFileInfo>
 #include <QGridLayout>
 #include <QHeaderView>
+#include <QKeyEvent>
 #include <QLabel>
 #include <QScrollBar>
 
@@ -188,6 +189,17 @@ bool TableView::hasSelectedRom()
     return currentItem() != NULL;
 }
 
+
+void TableView::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
+        emit enterPressed();
+    else if (event->key() == Qt::Key_Down && selectedItems().count() == 0) {
+        setCurrentItem(topLevelItem(0));
+        emit downPressed();
+    } else
+        QTreeWidget::keyPressEvent(event);
+}
 
 
 void TableView::resetView(bool imageUpdated)

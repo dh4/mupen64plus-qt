@@ -53,6 +53,9 @@ public:
     void saveGridPosition();
     void setGridBackground();
 
+protected:
+    void keyPressEvent(QKeyEvent *event);
+
 signals:
     void gridItemSelected(bool active);
 
@@ -68,6 +71,7 @@ private:
 
 private slots:
     void highlightGridWidget(QWidget *current);
+    void selectNextRom(QWidget *current, QString keypress);
     void setGridPosition();
 };
 

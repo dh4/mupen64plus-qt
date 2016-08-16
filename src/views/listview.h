@@ -52,6 +52,9 @@ public:
     void resetView();
     void saveListPosition();
 
+protected:
+    void keyPressEvent(QKeyEvent *event);
+
 signals:
     void listItemSelected(bool active);
 
@@ -68,6 +71,7 @@ private:
 private slots:
     void highlightListWidget(QWidget *current);
     void highlightListWidgetSetMargin();
+    void selectNextRom(QWidget *current, QString keypress);
     void setListPosition();
 
 };
