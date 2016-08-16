@@ -54,7 +54,8 @@ void EmulatorHandler::checkStatus(int status)
     if (status > 0) {
         QMessageBox exitDialog(parent);
         exitDialog.setWindowTitle(tr("Warning"));
-        exitDialog.setText(tr("Mupen64Plus quit unexpectedly. Check the log for more information."));
+        exitDialog.setText(tr("<ParentName> quit unexpectedly. Check the log for more information.")
+                           .replace("<ParentName>",ParentName));
         exitDialog.setIcon(QMessageBox::Warning);
         exitDialog.addButton(QMessageBox::Ok);
         exitDialog.addButton(tr("View Log..."), QMessageBox::HelpRole);
@@ -67,7 +68,7 @@ void EmulatorHandler::checkStatus(int status)
 
 void EmulatorHandler::cleanTemp()
 {
-    QFile::remove(QDir::tempPath() + "/mupen64plus-qt/temp.z64");
+    QFile::remove(QDir::tempPath() + "/"+AppNameLower+"/temp.z64");
 }
 
 
@@ -138,7 +139,7 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
         romData.append(zippedFile.readAll());
         zippedFile.close();
 
-        QString tempDir = QDir::tempPath() + "/mupen64plus-qt";
+        QString tempDir = QDir::tempPath() + "/"+AppNameLower;
         QDir().mkdir(tempDir);
         completeRomPath = tempDir + "/temp.n64";
 
@@ -149,7 +150,7 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
     } else
         completeRomPath = romDir.absoluteFilePath(romFileName);
 
-    QString mupen64Path = SETTINGS.value("Paths/mupen64plus", "").toString();
+    QString emulatorPath = SETTINGS.value("Paths/mupen64plus", "").toString();
     QString dataPath = SETTINGS.value("Paths/data", "").toString();
     QString configPath = SETTINGS.value("Paths/config", "").toString();
     QString pluginPath = SETTINGS.value("Paths/plugins", "").toString();
@@ -166,7 +167,7 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
     QString inputPlugin = SETTINGS.value("Plugins/input", "").toString();
     QString rspPlugin = SETTINGS.value("Plugins/rsp", "").toString();
 
-    QFile mupen64File(mupen64Path);
+    QFile emulatorFile(emulatorPath);
     QFile romFile(completeRomPath);
 
     QString gameVideoPlugin = SETTINGS.value(romFileName+"/video", "").toString();
@@ -179,8 +180,9 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
 
 
     //Sanity checks
-    if(!mupen64File.exists() || QFileInfo(mupen64File).isDir() || !QFileInfo(mupen64File).isExecutable()) {
-        QMessageBox::warning(parent, tr("Warning"), tr("Mupen64Plus executable not found."));
+    if(!emulatorFile.exists() || QFileInfo(emulatorFile).isDir() || !QFileInfo(emulatorFile).isExecutable()) {
+        QMessageBox::warning(parent, tr("Warning"),
+                             tr("<ParentName> executable not found.").replace("<ParentName>",ParentName));
         if (zip) cleanTemp();
         return;
     }
@@ -277,12 +279,12 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
         emulatorProc->setProcessEnvironment(emulatorEnv);
     }
 
-    emulatorProc->setWorkingDirectory(QFileInfo(mupen64File).dir().canonicalPath());
+    emulatorProc->setWorkingDirectory(QFileInfo(emulatorFile).dir().canonicalPath());
     emulatorProc->setProcessChannelMode(QProcess::MergedChannels);
-    emulatorProc->start(mupen64Path, args);
+    emulatorProc->start(emulatorPath, args);
 
     //Add command to log
-    QString executable = mupen64Path;
+    QString executable = emulatorPath;
     if (executable.contains(" "))
         executable = '"' + executable + '"';
 

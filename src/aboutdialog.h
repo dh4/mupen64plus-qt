@@ -50,9 +50,10 @@ public:
 private:
     QDialogButtonBox *buttonBox;
     QGridLayout *aboutLayout;
+    QLabel *copyrightLabel;
     QLabel *descriptionLabel;
     QLabel *githubLink;
-    QLabel *mupen64Link;
+    QLabel *websiteLink;
     QLabel *icon;
     QPlainTextEdit *license;
 };

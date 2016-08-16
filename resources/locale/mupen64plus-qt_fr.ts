@@ -5,36 +5,21 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../../src/aboutdialog.cpp" line="44"/>
-        <source>About Mupen64Plus-Qt</source>
-        <translation>À propos de Mupen64Plus-Qt</translation>
+        <source>About &lt;AppName&gt;</source>
+        <translation>À propos de &lt;AppName&gt;</translation>
     </message>
     <message>
         <location filename="../../src/aboutdialog.cpp" line="58"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
-    <message>
-        <location filename="../../src/aboutdialog.cpp" line="59"/>
-        <source>A basic launcher for Mupen64Plus using Qt.</source>
-        <translation>Une interface élémentaire pour Mupen64Plus.</translation>
-    </message>
-    <message>
-        <location filename="../../src/aboutdialog.cpp" line="60"/>
-        <source>Mupen64Plus website</source>
-        <translation>Site web de Mupen64Plus</translation>
-    </message>
-    <message>
-        <location filename="../../src/aboutdialog.cpp" line="61"/>
-        <source>GitHub repository</source>
-        <translation>Dépôt GitHub</translation>
-    </message>
 </context>
 <context>
     <name>ConfigEditor</name>
     <message>
         <location filename="../../src/configeditor.cpp" line="48"/>
-        <source>Mupen64Plus Config Editor</source>
-        <translation>Éditeur de configuration Mupen64Plus</translation>
+        <source>&lt;ParentName&gt; Config Editor</source>
+        <translation>Éditeur de configuration &lt;ParentName&gt;</translation>
     </message>
     <message>
         <location filename="../../src/configeditor.cpp" line="72"/>
@@ -79,34 +64,34 @@
     <name>EmulatorHandler</name>
     <message>
         <location filename="../../src/emulatorhandler.cpp" line="56"/>
-        <location filename="../../src/emulatorhandler.cpp" line="183"/>
-        <location filename="../../src/emulatorhandler.cpp" line="189"/>
-        <location filename="../../src/emulatorhandler.cpp" line="199"/>
+        <location filename="../../src/emulatorhandler.cpp" line="184"/>
+        <location filename="../../src/emulatorhandler.cpp" line="191"/>
+        <location filename="../../src/emulatorhandler.cpp" line="201"/>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
     <message>
         <location filename="../../src/emulatorhandler.cpp" line="57"/>
-        <source>Mupen64Plus quit unexpectedly. Check the log for more information.</source>
-        <translation>Mupen64Plus a quitté de manière inattendue. Consultez les journaux pour plus d&apos;informations.</translation>
+        <source>&lt;ParentName&gt; quit unexpectedly. Check the log for more information.</source>
+        <translation>&lt;ParentName&gt; a quitté de manière inattendue. Consultez les journaux pour plus d&apos;informations.</translation>
     </message>
     <message>
-        <location filename="../../src/emulatorhandler.cpp" line="60"/>
+        <location filename="../../src/emulatorhandler.cpp" line="61"/>
         <source>View Log...</source>
         <translation>Consulter les journaux...</translation>
     </message>
     <message>
-        <location filename="../../src/emulatorhandler.cpp" line="199"/>
+        <location filename="../../src/emulatorhandler.cpp" line="185"/>
+        <source>&lt;ParentName&gt; executable not found.</source>
+        <translation>Executable &lt;ParentName&gt; non trouvé.</translation>
+    </message>
+    <message>
+        <location filename="../../src/emulatorhandler.cpp" line="201"/>
         <source>Not a valid ROM File.</source>
         <translation>Fichier ROM invalide.</translation>
     </message>
     <message>
-        <location filename="../../src/emulatorhandler.cpp" line="183"/>
-        <source>Mupen64Plus executable not found.</source>
-        <translation>Executable Mupen64Plus non trouvé.</translation>
-    </message>
-    <message>
-        <location filename="../../src/emulatorhandler.cpp" line="189"/>
+        <location filename="../../src/emulatorhandler.cpp" line="191"/>
         <source>ROM file not found.</source>
         <translation>Fichier ROM manquant.</translation>
     </message>
@@ -190,7 +175,7 @@
 <context>
     <name>GridView</name>
     <message>
-        <location filename="../../src/views/gridview.cpp" line="144"/>
+        <location filename="../../src/views/gridview.cpp" line="145"/>
         <source>No Cart</source>
         <translation type="unfinished"></translation>
     </message>
@@ -198,7 +183,7 @@
 <context>
     <name>ListView</name>
     <message>
-        <location filename="../../src/views/listview.cpp" line="151"/>
+        <location filename="../../src/views/listview.cpp" line="152"/>
         <source>No Cart</source>
         <translation type="unfinished"></translation>
     </message>
@@ -207,8 +192,8 @@
     <name>LogDialog</name>
     <message>
         <location filename="../../src/logdialog.cpp" line="46"/>
-        <source>Mupen64Plus Log</source>
-        <translation>Journaux Mupen64Plus</translation>
+        <source>&lt;ParentName&gt; Log</source>
+        <translation>Journaux &lt;ParentName&gt;</translation>
     </message>
     <message>
         <location filename="../../src/logdialog.cpp" line="66"/>
@@ -218,11 +203,6 @@
 </context>
 <context>
     <name>MainWindow</name>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="67"/>
-        <source>Mupen64Plus-Qt</source>
-        <translation>Mupen64Plus-Qt</translation>
-    </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="241"/>
         <source>&amp;File</source>
@@ -240,13 +220,13 @@
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="245"/>
-        <location filename="../../src/mainwindow.cpp" line="783"/>
+        <location filename="../../src/mainwindow.cpp" line="793"/>
         <source>&amp;Download/Update Info...</source>
         <translation>&amp;Télécharger/Mettre à jour les infos...</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="246"/>
-        <location filename="../../src/mainwindow.cpp" line="784"/>
+        <location filename="../../src/mainwindow.cpp" line="794"/>
         <source>D&amp;elete Current Info...</source>
         <translation>&amp;Effacer les infos actuelles...</translation>
     </message>
@@ -262,7 +242,7 @@
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="270"/>
-        <location filename="../../src/mainwindow.cpp" line="773"/>
+        <location filename="../../src/mainwindow.cpp" line="783"/>
         <source>&amp;Start</source>
         <translation>&amp;Démarrer</translation>
     </message>
@@ -288,7 +268,7 @@
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="317"/>
-        <location filename="../../src/mainwindow.cpp" line="776"/>
+        <location filename="../../src/mainwindow.cpp" line="786"/>
         <source>Configure &amp;Game...</source>
         <translation>Configurer le &amp;jeu...</translation>
     </message>
@@ -296,6 +276,11 @@
         <location filename="../../src/mainwindow.cpp" line="321"/>
         <source>&amp;Configure...</source>
         <translation>&amp;Configurer...</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="629"/>
+        <source>There is no log. Either &lt;ParentName&gt; has not yet run or there was no output from the last run.</source>
+        <translation>Il n&apos;y a pas de journaux. Soit &lt;ParentName&gt; n’a pas encore été lancé, soit il n’y a pas de données concernant le dernier démarrage.</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="290"/>
@@ -333,62 +318,57 @@
         <translation>À &amp;propos</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="597"/>
+        <location filename="../../src/mainwindow.cpp" line="606"/>
         <source>Not Found</source>
         <translation>Non trouvé</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="597"/>
+        <location filename="../../src/mainwindow.cpp" line="606"/>
         <source>Editor requires config directory to be </source>
         <translation>L&apos;éditeur nécessite que le dossier de configuration soit </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="598"/>
+        <location filename="../../src/mainwindow.cpp" line="607"/>
         <source>set to a directory with mupen64plus.cfg.</source>
         <translation>un dossier contenant mupen64plus.cfg.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="599"/>
+        <location filename="../../src/mainwindow.cpp" line="608"/>
         <source>See here for the default config location:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="619"/>
+        <location filename="../../src/mainwindow.cpp" line="628"/>
         <source>No Output</source>
         <translation>Pas de sortie</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="620"/>
-        <source>There is no log. Either Mupen64Plus has not yet run or there was no output from the last run.</source>
-        <translation>Il n&apos;y a pas de journaux. Soit Mupen64Plus n’a pas encore été lancé, soit il n’y a pas de données concernant le dernier démarrage. </translation>
-    </message>
-    <message>
-        <location filename="../../src/mainwindow.cpp" line="670"/>
+        <location filename="../../src/mainwindow.cpp" line="680"/>
         <source>All Files</source>
         <translation>Tous les fichiers</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="680"/>
+        <location filename="../../src/mainwindow.cpp" line="690"/>
         <source>Open ROM File</source>
         <translation>Ouvrir un fichier ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="698"/>
+        <location filename="../../src/mainwindow.cpp" line="708"/>
         <source>No ROMs</source>
         <translation>Aucune ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="698"/>
+        <location filename="../../src/mainwindow.cpp" line="708"/>
         <source>No ROMs found in ZIP file.</source>
         <translation>Aucune ROM trouvée dans le fichier ZIP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="713"/>
+        <location filename="../../src/mainwindow.cpp" line="723"/>
         <source>Select ROM</source>
         <translation>Choisir une ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="730"/>
+        <location filename="../../src/mainwindow.cpp" line="740"/>
         <source>Launch</source>
         <translation>Lancer</translation>
     </message>
@@ -497,16 +477,21 @@
     </message>
     <message>
         <location filename="../../src/common.cpp" line="327"/>
+        <source>Game Cover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/common.cpp" line="328"/>
         <source>Unknown ROM</source>
         <translation>ROM inconnue</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="328"/>
+        <location filename="../../src/common.cpp" line="329"/>
         <source>Requires catalog file</source>
         <translation>Fichier catalogue demandé</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="329"/>
+        <location filename="../../src/common.cpp" line="330"/>
         <source>Not found</source>
         <translation>Non trouvé</translation>
     </message>
@@ -516,26 +501,41 @@
         <translation>%1 - MB</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscraper.cpp" line="169"/>
-        <location filename="../../src/thegamesdbscraper.cpp" line="206"/>
-        <location filename="../../src/thegamesdbscraper.cpp" line="251"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="170"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="207"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="252"/>
         <source>Game Information Download</source>
         <translation>Télécharger des informations sur le jeu</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscraper.cpp" line="202"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="203"/>
         <source>No results found.</source>
         <translation>Aucun résultat.</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscraper.cpp" line="204"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="205"/>
         <source>No more results found.</source>
         <translation>Pas d&apos;autre résultat.</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscraper.cpp" line="252"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="253"/>
         <source>Download Complete!</source>
         <translation>Téléchargement terminé !</translation>
+    </message>
+    <message>
+        <location filename="../../src/global.h" line="44"/>
+        <source>A basic launcher for &lt;ParentName&gt; using Qt.</source>
+        <translation>Une interface élémentaire pour &lt;ParentName&gt;.</translation>
+    </message>
+    <message>
+        <location filename="../../src/global.h" line="47"/>
+        <source>&lt;ParentName&gt; website</source>
+        <translation>Site web de &lt;ParentName&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/global.h" line="50"/>
+        <source>GitHub repository</source>
+        <translation>Dépôt GitHub</translation>
     </message>
 </context>
 <context>
@@ -970,17 +970,22 @@
         <translation>Dossiers des ROMS</translation>
     </message>
     <message>
-        <location filename="../../src/settingsdialog.cpp" line="416"/>
+        <location filename="../../src/settingsdialog.cpp" line="399"/>
+        <source>&lt;ParentName&gt; Executable</source>
+        <translation>Fichier exécutable &lt;ParentName&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/settingsdialog.cpp" line="417"/>
         <source>Plugin Directory</source>
         <translation>Dossier des plugins</translation>
     </message>
     <message>
-        <location filename="../../src/settingsdialog.cpp" line="425"/>
+        <location filename="../../src/settingsdialog.cpp" line="426"/>
         <source>Data Directory</source>
         <translation>Dossier des données</translation>
     </message>
     <message>
-        <location filename="../../src/settingsdialog.cpp" line="433"/>
+        <location filename="../../src/settingsdialog.cpp" line="434"/>
         <source>Config Directory</source>
         <translation>Dossier de configuration</translation>
     </message>
@@ -989,17 +994,12 @@
         <source>Background Image</source>
         <translation>Image d&apos;arrière-plan</translation>
     </message>
-    <message>
-        <location filename="../../src/settingsdialog.cpp" line="399"/>
-        <source>Mupen64Plus Executable</source>
-        <translation>Fichier exécutable Mupen64Plus</translation>
-    </message>
 </context>
 <context>
     <name>TableView</name>
     <message>
-        <location filename="../../src/views/tableview.cpp" line="73"/>
-        <location filename="../../src/views/tableview.cpp" line="76"/>
+        <location filename="../../src/views/tableview.cpp" line="74"/>
+        <location filename="../../src/views/tableview.cpp" line="77"/>
         <source>No Cart</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1009,12 +1009,7 @@
     <message>
         <location filename="../../src/thegamesdbscraper.cpp" line="60"/>
         <source>&lt;b&gt;NOTE:&lt;/b&gt; If you are deleting this game&apos;s information because the game doesn&apos;t </source>
-        <translation>&lt;b&gt;Remarque :&lt;/b&gt; Si vous effacez les informations de ce jeu parce que le jeu</translation>
-    </message>
-    <message>
-        <location filename="../../src/thegamesdbscraper.cpp" line="61"/>
-        <source>exist on TheGamesDB and Mupen64Plus-Qt pulled the information for different game, it&apos;s </source>
-        <translation>n’est pas dans TheGamesDB et que Mupen64Plus-Qt vous propose des informations pour un autre jeu,</translation>
+        <translation>&lt;b&gt;Remarque :&lt;/b&gt; Si vous effacez les informations de ce jeu parce que le jeu </translation>
     </message>
     <message>
         <location filename="../../src/thegamesdbscraper.cpp" line="62"/>
@@ -1027,14 +1022,19 @@
         <translation>et d’ajouter le jeu afin d’en faire profiter également les autres utilisateurs.</translation>
     </message>
     <message>
+        <location filename="../../src/thegamesdbscraper.cpp" line="61"/>
+        <source>exist on TheGamesDB and &lt;AppName&gt; pulled the information for different game, it&apos;s </source>
+        <translation>n’est pas dans TheGamesDB et que &lt;AppName&gt; vous propose des informations pour un autre jeu, </translation>
+    </message>
+    <message>
         <location filename="../../src/thegamesdbscraper.cpp" line="65"/>
-        <source>This will cause Mupen64Plus-Qt to not update the information for this game until you </source>
-        <translation>Mupen64Plus-QT ne mettra pas à jour les informations jusqu&apos;à ce que vous</translation>
+        <source>This will cause &lt;AppName&gt; to not update the information for this game until you </source>
+        <translation>&lt;AppName&gt; ne mettra pas à jour les informations jusqu&apos;à ce que vous </translation>
     </message>
     <message>
         <location filename="../../src/thegamesdbscraper.cpp" line="66"/>
         <source>force it with &quot;Download/Update Info...&quot;</source>
-        <translation>relanciez le téléchargement/la mise à jour des informations...</translation>
+        <translation>relanciez le &quot;Télécharger/Mettre à jour les infos...&quot;</translation>
     </message>
     <message>
         <location filename="../../src/thegamesdbscraper.cpp" line="68"/>
@@ -1042,33 +1042,33 @@
         <translation>Effacer les informations actuelles pour</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscraper.cpp" line="70"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="71"/>
         <source>Delete Game Information</source>
         <translation>Effacer les informations du jeu</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscraper.cpp" line="166"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="167"/>
         <source>Released on: </source>
         <translation>Publié le :</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscraper.cpp" line="167"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="168"/>
         <source>Does this look correct?</source>
         <translation>Ces informations vous semblent-elles correctes ?</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscraper.cpp" line="286"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="287"/>
         <source>Request timed out. Check your network settings.</source>
         <translation>Temps dépassé. Vérifier vos paramètres de connexion.</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscraper.cpp" line="294"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="295"/>
         <source>Continue scraping information?</source>
         <translation>Continuer à récolter des informations ?</translation>
     </message>
     <message>
-        <location filename="../../src/thegamesdbscraper.cpp" line="297"/>
-        <location filename="../../src/thegamesdbscraper.cpp" line="299"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="298"/>
+        <location filename="../../src/thegamesdbscraper.cpp" line="300"/>
         <source>Network Error</source>
         <translatorcomment>Erreur réseau</translatorcomment>
         <translation>Erreur réseau</translation>

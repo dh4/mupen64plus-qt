@@ -36,7 +36,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pathsWidget">
       <attribute name="title">
@@ -82,7 +82,7 @@
              </widget>
             </item>
             <item row="0" column="2">
-             <widget class="QPushButton" name="mupen64Button">
+             <widget class="QPushButton" name="emulatorButton">
               <property name="text">
                <string>Browse...</string>
               </property>
@@ -103,14 +103,14 @@
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QLabel" name="mupen64PathLabel">
+             <widget class="QLabel" name="emulatorPathLabel">
               <property name="text">
                <string>Mupen64Plus executable: </string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="mupen64Path"/>
+             <widget class="QLineEdit" name="emulatorPath"/>
             </item>
             <item row="2" column="0">
              <widget class="QLabel" name="dataPathLabel">
@@ -1218,11 +1218,11 @@
  </widget>
  <tabstops>
   <tabstop>tabWidget</tabstop>
-  <tabstop>mupen64Path</tabstop>
+  <tabstop>emulatorPath</tabstop>
   <tabstop>pluginPath</tabstop>
   <tabstop>dataPath</tabstop>
   <tabstop>configPath</tabstop>
-  <tabstop>mupen64Button</tabstop>
+  <tabstop>emulatorButton</tabstop>
   <tabstop>pluginButton</tabstop>
   <tabstop>dataButton</tabstop>
   <tabstop>configButton</tabstop>

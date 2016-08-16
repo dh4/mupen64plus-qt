@@ -32,17 +32,32 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#include <QObject>
 #include <QSettings>
 
 
-#if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD) || defined(Q_OS_OPENBSD) || defined(Q_OS_NETBSD)
-    #define OS_LINUX_OR_BSD
-#endif
+const QString AppName           = "Mupen64Plus-Qt";
+const QString AppNameLower      = "mupen64plus-qt";
+const QString ParentName        = "Mupen64Plus";
+const QString ParentNameLower   = "mupen64plus";
+
+const QString Description = QObject::tr("A basic launcher for <ParentName> using Qt.").replace("<ParentName>",ParentName);
+const QString Copyright = "";
+const QString Website = "<a href=\"http://www.mupen64plus.org/\">"
+        + QObject::tr("<ParentName> website").replace("<ParentName>",ParentName)
+        + "</a>";
+const QString GitHub = "<a href=\"https://github.com/dh4/mupen64plus-qt\">"
+        + QObject::tr("GitHub repository")
+        + "</a>";
 
 #ifdef Q_OS_WIN
-    #define SETTINGS QSettings("mupen64plus-qt.ini", QSettings::IniFormat)
+    #define SETTINGS    QSettings(AppNameLower+".ini", QSettings::IniFormat)
 #else
-    #define SETTINGS QSettings("mupen64plus", "mupen64plus-qt")
+    #define SETTINGS    QSettings(ParentNameLower, AppNameLower)
+#endif
+
+#if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD) || defined(Q_OS_OPENBSD) || defined(Q_OS_NETBSD)
+    #define OS_LINUX_OR_BSD
 #endif
 
 #endif // GLOBAL_H

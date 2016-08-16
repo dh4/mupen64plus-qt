@@ -47,15 +47,15 @@ int main(int argc, char *argv[])
     QString language = SETTINGS.value("language", getDefaultLanguage()).toString();
 
     if (language != "EN") {
-        QString resource = ":/locale/mupen64plus-qt_"+language.toLower()+".qm";
+        QString resource = ":/locale/"+AppNameLower+"_"+language.toLower()+".qm";
         if (QFileInfo(resource).exists()) {
             translator.load(resource);
             application.installTranslator(&translator);
         }
     }
 
-    QCoreApplication::setOrganizationName("Mupen64Plus");
-    QCoreApplication::setApplicationName("Mupen64Plus-Qt");
+    QCoreApplication::setOrganizationName(ParentName);
+    QCoreApplication::setApplicationName(AppName);
 
     MainWindow window;
 

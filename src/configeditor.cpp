@@ -45,7 +45,7 @@ ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent
 {
     config.setFileName(configFile);
 
-    setWindowTitle(tr("Mupen64Plus Config Editor"));
+    setWindowTitle(tr("<ParentName> Config Editor").replace("<ParentName>",ParentName));
     setMinimumSize(600, 400);
 
     editorLayout = new QGridLayout(this);

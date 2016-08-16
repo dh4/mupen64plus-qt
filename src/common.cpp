@@ -76,10 +76,10 @@ QString getDataLocation()
 
 #if QT_VERSION >= 0x050000
     dataDir = QStandardPaths::writableLocation(QStandardPaths::DataLocation)
-                    .replace("Mupen64Plus/Mupen64Plus-Qt","mupen64plus-qt");
+                    .replace(ParentName+"/"+AppName,AppNameLower);
 #else
     dataDir = QDesktopServices::storageLocation(QDesktopServices::DataLocation)
-                    .remove("data/").replace("Mupen64Plus/Mupen64Plus-Qt","mupen64plus-qt");
+                    .remove("data/").replace(ParentName+"/"+AppName,AppNameLower);
 #endif
 
 #endif
@@ -324,6 +324,7 @@ QString getTranslation(QString text)
     else if (text == "Publisher")               return QObject::tr("Publisher");
     else if (text == "Developer")               return QObject::tr("Developer");
     else if (text == "Rating")                  return QObject::tr("Rating");
+    else if (text == "Game Cover")              return QObject::tr("Game Cover");
     else if (text == "Unknown ROM")             return QObject::tr("Unknown ROM");
     else if (text == "Requires catalog file")   return QObject::tr("Requires catalog file");
     else if (text == "Not found")               return QObject::tr("Not found");

@@ -43,7 +43,7 @@
 
 LogDialog::LogDialog(QString lastOutput, QWidget *parent) : QDialog(parent)
 {
-    setWindowTitle(tr("Mupen64Plus Log"));
+    setWindowTitle(tr("<ParentName> Log").replace("<ParentName>",ParentName));
     setMinimumSize(600, 400);
 
     logLayout = new QGridLayout(this);

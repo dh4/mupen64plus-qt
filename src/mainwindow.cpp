@@ -64,8 +64,8 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
-    setWindowTitle(tr("Mupen64Plus-Qt"));
-    setWindowIcon(QIcon(":/images/mupen64plus.png"));
+    setWindowTitle(AppName);
+    setWindowIcon(QIcon(":/images/"+ParentNameLower+".png"));
 
     autoloadSettings();
 
@@ -125,16 +125,16 @@ void MainWindow::addToView(Rom *currentRom, int count)
 
 void MainWindow::autoloadSettings()
 {
-    QString mupen64Path = SETTINGS.value("Paths/mupen64plus", "").toString();
+    QString emulatorPath = SETTINGS.value("Paths/mupen64plus", "").toString();
     QString dataPath = SETTINGS.value("Paths/data", "").toString();
     QString pluginPath = SETTINGS.value("Paths/plugins", "").toString();
 
-    if (mupen64Path == "" && dataPath == "" && pluginPath == "") {
+    if (emulatorPath == "" && dataPath == "" && pluginPath == "") {
 #ifdef OS_LINUX_OR_BSD
         //If user has not entered any settings, check common locations for them
-        QStringList mupen64Check, dataCheck, pluginCheck;
+        QStringList emulatorCheck, dataCheck, pluginCheck;
 
-        mupen64Check << "/usr/bin/mupen64plus"
+        emulatorCheck << "/usr/bin/mupen64plus"
                      << "/usr/games/mupen64plus"
                      << "/usr/local/bin/mupen64plus";
 
@@ -151,7 +151,7 @@ void MainWindow::autoloadSettings()
                      << "/usr/local/share/mupen64plus";
 
 
-        foreach (QString check, mupen64Check)
+        foreach (QString check, emulatorCheck)
             if (QFileInfo(check).exists())
                 SETTINGS.setValue("Paths/mupen64plus", check);
 
@@ -305,7 +305,7 @@ void MainWindow::createMenu()
         layoutItem->setCheckable(true);
         layoutGroup->addAction(layoutItem);
 
-        //Only enable layout changes when Mupen64Plus is not running
+        //Only enable layout changes when emulator is not running
         menuEnable << layoutItem;
 
         if(layoutValue == layoutName.at(1))
@@ -340,7 +340,7 @@ void MainWindow::createMenu()
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(openAbout()));
 
 
-    //Create list of actions that are enabled only when Mupen64Plus is not running
+    //Create list of actions that are enabled only when emulator is not running
     menuEnable << startAction
                << logAction
                << openAction
@@ -352,7 +352,7 @@ void MainWindow::createMenu()
                << editorAction
                << quitAction;
 
-    //Create list of actions that are disabled when Mupen64Plus is not running
+    //Create list of actions that are disabled when emulator is not running
     menuDisable << stopAction;
 
     //Create list of actions that are only active when a ROM is selected
@@ -375,7 +375,7 @@ void MainWindow::createRomView()
     emptyLayout = new QGridLayout(emptyView);
 
     emptyIcon = new QLabel(emptyView);
-    emptyIcon->setPixmap(QPixmap(":/images/mupen64plus.png"));
+    emptyIcon->setPixmap(QPixmap(":/images/"+ParentNameLower+".png"));
 
     emptyLayout->addWidget(emptyIcon, 1, 1);
     emptyLayout->setColumnStretch(0, 1);
@@ -626,7 +626,8 @@ void MainWindow::openLog()
 {
     if (emulation->lastOutput == "") {
         QMessageBox::information(this, tr("No Output"),
-            tr("There is no log. Either Mupen64Plus has not yet run or there was no output from the last run."));
+            tr("There is no log. Either <ParentName> has not yet run or there was no output from the last run.")
+            .replace("<ParentName>",ParentName));
     } else {
         LogDialog logDialog(emulation->lastOutput, this);
         logDialog.exec();

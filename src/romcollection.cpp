@@ -422,7 +422,7 @@ void RomCollection::setupDatabase()
     int dbVersion = 1;
 
     database = QSqlDatabase::addDatabase("QSQLITE");
-    database.setDatabaseName(getDataLocation() + "/mupen64plus-qt.sqlite");
+    database.setDatabaseName(getDataLocation() + "/"+AppNameLower+".sqlite");
 
     if (!database.open())
         QMessageBox::warning(parent, tr("Database Not Loaded"),

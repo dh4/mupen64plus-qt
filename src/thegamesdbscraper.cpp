@@ -58,14 +58,15 @@ void TheGamesDBScraper::deleteGameInfo(QString fileName, QString identifier)
 {
     QString text;
     text = QString(tr("<b>NOTE:</b> If you are deleting this game's information because the game doesn't "))
-                 + tr("exist on TheGamesDB and Mupen64Plus-Qt pulled the information for different game, it's ")
+                 + tr("exist on TheGamesDB and <AppName> pulled the information for different game, it's ")
                  + tr("better to create an account on")+" <a href=\"http://thegamesdb.net/\">TheGamesDB</a> "
                  + tr("and add the game so other users can benefit as well.")
                  + "<br /><br />"
-                 + tr("This will cause Mupen64Plus-Qt to not update the information for this game until you ")
+                 + tr("This will cause <AppName> to not update the information for this game until you ")
                  + tr("force it with \"Download/Update Info...\"")
                  + "<br /><br />"
                  + tr("Delete the current information for") + " <b>" + fileName + "</b>?";
+    text.replace("<AppName>",AppName);
 
     int answer = QMessageBox::question(parent, tr("Delete Game Information"), text,
                                        QMessageBox::Yes | QMessageBox::No);
@@ -262,7 +263,7 @@ QByteArray TheGamesDBScraper::getUrlContents(QUrl url)
 
     QNetworkRequest request;
     request.setUrl(url);
-    request.setRawHeader("User-Agent", "Mupen64Plus-Qt");
+    request.setRawHeader("User-Agent", AppName.toUtf8().constData());
     QNetworkReply *reply = manager->get(request);
 
     QTimer timer;
