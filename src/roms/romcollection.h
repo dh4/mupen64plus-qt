@@ -57,6 +57,7 @@ public slots:
     int addRoms();
 
 signals:
+    void ddRomAdded(Rom *currentRom);
     void romAdded(Rom *currentRom, int count);
     void updateEnded(int romCount, bool cached = false);
     void updateStarted(bool imageUpdated = false);
@@ -66,7 +67,8 @@ private:
     void setupDatabase();
     void setupProgressDialog(int size);
 
-    Rom addRom(QByteArray *romData, QString fileName, QString directory, QString zipFile, QSqlQuery query);
+    Rom addRom(QByteArray *romData, QString fileName, QString directory, QString zipFile, QSqlQuery query,
+               bool ddRom = false);
 
     QStringList fileTypes;
     QStringList scanDirectory(QDir romDir);
