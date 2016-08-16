@@ -29,8 +29,8 @@
  *
  ***/
 
-#include "common.h"
 #include "global.h"
+#include "common.h"
 #include "mainwindow.h"
 
 #include <QApplication>

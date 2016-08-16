@@ -30,8 +30,10 @@
  ***/
 
 #include "downloaddialog.h"
-#include "common.h"
-#include "thegamesdbscraper.h"
+
+#include "../common.h"
+
+#include "../roms/thegamesdbscraper.h"
 
 #include <QDialogButtonBox>
 #include <QGridLayout>

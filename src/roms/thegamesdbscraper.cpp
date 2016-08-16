@@ -30,8 +30,9 @@
  ***/
 
 #include "thegamesdbscraper.h"
-#include "common.h"
-#include "global.h"
+
+#include "../global.h"
+#include "../common.h"
 
 #include <QDir>
 #include <QEventLoop>

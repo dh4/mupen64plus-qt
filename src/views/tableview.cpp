@@ -30,9 +30,11 @@
  ***/
 
 #include "tableview.h"
-#include "treewidgetitem.h"
-#include "../common.h"
+
 #include "../global.h"
+#include "../common.h"
+
+#include "widgets/treewidgetitem.h"
 
 #include <QFile>
 #include <QFileInfo>

@@ -31,8 +31,9 @@
 
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
-#include "common.h"
-#include "global.h"
+
+#include "../global.h"
+#include "../common.h"
 
 #include <QDesktopWidget>
 #include <QFileDialog>

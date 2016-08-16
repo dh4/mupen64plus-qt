@@ -30,6 +30,7 @@
  ***/
 
 #include "common.h"
+
 #include "global.h"
 
 #include <QColor>

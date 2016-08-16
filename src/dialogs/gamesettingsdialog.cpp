@@ -31,7 +31,8 @@
 
 #include "gamesettingsdialog.h"
 #include "ui_gamesettingsdialog.h"
-#include "global.h"
+
+#include "../global.h"
 
 #include <QFileDialog>
 

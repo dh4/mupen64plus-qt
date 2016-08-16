@@ -30,7 +30,8 @@
  ***/
 
 #include "logdialog.h"
-#include "global.h"
+
+#include "../global.h"
 
 #include <QDialogButtonBox>
 #include <QGridLayout>

@@ -30,8 +30,10 @@
  ***/
 
 #include "romcollection.h"
-#include "common.h"
-#include "global.h"
+
+#include "../global.h"
+#include "../common.h"
+
 #include "thegamesdbscraper.h"
 
 #include <QCoreApplication>
