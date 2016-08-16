@@ -302,6 +302,15 @@ void TableView::saveTablePosition()
 {
     positionx = horizontalScrollBar()->value();
     positiony = verticalScrollBar()->value();
+
+    if (selectedItems().count() > 0) {
+        int index = getTableDataIndexFromName("fileName");
+        savedTableRom = indexOfTopLevelItem(selectedItems().at(0));
+        savedTableRomFilename = QVariant(topLevelItem(savedTableRom)->data(index, 0)).toString();
+    } else {
+        savedTableRom = -1;
+        savedTableRomFilename = "";
+    }
 }
 
 
@@ -309,4 +318,12 @@ void TableView::setTablePosition()
 {
     horizontalScrollBar()->setValue(positionx);
     verticalScrollBar()->setValue(positiony);
+
+    //Restore selected ROM if it is in the same position
+    if (savedTableRom >= 0) {
+        int index = getTableDataIndexFromName("fileName");
+        QString checkFilename = QVariant(topLevelItem(savedTableRom)->data(index, 0)).toString();
+        if (savedTableRomFilename == checkFilename)
+            setCurrentItem(topLevelItem(savedTableRom));
+    }
 }

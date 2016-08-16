@@ -183,7 +183,10 @@ int ListView::getCurrentRom()
 QString ListView::getCurrentRomInfo(QString infoName)
 {
     const char *property = infoName.toUtf8().constData();
-    return listLayout->itemAt(currentListRom)->widget()->property(property).toString();
+
+    if (listLayout->count() > currentListRom)
+        return listLayout->itemAt(currentListRom)->widget()->property(property).toString();
+    return "";
 }
 
 
@@ -245,6 +248,9 @@ void ListView::saveListPosition()
 {
     positionx = horizontalScrollBar()->value();
     positiony = verticalScrollBar()->value();
+
+    savedListRom = currentListRom;
+    savedListRomFilename = getCurrentRomInfo("fileName");
 }
 
 
@@ -252,4 +258,11 @@ void ListView::setListPosition()
 {
     horizontalScrollBar()->setValue(positionx);
     verticalScrollBar()->setValue(positiony);
+
+    //Restore selected ROM if it is in the same position
+    if (listLayout->count() > savedListRom) {
+        QWidget *checkWidget = listLayout->itemAt(savedListRom)->widget();
+        if (checkWidget->property("fileName").toString() == savedListRomFilename)
+            highlightListWidget(checkWidget);
+    }
 }

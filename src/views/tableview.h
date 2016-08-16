@@ -57,6 +57,8 @@ signals:
 private:
     int positionx;
     int positiony;
+    int savedTableRom;
+    QString savedTableRomFilename;
     QStringList headerLabels;
     QHeaderView *headerView;
     QWidget *parent;

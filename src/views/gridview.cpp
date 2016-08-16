@@ -179,7 +179,10 @@ int GridView::getCurrentRom()
 QString GridView::getCurrentRomInfo(QString infoName)
 {
     const char *property = infoName.toUtf8().constData();
-    return gridLayout->itemAt(currentGridRom)->widget()->property(property).toString();
+
+    if (gridLayout->count() > currentGridRom)
+        return gridLayout->itemAt(currentGridRom)->widget()->property(property).toString();
+    return "";
 }
 
 
@@ -232,6 +235,9 @@ void GridView::saveGridPosition()
 {
     positionx = horizontalScrollBar()->value();
     positiony = verticalScrollBar()->value();
+
+    savedGridRom = currentGridRom;
+    savedGridRomFilename = getCurrentRomInfo("fileName");
 }
 
 
@@ -260,5 +266,12 @@ void GridView::setGridPosition()
 {
     horizontalScrollBar()->setValue(positionx);
     verticalScrollBar()->setValue(positiony);
+
+    //Restore selected ROM if it is in the same position
+    if (gridLayout->count() > savedGridRom) {
+        QWidget *checkWidget = gridLayout->itemAt(savedGridRom)->widget();
+        if (checkWidget->property("fileName").toString() == savedGridRomFilename)
+            highlightGridWidget(checkWidget);
+    }
 }
 

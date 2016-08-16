@@ -59,6 +59,8 @@ signals:
 private:
     int currentGridRom;
     bool gridCurrent;
+    int savedGridRom;
+    QString savedGridRomFilename;
     int positionx;
     int positiony;
 

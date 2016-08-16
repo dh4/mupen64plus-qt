@@ -58,6 +58,8 @@ signals:
 private:
     int currentListRom;
     bool listCurrent;
+    int savedListRom;
+    QString savedListRomFilename;
     int positionx;
     int positiony;
 
