@@ -56,8 +56,8 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 signals:
-    void downPressed();
     void enterPressed();
+    void tableActive();
 
 private:
     int positionx;

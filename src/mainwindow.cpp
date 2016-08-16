@@ -390,7 +390,7 @@ void MainWindow::createRomView()
     tableView = new TableView(this);
     connect(tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(enableButtons()));
     connect(tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(launchRomFromTable()));
-    connect(tableView, SIGNAL(downPressed()), this, SLOT(enableButtons()));
+    connect(tableView, SIGNAL(tableActive()), this, SLOT(enableButtons()));
     connect(tableView, SIGNAL(enterPressed()), this, SLOT(launchRomFromTable()));
 
 

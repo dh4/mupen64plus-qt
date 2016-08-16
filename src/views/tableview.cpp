@@ -196,7 +196,15 @@ void TableView::keyPressEvent(QKeyEvent *event)
         emit enterPressed();
     else if (event->key() == Qt::Key_Down && selectedItems().count() == 0) {
         setCurrentItem(topLevelItem(0));
-        emit downPressed();
+        emit tableActive();
+    } else if (event->key() == Qt::Key_Down  && selectedItems().count() == 1) {
+        int current = indexOfTopLevelItem(selectedItems().at(0));
+        if (current < topLevelItemCount() - 1)
+            setCurrentItem(topLevelItem(current + 1));
+    } else if (event->key() == Qt::Key_Up  && selectedItems().count() == 1) {
+        int current = indexOfTopLevelItem(selectedItems().at(0));
+        if (current > 0)
+            setCurrentItem(topLevelItem(current - 1));
     } else
         QTreeWidget::keyPressEvent(event);
 }
@@ -335,7 +343,9 @@ void TableView::setTablePosition()
     if (savedTableRom >= 0) {
         int index = getTableDataIndexFromName("fileName");
         QString checkFilename = QVariant(topLevelItem(savedTableRom)->data(index, 0)).toString();
-        if (savedTableRomFilename == checkFilename)
+        if (savedTableRomFilename == checkFilename) {
             setCurrentItem(topLevelItem(savedTableRom));
+            emit tableActive();
+        }
     }
 }
