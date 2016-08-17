@@ -132,26 +132,25 @@ void ListView::addToListView(Rom *currentRom, int count, bool ddEnabled)
 
     foreach (QString current, visible)
     {
-        QString addition = "<style>h2 { margin: 0; }</style>";
+        QString addition = "";
 
         if (i == 0 && SETTINGS.value("List/firstitemheader","true") == "true")
-            addition += "<h2>";
+            addition += "<h2 style='line-height:120%;margin:0;padding:0;'>";
         else
-            addition += "<b>" + current + ":</b> ";
+            addition += "<div style='line-height:120%;margin:0;padding:0;'><b>" + current + ":</b> ";
 
-        addition += getRomInfo(current, currentRom, true) + "<br />";
+        addition += getRomInfo(current, currentRom, true);
 
         if (i == 0 && SETTINGS.value("List/firstitemheader","true") == "true")
             addition += "</h2>";
+        else
+            addition += "</div>";
 
-        if (addition != "<style>h2 { margin: 0; }</style><b>" + current + ":</b> <br />")
+        if (addition.right(12) != ":</b> </div>")
             listText += addition;
 
         i++;
     }
-
-    //Remove last break tag
-    listText.remove(QRegExp("<br />$"));
 
     if (ddEnabled && count == 0)
         listText = "<h2>" + tr("No Cart") + "</h2>";
