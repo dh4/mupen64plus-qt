@@ -64,6 +64,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *event);
+    bool eventFilter(QObject*, QEvent *event);
 
 private:
     void autoloadSettings();

@@ -212,15 +212,6 @@ void TableView::keyPressEvent(QKeyEvent *event)
 }
 
 
-void TableView::mouseMoveEvent(QMouseEvent *event)
-{
-    if (event->pos().y() < 20)
-        emit mouseAtTop(true);
-    else
-        emit mouseAtTop(false);
-}
-
-
 void TableView::resetView(bool imageUpdated)
 {
     QStringList tableVisible = SETTINGS.value("Table/columns", "Filename|Size").toString().split("|");

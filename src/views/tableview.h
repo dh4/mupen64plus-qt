@@ -54,11 +54,9 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
 
 signals:
     void enterPressed();
-    void mouseAtTop(bool mouseAtTop);
     void tableActive();
 
 private:
