@@ -277,7 +277,10 @@ void ListView::saveListPosition()
     positionx = horizontalScrollBar()->value();
     positiony = verticalScrollBar()->value();
 
-    savedListRom = currentListRom;
+    if (listCurrent)
+        savedListRom = currentListRom;
+    else
+        savedListRom = -1;
     savedListRomFilename = getCurrentRomInfo("fileName");
 }
 
@@ -316,7 +319,7 @@ void ListView::setListPosition()
     verticalScrollBar()->setValue(positiony);
 
     //Restore selected ROM if it is in the same position
-    if (listLayout->count() > savedListRom) {
+    if (savedListRom != -1 && listLayout->count() > savedListRom) {
         QWidget *checkWidget = listLayout->itemAt(savedListRom)->widget();
         if (checkWidget->property("fileName").toString() == savedListRomFilename)
             highlightListWidget(checkWidget);

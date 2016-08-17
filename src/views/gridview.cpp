@@ -252,7 +252,10 @@ void GridView::saveGridPosition()
     positionx = horizontalScrollBar()->value();
     positiony = verticalScrollBar()->value();
 
-    savedGridRom = currentGridRom;
+    if (gridCurrent)
+        savedGridRom = currentGridRom;
+    else
+        savedGridRom = -1;
     savedGridRomFilename = getCurrentRomInfo("fileName");
 }
 
@@ -309,7 +312,7 @@ void GridView::setGridPosition()
     verticalScrollBar()->setValue(positiony);
 
     //Restore selected ROM if it is in the same position
-    if (gridLayout->count() > savedGridRom) {
+    if (savedGridRom != -1 && gridLayout->count() > savedGridRom) {
         QWidget *checkWidget = gridLayout->itemAt(savedGridRom)->widget();
         if (checkWidget->property("fileName").toString() == savedGridRomFilename)
             highlightGridWidget(checkWidget);
