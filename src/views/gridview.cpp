@@ -287,7 +287,13 @@ void GridView::selectNextRom(QWidget* current, QString keypress)
 
 void GridView::setGridBackground()
 {
-    setStyleSheet("#gridView { border: none; }");
+    QString theme = SETTINGS.value("Grid/theme", "Normal").toString();
+    if (theme == "Light")
+        setStyleSheet("#gridView { border: none; background: #FFF; } #gridWidget { background: transparent; }");
+    else if (theme == "Dark")
+        setStyleSheet("#gridView { border: none; background: #222; } #gridWidget { background: transparent; }");
+    else
+        setStyleSheet("#gridView { border: none; }");
 
     QString background = SETTINGS.value("Grid/background", "").toString();
     if (background != "") {

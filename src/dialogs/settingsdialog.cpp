@@ -205,11 +205,12 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
 
     //Populate Grid tab
-    int gridSizeIndex = 0, activeIndex = 0, inactiveIndex = 0, labelColorIndex = 0;
+    int gridSizeIndex = 0, activeIndex = 0, inactiveIndex = 0, labelColorIndex = 0, bgThemeIndex = 0;
     QString currentGridSize = SETTINGS.value("Grid/imagesize","Medium").toString();
     QString currentActiveColor = SETTINGS.value("Grid/activecolor","Cyan").toString();
     QString currentInactiveColor = SETTINGS.value("Grid/inactivecolor","Black").toString();
     QString currentLabelColor = SETTINGS.value("Grid/labelcolor","White").toString();
+    QString currentBGTheme = SETTINGS.value("Grid/theme","Normal").toString();
 
     QList<QStringList> colors;
     colors << (QStringList() << tr("Black")      << "Black")
@@ -225,6 +226,11 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
            << (QStringList() << tr("Orange")     << "Orange")
            << (QStringList() << tr("Yellow")     << "Yellow")
            << (QStringList() << tr("Brown")      << "Brown");
+
+    QList<QStringList> bgThemes;
+    bgThemes << (QStringList() << tr("Light")   << "Light")
+             << (QStringList() << tr("Normal")  << "Normal")
+             << (QStringList() << tr("Dark")    << "Dark");
 
     for (int i = 0; i < sizes.length(); i++)
     {
@@ -267,11 +273,22 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     } else
         toggleLabel(false);
 
-    ui->backgroundPath->setText(SETTINGS.value("Grid/background", "").toString());
+    for (int i = 0; i < bgThemes.length(); i++)
+    {
+        ui->bgThemeBox->insertItem(i, bgThemes.at(i).at(0), bgThemes.at(i).at(1));
+        if (currentBGTheme == bgThemes.at(i).at(1))
+            bgThemeIndex = i;
+    }
+    if (bgThemeIndex >= 0) ui->bgThemeBox->setCurrentIndex(bgThemeIndex);
+
+    QString imagePath = SETTINGS.value("Grid/background", "").toString();
+    ui->backgroundPath->setText(imagePath);
+    hideBGTheme(imagePath);
 
     if (SETTINGS.value("Grid/sortdirection", "ascending").toString() == "descending")
         ui->gridDescendingOption->setChecked(true);
 
+    connect(ui->backgroundPath, SIGNAL(textChanged(QString)), this, SLOT(hideBGTheme(QString)));
     connect(ui->backgroundButton, SIGNAL(clicked()), this, SLOT(browseBackground()));
     connect(ui->labelOption, SIGNAL(toggled(bool)), this, SLOT(toggleLabel(bool)));
 
@@ -535,6 +552,7 @@ void SettingsDialog::editSettings()
     SETTINGS.setValue("Grid/columncount", ui->columnCountBox->value());
     SETTINGS.setValue("Grid/inactivecolor", ui->shadowInactiveBox->itemData(ui->shadowInactiveBox->currentIndex()));
     SETTINGS.setValue("Grid/activecolor", ui->shadowActiveBox->itemData(ui->shadowActiveBox->currentIndex()));
+    SETTINGS.setValue("Grid/theme", ui->bgThemeBox->itemData(ui->bgThemeBox->currentIndex()));
     SETTINGS.setValue("Grid/background", ui->backgroundPath->text());
 
     if (ui->labelOption->isChecked())
@@ -591,6 +609,18 @@ void SettingsDialog::editSettings()
     SETTINGS.setValue("language", ui->languageBox->itemData(ui->languageBox->currentIndex()));
 
     close();
+}
+
+
+void SettingsDialog::hideBGTheme(QString imagePath)
+{
+    if (imagePath == "") {
+        ui->bgThemeLabel->setEnabled(true);
+        ui->bgThemeBox->setEnabled(true);
+    } else {
+        ui->bgThemeLabel->setEnabled(false);
+        ui->bgThemeBox->setEnabled(false);
+    }
 }
 
 

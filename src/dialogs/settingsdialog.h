@@ -74,6 +74,7 @@ private slots:
     void browseData();
     void browseConfig();
     void editSettings();
+    void hideBGTheme(QString imagePath);
     void listAddColumn();
     void listRemoveColumn();
     void listSortDown();

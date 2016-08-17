@@ -706,38 +706,38 @@
          <layout class="QGridLayout" name="gridLayout6">
           <item row="2" column="0">
            <layout class="QGridLayout" name="gridOtherLayout" columnstretch="0,1,1,0" columnminimumwidth="150,0,0,0">
-            <item row="0" column="3">
+            <item row="1" column="3">
              <widget class="QPushButton" name="backgroundButton">
               <property name="text">
                <string>Browse...</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="0">
+            <item row="1" column="0">
              <widget class="QLabel" name="backgroundLabel">
               <property name="text">
                <string>Custom Background:</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="0">
+            <item row="2" column="0">
              <widget class="QLabel" name="gridSortLabel">
               <property name="text">
                <string>Sorting:</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1" colspan="2">
+            <item row="1" column="1" colspan="2">
              <widget class="QLineEdit" name="backgroundPath"/>
             </item>
-            <item row="1" column="2" colspan="2">
+            <item row="2" column="2" colspan="2">
              <widget class="QCheckBox" name="gridDescendingOption">
               <property name="text">
                <string>Descending</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
+            <item row="2" column="1">
              <widget class="QComboBox" name="gridSortBox">
               <property name="maximumSize">
                <size>
@@ -746,6 +746,16 @@
                </size>
               </property>
              </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="bgThemeLabel">
+              <property name="text">
+               <string>Background:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="bgThemeBox"/>
             </item>
            </layout>
           </item>
@@ -1274,6 +1284,7 @@
   <tabstop>labelOption</tabstop>
   <tabstop>labelTextBox</tabstop>
   <tabstop>labelColorBox</tabstop>
+  <tabstop>bgThemeBox</tabstop>
   <tabstop>backgroundPath</tabstop>
   <tabstop>backgroundButton</tabstop>
   <tabstop>gridSortBox</tabstop>
