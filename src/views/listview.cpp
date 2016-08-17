@@ -50,10 +50,11 @@ ListView::ListView(QWidget *parent) : QScrollArea(parent)
 {
     this->parent = parent;
 
-    setStyleSheet("QScrollArea { border: none; }");
-    setBackgroundRole(QPalette::Base);
     setWidgetResizable(true);
     setHidden(true);
+
+    setListBackground();
+
 
     listWidget = new QWidget(this);
     setWidget(listWidget);
@@ -81,6 +82,8 @@ void ListView::addToListView(Rom *currentRom, int count, bool ddEnabled)
     ClickableWidget *gameListItem = new ClickableWidget(listWidget);
     gameListItem->setContentsMargins(0, 0, 20, 0);
     gameListItem->setContextMenuPolicy(Qt::CustomContextMenu);
+    if (SETTINGS.value("List/theme","Light").toString() == "Dark")
+        gameListItem->setStyleSheet("color:#EEE;");
 
     //Assign ROM data to widget for use in click events
     gameListItem->setProperty("fileName", currentRom->fileName);
@@ -156,6 +159,9 @@ void ListView::addToListView(Rom *currentRom, int count, bool ddEnabled)
     listTextLabel->setText(listText);
     listTextLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     listTextLabel->setWordWrap(true);
+    QFont font = listTextLabel->font();
+    font.setPointSize(getTextSize());
+    listTextLabel->setFont(font);
     gameListLayout->addWidget(listTextLabel, 0, 3);
 
     gameListLayout->setColumnMinimumWidth(0, 20);
@@ -166,6 +172,12 @@ void ListView::addToListView(Rom *currentRom, int count, bool ddEnabled)
         QFrame *separator = new QFrame();
         separator->setFrameShape(QFrame::HLine);
         separator->setStyleSheet("margin:0;padding:0;");
+        QPalette palette = separator->palette();
+        if (SETTINGS.value("List/theme","Light").toString() == "Dark")
+            palette.setColor(QPalette::Window, Qt::black);
+        else
+            palette.setColor(QPalette::Window, Qt::gray);
+        separator->setPalette(palette);
         listLayout->addWidget(separator);
     }
 
@@ -286,6 +298,15 @@ void ListView::selectNextRom(QWidget* current, QString keypress)
             highlightListWidget(listLayout->itemAt(item + offset)->widget());
         }
     }
+}
+
+
+void ListView::setListBackground()
+{
+    if (SETTINGS.value("List/theme","Light").toString() == "Dark")
+        setStyleSheet("QScrollArea { border:none; background-color: #222 }");
+    else
+        setStyleSheet("QScrollArea { border:none; background-color: #FFF }");
 }
 
 

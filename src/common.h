@@ -78,6 +78,7 @@ bool romSorter(const Rom &firstRom, const Rom &lastRom);
 int getDefaultWidth(QString id, int imageWidth);
 int getGridSize(QString which);
 int getTableDataIndexFromName(QString infoName);
+int getTextSize();
 
 QByteArray byteswap(QByteArray romData);
 QStringList getZippedFiles(QString completeFileName);

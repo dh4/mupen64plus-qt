@@ -303,6 +303,19 @@ int getTableDataIndexFromName(QString infoName)
 }
 
 
+int getTextSize()
+{
+    QString size = SETTINGS.value("List/textsize","Medium").toString();
+
+    if (size == "Extra Small") return 7;
+    if (size == "Small")       return 9;
+    if (size == "Medium")      return 10;
+    if (size == "Large")       return 12;
+    if (size == "Extra Large") return 14;
+    return 10;
+}
+
+
 QString getTranslation(QString text)
 {
     if (text == "GoodName")                     return QObject::tr("GoodName");

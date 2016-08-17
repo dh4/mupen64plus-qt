@@ -277,8 +277,14 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
 
     //Populate List tab
-    int listSizeIndex = 0;
+    int listSizeIndex = 0, listTextIndex = 0, listThemeIndex = 0;
     QString currentListSize = SETTINGS.value("List/imagesize","Medium").toString();
+    QString currentListText = SETTINGS.value("List/textsize","Medium").toString();
+    QString currentListTheme = SETTINGS.value("List/theme","Light").toString();
+
+    QList<QStringList> themes;
+    themes << (QStringList() << tr("Light") << "Light")
+           << (QStringList() << tr("Dark")  << "Dark");
 
     listCoverEnable << ui->listSizeLabel
                     << ui->listSizeBox;
@@ -297,8 +303,20 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
         ui->listSizeBox->insertItem(i, sizes.at(i).at(0), sizes.at(i).at(1));
         if (currentListSize == sizes.at(i).at(1))
             listSizeIndex = i;
+        ui->listTextBox->insertItem(i, sizes.at(i).at(0), sizes.at(i).at(1));
+        if (currentListText == sizes.at(i).at(1))
+            listTextIndex = i;
     }
     if (listSizeIndex >= 0) ui->listSizeBox->setCurrentIndex(listSizeIndex);
+    if (listTextIndex >= 0) ui->listTextBox->setCurrentIndex(listTextIndex);
+
+    for (int i = 0; i < themes.length(); i++)
+    {
+        ui->listThemeBox->insertItem(i, themes.at(i).at(0), themes.at(i).at(1));
+        if (currentListTheme == themes.at(i).at(1))
+            listThemeIndex = i;
+    }
+    if (listThemeIndex >= 0) ui->listThemeBox->setCurrentIndex(listThemeIndex);
 
     if (SETTINGS.value("List/sortdirection", "ascending").toString() == "descending")
         ui->listDescendingOption->setChecked(true);
@@ -553,6 +571,8 @@ void SettingsDialog::editSettings()
         SETTINGS.setValue("List/displaycover", "");
 
     SETTINGS.setValue("List/imagesize", ui->listSizeBox->itemData(ui->listSizeBox->currentIndex()));
+    SETTINGS.setValue("List/textsize", ui->listTextBox->itemData(ui->listTextBox->currentIndex()));
+    SETTINGS.setValue("List/theme", ui->listThemeBox->itemData(ui->listThemeBox->currentIndex()));
     SETTINGS.setValue("List/sort", ui->listSortBox->itemData(ui->listSortBox->currentIndex()));
 
     if (ui->listDescendingOption->isChecked())

@@ -51,6 +51,7 @@ public:
     bool hasSelectedRom();
     void resetView();
     void saveListPosition();
+    void setListBackground();
 
 protected:
     void keyPressEvent(QKeyEvent *event);

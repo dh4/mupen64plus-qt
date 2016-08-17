@@ -715,6 +715,7 @@ void MainWindow::openSettings()
     }
 
     gridView->setGridBackground();
+    listView->setListBackground();
     toggleMenus(true);
 }
 
