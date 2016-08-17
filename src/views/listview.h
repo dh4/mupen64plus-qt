@@ -54,9 +54,11 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
 
 signals:
     void listItemSelected(bool active);
+    void mouseAtTop(bool mouseAtTop);
 
 private:
     int currentListRom;

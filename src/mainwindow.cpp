@@ -99,6 +99,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
                       SETTINGS.value("Geometry/width", 900).toInt(),
                       SETTINGS.value("Geometry/height", 600).toInt()));
 
+    if (SETTINGS.value("View/fullscreen", "").toString() == "true")
+        updateFullScreenMode();
+
     mainLayout = new QVBoxLayout(mainWidget);
     mainLayout->setMenuBar(menuBar);
 
@@ -292,7 +295,27 @@ void MainWindow::createMenu()
 
     //Settings
     settingsMenu = new QMenu(tr("&Settings"), this);
-    layoutMenu = settingsMenu->addMenu(tr("&Layout"));
+    editorAction = settingsMenu->addAction(tr("Edit mupen64plus.cfg..."));
+    settingsMenu->addSeparator();
+    configureGameAction = settingsMenu->addAction(tr("Configure &Game..."));
+#ifndef Q_OS_OSX //OSX does not show the quit action so the separator is unneeded
+    settingsMenu->addSeparator();
+#endif
+    configureAction = settingsMenu->addAction(tr("&Configure..."));
+    configureAction->setIcon(QIcon::fromTheme("preferences-other"));
+
+    configureGameAction->setEnabled(false);
+
+    menuBar->addMenu(settingsMenu);
+
+    connect(editorAction, SIGNAL(triggered()), this, SLOT(openEditor()));
+    connect(configureGameAction, SIGNAL(triggered()), this, SLOT(openGameSettings()));
+    connect(configureAction, SIGNAL(triggered()), this, SLOT(openSettings()));
+
+
+    //View
+    viewMenu = new QMenu(tr("&View"), this);
+    layoutMenu = viewMenu->addMenu(tr("&Layout"));
     layoutGroup = new QActionGroup(this);
 
     QList<QStringList> layouts;
@@ -317,23 +340,17 @@ void MainWindow::createMenu()
             layoutItem->setChecked(true);
     }
 
-    editorAction = settingsMenu->addAction(tr("Edit mupen64plus.cfg..."));
-    settingsMenu->addSeparator();
-    configureGameAction = settingsMenu->addAction(tr("Configure &Game..."));
-#ifndef Q_OS_OSX //OSX does not show the configure action so the separator is unneeded
-    settingsMenu->addSeparator();
-#endif
-    configureAction = settingsMenu->addAction(tr("&Configure..."));
-    configureAction->setIcon(QIcon::fromTheme("preferences-other"));
+    viewMenu->addSeparator();
+    fullScreenAction = viewMenu->addAction(tr("&Full-screen"));
+    fullScreenAction->setCheckable(true);
 
-    configureGameAction->setEnabled(false);
+    if (SETTINGS.value("View/fullscreen", "") == "true")
+        fullScreenAction->setChecked(true);
 
-    menuBar->addMenu(settingsMenu);
+    menuBar->addMenu(viewMenu);
 
-    connect(configureAction, SIGNAL(triggered()), this, SLOT(openSettings()));
-    connect(configureGameAction, SIGNAL(triggered()), this, SLOT(openGameSettings()));
-    connect(editorAction, SIGNAL(triggered()), this, SLOT(openEditor()));
     connect(layoutGroup, SIGNAL(triggered(QAction*)), this, SLOT(updateLayoutSetting()));
+    connect(fullScreenAction, SIGNAL(triggered()), this, SLOT(updateFullScreenMode()));
 
 
     //Help
@@ -781,6 +798,13 @@ void MainWindow::showActiveView()
 }
 
 
+void MainWindow::showMenuBar(bool mouseAtTop)
+{
+    menuBar->setHidden(!mouseAtTop);
+}
+
+
+
 void MainWindow::showRomMenu(const QPoint &pos)
 {
     QMenu *contextMenu = new QMenu(this);
@@ -846,6 +870,42 @@ void MainWindow::toggleMenus(bool active)
     if (SETTINGS.value("Other/downloadinfo", "").toString() == "") {
         downloadAction->setEnabled(false);
         deleteAction->setEnabled(false);
+    }
+}
+
+
+void MainWindow::updateFullScreenMode()
+{
+    if (isFullScreen()) {
+        SETTINGS.setValue("View/fullscreen", "");
+
+        menuBar->setHidden(false);
+        tableView->setMouseTracking(false);
+        gridView->setMouseTracking(false);
+        listView->setMouseTracking(false);
+        tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        gridView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        listView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        showNormal();
+
+        disconnect(tableView, SIGNAL(mouseAtTop(bool)));
+        disconnect(gridView, SIGNAL(mouseAtTop(bool)));
+        disconnect(listView, SIGNAL(mouseAtTop(bool)));
+    } else {
+        SETTINGS.setValue("View/fullscreen", true);
+
+        menuBar->setHidden(true);
+        tableView->setMouseTracking(true);
+        gridView->setMouseTracking(true);
+        listView->setMouseTracking(true);
+        tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        gridView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        showFullScreen();
+
+        connect(tableView, SIGNAL(mouseAtTop(bool)), this, SLOT(showMenuBar(bool)));
+        connect(gridView, SIGNAL(mouseAtTop(bool)), this, SLOT(showMenuBar(bool)));
+        connect(listView, SIGNAL(mouseAtTop(bool)), this, SLOT(showMenuBar(bool)));
     }
 }
 

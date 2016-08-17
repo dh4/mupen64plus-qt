@@ -82,6 +82,7 @@ private:
     QAction *deleteAction;
     QAction *downloadAction;
     QAction *editorAction;
+    QAction *fullScreenAction;
     QAction *logAction;
     QAction *openAction;
     QAction *quitAction;
@@ -104,6 +105,7 @@ private:
     QMenu *helpMenu;
     QMenu *layoutMenu;
     QMenu *settingsMenu;
+    QMenu *viewMenu;
     QMenuBar *menuBar;
     QScrollArea *emptyView;
     QVBoxLayout *disabledLayout;
@@ -137,9 +139,11 @@ private slots:
     void openLog();
     void openSettings();
     void openRom();
+    void showMenuBar(bool mouseAtTop);
     void showRomMenu(const QPoint &);
     void stopEmulator();
     void toggleMenus(bool active);
+    void updateFullScreenMode();
     void updateLayoutSetting();
 
 };

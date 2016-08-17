@@ -247,6 +247,15 @@ void ListView::keyPressEvent(QKeyEvent *event)
 }
 
 
+void ListView::mouseMoveEvent(QMouseEvent *event)
+{
+    if (event->pos().y() < 20)
+        emit mouseAtTop(true);
+    else
+        emit mouseAtTop(false);
+}
+
+
 void ListView::resetView()
 {
     QLayoutItem *listItem;

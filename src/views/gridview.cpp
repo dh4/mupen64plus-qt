@@ -234,6 +234,14 @@ void GridView::keyPressEvent(QKeyEvent *event)
 }
 
 
+void GridView::mouseMoveEvent(QMouseEvent *event)
+{
+    if (event->pos().y() < 20)
+        emit mouseAtTop(true);
+    else
+        emit mouseAtTop(false);
+}
+
 
 void GridView::resetView()
 {
