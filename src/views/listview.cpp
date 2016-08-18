@@ -253,9 +253,10 @@ void ListView::highlightListWidgetSetMargin()
 
 void ListView::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_Down && listLayout->count() > 0)
+    if (event->key() == Qt::Key_Down && listLayout->count() > 0) {
         highlightListWidget(listLayout->itemAt(0)->widget());
-    else
+        ensureWidgetVisible(listLayout->itemAt(0)->widget());
+    } else
         QScrollArea::keyPressEvent(event);
 }
 

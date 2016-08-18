@@ -224,9 +224,10 @@ void GridView::highlightGridWidget(QWidget *current)
 
 void GridView::keyPressEvent(QKeyEvent *event)
 {
-    if ((event->key() == Qt::Key_Down || event->key() == Qt::Key_Right) && gridLayout->count() > 0)
+    if ((event->key() == Qt::Key_Down || event->key() == Qt::Key_Right) && gridLayout->count() > 0) {
         highlightGridWidget(gridLayout->itemAt(0)->widget());
-    else
+        ensureWidgetVisible(gridLayout->itemAt(0)->widget());
+    } else
         QScrollArea::keyPressEvent(event);
 }
 
