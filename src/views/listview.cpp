@@ -50,6 +50,7 @@ ListView::ListView(QWidget *parent) : QScrollArea(parent)
 {
     this->parent = parent;
 
+    setObjectName("listView");
     setWidgetResizable(true);
     setHidden(true);
 
@@ -57,6 +58,7 @@ ListView::ListView(QWidget *parent) : QScrollArea(parent)
 
 
     listWidget = new QWidget(this);
+    listWidget->setObjectName("listWidget");
     setWidget(listWidget);
 
     listLayout = new QVBoxLayout(listWidget);
@@ -306,9 +308,9 @@ void ListView::selectNextRom(QWidget* current, QString keypress)
 void ListView::setListBackground()
 {
     if (SETTINGS.value("List/theme","Light").toString() == "Dark")
-        setStyleSheet("QScrollArea { border:none; background-color: #222 }");
+        setStyleSheet("#listView { border: none; background: #222; } #listWidget { background: transparent; }");
     else
-        setStyleSheet("QScrollArea { border:none; background-color: #FFF }");
+        setStyleSheet("#listView { border: none; background: #FFF; } #listWidget { background: transparent; }");
 }
 
 

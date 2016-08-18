@@ -55,9 +55,6 @@ GridView::GridView(QWidget *parent) : QScrollArea(parent)
     setAlignment(Qt::AlignHCenter);
     setHidden(true);
 
-    verticalScrollBar()->setObjectName("vScrollBar");
-    horizontalScrollBar()->setObjectName("hScrollBar");
-
     setGridBackground();
 
 
