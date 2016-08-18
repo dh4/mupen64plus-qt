@@ -342,7 +342,12 @@ void MainWindow::createMenu()
     }
 
     viewMenu->addSeparator();
-    fullScreenAction = viewMenu->addAction(tr("&Full-screen"));
+
+    //OSX El Capitan adds it's own full-screen option
+    if (QSysInfo::macVersion() < QSysInfo::MV_ELCAPITAN || QSysInfo::macVersion() == QSysInfo::MV_None)
+        fullScreenAction = viewMenu->addAction(tr("&Full-screen"));
+    else
+        fullScreenAction = new QAction(this);
     fullScreenAction->setCheckable(true);
 
     if (SETTINGS.value("View/fullscreen", "") == "true")
@@ -551,6 +556,25 @@ bool MainWindow::eventFilter(QObject*, QEvent *event)
         //Exit fullscreen mode if Esc key is pressed
         if (keyEvent->key() == Qt::Key_Escape && isFullScreen())
             updateFullScreenMode();
+    }
+
+    //OSX El Capitan adds it's own full-screen option, so handle the event change here
+    if (QSysInfo::macVersion() >= QSysInfo::MV_ELCAPITAN && QSysInfo::macVersion() != QSysInfo::MV_None) {
+        if (event->type() == QEvent::WindowStateChange) {
+            QWindowStateChangeEvent *windowEvent = static_cast<QWindowStateChangeEvent*>(event);
+
+            if (windowEvent->oldState() == Qt::WindowNoState) {
+                SETTINGS.setValue("View/fullscreen", true);
+                tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+                gridView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+                listView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+            } else {
+                SETTINGS.setValue("View/fullscreen", "");
+                tableView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+                gridView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+                listView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+            }
+        }
     }
 
     return false;
