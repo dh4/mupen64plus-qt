@@ -257,11 +257,6 @@ void GridView::resizeEvent(QResizeEvent *event)
     int check = event->size().width() / (getGridSize("width") + 10);
     bool autoAdjustColumns = SETTINGS.value("Grid/autocolumns","true").toString() == "true";
 
-    if (autoAdjustColumns)
-        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    else
-        setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-
     if (autoAdjustColumns && check != autoColumnCount && check != 0) {
         autoColumnCount = check;
         updateGridColumns(event->size().width());
@@ -350,6 +345,11 @@ void GridView::setGridPosition()
         if (checkWidget->property("fileName").toString() == savedGridRomFilename)
             highlightGridWidget(checkWidget);
     }
+
+    if (SETTINGS.value("Grid/autocolumns","true").toString() == "true")
+        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    else
+        setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 }
 
 
