@@ -160,7 +160,14 @@ void GridView::addToGridView(Rom *currentRom, int count, bool ddEnabled)
 
     gameGridItem->setMinimumHeight(gameGridItem->sizeHint().height());
 
-    int columnCount = SETTINGS.value("Grid/columncount", "4").toInt();
+    int columnCount;
+    if (SETTINGS.value("Grid/autocolumns","true").toString() == "true")
+        columnCount = viewport()->width() / (getGridSize("width") + 10);
+    else
+        columnCount = SETTINGS.value("Grid/columncount", "4").toInt();
+
+    if (columnCount == 0) columnCount = 1;
+
     gridLayout->addWidget(gameGridItem, count / columnCount + 1, count % columnCount + 1);
     gridWidget->adjustSize();
 
