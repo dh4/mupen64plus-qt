@@ -89,6 +89,7 @@ private slots:
     void tableSortDown();
     void tableSortUp();
     void toggleDownload(bool active);
+    void toggleGridColumn(bool active);
     void toggleLabel(bool active);
     void toggleListCover(bool active);
     void updateLanguageInfo();

@@ -243,6 +243,12 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     int gridColumnCount = SETTINGS.value("Grid/columncount","4").toInt();
     ui->columnCountBox->setValue(gridColumnCount);
 
+    if (SETTINGS.value("Grid/autocolumns", "true").toString() == "true") {
+        toggleGridColumn(true);
+        ui->autoColumnOption->setChecked(true);
+    } else
+        toggleGridColumn(false);
+
     for (int i = 0; i < colors.length(); i++)
     {
         ui->shadowActiveBox->insertItem(i, colors.at(i).at(0), colors.at(i).at(1));
@@ -288,6 +294,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     if (SETTINGS.value("Grid/sortdirection", "ascending").toString() == "descending")
         ui->gridDescendingOption->setChecked(true);
 
+    connect(ui->autoColumnOption, SIGNAL(toggled(bool)), this, SLOT(toggleGridColumn(bool)));
     connect(ui->backgroundPath, SIGNAL(textChanged(QString)), this, SLOT(hideBGTheme(QString)));
     connect(ui->backgroundButton, SIGNAL(clicked()), this, SLOT(browseBackground()));
     connect(ui->labelOption, SIGNAL(toggled(bool)), this, SLOT(toggleLabel(bool)));
@@ -550,6 +557,12 @@ void SettingsDialog::editSettings()
     //Grid tab
     SETTINGS.setValue("Grid/imagesize", ui->gridSizeBox->itemData(ui->gridSizeBox->currentIndex()));
     SETTINGS.setValue("Grid/columncount", ui->columnCountBox->value());
+
+    if (ui->autoColumnOption->isChecked())
+        SETTINGS.setValue("Grid/autocolumns", true);
+    else
+        SETTINGS.setValue("Grid/autocolumns", "");
+
     SETTINGS.setValue("Grid/inactivecolor", ui->shadowInactiveBox->itemData(ui->shadowInactiveBox->currentIndex()));
     SETTINGS.setValue("Grid/activecolor", ui->shadowActiveBox->itemData(ui->shadowActiveBox->currentIndex()));
     SETTINGS.setValue("Grid/theme", ui->bgThemeBox->itemData(ui->bgThemeBox->currentIndex()));
@@ -893,6 +906,15 @@ void SettingsDialog::toggleDownload(bool active)
 
     if (active)
         toggleListCover(ui->listCoverOption->isChecked());
+}
+
+
+void SettingsDialog::toggleGridColumn(bool active)
+{
+    if (active)
+        ui->columnCountBox->setEnabled(false);
+    else
+        ui->columnCountBox->setEnabled(true);
 }
 
 

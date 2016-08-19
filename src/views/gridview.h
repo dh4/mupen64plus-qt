@@ -55,11 +55,15 @@ public:
 
 protected:
     void keyPressEvent(QKeyEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 signals:
     void gridItemSelected(bool active);
 
 private:
+    void updateGridColumns(int width);
+
+    int autoColumnCount;
     int currentGridRom;
     bool gridCurrent;
     int savedGridRom;

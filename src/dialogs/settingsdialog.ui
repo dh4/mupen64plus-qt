@@ -782,7 +782,7 @@
            </spacer>
           </item>
           <item row="0" column="0">
-           <layout class="QGridLayout" name="gridImageLayout" rowstretch="0,0,0,0" columnstretch="0,0" columnminimumwidth="150,0">
+           <layout class="QGridLayout" name="gridImageLayout" rowstretch="0,0,0,0" columnstretch="0,0,0" columnminimumwidth="150,0,0">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -869,6 +869,13 @@
                 <width>100</width>
                 <height>16777215</height>
                </size>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QCheckBox" name="autoColumnOption">
+              <property name="text">
+               <string>Adjust Automatically</string>
               </property>
              </widget>
             </item>
@@ -1279,6 +1286,7 @@
   <tabstop>tableStretchOption</tabstop>
   <tabstop>gridSizeBox</tabstop>
   <tabstop>columnCountBox</tabstop>
+  <tabstop>autoColumnOption</tabstop>
   <tabstop>shadowInactiveBox</tabstop>
   <tabstop>shadowActiveBox</tabstop>
   <tabstop>labelOption</tabstop>

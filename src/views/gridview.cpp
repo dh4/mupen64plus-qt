@@ -245,6 +245,24 @@ void GridView::resetView()
 }
 
 
+void GridView::resizeEvent(QResizeEvent *event)
+{
+    int check = event->size().width() / (getGridSize("width") + 10);
+    bool autoAdjustColumns = SETTINGS.value("Grid/autocolumns","true").toString() == "true";
+
+    if (autoAdjustColumns)
+        setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    else
+        setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+    if (autoAdjustColumns && check != autoColumnCount && check != 0) {
+        autoColumnCount = check;
+        updateGridColumns(event->size().width());
+    } else
+        QScrollArea::resizeEvent(event);
+}
+
+
 void GridView::saveGridPosition()
 {
     positionx = horizontalScrollBar()->value();
@@ -260,7 +278,11 @@ void GridView::saveGridPosition()
 
 void GridView::selectNextRom(QWidget* current, QString keypress)
 {
-    int columnCount = SETTINGS.value("Grid/columncount", "4").toInt();
+    int columnCount;
+    if (SETTINGS.value("Grid/autocolumns","true").toString() == "true")
+        columnCount = autoColumnCount;
+    else
+        columnCount = SETTINGS.value("Grid/columncount", "4").toInt();
 
     int offset = 0;
     if (keypress == "UP")
@@ -321,5 +343,25 @@ void GridView::setGridPosition()
         if (checkWidget->property("fileName").toString() == savedGridRomFilename)
             highlightGridWidget(checkWidget);
     }
+}
+
+
+void GridView::updateGridColumns(int width)
+{
+    int columnCount = width / (getGridSize("width") + 10);
+
+    int gridCount = gridLayout->count();
+    QList<QWidget*> gridItems;
+    for (int count = 0; count < gridCount; count++)
+        gridItems << gridLayout->takeAt(0)->widget();
+
+    int count = 0;
+    foreach(QWidget *gridItem, gridItems)
+    {
+        gridLayout->addWidget(gridItem, count / columnCount + 1, count % columnCount + 1);
+        count++;
+    }
+
+    gridWidget->adjustSize();
 }
 
