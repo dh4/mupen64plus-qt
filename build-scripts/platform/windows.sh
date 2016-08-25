@@ -7,7 +7,7 @@
 case "$1" in
 
     'setup_qt')
-        cd $WORKING_DIR/../
+        cd "$WORKING_DIR/../"
 
         if [[ $BUILD_MXE_QT ]]; then
             # Build Qt with mxe
@@ -27,7 +27,7 @@ case "$1" in
             tar -xvzf travis-mxe-qt5.tar.gz > /dev/null
         fi
 
-        cd $WORKING_DIR/mupen64plus-qt
+        cd "$WORKING_DIR/mupen64plus-qt"
     ;;
 
     'get_quazip')
@@ -37,7 +37,7 @@ case "$1" in
     ;;
 
     'build')
-        export PATH=$PATH:$WORKING_DIR/../mxe/usr/bin
+        export PATH="$PATH:$WORKING_DIR/../mxe/usr/bin"
 
         ./build-scripts/revision.sh
         i686-w64-mingw32.static-qmake-qt5
@@ -45,10 +45,10 @@ case "$1" in
     ;;
 
     'package')
-        mkdir build
+        mkdir -p "build/$TRAVIS_BRANCH"
 
         mv release/mupen64plus-qt.exe resources/README.txt .
-        zip build/mupen64plus-qt_win_$VERSION.zip mupen64plus-qt.exe README.txt
+        zip "build/$TRAVIS_BRANCH/mupen64plus-qt_win_$VERSION.zip" mupen64plus-qt.exe README.txt
     ;;
 
 esac

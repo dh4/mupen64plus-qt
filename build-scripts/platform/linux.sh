@@ -24,10 +24,10 @@ case "$1" in
     ;;
 
     'package')
-        mkdir build
+        mkdir -p "build/$TRAVIS_BRANCH"
 
         mv resources/README.txt .
-        tar -cvzpf build/mupen64plus-qt_linux_$VERSION.tar.gz mupen64plus-qt README.txt
+        tar -cvzpf "build/$TRAVIS_BRANCH/mupen64plus-qt_linux_$VERSION.tar.gz" mupen64plus-qt README.txt
     ;;
 
 esac

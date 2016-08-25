@@ -7,8 +7,8 @@
 case "$1" in
 
     'setup_qt')
-        mkdir $WORKING_DIR/../osx
-        cd $WORKING_DIR/../osx
+        mkdir "$WORKING_DIR/../osx"
+        cd "$WORKING_DIR/../osx"
 
         if [[ $BUILD_OSX_QT ]]; then
             # Build Qt
@@ -22,7 +22,7 @@ case "$1" in
             tar -xvzf macosx-qt5.tar.gz >& /dev/null
         fi
 
-        cd $WORKING_DIR/mupen64plus-qt
+        cd "$WORKING_DIR/mupen64plus-qt"
     ;;
 
     'get_quazip')
@@ -38,19 +38,19 @@ case "$1" in
     ;;
 
     'package')
-        mkdir build
+        mkdir -p "build/$TRAVIS_BRANCH"
 
-        hdiutil create -megabytes 20 -fs HFS+ -volname Mupen64Plus-Qt mupen64plus-qt_osx_$VERSION
-        hdiutil attach mupen64plus-qt_osx_$VERSION.dmg
+        hdiutil create -megabytes 20 -fs HFS+ -volname Mupen64Plus-Qt "mupen64plus-qt_osx_$VERSION"
+        hdiutil attach "mupen64plus-qt_osx_$VERSION.dmg"
 
         cp -r Mupen64Plus-Qt.app /Volumes/Mupen64Plus-Qt/Mupen64Plus-Qt.app
         cp resources/README.txt /Volumes/Mupen64Plus-Qt/README.txt
 
         hdiutil detach /Volumes/Mupen64Plus-Qt
-        hdiutil convert -format UDZO -o mupen64plus-qt_osx_$VERSION.dmg \
-                        -ov mupen64plus-qt_osx_$VERSION.dmg
+        hdiutil convert -format UDZO -o "mupen64plus-qt_osx_$VERSION.dmg" \
+                        -ov "mupen64plus-qt_osx_$VERSION.dmg"
 
-        mv mupen64plus-qt_osx_$VERSION.dmg build/
+        mv "mupen64plus-qt_osx_$VERSION.dmg" "build/$TRAVIS_BRANCH"
     ;;
 
 esac

@@ -48,9 +48,9 @@ _Redhat/Fedora:_ See the section below on [creating a .rpm package](#creating-a-
 ### Development Builds
 
 Automatic builds of the latest git commit can be downloaded here:  
-Linux: [mupen64plus-qt_linux_git-latest.tar.gz](https://s3.amazonaws.com/dh4/mupen64plus-qt/latest/mupen64plus-qt_linux_git-latest.tar.gz)  
-Windows: [mupen64plus-qt_win_git-latest.zip](https://s3.amazonaws.com/dh4/mupen64plus-qt/latest/mupen64plus-qt_win_git-latest.zip)  
-OSX: [mupen64plus-qt_osx_git-latest.dmg](https://s3.amazonaws.com/dh4/mupen64plus-qt/latest/mupen64plus-qt_osx_git-latest.dmg)
+Linux: [mupen64plus-qt_linux_git-latest.tar.gz](https://s3.amazonaws.com/dh4/mupen64plus-qt/master/mupen64plus-qt_linux_git-latest.tar.gz)  
+Windows: [mupen64plus-qt_win_git-latest.zip](https://s3.amazonaws.com/dh4/mupen64plus-qt/master/mupen64plus-qt_win_git-latest.zip)  
+OSX: [mupen64plus-qt_osx_git-latest.dmg](https://s3.amazonaws.com/dh4/mupen64plus-qt/master/mupen64plus-qt_osx_git-latest.dmg)
 
 Be aware that these may contain bugs not present in the stable releases.
 
