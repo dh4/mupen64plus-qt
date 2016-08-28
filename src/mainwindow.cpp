@@ -548,9 +548,17 @@ bool MainWindow::eventFilter(QObject*, QEvent *event)
     //Show menu bar if mouse is at top of screen in full-screen mode
     if (event->type() == QEvent::HoverMove && isFullScreen()) {
         QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-        if (mouseEvent->pos().y() < 5)
+
+        //x and y axis are reversed in Qt4
+#if QT_VERSION >= 0x050000
+        int mousePos = mouseEvent->pos().y();
+#else
+        int mousePos = mouseEvent->pos().x();
+#endif
+
+        if (mousePos < 5)
             showMenuBar(true);
-        if (mouseEvent->pos().y() > 30)
+        if (mousePos > 30)
             showMenuBar(false);
     }
 
