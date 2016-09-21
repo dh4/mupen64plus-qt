@@ -40,7 +40,7 @@ Stable releases for Linux, Windows and OSX can be found on the [releases](https:
 Note the Linux release is just a tar.gz archive containing an executable. It's a 64-bit executable that is linked to Qt4, so you'll need Qt4 installed to run it. If you have issues with it, see the section below on building.
 
 ##### Linux Distributions
-_Debian/Ubuntu:_ See the section below on [creating a .deb package](#creating-a-deb-package-debianubuntu).  
+_Debian/Ubuntu:_ Mupen64Plus-Qt is in the repositories: `apt-get install mupen64plus-qt`. Alternately, see the section below on [creating a .deb package](#creating-a-deb-package-debianubuntu).  
 _Arch Linux:_ [https://aur.archlinux.org/packages/mupen64plus-qt/](https://aur.archlinux.org/packages/mupen64plus-qt/)  
 _Redhat/Fedora:_ See the section below on [creating a .rpm package](#creating-a-rpm-package-redhatfedora).
 
@@ -62,8 +62,10 @@ First, obtain the source code for Mupen64Plus-Qt. You can either clone the repos
 You'll need to make sure you have qmake, g++, the Qt development libraries and the QuaZIP development files installed. On Debian/Ubuntu, this can be accomplished by:
 
 ```
-# apt-get install qt5-qmake g++ qtbase5-dev libquazip-qt5-dev libqt5sql5-sqlite
+# apt-get install qt5-qmake g++ qtbase5-dev libquazip5-dev libqt5sql5-sqlite
 ```
+
+You may need to replace `libquazip5-dev` with `libquazip-qt5-dev` depending on your OS version.
 
 Once the needed packages are installed, create the Makefile with qmake and then build with make. Run the following commands from the directory that contains mupen64plus-qt.pro:
 
@@ -105,10 +107,12 @@ You will see warnings after the qmake step if the QuaZIP sources are in the wron
 You can build and install a debian package using the files found in dist/debian:
 
 ```
-$ sudo apt-get install build-essential devscripts debhelper qt5-qmake qtbase5-dev libquazip-qt5-dev libqt5sql5-sqlite
+$ sudo apt-get install build-essential devscripts debhelper qt5-qmake qtbase5-dev libquazip5-dev libqt5sql5-sqlite
 $ ./dist/debian/deb-build.sh
 $ sudo dpkg -i mupen64plus-qt_<VERSION>-1.<ARCH>.deb
 ```
+
+You may need to replace `libquazip5-dev` with `libquazip-qt5-dev` depending on your OS version.
 
 #### Creating a .rpm package (Redhat/Fedora)
 
