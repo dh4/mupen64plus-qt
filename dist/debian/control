@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Dan Hasting <dan@hasting.info>
 Homepage: https://github.com/dh4/mupen64plus-qt
 Standards-Version: 3.9.6
-Build-Depends: debhelper (>=9), qt5-qmake, qtbase5-dev, libquazip-qt5-dev, libqt5sql5-sqlite
+Build-Depends: debhelper (>=9), qt5-qmake, qtbase5-dev, libquazip5-dev, libqt5sql5-sqlite
 
 Package: mupen64plus-qt
 Architecture: any-i386 any-amd64
