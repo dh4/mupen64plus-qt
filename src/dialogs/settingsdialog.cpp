@@ -77,7 +77,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
 
     //Populate Graphics tab
-    if (SETTINGS.value("Graphics/osd", "").toString() == "true")
+    if (SETTINGS.value("Graphics/osd", "true").toString() == "true")
         ui->osdOption->setChecked(true);
     if (SETTINGS.value("Graphics/fullscreen", "").toString() == "true")
         ui->fullscreenOption->setChecked(true);
