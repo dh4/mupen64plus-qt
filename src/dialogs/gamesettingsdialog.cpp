@@ -112,22 +112,22 @@ void GameSettingsDialog::browseConfig()
 
 void GameSettingsDialog::editGameSettings()
 {
-    if (ui->videoBox->currentText() != "default")
+    if (ui->videoBox->currentIndex() > 0)
         SETTINGS.setValue(fileName+"/video", ui->videoBox->currentText());
     else
         SETTINGS.setValue(fileName+"/video", "");
 
-    if (ui->audioBox->currentText() != "default")
+    if (ui->audioBox->currentIndex() > 0)
         SETTINGS.setValue(fileName+"/audio", ui->audioBox->currentText());
     else
         SETTINGS.setValue(fileName+"/audio", "");
 
-    if (ui->inputBox->currentText() != "default")
+    if (ui->inputBox->currentIndex() > 0)
         SETTINGS.setValue(fileName+"/input", ui->inputBox->currentText());
     else
         SETTINGS.setValue(fileName+"/input", "");
 
-    if (ui->rspBox->currentText() != "default")
+    if (ui->rspBox->currentIndex() > 0)
         SETTINGS.setValue(fileName+"/rsp", ui->rspBox->currentText());
     else
         SETTINGS.setValue(fileName+"/rsp", "");
