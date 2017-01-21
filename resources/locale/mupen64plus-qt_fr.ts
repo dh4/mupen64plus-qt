@@ -111,7 +111,7 @@
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="33"/>
         <source>These settings will override any global settings. If there&apos;s a setting you want to modify for this game, but it doesn&apos;t appear here, add the parameter for it to &quot;Other Parameters.&quot;</source>
-        <translation>Ces paramètres prévaleront sur tous les paramètres généraux. Si vous souhaitez modifier un paramètre pour ce jeu, mais qu&apos;il n&apos;apparaît pas ici, ajoutez-le dans &quot;Autres paramètres.&quot;</translation>
+        <translation>Ces paramètres prévaudront sur les paramètres généraux. Si vous souhaitez modifier un paramètre pour ce jeu, mais qu&apos;il n&apos;apparaît pas ici, ajoutez-le dans &quot;Autres paramètres.&quot;</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="43"/>
@@ -177,7 +177,7 @@
     <message>
         <location filename="../../src/views/gridview.cpp" line="144"/>
         <source>No Cart</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de cartouche</translation>
     </message>
 </context>
 <context>
@@ -185,7 +185,7 @@
     <message>
         <location filename="../../src/views/listview.cpp" line="158"/>
         <source>No Cart</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de cartouche</translation>
     </message>
 </context>
 <context>
@@ -316,7 +316,7 @@
         <location filename="../../src/mainwindow.cpp" line="349"/>
         <location filename="../../src/mainwindow.cpp" line="353"/>
         <source>&amp;Full-screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Pl&amp;ein-Écran</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="367"/>
@@ -346,7 +346,7 @@
     <message>
         <location filename="../../src/mainwindow.cpp" line="692"/>
         <source>See here for the default config location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Voir ici pour la configuration par défaut:</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="712"/>
@@ -489,7 +489,7 @@
     <message>
         <location filename="../../src/common.cpp" line="341"/>
         <source>Game Cover</source>
-        <translation type="unfinished"></translation>
+        <translation>Jaquette</translation>
     </message>
     <message>
         <location filename="../../src/common.cpp" line="342"/>
@@ -667,7 +667,7 @@
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="232"/>
         <source>Pure Interpreter</source>
-        <translation type="unfinished"></translation>
+        <translation>Interpréteur pur</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="239"/>
@@ -682,7 +682,7 @@
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="286"/>
         <source>On Screen Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sur-affichage:</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="293"/>
@@ -807,7 +807,7 @@
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="753"/>
         <source>Background:</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrière-plan:</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="768"/>
@@ -838,7 +838,7 @@
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="878"/>
         <source>Adjust Automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustage automatique</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="904"/>
@@ -868,12 +868,12 @@
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="1085"/>
         <source>Text Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille du texte:</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="1092"/>
         <source>Theme:</source>
-        <translation type="unfinished"></translation>
+        <translation>Thème:</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="1168"/>
@@ -999,18 +999,18 @@
         <location filename="../../src/dialogs/settingsdialog.cpp" line="231"/>
         <location filename="../../src/dialogs/settingsdialog.cpp" line="310"/>
         <source>Light</source>
-        <translation type="unfinished"></translation>
+        <translation>Lumière</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.cpp" line="232"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Normale</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.cpp" line="233"/>
         <location filename="../../src/dialogs/settingsdialog.cpp" line="311"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Sombre</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.cpp" line="418"/>
@@ -1049,7 +1049,7 @@
         <location filename="../../src/views/tableview.cpp" line="76"/>
         <location filename="../../src/views/tableview.cpp" line="79"/>
         <source>No Cart</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de cartouche</translation>
     </message>
 </context>
 <context>
