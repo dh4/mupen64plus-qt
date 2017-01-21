@@ -194,6 +194,19 @@ You can find the MD5 of a game by using the table or list view and adding "MD5" 
 Edit data.xml with a text editor and replace any information you want to change. You can also replace boxart-front.{jpg,png} with an image of your choosing.
 
 
+#### Extending the network timeout to TheGamesDB
+
+If you are getting timeout messages due to an issue with slow responses from TheGamesDB API, you can extend the timeout by editing the [configuration file](#configuration-file) and adding `networktimeout` under [Other]:
+
+```
+[Other]
+...
+networktimeout=30
+```
+
+This example shows 30 seconds. The default is 10 seconds.
+
+
 ## Editor For mupen64plus.cfg
 
 <img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/config-editor.jpg" alt="Table View" height="200" />
