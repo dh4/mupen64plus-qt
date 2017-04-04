@@ -22,7 +22,8 @@ description of its features and usage.
 %autosetup -n %{_name}-%{version}
 
 %build
-sed -i 's#include <quazip/#include <quazip5/#g' src/common.h
+sed -i 's#include <quazip/#include <quazip5/#g' src/common.cpp
+sed -i 's#include <quazip/#include <quazip5/#g' src/emulation/emulatorhandler.cpp
 
 qmake-qt5
 make %{?_smp_mflags}
