@@ -4,7 +4,7 @@ A basic cross-platform launcher. This was adapted from CEN64-Qt to work with [Mu
 
 A discussion thread can be found [here](http://www.emutalk.net/threads/54976-Mupen64Plus-Qt).
 
-![Mupen64Plus-Qt](https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/github.jpg)
+![Mupen64Plus-Qt](https://raw.githubusercontent.com/dh4/mupen64plus-qt/master/resources/demos/main.jpg)
 
 
 ## Table of Contents
@@ -156,9 +156,9 @@ You can specify ROM directories under Settings->Configure->Paths. Mupen64Plus-Qt
 
 Mupen64Plus-Qt contains three options for displaying your ROMs: a table view, grid view and list view. The view can be changed under Settings->Layout. These can be configured under Settings->Configure.
 
-<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/table-view.jpg" alt="Table View" height="150" />
-<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/grid-view.jpg" alt="Grid View" height="150" />
-<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/list-view.jpg" alt="List View" height="150" />
+<img src="https://raw.githubusercontent.com/dh4/mupen64plus-qt/master/resources/demos/table-view.jpg" alt="Table View" height="150" />
+<img src="https://raw.githubusercontent.com/dh4/mupen64plus-qt/master/resources/demos/grid-view.jpg" alt="Grid View" height="150" />
+<img src="https://raw.githubusercontent.com/dh4/mupen64plus-qt/master/resources/demos/list-view.jpg" alt="List View" height="150" />
 
 In each of the views, you can simply double click a game to launch it, or single click to select it and use Emulation->Start.
 
@@ -209,7 +209,7 @@ This example shows 30 seconds. The default is 10 seconds.
 
 ## Editor For mupen64plus.cfg
 
-<img src="https://dl.dropboxusercontent.com/u/232085155/mupen64plus-qt/config-editor.jpg" alt="Table View" height="200" />
+<img src="https://raw.githubusercontent.com/dh4/mupen64plus-qt/master/resources/demos/config-editor.jpg" alt="Table View" height="200" />
 
 Mupen64Plus-Qt contains an editor with syntax highlighting for mupen64plus.cfg. To use it, make sure you have your config directory set under Settings->Configure->Paths. Mupen64Plus-Qt should auto-detect this setting for you. If it doesn't, the default location is:
 
