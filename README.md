@@ -39,11 +39,11 @@ Stable releases for Linux, Windows and OSX can be found on the [releases](https:
 
 Note the Linux release is just a tar.gz archive containing an executable. It's a 64-bit executable that is linked to Qt4, so you'll need Qt4 installed to run it. If you have issues with it, see the section below on building.
 
-##### Linux Distributions
+##### Linux and Unix Distributions
 _Debian/Ubuntu:_ Mupen64Plus-Qt is in the repositories: `apt-get install mupen64plus-qt`. Alternately, see the section below on [creating a .deb package](#creating-a-deb-package-debianubuntu).  
 _Arch Linux:_ [https://aur.archlinux.org/packages/mupen64plus-qt/](https://aur.archlinux.org/packages/mupen64plus-qt/)  
-_Redhat/Fedora:_ See the section below on [creating a .rpm package](#creating-a-rpm-package-redhatfedora).
-
+_Redhat/Fedora:_ See the section below on [creating a .rpm package](#creating-a-rpm-package-redhatfedora).  
+_FreeBSD:_ Mupen64Plus-Qt is in the ports tree: `cd /usr/ports/emulators/mupen64plus-qt && make install clean`.
 
 ### Development Builds
 
@@ -156,9 +156,11 @@ You can specify ROM directories under Settings->Configure->Paths. Mupen64Plus-Qt
 
 Mupen64Plus-Qt contains three options for displaying your ROMs: a table view, grid view and list view. The view can be changed under Settings->Layout. These can be configured under Settings->Configure.
 
+<p align="center">
 <img src="https://raw.githubusercontent.com/dh4/mupen64plus-qt/master/resources/demos/table-view.jpg" alt="Table View" height="150" />
 <img src="https://raw.githubusercontent.com/dh4/mupen64plus-qt/master/resources/demos/grid-view.jpg" alt="Grid View" height="150" />
 <img src="https://raw.githubusercontent.com/dh4/mupen64plus-qt/master/resources/demos/list-view.jpg" alt="List View" height="150" />
+</p>
 
 In each of the views, you can simply double click a game to launch it, or single click to select it and use Emulation->Start.
 
