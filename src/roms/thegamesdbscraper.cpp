@@ -239,6 +239,10 @@ void TheGamesDBScraper::downloadGameInfo(QString identifier, QString searchName,
             if (boxartURL != "") {
                 QUrl url("http://thegamesdb.net/banners/" + boxartURL);
 
+                //Delete current box art
+                QFile::remove(coverFile + "jpg");
+                QFile::remove(coverFile + "png");
+
                 //Check to save as JPG or PNG
                 boxartExt = QFileInfo(boxartURL).completeSuffix().toLower();
                 QFile cover(coverFile + boxartExt);
