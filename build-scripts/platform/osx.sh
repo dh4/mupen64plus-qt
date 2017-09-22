@@ -26,9 +26,9 @@ case "$1" in
     ;;
 
     'get_quazip')
-        wget http://downloads.sourceforge.net/quazip/quazip-0.7.1.tar.gz
-        tar -xvzf quazip-0.7.1.tar.gz >& /dev/null
-        mv quazip-0.7.1/quazip .
+        wget http://downloads.sourceforge.net/quazip/quazip-0.7.3.tar.gz
+        tar -xvzf quazip-0.7.3.tar.gz >& /dev/null
+        mv quazip-0.7.3/quazip .
     ;;
 
     'build')

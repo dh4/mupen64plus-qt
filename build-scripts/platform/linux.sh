@@ -8,13 +8,13 @@ case "$1" in
 
     'setup_qt')
         sudo apt-get update -qq
-        sudo apt-get -y install qt4-qmake libqt4-dev libqt4-sql-sqlite
+        sudo apt-get -y install qt4-qmake libqt4-dev libqt4-sql-sqlite zlib1g-dev
     ;;
 
     'get_quazip')
-        wget http://downloads.sourceforge.net/quazip/quazip-0.7.1.tar.gz
-        tar -xvzf quazip-0.7.1.tar.gz > /dev/null
-        mv quazip-0.7.1/quazip .
+        wget http://downloads.sourceforge.net/quazip/quazip-0.7.3.tar.gz
+        tar -xvzf quazip-0.7.3.tar.gz > /dev/null
+        mv quazip-0.7.3/quazip .
     ;;
 
     'build')
