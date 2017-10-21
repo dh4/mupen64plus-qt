@@ -1,14 +1,20 @@
 Source: mupen64plus-qt
 Section: games
 Priority: optional
-Maintainer: Dan Hasting <dan@hasting.info>
+Maintainer: Dan Hasting <maintainer@hasting.email>
 Homepage: https://github.com/dh4/mupen64plus-qt
 Standards-Version: 3.9.6
-Build-Depends: debhelper (>=9), qt5-qmake, qtbase5-dev, libquazip5-dev, libqt5sql5-sqlite
-
+Build-Depends: debhelper (>= 10),
+               libqt5sql5-sqlite,
+               libquazip5-dev,
+               qt5-qmake,
+               qtbase5-dev
 Package: mupen64plus-qt
 Architecture: any-i386 any-amd64
-Depends: ${shlibs:Depends}, ${misc:Depends}, mupen64plus
+Depends: mupen64plus-ui-console,
+         libqt5sql5-sqlite,
+         ${misc:Depends},
+         ${shlibs:Depends}
 Description: A basic launcher for Mupen64Plus
  Mupen64Plus-Qt is a basic launcher for the mupen64plus-ui-console frontend.
  It was adapted from CEN64-Qt to work with Mupen64Plus.
