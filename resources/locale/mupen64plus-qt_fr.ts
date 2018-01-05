@@ -116,27 +116,27 @@
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="43"/>
         <source>Plugins</source>
-        <translation>Plugins</translation>
+        <translation>Greffons</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="57"/>
         <source>Audio Plugin:</source>
-        <translation>Plugin audio :</translation>
+        <translation>Greffon audio :</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="64"/>
         <source>Input Plugin:</source>
-        <translation>Plugin d&apos;entrée :</translation>
+        <translation>Greffon d&apos;entrée :</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="71"/>
         <source>RSP Plugin:</source>
-        <translation>Plugin RSP :</translation>
+        <translation>Greffon RSP :</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="78"/>
         <source>Video Plugin:</source>
-        <translation>Plugin vidéo :</translation>
+        <translation>Greffon vidéo :</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="86"/>
@@ -389,7 +389,7 @@
     <message>
         <location filename="../../src/common.cpp" line="321"/>
         <source>GoodName</source>
-        <translation>GoodName</translation>
+        <translation>Nom Good</translation>
     </message>
     <message>
         <location filename="../../src/common.cpp" line="322"/>
@@ -662,7 +662,7 @@
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="225"/>
         <source>Cached Interpreter</source>
-        <translation type="unfinished"></translation>
+        <translation>Interpréteur avec cache</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="232"/>
@@ -697,27 +697,28 @@
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="360"/>
         <source>Plugins</source>
-        <translation>Plugins</translation>
+        <translatorcomment>Garder l&apos;anglicisme Plugins, Extensions, ou encore Plugiciel pour le Canada</translatorcomment>
+        <translation>Greffons</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="368"/>
         <source>Video Plugin:</source>
-        <translation>Plugin vidéo :</translation>
+        <translation>Greffon vidéo :</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="375"/>
         <source>Audio Plugin:</source>
-        <translation>Plugin audio :</translation>
+        <translation>Greffon Audio :</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="382"/>
         <source>Input Plugin:</source>
-        <translation>Plugin d&apos;entrée :</translation>
+        <translation>Greffon d&apos;entrée :</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="389"/>
         <source>RSP Plugin:</source>
-        <translation>Plugin RSP :</translation>
+        <translation>Greffon RSP :</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="424"/>
