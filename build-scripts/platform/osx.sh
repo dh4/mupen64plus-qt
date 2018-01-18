@@ -12,9 +12,10 @@ case "$1" in
 
         if [[ $BUILD_OSX_QT ]]; then
             # Build Qt
-            git clone --branch v5.5.0 --depth 1 https://code.qt.io/qt/qtbase.git
+            # Perform commands in /Users/travis/build/osx/ if building for travis
+            git clone --branch v5.10.0 --depth 1 https://code.qt.io/qt/qtbase.git
             cd qtbase
-            ./configure -release -static -qt-sql-sqlite -opensource -confirm-license
+            ./configure -release -static -sql-sqlite -opensource -confirm-license
             make sub-src
         else
             # Fetch pre-build Qt
