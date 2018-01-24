@@ -29,7 +29,7 @@ case "$1" in
     'get_quazip')
         wget http://downloads.sourceforge.net/quazip/quazip-0.7.3.tar.gz
         tar -xvzf quazip-0.7.3.tar.gz >& /dev/null
-        mv quazip-0.7.3/quazip .
+        mv quazip-0.7.3/quazip quazip5
     ;;
 
     'build')

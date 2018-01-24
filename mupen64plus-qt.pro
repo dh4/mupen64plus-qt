@@ -65,10 +65,10 @@ win32|macx|linux_quazip_static {
     DEFINES += QUAZIP_STATIC
     LIBS += -lz
 
-    #Download quazip source and copy the quazip directory to project
-    SOURCES += quazip/*.cpp
-    SOURCES += quazip/*.c
-    HEADERS += quazip/*.h
+    #Download quazip source and copy the quazip directory to project as quazip5
+    SOURCES += quazip5/*.cpp
+    SOURCES += quazip5/*.c
+    HEADERS += quazip5/*.h
 } else {
     lessThan(QT_MAJOR_VERSION, 5) {
         LIBS += -lquazip

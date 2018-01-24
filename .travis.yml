@@ -1,5 +1,6 @@
 language: cpp
 sudo: required
+dist: xenial
 env:
   matrix:
   - BUILD=windows

@@ -39,8 +39,8 @@
 #include <QMessageBox>
 #include <QProcess>
 
-#include <quazip/quazip.h>
-#include <quazip/quazipfile.h>
+#include <quazip5/quazip.h>
+#include <quazip5/quazipfile.h>
 
 
 EmulatorHandler::EmulatorHandler(QWidget *parent) : QObject(parent)

@@ -40,8 +40,8 @@
 #include <QLocale>
 #include <QSize>
 
-#include <quazip/quazip.h>
-#include <quazip/quazipfile.h>
+#include <quazip5/quazip.h>
+#include <quazip5/quazipfile.h>
 
 #ifdef Q_OS_WIN
 #include <QCoreApplication>

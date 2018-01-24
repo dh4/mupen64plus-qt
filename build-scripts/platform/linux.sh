@@ -8,18 +8,18 @@ case "$1" in
 
     'setup_qt')
         sudo apt-get update -qq
-        sudo apt-get -y install qt4-qmake libqt4-dev libqt4-sql-sqlite zlib1g-dev
+        sudo apt-get -y install qt5-qmake qtbase5-dev libqt5sql5-sqlite zlib1g-dev
     ;;
 
     'get_quazip')
         wget http://downloads.sourceforge.net/quazip/quazip-0.7.3.tar.gz
         tar -xvzf quazip-0.7.3.tar.gz > /dev/null
-        mv quazip-0.7.3/quazip .
+        mv quazip-0.7.3/quazip quazip5
     ;;
 
     'build')
         ./build-scripts/revision.sh
-        qmake-qt4 CONFIG+=linux_quazip_static
+        qmake -qt=qt5 CONFIG+=linux_quazip_static
         make
     ;;
 

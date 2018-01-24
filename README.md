@@ -37,7 +37,7 @@ A discussion thread can be found [here](http://www.emutalk.net/threads/54976-Mup
 
 Stable releases for Linux, Windows and OSX can be found on the [releases](https://github.com/dh4/mupen64plus-qt/releases) page.
 
-Note the Linux release is just a tar.gz archive containing an executable. It's a 64-bit executable that is linked to Qt4, so you'll need Qt4 installed to run it. If you have issues with it, see the section below on building.
+Note the Linux release is just a tar.gz archive containing an executable. It's a 64-bit executable that is linked to Qt5, so you'll need Qt5 installed to run it. If you have issues with it, see the section below on building.
 
 ##### Linux and Unix Distributions
 _Debian/Ubuntu:_ Mupen64Plus-Qt is in the repositories: `apt-get install mupen64plus-qt`. Alternately, see the section below on [creating a .deb package](#creating-a-deb-package-debianubuntu).  
@@ -93,7 +93,7 @@ $ make
 
 ##### Compiling QuaZIP statically
 
-You also have the option to compile QuaZIP statically. Download the QuaZIP sources from Sourceforge. Place the contents of `quazip-<version>/quazip/` in `quazip/` within the project directory. Then run:
+You also have the option to compile QuaZIP statically. Download the QuaZIP sources from Sourceforge. Place the contents of `quazip-<version>/quazip/` in `quazip5/` within the project directory. Then run:
 
 ```
 $ qmake CONFIG+=linux_quazip_static
