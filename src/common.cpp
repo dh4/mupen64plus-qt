@@ -40,8 +40,13 @@
 #include <QLocale>
 #include <QSize>
 
+#if QT_VERSION >= 0x050000
 #include <quazip5/quazip.h>
 #include <quazip5/quazipfile.h>
+#else
+#include <quazip/quazip.h>
+#include <quazip/quazipfile.h>
+#endif
 
 #ifdef Q_OS_WIN
 #include <QCoreApplication>
