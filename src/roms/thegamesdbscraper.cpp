@@ -141,10 +141,10 @@ void TheGamesDBScraper::downloadGameInfo(QString identifier, QString searchName,
 
             //If user submits gameID, use that
             if (gameID != "")
-                url.setUrl("http://thegamesdb.net/api/GetGame.php?id="
+                url.setUrl("http://legacy.thegamesdb.net/api/GetGame.php?id="
                            + gameID + "&platform=Nintendo 64");
             else
-                url.setUrl("http://thegamesdb.net/api/GetGame.php?name="
+                url.setUrl("http://legacy.thegamesdb.net/api/GetGame.php?name="
                            + searchName + "&platform=Nintendo 64");
 
             QString dom = getUrlContents(url);
@@ -237,7 +237,7 @@ void TheGamesDBScraper::downloadGameInfo(QString identifier, QString searchName,
             }
 
             if (boxartURL != "") {
-                QUrl url("http://thegamesdb.net/banners/" + boxartURL);
+                QUrl url("http://legacy.thegamesdb.net/banners/" + boxartURL);
 
                 //Delete current box art
                 QFile::remove(coverFile + "jpg");
