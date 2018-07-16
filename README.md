@@ -1,4 +1,7 @@
-# Mupen64Plus-Qt [![Build Status](https://travis-ci.org/dh4/mupen64plus-qt.svg?branch=master)](https://travis-ci.org/dh4/mupen64plus-qt)
+### NOTE (on game information not downloading):
+TheGamesDB has shut off their API in preparation for launching the new version of their API. If you're wanting to download game information but getting "no results found" errors, use the development builds below for a temporary fix ([here](https://github.com/dh4/mupen64plus-qt#development-builds)).
+
+# Mupen64Plus-Qt [![Build Status](https://travis-ci.org/dh4/mupen64plus-qt.svg?branch=master)](https://travis-ci.org/dh4/mupen64plus-qt) 
 
 A basic cross-platform launcher. This was adapted from CEN64-Qt to work with [Mupen64Plus](http://mupen64plus.org/).
 
