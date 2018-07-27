@@ -242,7 +242,7 @@ int RomCollection::cachedRoms(bool imageUpdated, bool onStartup)
         {
             if (!subDirString.contains(".")) {
                 QDir subDir(cacheString + subDirString);
-                if (subDir.entryList().contains("data.xml")) {
+                if (subDir.exists() && subDir.entryList().contains("data.xml")) {
                     onV1 = true;
                     foreach (QString subFileString, subDir.entryList())
                     {
