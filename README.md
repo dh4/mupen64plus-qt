@@ -1,5 +1,5 @@
 ### NOTE (on game information not downloading):
-TheGamesDB has shut off their API in preparation for launching the new version of their API. If you're wanting to download game information but getting "no results found" errors, use the development builds below for a temporary fix ([here](https://github.com/dh4/mupen64plus-qt#development-builds)).
+TheGamesDB has shut off their API in preparation for launching the new version of their API. If you're wanting to download game information but getting "no results found" errors, use the development builds below for a temporary fix ([here](https://github.com/dh4/mupen64plus-qt#development-builds)). Note that this version will delete the cached game information and refresh your ROM collection when it first starts.
 
 # Mupen64Plus-Qt [![Build Status](https://travis-ci.org/dh4/mupen64plus-qt.svg?branch=master)](https://travis-ci.org/dh4/mupen64plus-qt) 
 
@@ -196,7 +196,7 @@ OSX: /Users/\<user\>/Library/Application Support/mupen64plus-qt/cache/\<MD5 of g
 
 You can find the MD5 of a game by using the table or list view and adding "MD5" to the current information.
 
-Edit data.xml with a text editor and replace any information you want to change. You can also replace boxart-front.{jpg,png} with an image of your choosing.
+Edit data.json with a text editor and replace any information you want to change. You can also replace boxart-front.{jpg,png} with an image of your choosing.
 
 
 #### Extending the network timeout to TheGamesDB

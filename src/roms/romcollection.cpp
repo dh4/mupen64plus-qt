@@ -39,12 +39,13 @@
 #include <QCoreApplication>
 #include <QCryptographicHash>
 #include <QDir>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QTime>
 
 #include <QtSql/QSqlQuery>
-#include <QtXml/QDomDocument>
 
 
 RomCollection::RomCollection(QStringList fileTypes, QStringList romPaths, QWidget *parent) : QObject(parent)
@@ -215,7 +216,7 @@ int RomCollection::addRoms()
 }
 
 
-int RomCollection::cachedRoms(bool imageUpdated)
+int RomCollection::cachedRoms(bool imageUpdated, bool onStartup)
 {
     emit updateStarted(imageUpdated);
 
@@ -229,6 +230,33 @@ int RomCollection::cachedRoms(bool imageUpdated)
 
     if (romCount == -1) //Nothing cached so try adding ROMs instead
         return addRoms();
+
+
+    //Check if user has data from TheGamesDB API v1 and update them to v2 data
+    if (onStartup) {
+        bool onV1 = false;
+
+        QString cacheString = getDataLocation() + "/cache/";
+        QDir cacheDir(cacheString);
+        foreach (QString subDirString, cacheDir.entryList())
+        {
+            if (!subDirString.contains(".")) {
+                QDir subDir(cacheString + subDirString);
+                if (subDir.entryList().contains("data.xml")) {
+                    onV1 = true;
+                    foreach (QString subFileString, subDir.entryList())
+                    {
+                        QFile subFile(cacheString + subDirString + "/" + subFileString);
+                        subFile.remove();
+                    }
+                }
+            }
+        }
+
+        if (onV1)
+            return addRoms();
+    }
+
 
     QList<Rom> roms;
     QList<Rom> ddRoms;
@@ -380,52 +408,32 @@ void RomCollection::initializeRom(Rom *currentRom, bool cached)
     if (SETTINGS.value("Other/downloadinfo", "").toString() == "true") {
         QString cacheDir = getDataLocation() + "/cache";
 
-        QString dataFile = cacheDir + "/" + currentRom->romMD5.toLower() + "/data.xml";
+        QString dataFile = cacheDir + "/" + currentRom->romMD5.toLower() + "/data.json";
         QFile file(dataFile);
 
         file.open(QIODevice::ReadOnly);
-        QString dom = file.readAll();
+        QString data = file.readAll();
         file.close();
 
-        QDomDocument xml;
-        xml.setContent(dom);
-        QDomNode game = xml.elementsByTagName("Game").at(0);
+        QJsonDocument document = QJsonDocument::fromJson(data.toUtf8());
+        QJsonObject json = document.object();
 
         //Remove any non-standard characters
-        QString regex = "[^A-Za-z 0-9 \\.,\\?'""!@#\\$%\\^&\\*\\(\\)-_=\\+;:<>\\/\\\\|\\}\\{\\[\\]`~]*";
+        QString regex = "[^A-Za-z 0-9 \\.,\\?'""!@#\\$%\\^&\\*\\(\\)-_=\\+;:<>\\/\\\\|\\}\\{\\[\\]`~é]*";
 
-        currentRom->gameTitle = game.firstChildElement("GameTitle").text().remove(QRegExp(regex));
+        currentRom->gameTitle = json.value("game_title").toString().remove(QRegExp(regex));
         if (currentRom->gameTitle == "") currentRom->gameTitle = getTranslation("Not found");
 
-        currentRom->releaseDate = game.firstChildElement("ReleaseDate").text();
+        currentRom->releaseDate = json.value("release_date").toString();
+        currentRom->sortDate = json.value("release_date").toString();
+        currentRom->releaseDate.replace(QRegExp("(\\d{4})-(\\d{2})-(\\d{2})"), "\\2/\\3/\\1");
 
-        //Fix missing 0's in date
-        currentRom->releaseDate.replace(QRegExp("^(\\d)/(\\d{2})/(\\d{4})"), "0\\1/\\2/\\3");
-        currentRom->releaseDate.replace(QRegExp("^(\\d{2})/(\\d)/(\\d{4})"), "\\1/0\\2/\\3");
-        currentRom->releaseDate.replace(QRegExp("^(\\d)/(\\d)/(\\d{4})"), "0\\1/0\\2/\\3");
+        currentRom->overview = json.value("overview").toString().remove(QRegExp(regex));
+        currentRom->esrb = json.value("rating").toString();
 
-        currentRom->sortDate = currentRom->releaseDate;
-        currentRom->sortDate.replace(QRegExp("(\\d{2})/(\\d{2})/(\\d{4})"), "\\3-\\1-\\2");
-
-        currentRom->overview = game.firstChildElement("Overview").text().remove(QRegExp(regex));
-        currentRom->esrb = game.firstChildElement("ESRB").text();
-
-        int count = 0;
-        QDomNode genreNode = game.firstChildElement("Genres").firstChild();
-        while(!genreNode.isNull())
-        {
-            if (count != 0)
-                currentRom->genre += "/" + genreNode.toElement().text();
-            else
-                currentRom->genre = genreNode.toElement().text();
-
-            genreNode = genreNode.nextSibling();
-            count++;
-        }
-
-        currentRom->publisher = game.firstChildElement("Publisher").text();
-        currentRom->developer = game.firstChildElement("Developer").text();
-        currentRom->rating = game.firstChildElement("Rating").text();
+        currentRom->genre = json.value("genres").toString();
+        currentRom->publisher = json.value("publisher").toString();
+        currentRom->developer = json.value("developer").toString();
 
         foreach (QString ext, QStringList() << "jpg" << "png")
         {
@@ -433,7 +441,7 @@ void RomCollection::initializeRom(Rom *currentRom, bool cached)
                                 + currentRom->romMD5.toLower() + "/boxart-front." + ext;
             QFile cover(imageFile);
 
-            if (cover.exists()&& currentRom->image.load(imageFile)) {
+            if (cover.exists() && currentRom->image.load(imageFile)) {
                 currentRom->imageExists = true;
                 break;
             }

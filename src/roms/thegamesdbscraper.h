@@ -32,6 +32,7 @@
 #ifndef THEGAMESDBSCRAPER_H
 #define THEGAMESDBSCRAPER_H
 
+#include <QFile>
 #include <QWidget>
 
 class QUrl;
@@ -46,8 +47,10 @@ public:
     void downloadGameInfo(QString identifier, QString searchName, QString gameID = "");
 
 private:
+    QString convertIDs(QJsonObject foundGame, QString typeName, QString listName);
     QByteArray getUrlContents(QUrl url);
     void showError(QString error);
+    void updateListCache(QFile *file, QString list);
 
     bool force;
     bool keepGoing;

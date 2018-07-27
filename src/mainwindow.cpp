@@ -90,7 +90,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     connect(romCollection, SIGNAL(romAdded(Rom*, int)), this, SLOT(addToView(Rom*, int)));
     connect(romCollection, SIGNAL(updateEnded(int, bool)), this, SLOT(enableViews(int, bool)));
 
-    romCollection->cachedRoms();
+    romCollection->cachedRoms(false, true);
 
 
     mainWidget = new QWidget(this);

@@ -697,7 +697,6 @@ void SettingsDialog::populateAvailable(bool downloadItems) {
                   << "Genre"
                   << "Publisher"
                   << "Developer"
-                  << "Rating"
                   << "Game Cover";
 
         labelOptions << "Game Title"
@@ -709,8 +708,7 @@ void SettingsDialog::populateAvailable(bool downloadItems) {
                     << "ESRB"
                     << "Genre"
                     << "Publisher"
-                    << "Developer"
-                    << "Rating";
+                    << "Developer";
     }
 
     available.sort();
