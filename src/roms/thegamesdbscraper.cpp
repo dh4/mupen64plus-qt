@@ -69,8 +69,7 @@ QString TheGamesDBScraper::convertIDs(QJsonObject foundGame, QString typeName, Q
     cacheFile.close();
 
     QJsonDocument document = QJsonDocument::fromJson(data.toUtf8());
-    QJsonObject json = document.object();
-    QJsonObject cache = json.value("data").toObject().value(typeName).toObject();
+    QJsonObject cache = document.object();
 
     QString result = "";
 
@@ -86,8 +85,6 @@ QString TheGamesDBScraper::convertIDs(QJsonObject foundGame, QString typeName, Q
             cacheFile.close();
 
             document = QJsonDocument::fromJson(data.toUtf8());
-            json = document.object();
-            cache = json.value("data").toObject().value(typeName).toObject();
             entryName = cache.value(entryID).toObject().value("name").toString();
         }
 
@@ -429,8 +426,9 @@ void TheGamesDBScraper::updateListCache(QFile *file, QString list)
     url.setUrl("https://api.thegamesdb.net/" + list + "?apikey=" + TheGamesDBAPIKey);
     QString data = getUrlContents(url);
     QJsonDocument document = QJsonDocument::fromJson(data.toUtf8());
+    QJsonDocument result(document.object().value("data").toObject().value(list.toLower()).toObject());
 
     file->open(QIODevice::WriteOnly);
-    file->write(document.toJson());
+    file->write(result.toJson());
     file->close();
 }
