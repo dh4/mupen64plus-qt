@@ -222,8 +222,8 @@ void TheGamesDBScraper::downloadGameInfo(QString identifier, QString searchName,
                 QString status = json.value("status").toString();
                 QString message;
                 message = QString(tr("The following error from TheGamesDB occured while downloading:"))
-                                   + "<br /><br />" + status;
-                QMessageBox::information(parent, QObject::tr("Download Error"), message);
+                                   + "<br /><br />" + status + "<br /><br />";
+                showError(message);
                 if (force) parent->setEnabled(true);
                 return;
             }
@@ -293,11 +293,11 @@ void TheGamesDBScraper::downloadGameInfo(QString identifier, QString searchName,
                 QString publisherString = convertIDs(foundGame, "publishers", "Publishers");
 
 
-                saveData.insert("game_title", foundGame.value("game_title"));
-                saveData.insert("release_date", foundGame.value("release_date"));
-                saveData.insert("rating", foundGame.value("rating"));
-                saveData.insert("overview", foundGame.value("overview"));
-                saveData.insert("players", foundGame.value("players"));
+                saveData.insert("game_title", foundGame.value("game_title").toString());
+                saveData.insert("release_date", foundGame.value("release_date").toString());
+                saveData.insert("rating", foundGame.value("rating").toString());
+                saveData.insert("overview", foundGame.value("overview").toString());
+                saveData.insert("players", QString::number(foundGame.value("players").toInt()));
                 saveData.insert("boxart", frontImg);
                 saveData.insert("genres", genresString);
                 saveData.insert("developer", developerString);
