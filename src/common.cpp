@@ -168,12 +168,14 @@ int getGridSize(QString which)
             if (size == "Medium")      return 145;
             if (size == "Large")       return 190;
             if (size == "Extra Large") return 250;
+            if (size == "Super")       return 360;
         } else {
             if (size == "Extra Small") return 47;
             if (size == "Small")       return 71;
             if (size == "Medium")      return 122;
             if (size == "Large")       return 172;
             if (size == "Extra Large") return 224;
+            if (size == "Super")       return 330;
         }
     } else if (which == "width") {
         if (size == "Extra Small") return 60;
@@ -181,12 +183,14 @@ int getGridSize(QString which)
         if (size == "Medium")      return 160;
         if (size == "Large")       return 225;
         if (size == "Extra Large") return 300;
+        if (size == "Super")       return 440;
     } else if (which == "font") {
         if (size == "Extra Small") return 5;
         if (size == "Small")       return 7;
         if (size == "Medium")      return 10;
         if (size == "Large")       return 12;
         if (size == "Extra Large") return 13;
+        if (size == "Super")       return 15;
     }
     return 0;
 }
@@ -202,12 +206,14 @@ QSize getImageSize(QString view)
         if (size == "Medium")      return QSize(69, 50);
         if (size == "Large")       return QSize(103, 75);
         if (size == "Extra Large") return QSize(138, 100);
+        if (size == "Super")       return QSize(210, 150);
     } else if (view == "Grid" || view == "List") {
         if (size == "Extra Small") return QSize(48, 35);
         if (size == "Small")       return QSize(69, 50);
         if (size == "Medium")      return QSize(138, 100);
         if (size == "Large")       return QSize(203, 150);
         if (size == "Extra Large") return QSize(276, 200);
+        if (size == "Super")       return QSize(425, 300);
     }
 
     return QSize();

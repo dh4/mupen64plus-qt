@@ -180,7 +180,9 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
           << (QStringList() << tr("Small")       << "Small")
           << (QStringList() << tr("Medium")      << "Medium")
           << (QStringList() << tr("Large")       << "Large")
-          << (QStringList() << tr("Extra Large") << "Extra Large");
+          << (QStringList() << tr("Extra Large") << "Extra Large")
+          << (QStringList() << tr("Super")       << "Super");
+
 
     if (SETTINGS.value("Other/downloadinfo", "").toString() == "true")
         populateTableAndListTab(true);
