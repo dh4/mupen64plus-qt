@@ -292,12 +292,14 @@ void TheGamesDBScraper::downloadGameInfo(QString identifier, QString searchName,
                 QString developerString = convertIDs(foundGame, "developers", "Developers");
                 QString publisherString = convertIDs(foundGame, "publishers", "Publishers");
 
+                QString players = QString::number(foundGame.value("players").toInt());
+                if (players == "0") players = "";
 
                 saveData.insert("game_title", foundGame.value("game_title").toString());
                 saveData.insert("release_date", foundGame.value("release_date").toString());
                 saveData.insert("rating", foundGame.value("rating").toString());
                 saveData.insert("overview", foundGame.value("overview").toString());
-                saveData.insert("players", QString::number(foundGame.value("players").toInt()));
+                saveData.insert("players", players);
                 saveData.insert("boxart", frontImg);
                 saveData.insert("genres", genresString);
                 saveData.insert("developer", developerString);
