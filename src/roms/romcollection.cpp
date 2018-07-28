@@ -235,23 +235,11 @@ int RomCollection::cachedRoms(bool imageUpdated, bool onStartup)
     //Check if user has data from TheGamesDB API v1 and update them to v2 data
     if (onStartup) {
         bool onV1 = false;
-
-        QString cacheString = getDataLocation() + "/cache/";
+        QString cacheString = getDataLocation() + "/cache_v2/";
         QDir cacheDir(cacheString);
-        foreach (QString subDirString, cacheDir.entryList())
-        {
-            if (!subDirString.contains(".")) {
-                QDir subDir(cacheString + subDirString);
-                if (subDir.exists() && subDir.entryList().contains("data.xml")) {
-                    onV1 = true;
-                    foreach (QString subFileString, subDir.entryList())
-                    {
-                        QFile subFile(cacheString + subDirString + "/" + subFileString);
-                        subFile.remove();
-                    }
-                }
-            }
-        }
+
+        if (!cacheDir.exists() && SETTINGS.value("Other/downloadinfo", "").toString() == "true")
+            onV1 = true;
 
         if (onV1)
             return addRoms();
@@ -406,7 +394,7 @@ void RomCollection::initializeRom(Rom *currentRom, bool cached)
     }
 
     if (SETTINGS.value("Other/downloadinfo", "").toString() == "true") {
-        QString cacheDir = getDataLocation() + "/cache";
+        QString cacheDir = getDataLocation() + "/cache_v2";
 
         QString dataFile = cacheDir + "/" + currentRom->romMD5.toLower() + "/data.json";
         QFile file(dataFile);
@@ -437,7 +425,7 @@ void RomCollection::initializeRom(Rom *currentRom, bool cached)
 
         foreach (QString ext, QStringList() << "jpg" << "png")
         {
-            QString imageFile = getDataLocation() + "/cache/"
+            QString imageFile = getDataLocation() + "/cache_v2/"
                                 + currentRom->romMD5.toLower() + "/boxart-front." + ext;
             QFile cover(imageFile);
 
