@@ -512,24 +512,24 @@
         <translation>%1 - MB</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="247"/>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="320"/>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="360"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="249"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="322"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="362"/>
         <source>Game Information Download</source>
         <translation>Télécharger des informations sur le jeu</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="316"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="318"/>
         <source>No results found.</source>
         <translation>Aucun résultat.</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="318"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="320"/>
         <source>No more results found.</source>
         <translation>Pas d&apos;autre résultat.</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="361"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="363"/>
         <source>Download Complete!</source>
         <translation>Téléchargement terminé !</translation>
     </message>
@@ -1101,33 +1101,33 @@
         <translation>Effacer les informations du jeu</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="221"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="223"/>
         <source>The following error from TheGamesDB occured while downloading:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="244"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="246"/>
         <source>Released on: </source>
         <translation>Publié le :</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="245"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="247"/>
         <source>Does this look correct?</source>
         <translation>Ces informations vous semblent-elles correctes ?</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="400"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="402"/>
         <source>Request timed out. Check your network settings.</source>
         <translation>Temps dépassé. Vérifier vos paramètres de connexion.</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="408"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="410"/>
         <source>Continue scraping information?</source>
         <translation>Continuer à récolter des informations ?</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="411"/>
         <location filename="../../src/roms/thegamesdbscraper.cpp" line="413"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="415"/>
         <source>Network Error</source>
         <translatorcomment>Erreur réseau</translatorcomment>
         <translation>Erreur réseau</translation>
