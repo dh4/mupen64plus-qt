@@ -61,7 +61,7 @@ QString TheGamesDBScraper::convertIDs(QJsonObject foundGame, QString typeName, Q
 {
     QJsonArray idArray = foundGame.value(typeName).toArray();
 
-    QString cacheFileString = getDataLocation() + "/cache_v2/" + typeName + ".json";
+    QString cacheFileString = getCacheLocation() + typeName + ".json";
     QFile cacheFile(cacheFileString);
 
     cacheFile.open(QIODevice::ReadOnly);
@@ -115,7 +115,7 @@ void TheGamesDBScraper::deleteGameInfo(QString fileName, QString identifier)
                                        QMessageBox::Yes | QMessageBox::No);
 
     if (answer == QMessageBox::Yes) {
-        QString gameCache = getDataLocation() + "/cache_v2/" + identifier.toLower();
+        QString gameCache = getCacheLocation() + identifier.toLower();
 
         QString dataFile = gameCache + "/data.xml";
         QFile file(dataFile);
@@ -152,25 +152,22 @@ void TheGamesDBScraper::downloadGameInfo(QString identifier, QString searchName,
 
         bool updated = false;
 
-        QString gameCache = getDataLocation() + "/cache_v2/" + identifier.toLower();
+        QString gameCache = getCacheLocation() + identifier.toLower();
         QDir cache(gameCache);
 
         if (!cache.exists()) {
             cache.mkpath(gameCache);
         }
 
-        QString genreCache = getDataLocation() + "/cache_v2/genres.json";
-        QFile genres(genreCache);
+        QFile genres(getCacheLocation() + "genres.json");
         if (!genres.exists())
             updateListCache(&genres, "Genres");
 
-        QString developerCache = getDataLocation() + "/cache_v2/developers.json";
-        QFile developers(developerCache);
+        QFile developers(getCacheLocation() + "developers.json");
         if (!developers.exists())
             updateListCache(&developers, "Developers");
 
-        QString publisherCache = getDataLocation() + "/cache_v2/publishers.json";
-        QFile publishers(publisherCache);
+        QFile publishers(getCacheLocation() + "publishers.json");
         if (!publishers.exists())
             updateListCache(&publishers, "Publishers");
 

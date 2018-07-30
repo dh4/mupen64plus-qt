@@ -190,9 +190,9 @@ If desired, you can also manually update the information from TheGamesDB. Note t
 
 The information cache can be found here:
 
-Linux: /home/\<user\>/.local/share/mupen64plus-qt/cache/\<MD5 of game\>/  
-Windows: cache folder in same directory as executable -> MD5 of game  
-OSX: /Users/\<user\>/Library/Application Support/mupen64plus-qt/cache/\<MD5 of game\>/
+Linux: /home/\<user\>/.local/share/mupen64plus-qt/cache_v2/\<MD5 of game\>/  
+Windows: cache_v2 folder in same directory as executable -> MD5 of game  
+OSX: /Users/\<user\>/Library/Application Support/mupen64plus-qt/cache_v2/\<MD5 of game\>/
 
 You can find the MD5 of a game by using the table or list view and adding "MD5" to the current information.
 

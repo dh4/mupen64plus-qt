@@ -88,6 +88,7 @@ QString getDefaultLanguage();
 QString getTranslation(QString text);
 QGraphicsDropShadowEffect *getShadow(bool active);
 QSize getImageSize(QString view);
+QString getCacheLocation();
 QString getDataLocation();
 QString getRomInfo(QString identifier, const Rom *rom, bool removeWarn = false, bool sort = false);
 QString getVersion();

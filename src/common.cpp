@@ -72,6 +72,12 @@ QByteArray byteswap(QByteArray romData)
 }
 
 
+QString getCacheLocation()
+{
+    return getDataLocation() + "/cache_v2/";
+}
+
+
 QString getDataLocation()
 {
     QString dataDir;
