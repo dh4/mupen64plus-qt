@@ -1,6 +1,3 @@
-### NOTE (on game information not downloading):
-TheGamesDB has shut off their API in preparation for launching the new version of their API. If you're wanting to download game information but getting "no results found" errors, use the development builds below for a temporary fix ([here](https://github.com/dh4/mupen64plus-qt#development-builds)). Note that this version will delete the cached game information and refresh your ROM collection when it first starts.
-
 # Mupen64Plus-Qt [![Build Status](https://travis-ci.org/dh4/mupen64plus-qt.svg?branch=master)](https://travis-ci.org/dh4/mupen64plus-qt) 
 
 A customizable cross-platform launcher. This was adapted from CEN64-Qt to work with [Mupen64Plus](http://mupen64plus.org/).
@@ -171,6 +168,8 @@ In each of the views, you can simply double click a game to launch it, or single
 ## Game Information from TheGamesDB
 
 Mupen64Plus-Qt supports downloading game information and cover images from [thegamesdb.net](http://thegamesdb.net/). This can be enabled under Settings->Configure->Other. It's recommended you have the data directory set (under Paths) before using this. Once enabled, you'll need to refresh your ROMs list to download the information. Afterwards, images and other information about the game can be added to the views.
+
+***Note:*** TheGamesDB shut off version one of their API which is used in Mupen64Plus-Qt 1.11 and below. You will need version 1.12 to download game information.
 
 #### Updating Game Information
 
