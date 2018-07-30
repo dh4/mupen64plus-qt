@@ -63,35 +63,35 @@
 <context>
     <name>EmulatorHandler</name>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="57"/>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="185"/>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="192"/>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="202"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="62"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="190"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="197"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="207"/>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="58"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="63"/>
         <source>&lt;ParentName&gt; quit unexpectedly. Check the log for more information.</source>
         <translation>&lt;ParentName&gt; a quitté de manière inattendue. Consultez les journaux pour plus d&apos;informations.</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="62"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="67"/>
         <source>View Log...</source>
         <translation>Consulter les journaux...</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="186"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="191"/>
         <source>&lt;ParentName&gt; executable not found.</source>
         <translation>Executable &lt;ParentName&gt; non trouvé.</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="202"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="207"/>
         <source>Not a valid ROM File.</source>
         <translation>Fichier ROM invalide.</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="192"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="197"/>
         <source>ROM file not found.</source>
         <translation>Fichier ROM manquant.</translation>
     </message>
@@ -387,155 +387,155 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/common.cpp" line="321"/>
+        <location filename="../../src/common.cpp" line="338"/>
         <source>GoodName</source>
         <translation>Nom Good</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="322"/>
+        <location filename="../../src/common.cpp" line="339"/>
         <source>Filename</source>
         <translation>Nom du fichier</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="323"/>
+        <location filename="../../src/common.cpp" line="340"/>
         <source>Filename (extension)</source>
         <translation>Nom du fichier (extension)</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="324"/>
+        <location filename="../../src/common.cpp" line="341"/>
         <source>Zip File</source>
         <translation>Fichier Zip</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="325"/>
+        <location filename="../../src/common.cpp" line="342"/>
         <source>Internal Name</source>
         <translation>Nom interne</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="326"/>
+        <location filename="../../src/common.cpp" line="343"/>
         <source>Size</source>
         <translation>Taille</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="327"/>
+        <location filename="../../src/common.cpp" line="344"/>
         <source>MD5</source>
         <translation>MD5</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="328"/>
+        <location filename="../../src/common.cpp" line="345"/>
         <source>CRC1</source>
         <translation>CRC1</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="329"/>
+        <location filename="../../src/common.cpp" line="346"/>
         <source>CRC2</source>
         <translation>CRC2</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="330"/>
+        <location filename="../../src/common.cpp" line="347"/>
         <source>Players</source>
         <translation>Joueurs</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="331"/>
+        <location filename="../../src/common.cpp" line="348"/>
         <source>Rumble</source>
         <translation>Rumble</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="332"/>
+        <location filename="../../src/common.cpp" line="349"/>
         <source>Save Type</source>
         <translation>Type de sauvegarde</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="333"/>
+        <location filename="../../src/common.cpp" line="350"/>
         <source>Game Title</source>
         <translation>Titre du jeu</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="334"/>
+        <location filename="../../src/common.cpp" line="351"/>
         <source>Release Date</source>
         <translation>Date de sortie</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="335"/>
+        <location filename="../../src/common.cpp" line="352"/>
         <source>Overview</source>
         <translation>Aperçu</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="336"/>
+        <location filename="../../src/common.cpp" line="353"/>
         <source>ESRB</source>
         <translation>ESRB</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="337"/>
+        <location filename="../../src/common.cpp" line="354"/>
         <source>Genre</source>
         <translation>Genre</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="338"/>
+        <location filename="../../src/common.cpp" line="355"/>
         <source>Publisher</source>
         <translation>Éditeur</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="339"/>
+        <location filename="../../src/common.cpp" line="356"/>
         <source>Developer</source>
         <translation>Développeur</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="340"/>
+        <location filename="../../src/common.cpp" line="357"/>
         <source>Rating</source>
         <translation>Certification</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="341"/>
+        <location filename="../../src/common.cpp" line="358"/>
         <source>Game Cover</source>
         <translation>Jaquette</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="342"/>
+        <location filename="../../src/common.cpp" line="359"/>
         <source>Unknown ROM</source>
         <translation>ROM inconnue</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="343"/>
+        <location filename="../../src/common.cpp" line="360"/>
         <source>Requires catalog file</source>
         <translation>Fichier catalogue demandé</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="344"/>
+        <location filename="../../src/common.cpp" line="361"/>
         <source>Not found</source>
         <translation>Non trouvé</translation>
     </message>
     <message>
-        <location filename="../../src/roms/romcollection.cpp" line="343"/>
+        <location filename="../../src/roms/romcollection.cpp" line="358"/>
         <source>%1 MB</source>
         <translation>%1 - MB</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="171"/>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="208"/>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="253"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="247"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="320"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="360"/>
         <source>Game Information Download</source>
         <translation>Télécharger des informations sur le jeu</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="204"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="316"/>
         <source>No results found.</source>
         <translation>Aucun résultat.</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="206"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="318"/>
         <source>No more results found.</source>
         <translation>Pas d&apos;autre résultat.</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="254"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="361"/>
         <source>Download Complete!</source>
         <translation>Téléchargement terminé !</translation>
     </message>
     <message>
         <location filename="../../src/global.h" line="44"/>
-        <source>A basic launcher for &lt;ParentName&gt; using Qt.</source>
+        <source>A customizable launcher for &lt;ParentName&gt; using Qt.</source>
         <translation>Une interface élémentaire pour &lt;ParentName&gt;.</translation>
     </message>
     <message>
@@ -552,38 +552,38 @@
 <context>
     <name>RomCollection</name>
     <message>
-        <location filename="../../src/roms/romcollection.cpp" line="189"/>
-        <location filename="../../src/roms/romcollection.cpp" line="195"/>
+        <location filename="../../src/roms/romcollection.cpp" line="190"/>
+        <location filename="../../src/roms/romcollection.cpp" line="196"/>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location filename="../../src/roms/romcollection.cpp" line="189"/>
+        <location filename="../../src/roms/romcollection.cpp" line="190"/>
         <source>No ROMs found in </source>
         <translation>Aucune ROM trouvée dans</translation>
     </message>
     <message>
-        <location filename="../../src/roms/romcollection.cpp" line="195"/>
+        <location filename="../../src/roms/romcollection.cpp" line="196"/>
         <source>No ROMs found.</source>
         <translation>Aucune ROM trouvée.</translation>
     </message>
     <message>
-        <location filename="../../src/roms/romcollection.cpp" line="471"/>
+        <location filename="../../src/roms/romcollection.cpp" line="463"/>
         <source>Database Not Loaded</source>
         <translation>Base de données non chargée</translation>
     </message>
     <message>
-        <location filename="../../src/roms/romcollection.cpp" line="472"/>
+        <location filename="../../src/roms/romcollection.cpp" line="464"/>
         <source>Could not connect to Sqlite database. Application may misbehave.</source>
         <translation>Impossible de se connecter à la base de données Sqlite. L&apos;application peut dysfonctionner.</translation>
     </message>
     <message>
-        <location filename="../../src/roms/romcollection.cpp" line="501"/>
+        <location filename="../../src/roms/romcollection.cpp" line="493"/>
         <source>Loading ROMs...</source>
         <translation>Chargement des ROMS...</translation>
     </message>
     <message>
-        <location filename="../../src/roms/romcollection.cpp" line="501"/>
+        <location filename="../../src/roms/romcollection.cpp" line="493"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -932,114 +932,119 @@
         <translation>Très grande</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="216"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="184"/>
+        <source>Super</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="218"/>
         <source>Black</source>
         <translation>Noir</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="217"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="219"/>
         <source>White</source>
         <translation>Blanc</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="218"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="220"/>
         <source>Light Gray</source>
         <translation>Gris clair</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="219"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="221"/>
         <source>Dark Gray</source>
         <translation>Gris foncé</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="220"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="222"/>
         <source>Green</source>
         <translation>Vert</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="221"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="223"/>
         <source>Cyan</source>
         <translation>Cyan</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="222"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="224"/>
         <source>Blue</source>
         <translation>Bleu</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="223"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="225"/>
         <source>Purple</source>
         <translation>Violet</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="224"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="226"/>
         <source>Red</source>
         <translation>Rouge</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="225"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="227"/>
         <source>Pink</source>
         <translation>Rose</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="226"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="228"/>
         <source>Orange</source>
         <translation>Orange</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="227"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="229"/>
         <source>Yellow</source>
         <translation>Jaune</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="228"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="230"/>
         <source>Brown</source>
         <translation>Marron</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="231"/>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="310"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="233"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="312"/>
         <source>Light</source>
         <translation>Lumière</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="232"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="234"/>
         <source>Normal</source>
         <translation>Normale</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="233"/>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="311"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="235"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="313"/>
         <source>Dark</source>
         <translation>Sombre</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="418"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="420"/>
         <source>ROM Directory</source>
         <translation>Dossiers des ROMS</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="442"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="444"/>
         <source>&lt;ParentName&gt; Executable</source>
         <translation>Fichier exécutable &lt;ParentName&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="460"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="462"/>
         <source>Plugin Directory</source>
         <translation>Dossier des plugins</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="469"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="471"/>
         <source>Data Directory</source>
         <translation>Dossier des données</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="477"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="479"/>
         <source>Config Directory</source>
         <translation>Dossier de configuration</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="434"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="436"/>
         <source>Background Image</source>
         <translation>Image d&apos;arrière-plan</translation>
     </message>
@@ -1056,68 +1061,73 @@
 <context>
     <name>TheGamesDBScraper</name>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="61"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="103"/>
         <source>&lt;b&gt;NOTE:&lt;/b&gt; If you are deleting this game&apos;s information because the game doesn&apos;t </source>
         <translation>&lt;b&gt;Remarque :&lt;/b&gt; Si vous effacez les informations de ce jeu parce que le jeu </translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="63"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="105"/>
         <source>better to create an account on</source>
         <translation>il est préférable de créer un compte</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="64"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="106"/>
         <source>and add the game so other users can benefit as well.</source>
         <translation>et d’ajouter le jeu afin d’en faire profiter également les autres utilisateurs.</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="62"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="104"/>
         <source>exist on TheGamesDB and &lt;AppName&gt; pulled the information for different game, it&apos;s </source>
         <translation>n’est pas dans TheGamesDB et que &lt;AppName&gt; vous propose des informations pour un autre jeu, </translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="66"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="108"/>
         <source>This will cause &lt;AppName&gt; to not update the information for this game until you </source>
         <translation>&lt;AppName&gt; ne mettra pas à jour les informations jusqu&apos;à ce que vous </translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="67"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="109"/>
         <source>force it with &quot;Download/Update Info...&quot;</source>
         <translation>relanciez le &quot;Télécharger/Mettre à jour les infos...&quot;</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="69"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="111"/>
         <source>Delete the current information for</source>
         <translation>Effacer les informations actuelles pour</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="72"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="114"/>
         <source>Delete Game Information</source>
         <translation>Effacer les informations du jeu</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="168"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="221"/>
+        <source>The following error from TheGamesDB occured while downloading:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="244"/>
         <source>Released on: </source>
         <translation>Publié le :</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="169"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="245"/>
         <source>Does this look correct?</source>
         <translation>Ces informations vous semblent-elles correctes ?</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="288"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="400"/>
         <source>Request timed out. Check your network settings.</source>
         <translation>Temps dépassé. Vérifier vos paramètres de connexion.</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="296"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="408"/>
         <source>Continue scraping information?</source>
         <translation>Continuer à récolter des informations ?</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="299"/>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="301"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="411"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="413"/>
         <source>Network Error</source>
         <translatorcomment>Erreur réseau</translatorcomment>
         <translation>Erreur réseau</translation>

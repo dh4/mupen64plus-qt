@@ -41,7 +41,7 @@ const QString AppNameLower      = "mupen64plus-qt";
 const QString ParentName        = "Mupen64Plus";
 const QString ParentNameLower   = "mupen64plus";
 
-const QString Description = QObject::tr("A basic launcher for <ParentName> using Qt.").replace("<ParentName>",ParentName);
+const QString Description = QObject::tr("A customizable launcher for <ParentName> using Qt.").replace("<ParentName>",ParentName);
 const QString Copyright = "";
 const QString Website = "<a href=\"http://www.mupen64plus.org/\">"
         + QObject::tr("<ParentName> website").replace("<ParentName>",ParentName)

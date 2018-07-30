@@ -3,7 +3,7 @@
 Name:           mupen64plus-qt-rpm
 Version:        @@VERSION@@
 Release:        1
-Summary:        A basic launcher for Mupen64Plus
+Summary:        A customizable launcher for Mupen64Plus
 Group:          Applications/Emulators
 License:        BSD
 URL:            https://github.com/dh4/mupen64plus-qt
@@ -12,8 +12,8 @@ BuildRequires:  qt5-qtbase-devel, quazip-qt5-devel, gcc-c++
 Requires:       qt5-qtbase, quazip-qt5
 
 %description
-Mupen64Plus-Qt is a basic launcher for the mupen64plus-ui-console frontend. It
-was adapted from CEN64-Qt to work with Mupen64Plus.
+Mupen64Plus-Qt is a customizable launcher for the mupen64plus-ui-console
+frontend. It was adapted from CEN64-Qt to work with Mupen64Plus.
 
 See the README at https://www.github.com/dh4/mupen64plus-qt for a detailed
 description of its features and usage.

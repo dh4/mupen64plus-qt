@@ -3,7 +3,7 @@ TheGamesDB has shut off their API in preparation for launching the new version o
 
 # Mupen64Plus-Qt [![Build Status](https://travis-ci.org/dh4/mupen64plus-qt.svg?branch=master)](https://travis-ci.org/dh4/mupen64plus-qt) 
 
-A basic cross-platform launcher. This was adapted from CEN64-Qt to work with [Mupen64Plus](http://mupen64plus.org/).
+A customizable cross-platform launcher. This was adapted from CEN64-Qt to work with [Mupen64Plus](http://mupen64plus.org/).
 
 A discussion thread can be found [here](http://www.emutalk.net/threads/54976-Mupen64Plus-Qt).
 
