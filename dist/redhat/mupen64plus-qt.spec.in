@@ -18,6 +18,8 @@ frontend. It was adapted from CEN64-Qt to work with Mupen64Plus.
 See the README at https://www.github.com/dh4/mupen64plus-qt for a detailed
 description of its features and usage.
 
+%global debug_package %{nil}
+
 %prep
 %autosetup -n %{_name}-%{version}
 
