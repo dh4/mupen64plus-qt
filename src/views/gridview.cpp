@@ -60,6 +60,7 @@ GridView::GridView(QWidget *parent) : QScrollArea(parent)
 
     gridWidget = new QWidget(this);
     gridWidget->setObjectName("gridWidget");
+    gridWidget->setStyleSheet("#gridWidget { background: transparent; }");
     setWidget(gridWidget);
 
     gridLayout = new QGridLayout(gridWidget);
