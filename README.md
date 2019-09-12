@@ -1,6 +1,6 @@
 # Mupen64Plus-Qt [![Build Status](https://travis-ci.org/dh4/mupen64plus-qt.svg?branch=master)](https://travis-ci.org/dh4/mupen64plus-qt) 
 
-A customizable cross-platform launcher. This was adapted from CEN64-Qt to work with [Mupen64Plus](http://mupen64plus.org/).
+A customizable cross-platform launcher. This was adapted from CEN64-Qt to work with [Mupen64Plus](https://mupen64plus.org/).
 
 A discussion thread can be found [here](http://www.emutalk.net/threads/54976-Mupen64Plus-Qt).
 
@@ -237,7 +237,7 @@ OSX: /Users/\<user\>/Library/Preferences/com.mupen64plus.mupen64plus-qt.plist
 
 ## Comparison to Console UI
 
-Mupen64Plus-Qt utilizes the console UI to launch games. It contains support for most of the command line parameters. These can be viewed by running Mupen64Plus from a terminal with the --help parameter or [here](http://mupen64plus.org/wiki/index.php?title=UIConsoleUsage).
+Mupen64Plus-Qt utilizes the console UI to launch games. It contains support for most of the command line parameters. These can be viewed by running Mupen64Plus from a terminal with the --help parameter or [here](https://mupen64plus.org/wiki/index.php?title=UIConsoleUsage).
 
 See below for how each parameter is used within Mupen64Plus-Qt:
 
