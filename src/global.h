@@ -43,7 +43,7 @@ const QString ParentNameLower   = "mupen64plus";
 
 const QString Description = QObject::tr("A customizable launcher for <ParentName> using Qt.").replace("<ParentName>",ParentName);
 const QString Copyright = "";
-const QString Website = "<a href=\"http://www.mupen64plus.org/\">"
+const QString Website = "<a href=\"https://www.mupen64plus.org/\">"
         + QObject::tr("<ParentName> website").replace("<ParentName>",ParentName)
         + "</a>";
 const QString GitHub = "<a href=\"https://github.com/dh4/mupen64plus-qt\">"
