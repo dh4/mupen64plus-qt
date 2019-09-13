@@ -1102,7 +1102,7 @@
     <message>
         <location filename="../../src/roms/thegamesdbscraper.cpp" line="223"/>
         <source>The following error from TheGamesDB occured while downloading:</source>
-        <translation">Во время загрузки с TheGamesDB произошла ошибка:</translation>
+        <translation>Во время загрузки с TheGamesDB произошла ошибка:</translation>
     </message>
     <message>
         <location filename="../../src/roms/thegamesdbscraper.cpp" line="246"/>

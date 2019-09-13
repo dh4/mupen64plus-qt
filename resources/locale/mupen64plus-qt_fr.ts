@@ -175,7 +175,7 @@
 <context>
     <name>GridView</name>
     <message>
-        <location filename="../../src/views/gridview.cpp" line="144"/>
+        <location filename="../../src/views/gridview.cpp" line="145"/>
         <source>No Cart</source>
         <translation>Pas de cartouche</translation>
     </message>
