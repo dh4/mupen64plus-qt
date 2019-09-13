@@ -58,7 +58,8 @@ RESOURCES += resources/mupen64plusqt.qrc
 FORMS += src/dialogs/gamesettingsdialog.ui \
     src/dialogs/settingsdialog.ui
 
-TRANSLATIONS += resources/locale/mupen64plus-qt_fr.ts
+TRANSLATIONS += resources/locale/mupen64plus-qt_fr.ts \
+    resources/locale/mupen64plus-qt_ru.ts
 
 win32|macx|linux_quazip_static {
     CONFIG += staticlib
