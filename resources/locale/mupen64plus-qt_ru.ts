@@ -116,7 +116,7 @@
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="26"/>
         <source>Game settings for: </source>
-        <translation>Настройки игры для:</translation>
+        <translation>Настройки игры для: </translation>
     </message>
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="33"/>
@@ -179,7 +179,7 @@
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.cpp" line="92"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.cpp" line="93"/>
@@ -351,12 +351,12 @@
     <message>
         <location filename="../../src/mainwindow.cpp" line="448"/>
         <source>Add a directory containing ROMs under </source>
-        <translation type="unfinished"></translation>
+        <translation>Добавьте каталог, содержащий файлы ROM, с помощью </translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="449"/>
         <source>Settings-&gt;Configure-&gt;Paths to use this view.</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки-&gt;Параметры-&gt;Пути, чтобы их показать.</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="690"/>
@@ -1055,7 +1055,7 @@
     <message>
         <location filename="../../src/dialogs/settingsdialog.cpp" line="394"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.cpp" line="395"/>

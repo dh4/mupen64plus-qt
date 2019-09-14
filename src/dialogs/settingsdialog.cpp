@@ -362,7 +362,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     QList<QStringList> languages;
     languages << (QStringList() << QString::fromUtf8("English")  << "EN")
               << (QStringList() << QString::fromUtf8("Français") << "FR")
-              << (QStringList() << QString::fromUtf8("русский") << "RU");
+              << (QStringList() << QString::fromUtf8("Русский") << "RU");
 
     downloadEnable << ui->tableSizeLabel
                    << ui->tableSizeBox
