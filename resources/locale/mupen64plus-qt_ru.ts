@@ -26,6 +26,11 @@
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
+    <message>
+        <location filename="../../src/dialogs/configeditor.cpp" line="74"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
+    </message>
 </context>
 <context>
     <name>DownloadDialog</name>
@@ -58,6 +63,11 @@
         <location filename="../../src/dialogs/downloaddialog.cpp" line="66"/>
         <source>Search</source>
         <translation>Найти</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/downloaddialog.cpp" line="67"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
     </message>
 </context>
 <context>
@@ -167,7 +177,17 @@
         <translation>Обзор...</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/gamesettingsdialog.cpp" line="107"/>
+        <location filename="../../src/dialogs/gamesettingsdialog.cpp" line="92"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/gamesettingsdialog.cpp" line="93"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/gamesettingsdialog.cpp" line="110"/>
         <source>Config Directory</source>
         <translation>Каталог настроек</translation>
     </message>
@@ -329,6 +349,16 @@
         <translation>&amp;О программе...</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.cpp" line="448"/>
+        <source>Add a directory containing ROMs under </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="449"/>
+        <source>Settings-&gt;Configure-&gt;Paths to use this view.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../../src/mainwindow.cpp" line="690"/>
         <source>Not Found</source>
         <translation>Не найдено</translation>
@@ -382,6 +412,11 @@
         <location filename="../../src/mainwindow.cpp" line="825"/>
         <source>Launch</source>
         <translation>Запустить</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="826"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
     </message>
 </context>
 <context>
@@ -1018,32 +1053,42 @@
         <translation>Темный</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="420"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="394"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="395"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="424"/>
         <source>ROM Directory</source>
         <translation>Каталог файлов ROM</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="444"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="448"/>
         <source>&lt;ParentName&gt; Executable</source>
         <translation>Исполняемый файл &lt;ParentName&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="462"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="466"/>
         <source>Plugin Directory</source>
         <translation>Каталог плагинов</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="471"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="475"/>
         <source>Data Directory</source>
         <translation>Каталог данных</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="479"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="483"/>
         <source>Config Directory</source>
         <translation>Каталог настроек</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="436"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="440"/>
         <source>Background Image</source>
         <translation>Фоновое изображение</translation>
     </message>

@@ -89,6 +89,9 @@ GameSettingsDialog::GameSettingsDialog(QString fileName, QWidget *parent)
     ui->configPath->setText(SETTINGS.value(fileName+"/config", "").toString());
     ui->parameters->setText(SETTINGS.value(fileName+"/parameters", "").toString());
 
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
+    ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
+
     connect(ui->configButton, SIGNAL(clicked()), this, SLOT(browseConfig()));
 
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(editGameSettings()));

@@ -26,6 +26,11 @@
         <source>Save</source>
         <translation>Sauvegarder</translation>
     </message>
+    <message>
+        <location filename="../../src/dialogs/configeditor.cpp" line="74"/>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
 </context>
 <context>
     <name>DownloadDialog</name>
@@ -58,6 +63,11 @@
         <location filename="../../src/dialogs/downloaddialog.cpp" line="66"/>
         <source>Search</source>
         <translation>Chercher</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/downloaddialog.cpp" line="67"/>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -167,7 +177,17 @@
         <translation>Naviguer...</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/gamesettingsdialog.cpp" line="107"/>
+        <location filename="../../src/dialogs/gamesettingsdialog.cpp" line="92"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/gamesettingsdialog.cpp" line="93"/>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/gamesettingsdialog.cpp" line="110"/>
         <source>Config Directory</source>
         <translation>Dossier de configuration</translation>
     </message>
@@ -329,6 +349,16 @@
         <translation>À &amp;propos</translation>
     </message>
     <message>
+        <location filename="../../src/mainwindow.cpp" line="448"/>
+        <source>Add a directory containing ROMs under </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="449"/>
+        <source>Settings-&gt;Configure-&gt;Paths to use this view.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../../src/mainwindow.cpp" line="690"/>
         <source>Not Found</source>
         <translation>Non trouvé</translation>
@@ -382,6 +412,11 @@
         <location filename="../../src/mainwindow.cpp" line="825"/>
         <source>Launch</source>
         <translation>Lancer</translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="826"/>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -1019,32 +1054,42 @@
         <translation>Sombre</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="420"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="394"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="395"/>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="424"/>
         <source>ROM Directory</source>
         <translation>Dossiers des ROMS</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="444"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="448"/>
         <source>&lt;ParentName&gt; Executable</source>
         <translation>Fichier exécutable &lt;ParentName&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="462"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="466"/>
         <source>Plugin Directory</source>
         <translation>Dossier des plugins</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="471"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="475"/>
         <source>Data Directory</source>
         <translation>Dossier des données</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="479"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="483"/>
         <source>Config Directory</source>
         <translation>Dossier de configuration</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="436"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="440"/>
         <source>Background Image</source>
         <translation>Image d&apos;arrière-plan</translation>
     </message>

@@ -64,7 +64,7 @@ DownloadDialog::DownloadDialog(QString fileText, QString defaultText, QString ro
 
     downloadButtonBox = new QDialogButtonBox(Qt::Horizontal, this);
     downloadButtonBox->addButton(tr("Search"), QDialogButtonBox::AcceptRole);
-    downloadButtonBox->addButton(QDialogButtonBox::Cancel);
+    downloadButtonBox->addButton(tr("Cancel"), QDialogButtonBox::RejectRole);
 
     downloadLayout->addWidget(fileLabel, 0, 0, 1, 2);
     downloadLayout->addWidget(gameNameLabel, 1, 0);
