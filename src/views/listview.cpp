@@ -139,7 +139,8 @@ void ListView::addToListView(Rom *currentRom, int count, bool ddEnabled)
         if (i == 0 && SETTINGS.value("List/firstitemheader","true") == "true")
             addition += "<h2 style='line-height:120%;margin:0;padding:0;'>";
         else
-            addition += "<div style='line-height:120%;margin:0;padding:0;'><b>" + current + ":</b> ";
+            addition += "<div style='line-height:120%;margin:0;padding:0;'><b>"
+                     + getTranslation(current) + ":</b> ";
 
         addition += getRomInfo(current, currentRom, true);
 

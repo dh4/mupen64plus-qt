@@ -439,7 +439,6 @@ void MainWindow::createRomView()
     //Create disabled view
     disabledView = new QWidget(this);
     disabledView->setHidden(true);
-    disabledView->setDisabled(true);
 
     disabledLayout = new QVBoxLayout(disabledView);
     disabledLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
