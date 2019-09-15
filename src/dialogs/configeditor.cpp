@@ -33,6 +33,8 @@
 
 #include "../global.h"
 
+#include "keycodesdialog.h"
+
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QTextEdit>
@@ -70,16 +72,30 @@ ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent
     config.close();
 
     editorButtonBox = new QDialogButtonBox(Qt::Horizontal, this);
+    editorButtonBox->addButton(tr("Key Codes Reference"), QDialogButtonBox::HelpRole);
     editorButtonBox->addButton(tr("Save"), QDialogButtonBox::AcceptRole);
     editorButtonBox->addButton(tr("Cancel"), QDialogButtonBox::RejectRole);
 
     editorLayout->addWidget(editorArea, 0, 0);
     editorLayout->addWidget(editorButtonBox, 1, 0);
 
+    connect(editorButtonBox, SIGNAL(helpRequested()), this, SLOT(openKeyCodes()));
     connect(editorButtonBox, SIGNAL(accepted()), this, SLOT(saveConfig()));
     connect(editorButtonBox, SIGNAL(rejected()), this, SLOT(close()));
 
     setLayout(editorLayout);
+}
+
+
+void ConfigEditor::openKeyCodes()
+{
+    if (!keyCodes) {
+        keyCodes = new KeyCodes(this);
+    }
+
+    keyCodes->show();
+    keyCodes->raise();
+    keyCodes->activateWindow();
 }
 
 

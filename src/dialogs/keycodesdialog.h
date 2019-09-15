@@ -29,67 +29,26 @@
  *
  ***/
 
-#ifndef CONFIGEDITOR_H
-#define CONFIGEDITOR_H
+#ifndef KEYCODESDIALOG_H
+#define KEYCODESDIALOG_H
 
 #include <QDialog>
-#include <QFile>
-#include <QSyntaxHighlighter>
 
 class QDialogButtonBox;
 class QGridLayout;
-class QTextCharFormat;
-class QTextEdit;
-class KeyCodes;
+class QTableWidget;
 
 
-class ConfigHighlighter : public QSyntaxHighlighter
-{
-    Q_OBJECT
-
-public:
-    ConfigHighlighter(QTextDocument *parent = 0);
-
-protected:
-    void highlightBlock(const QString &text);
-
-private:
-    struct Rule {
-        QRegExp pattern;
-        QTextCharFormat format;
-    };
-
-    QVector<Rule> rules;
-
-    QTextCharFormat headerFormat;
-    QTextCharFormat variableFormat;
-    QTextCharFormat valueFormat;
-    QTextCharFormat separatorFormat;
-    QTextCharFormat quotationFormat;
-    QTextCharFormat commentFormat;
-};
-
-
-class ConfigEditor : public QDialog
+class KeyCodes : public QDialog
 {
     Q_OBJECT
 public:
-    explicit ConfigEditor(QString configFile, QWidget *parent = 0);
+    explicit KeyCodes(QWidget *parent = 0);
 
 private:
-    QDialogButtonBox *editorButtonBox;
-    QFile config;
-    QGridLayout *editorLayout;
-    QTextEdit *editorArea;
-
-    ConfigHighlighter *highlighter;
-
-    KeyCodes *keyCodes = nullptr;
-
-private slots:
-    void openKeyCodes();
-    void saveConfig();
-
+    QDialogButtonBox *keyCodesButtonBox;
+    QGridLayout *keyCodesLayout;
+    QTableWidget *keyCodesTable;
 };
 
-#endif // CONFIGEDITOR_H
+#endif // KEYCODESDIALOG_H

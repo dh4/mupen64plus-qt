@@ -19,6 +19,7 @@ win32:RC_FILE = dist/windows/icon.rc
 
 SOURCES += src/main.cpp \
     src/common.cpp \
+    src/dialogs/keycodesdialog.cpp \
     src/mainwindow.cpp \
     src/dialogs/aboutdialog.cpp \
     src/dialogs/configeditor.cpp \
@@ -37,6 +38,7 @@ SOURCES += src/main.cpp \
 
 HEADERS += src/global.h \
     src/common.h \
+    src/dialogs/keycodesdialog.h \
     src/mainwindow.h \
     src/dialogs/aboutdialog.h \
     src/dialogs/configeditor.h \
