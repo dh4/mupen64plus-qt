@@ -115,8 +115,8 @@
     </message>
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="26"/>
-        <source>Game settings for: </source>
-        <translation>Настройки игры для: </translation>
+        <source>Game settings for:</source>
+        <translation>Настройки игры для:</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="33"/>
@@ -203,7 +203,7 @@
 <context>
     <name>ListView</name>
     <message>
-        <location filename="../../src/views/listview.cpp" line="158"/>
+        <location filename="../../src/views/listview.cpp" line="159"/>
         <source>No Cart</source>
         <translation>Нет картриджа</translation>
     </message>
@@ -240,13 +240,13 @@
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="254"/>
-        <location filename="../../src/mainwindow.cpp" line="885"/>
+        <location filename="../../src/mainwindow.cpp" line="884"/>
         <source>&amp;Download/Update Info...</source>
         <translation>&amp;Загрузить/обновить информацию...</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="255"/>
-        <location filename="../../src/mainwindow.cpp" line="886"/>
+        <location filename="../../src/mainwindow.cpp" line="885"/>
         <source>D&amp;elete Current Info...</source>
         <translation>&amp;Удалить текущую информацию...</translation>
     </message>
@@ -262,7 +262,7 @@
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="279"/>
-        <location filename="../../src/mainwindow.cpp" line="875"/>
+        <location filename="../../src/mainwindow.cpp" line="874"/>
         <source>&amp;Start</source>
         <translation>&amp;Запустить</translation>
     </message>
@@ -288,7 +288,7 @@
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="301"/>
-        <location filename="../../src/mainwindow.cpp" line="878"/>
+        <location filename="../../src/mainwindow.cpp" line="877"/>
         <source>Configure &amp;Game...</source>
         <translation>Настроить &amp;игру...</translation>
     </message>
@@ -298,7 +298,7 @@
         <translation>&amp;Параметры...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="713"/>
+        <location filename="../../src/mainwindow.cpp" line="712"/>
         <source>There is no log. Either &lt;ParentName&gt; has not yet run or there was no output from the last run.</source>
         <translation>Журнал отсутствует. &lt;ParentName&gt; не был запущен или не выводил информацию с момента последнего запуска.</translation>
     </message>
@@ -349,72 +349,72 @@
         <translation>&amp;О программе...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="448"/>
+        <location filename="../../src/mainwindow.cpp" line="447"/>
         <source>Add a directory containing ROMs under </source>
         <translation>Добавьте каталог, содержащий файлы ROM, с помощью </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="449"/>
+        <location filename="../../src/mainwindow.cpp" line="448"/>
         <source>Settings-&gt;Configure-&gt;Paths to use this view.</source>
         <translation>Настройки-&gt;Параметры-&gt;Пути, чтобы их показать.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="690"/>
+        <location filename="../../src/mainwindow.cpp" line="689"/>
         <source>Not Found</source>
         <translation>Не найдено</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="690"/>
+        <location filename="../../src/mainwindow.cpp" line="689"/>
         <source>Editor requires config directory to be </source>
         <translation>Для работы редактора нужно задать каталог </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="691"/>
+        <location filename="../../src/mainwindow.cpp" line="690"/>
         <source>set to a directory with mupen64plus.cfg.</source>
         <translation>с файлом mupen64plus.cfg в качестве каталога настроек.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="692"/>
+        <location filename="../../src/mainwindow.cpp" line="691"/>
         <source>See here for the default config location:</source>
         <translation>Посмотрите здесь, чтобы узнать местоположение файла настроек по умолчанию:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="712"/>
+        <location filename="../../src/mainwindow.cpp" line="711"/>
         <source>No Output</source>
         <translation>Нет вывода результатов</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="765"/>
+        <location filename="../../src/mainwindow.cpp" line="764"/>
         <source>All Files</source>
         <translation>Все файлы</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="775"/>
+        <location filename="../../src/mainwindow.cpp" line="774"/>
         <source>Open ROM File</source>
         <translation>Открыть файл ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="793"/>
+        <location filename="../../src/mainwindow.cpp" line="792"/>
         <source>No ROMs</source>
         <translation>Нет файлов ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="793"/>
+        <location filename="../../src/mainwindow.cpp" line="792"/>
         <source>No ROMs found in ZIP file.</source>
         <translation>Не найдены файлы ROM в файле ZIP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="808"/>
+        <location filename="../../src/mainwindow.cpp" line="807"/>
         <source>Select ROM</source>
         <translation>Выбрать ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="825"/>
+        <location filename="../../src/mainwindow.cpp" line="824"/>
         <source>Launch</source>
         <translation>Запустить</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="826"/>
+        <location filename="../../src/mainwindow.cpp" line="825"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>

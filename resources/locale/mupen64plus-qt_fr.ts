@@ -115,7 +115,7 @@
     </message>
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="26"/>
-        <source>Game settings for: </source>
+        <source>Game settings for:</source>
         <translation>Paramètres du jeu pour :</translation>
     </message>
     <message>
@@ -203,7 +203,7 @@
 <context>
     <name>ListView</name>
     <message>
-        <location filename="../../src/views/listview.cpp" line="158"/>
+        <location filename="../../src/views/listview.cpp" line="159"/>
         <source>No Cart</source>
         <translation>Pas de cartouche</translation>
     </message>
@@ -240,13 +240,13 @@
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="254"/>
-        <location filename="../../src/mainwindow.cpp" line="885"/>
+        <location filename="../../src/mainwindow.cpp" line="884"/>
         <source>&amp;Download/Update Info...</source>
         <translation>&amp;Télécharger/Mettre à jour les infos...</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="255"/>
-        <location filename="../../src/mainwindow.cpp" line="886"/>
+        <location filename="../../src/mainwindow.cpp" line="885"/>
         <source>D&amp;elete Current Info...</source>
         <translation>&amp;Effacer les infos actuelles...</translation>
     </message>
@@ -262,7 +262,7 @@
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="279"/>
-        <location filename="../../src/mainwindow.cpp" line="875"/>
+        <location filename="../../src/mainwindow.cpp" line="874"/>
         <source>&amp;Start</source>
         <translation>&amp;Démarrer</translation>
     </message>
@@ -288,7 +288,7 @@
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="301"/>
-        <location filename="../../src/mainwindow.cpp" line="878"/>
+        <location filename="../../src/mainwindow.cpp" line="877"/>
         <source>Configure &amp;Game...</source>
         <translation>Configurer le &amp;jeu...</translation>
     </message>
@@ -298,7 +298,7 @@
         <translation>&amp;Configurer...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="713"/>
+        <location filename="../../src/mainwindow.cpp" line="712"/>
         <source>There is no log. Either &lt;ParentName&gt; has not yet run or there was no output from the last run.</source>
         <translation>Il n&apos;y a pas de journaux. Soit &lt;ParentName&gt; n’a pas encore été lancé, soit il n’y a pas de données concernant le dernier démarrage.</translation>
     </message>
@@ -349,72 +349,72 @@
         <translation>À &amp;propos</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="448"/>
+        <location filename="../../src/mainwindow.cpp" line="447"/>
         <source>Add a directory containing ROMs under </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="449"/>
+        <location filename="../../src/mainwindow.cpp" line="448"/>
         <source>Settings-&gt;Configure-&gt;Paths to use this view.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="690"/>
+        <location filename="../../src/mainwindow.cpp" line="689"/>
         <source>Not Found</source>
         <translation>Non trouvé</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="690"/>
+        <location filename="../../src/mainwindow.cpp" line="689"/>
         <source>Editor requires config directory to be </source>
         <translation>L&apos;éditeur nécessite que le dossier de configuration soit </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="691"/>
+        <location filename="../../src/mainwindow.cpp" line="690"/>
         <source>set to a directory with mupen64plus.cfg.</source>
         <translation>un dossier contenant mupen64plus.cfg.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="692"/>
+        <location filename="../../src/mainwindow.cpp" line="691"/>
         <source>See here for the default config location:</source>
         <translation>Voir ici pour la configuration par défaut:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="712"/>
+        <location filename="../../src/mainwindow.cpp" line="711"/>
         <source>No Output</source>
         <translation>Pas de sortie</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="765"/>
+        <location filename="../../src/mainwindow.cpp" line="764"/>
         <source>All Files</source>
         <translation>Tous les fichiers</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="775"/>
+        <location filename="../../src/mainwindow.cpp" line="774"/>
         <source>Open ROM File</source>
         <translation>Ouvrir un fichier ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="793"/>
+        <location filename="../../src/mainwindow.cpp" line="792"/>
         <source>No ROMs</source>
         <translation>Aucune ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="793"/>
+        <location filename="../../src/mainwindow.cpp" line="792"/>
         <source>No ROMs found in ZIP file.</source>
         <translation>Aucune ROM trouvée dans le fichier ZIP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="808"/>
+        <location filename="../../src/mainwindow.cpp" line="807"/>
         <source>Select ROM</source>
         <translation>Choisir une ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="825"/>
+        <location filename="../../src/mainwindow.cpp" line="824"/>
         <source>Launch</source>
         <translation>Lancer</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="826"/>
+        <location filename="../../src/mainwindow.cpp" line="825"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>

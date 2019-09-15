@@ -44,7 +44,7 @@ GameSettingsDialog::GameSettingsDialog(QString fileName, QWidget *parent)
     ui->setupUi(this);
 
     QString labelText = ui->gameLabel->text();
-    labelText.append("<b>"+fileName+"</b>");
+    labelText.append(" <b>"+fileName+"</b>");
     ui->gameLabel->setText(labelText);
 
 

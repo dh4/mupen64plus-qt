@@ -23,7 +23,7 @@
    <item>
     <widget class="QLabel" name="gameLabel">
      <property name="text">
-      <string>Game settings for: </string>
+      <string>Game settings for:</string>
      </property>
     </widget>
    </item>
