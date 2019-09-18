@@ -17,17 +17,22 @@
 <context>
     <name>ConfigEditor</name>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="49"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="51"/>
         <source>&lt;ParentName&gt; Config Editor</source>
         <translation>Éditeur de configuration &lt;ParentName&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="73"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="75"/>
+        <source>Key Codes Reference</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/configeditor.cpp" line="76"/>
         <source>Save</source>
         <translation>Sauvegarder</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="74"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="77"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -198,6 +203,29 @@
         <location filename="../../src/views/gridview.cpp" line="145"/>
         <source>No Cart</source>
         <translation>Pas de cartouche</translation>
+    </message>
+</context>
+<context>
+    <name>KeyCodes</name>
+    <message>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="43"/>
+        <source>SDL Key Codes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="189"/>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="189"/>
+        <source>SDL Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="202"/>
+        <source>Close</source>
+        <translation type="unfinished">Fermer</translation>
     </message>
 </context>
 <context>
