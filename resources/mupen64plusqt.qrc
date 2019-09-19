@@ -6,5 +6,6 @@
         <file>other/VERSION</file>
         <file>locale/mupen64plus-qt_fr.qm</file>
         <file>locale/mupen64plus-qt_ru.qm</file>
+        <file>images/keyboard.png</file>
     </qresource>
 </RCC>

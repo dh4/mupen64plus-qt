@@ -64,7 +64,7 @@ void EmulatorHandler::checkStatus(int status)
                            .replace("<ParentName>",ParentName));
         exitDialog.setIcon(QMessageBox::Warning);
         exitDialog.addButton(QMessageBox::Ok);
-        exitDialog.addButton(tr("View Log..."), QMessageBox::HelpRole);
+        exitDialog.addButton(tr("View Log"), QMessageBox::HelpRole);
 
         int ret = exitDialog.exec();
         if (ret == 0) emit showLog();

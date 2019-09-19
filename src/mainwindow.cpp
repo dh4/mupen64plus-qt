@@ -36,6 +36,7 @@
 
 #include "dialogs/aboutdialog.h"
 #include "dialogs/configeditor.h"
+#include "dialogs/controlinfodialog.h"
 #include "dialogs/downloaddialog.h"
 #include "dialogs/gamesettingsdialog.h"
 #include "dialogs/logdialog.h"
@@ -279,7 +280,7 @@ void MainWindow::createMenu()
     startAction = emulationMenu->addAction(tr("&Start"));
     stopAction = emulationMenu->addAction(tr("St&op"));
     emulationMenu->addSeparator();
-    logAction = emulationMenu->addAction(tr("View Log..."));
+    logAction = emulationMenu->addAction(tr("View Log"));
 
     startAction->setIcon(QIcon::fromTheme("media-playback-start"));
     stopAction->setIcon(QIcon::fromTheme("media-playback-stop"));
@@ -365,10 +366,13 @@ void MainWindow::createMenu()
 
     //Help
     helpMenu = new QMenu(tr("&Help"), this);
+    controlInfoAction = helpMenu->addAction(tr("Default Controls"));
+    helpMenu->addSeparator();
     aboutAction = helpMenu->addAction(tr("&About"));
     aboutAction->setIcon(QIcon::fromTheme("help-about"));
     menuBar->addMenu(helpMenu);
 
+    connect(controlInfoAction, SIGNAL(triggered()), this, SLOT(openDefaultControls()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(openAbout()));
 
 
@@ -653,6 +657,12 @@ void MainWindow::openAbout()
 {
     AboutDialog aboutDialog(this);
     aboutDialog.exec();
+}
+
+void MainWindow::openDefaultControls()
+{
+    ControlInfo controlInfo(this);
+    controlInfo.exec();
 }
 
 

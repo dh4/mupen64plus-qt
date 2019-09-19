@@ -80,6 +80,7 @@ private:
     QAction *aboutAction;
     QAction *configureAction;
     QAction *configureGameAction;
+    QAction *controlInfoAction;
     QAction *deleteAction;
     QAction *downloadAction;
     QAction *editorAction;
@@ -133,6 +134,7 @@ private slots:
     void launchRomFromWidget(QWidget *current);
     void launchRomFromZip();
     void openAbout();
+    void openDefaultControls();
     void openDeleteDialog();
     void openDownloader();
     void openEditor();

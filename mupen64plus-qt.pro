@@ -19,6 +19,7 @@ win32:RC_FILE = dist/windows/icon.rc
 
 SOURCES += src/main.cpp \
     src/common.cpp \
+    src/dialogs/controlinfodialog.cpp \
     src/dialogs/keycodesdialog.cpp \
     src/mainwindow.cpp \
     src/dialogs/aboutdialog.cpp \
@@ -38,6 +39,7 @@ SOURCES += src/main.cpp \
 
 HEADERS += src/global.h \
     src/common.h \
+    src/dialogs/controlinfodialog.h \
     src/dialogs/keycodesdialog.h \
     src/mainwindow.h \
     src/dialogs/aboutdialog.h \
