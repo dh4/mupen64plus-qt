@@ -42,37 +42,37 @@
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="45"/>
         <source>Mupen64Plus Default Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавиши Mupen64Plus по умолчанию</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="51"/>
         <source>These are the default controls for Mupen64Plus. </source>
-        <translation type="unfinished"></translation>
+        <translation>Это клавиши Mupen64Plus по умолчанию.</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="52"/>
         <source>They can be modified using Settings-&gt;Edit mupen64plus.cfg...</source>
-        <translation type="unfinished"></translation>
+        <translation>Их можно модифицировать в меню Настройки-&gt;Изменить mupen64plus.cfg...</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="54"/>
         <source>For more information see the &lt;link&gt;Mupen64Plus Documentation&lt;linkend&gt;. </source>
-        <translation type="unfinished"></translation>
+        <translation>Для получения более подробной информации изучите &lt;link&gt;Документацию Mupen64Plus&lt;linkend&gt;. </translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="57"/>
         <source>For setting up a gamepad controller see &lt;link&gt;this page&lt;linkend&gt;. </source>
-        <translation type="unfinished"></translation>
+        <translation>Для настройки контроллера перейдите на &lt;link&gt;эту страницу&lt;linkend&gt;. </translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="60"/>
         <source>Note that Mupen64Plus output can be viewed with Emulation-&gt;View Log.</source>
-        <translation type="unfinished"></translation>
+        <translation>Примечание: вывод можно посмотреть в меню Эмуляция-&gt;Просмотреть журнал.</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="92"/>
         <source>N64 Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Ввод N64</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="92"/>
@@ -83,7 +83,7 @@
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="142"/>
         <source>Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Действие</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="160"/>
@@ -93,12 +93,12 @@
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="165"/>
         <source>Controller Input</source>
-        <translation type="unfinished"></translation>
+        <translation>Ввод контроллера</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="166"/>
         <source>Hotkeys</source>
-        <translation type="unfinished"></translation>
+        <translation>Горячие клавиши</translation>
     </message>
 </context>
 <context>
@@ -438,7 +438,7 @@
     <message>
         <location filename="../../src/mainwindow.cpp" line="369"/>
         <source>Default Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Управление по умолчанию</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="371"/>
