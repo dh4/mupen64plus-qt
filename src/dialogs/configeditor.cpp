@@ -37,6 +37,7 @@
 
 #include <QDialogButtonBox>
 #include <QGridLayout>
+#include <QLabel>
 #include <QTextEdit>
 
 #if QT_VERSION >= 0x050200
@@ -71,15 +72,35 @@ ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent
     editorArea->setPlainText(config.readAll());
     config.close();
 
-    editorButtonBox = new QDialogButtonBox(Qt::Horizontal, this);
-    editorButtonBox->addButton(tr("Key Codes Reference"), QDialogButtonBox::HelpRole);
+    controls = new QWidget(this);
+    controlsLayout = new QGridLayout(controls);
+    controlsLayout->setContentsMargins(0, 0, 0, 0);
+
+    codesButtonBox = new QDialogButtonBox(Qt::Horizontal, controls);
+    codesButtonBox->addButton(tr("Key Codes Reference"), QDialogButtonBox::HelpRole);
+
+    QString docsLinkString = "<a href=\"https://mupen64plus.org/docs/\">"
+                           + tr("Mupen64Plus Documentation") + "</a>";
+
+    docsLink = new QLabel(docsLinkString, controls);
+    docsLink->setOpenExternalLinks(true);
+
+    QSpacerItem *spacer = new QSpacerItem(1,1, QSizePolicy::Expanding, QSizePolicy::Fixed);
+
+    editorButtonBox = new QDialogButtonBox(Qt::Horizontal, controls);
     editorButtonBox->addButton(tr("Save"), QDialogButtonBox::AcceptRole);
     editorButtonBox->addButton(tr("Cancel"), QDialogButtonBox::RejectRole);
 
-    editorLayout->addWidget(editorArea, 0, 0);
-    editorLayout->addWidget(editorButtonBox, 1, 0);
+    controlsLayout->addWidget(codesButtonBox, 0, 0);
+    controlsLayout->addWidget(docsLink, 0, 1);
+    controlsLayout->addItem(spacer, 0, 2);
+    controlsLayout->addWidget(editorButtonBox, 0, 3);
+    controls->setLayout(controlsLayout);
 
-    connect(editorButtonBox, SIGNAL(helpRequested()), this, SLOT(openKeyCodes()));
+    editorLayout->addWidget(editorArea, 0, 0);
+    editorLayout->addWidget(controls, 1, 0);
+
+    connect(codesButtonBox, SIGNAL(helpRequested()), this, SLOT(openKeyCodes()));
     connect(editorButtonBox, SIGNAL(accepted()), this, SLOT(saveConfig()));
     connect(editorButtonBox, SIGNAL(rejected()), this, SLOT(close()));
 

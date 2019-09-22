@@ -38,6 +38,7 @@
 
 class QDialogButtonBox;
 class QGridLayout;
+class QLabel;
 class QTextCharFormat;
 class QTextEdit;
 class KeyCodes;
@@ -77,10 +78,14 @@ public:
     explicit ConfigEditor(QString configFile, QWidget *parent = 0);
 
 private:
+    QDialogButtonBox *codesButtonBox;
     QDialogButtonBox *editorButtonBox;
     QFile config;
+    QGridLayout *controlsLayout;
     QGridLayout *editorLayout;
+    QLabel *docsLink;
     QTextEdit *editorArea;
+    QWidget *controls;
 
     ConfigHighlighter *highlighter;
 

@@ -82,10 +82,12 @@ private:
     QAction *configureGameAction;
     QAction *controlInfoAction;
     QAction *deleteAction;
+    QAction *documentationAction;
     QAction *downloadAction;
     QAction *editorAction;
     QAction *fullScreenAction;
     QAction *logAction;
+    QAction *mupenDocsAction;
     QAction *openAction;
     QAction *quitAction;
     QAction *refreshAction;
@@ -148,7 +150,8 @@ private slots:
     void toggleMenus(bool active);
     void updateFullScreenMode();
     void updateLayoutSetting();
-
+    void openDocumentation();
+    void openMupenDocs();
 };
 
 #endif // MAINWINDOW_H

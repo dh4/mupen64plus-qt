@@ -366,12 +366,17 @@ void MainWindow::createMenu()
 
     //Help
     helpMenu = new QMenu(tr("&Help"), this);
+    documentationAction = helpMenu->addAction(tr("Documentation"));
+    mupenDocsAction = helpMenu->addAction(tr("Mupen64Plus Docs"));
+    helpMenu->addSeparator();
     controlInfoAction = helpMenu->addAction(tr("Default Controls"));
     helpMenu->addSeparator();
     aboutAction = helpMenu->addAction(tr("&About"));
     aboutAction->setIcon(QIcon::fromTheme("help-about"));
     menuBar->addMenu(helpMenu);
 
+    connect(documentationAction, SIGNAL(triggered()), this, SLOT(openDocumentation()));
+    connect(mupenDocsAction, SIGNAL(triggered()), this, SLOT(openMupenDocs()));
     connect(controlInfoAction, SIGNAL(triggered()), this, SLOT(openDefaultControls()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(openAbout()));
 
@@ -676,6 +681,12 @@ void MainWindow::openDeleteDialog()
 }
 
 
+void MainWindow::openDocumentation()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/dh4/mupen64plus-qt#table-of-contents"));
+}
+
+
 void MainWindow::openDownloader()
 {
     DownloadDialog downloadDialog(getCurrentRomInfoFromView("fileName"),
@@ -725,6 +736,12 @@ void MainWindow::openLog()
         LogDialog logDialog(emulation->lastOutput, this);
         logDialog.exec();
     }
+}
+
+
+void MainWindow::openMupenDocs()
+{
+    QDesktopServices::openUrl(QUrl("https://mupen64plus.org/docs/"));
 }
 
 
