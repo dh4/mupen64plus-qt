@@ -36,13 +36,10 @@
 #include "keycodesdialog.h"
 
 #include <QDialogButtonBox>
+#include <QFontDatabase>
 #include <QGridLayout>
 #include <QLabel>
 #include <QTextEdit>
-
-#if QT_VERSION >= 0x050200
-#include <QFontDatabase>
-#endif
 
 
 ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent)
@@ -58,12 +55,7 @@ ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent
     editorArea = new QTextEdit(this);
     editorArea->setWordWrapMode(QTextOption::NoWrap);
 
-#if QT_VERSION >= 0x050200
     QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
-#else
-    QFont font("Monospace");
-    font.setStyleHint(QFont::TypeWriter);
-#endif
     editorArea->setFont(font);
 
     highlighter = new ConfigHighlighter(editorArea->document());

@@ -40,13 +40,8 @@
 #include <QLocale>
 #include <QSize>
 
-#if QT_VERSION >= 0x050000
 #include <quazip5/quazip.h>
 #include <quazip5/quazipfile.h>
-#else
-#include <quazip/quazip.h>
-#include <quazip/quazipfile.h>
-#endif
 
 #ifdef Q_OS_WIN
 #include <QCoreApplication>
@@ -85,15 +80,8 @@ QString getDataLocation()
 #ifdef Q_OS_WIN
     dataDir = QCoreApplication::applicationDirPath();
 #else
-
-#if QT_VERSION >= 0x050000
     dataDir = QStandardPaths::writableLocation(QStandardPaths::DataLocation)
                     .replace(ParentName+"/"+AppName,AppNameLower);
-#else
-    dataDir = QDesktopServices::storageLocation(QDesktopServices::DataLocation)
-                    .remove("data/").replace(ParentName+"/"+AppName,AppNameLower);
-#endif
-
 #endif
 
      QDir data(dataDir);

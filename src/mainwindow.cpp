@@ -207,11 +207,7 @@ void MainWindow::autoloadSettings()
     QString configPath = SETTINGS.value("Paths/config", "").toString();
 
     if (configPath == "") {
-#if QT_VERSION >= 0x050000
         QString homeDir = QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first();
-#else
-        QString homeDir = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-#endif
 
 #ifdef Q_OS_WIN
         QString configCheck = homeDir + "/AppData/Roaming/Mupen64Plus/";
@@ -344,15 +340,12 @@ void MainWindow::createMenu()
 
     viewMenu->addSeparator();
 
-#if QT_VERSION >= 0x050000
     //OSX El Capitan adds it's own full-screen option
     if (QSysInfo::macVersion() < QSysInfo::MV_ELCAPITAN || QSysInfo::macVersion() == QSysInfo::MV_None)
         fullScreenAction = viewMenu->addAction(tr("&Full-screen"));
     else
         fullScreenAction = new QAction(this);
-#else
-    fullScreenAction = viewMenu->addAction(tr("&Full-screen"));
-#endif
+
     fullScreenAction->setCheckable(true);
 
     if (SETTINGS.value("View/fullscreen", "") == "true")
@@ -557,12 +550,7 @@ bool MainWindow::eventFilter(QObject*, QEvent *event)
     if (event->type() == QEvent::HoverMove && isFullScreen()) {
         QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-        //x and y axis are reversed in Qt4
-#if QT_VERSION >= 0x050000
         int mousePos = mouseEvent->pos().y();
-#else
-        int mousePos = mouseEvent->pos().x();
-#endif
 
         if (mousePos < 5)
             showMenuBar(true);
@@ -578,7 +566,6 @@ bool MainWindow::eventFilter(QObject*, QEvent *event)
             updateFullScreenMode();
     }
 
-#if QT_VERSION >= 0x050000
     //OSX El Capitan adds it's own full-screen option, so handle the event change here
     if (QSysInfo::macVersion() >= QSysInfo::MV_ELCAPITAN && QSysInfo::macVersion() != QSysInfo::MV_None) {
         if (event->type() == QEvent::WindowStateChange) {
@@ -597,7 +584,6 @@ bool MainWindow::eventFilter(QObject*, QEvent *event)
             }
         }
     }
-#endif
 
     return false;
 }
@@ -790,11 +776,7 @@ void MainWindow::openRom()
     foreach (QString type, romCollection->getFileTypes(true)) filter += type + " ";
     filter += ");;" + tr("All Files") + " (*)";
 
-#if QT_VERSION >= 0x050000
     QString searchPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first();
-#else
-    QString searchPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-#endif
     if (romCollection->romPaths.count() > 0)
         searchPath = romCollection->romPaths.at(0);
 

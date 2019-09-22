@@ -39,13 +39,8 @@
 #include <QMessageBox>
 #include <QProcess>
 
-#if QT_VERSION >= 0x050000
 #include <quazip5/quazip.h>
 #include <quazip5/quazipfile.h>
-#else
-#include <quazip/quazip.h>
-#include <quazip/quazipfile.h>
-#endif
 
 
 EmulatorHandler::EmulatorHandler(QWidget *parent) : QObject(parent)

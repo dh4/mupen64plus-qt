@@ -270,17 +270,9 @@ void TableView::resetView(bool imageUpdated)
             if (current == "Game Cover") c++; //If first column is game cover, use next column
 
             if (SETTINGS.value("Table/stretchfirstcolumn", "true") == "true")
-#if QT_VERSION >= 0x050000
                 header()->setSectionResizeMode(c, QHeaderView::Stretch);
-#else
-                header()->setResizeMode(c, QHeaderView::Stretch);
-#endif
             else
-#if QT_VERSION >= 0x050000
                 header()->setSectionResizeMode(c, QHeaderView::Interactive);
-#else
-                header()->setResizeMode(c, QHeaderView::Interactive);
-#endif
         }
 
         if (widths.size() == tableVisible.size())

@@ -34,12 +34,9 @@
 #include "../global.h"
 
 #include <QDialogButtonBox>
+#include <QFontDatabase>
 #include <QGridLayout>
 #include <QTextEdit>
-
-#if QT_VERSION >= 0x050200
-#include <QFontDatabase>
-#endif
 
 
 LogDialog::LogDialog(QString lastOutput, QWidget *parent) : QDialog(parent)
@@ -53,12 +50,7 @@ LogDialog::LogDialog(QString lastOutput, QWidget *parent) : QDialog(parent)
     logArea = new QTextEdit(this);
     logArea->setWordWrapMode(QTextOption::NoWrap);
 
-#if QT_VERSION >= 0x050200
     QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
-#else
-    QFont font("Monospace");
-    font.setStyleHint(QFont::TypeWriter);
-#endif
     logArea->setFont(font);
 
     logArea->setPlainText(lastOutput);

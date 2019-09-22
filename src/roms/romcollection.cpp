@@ -491,13 +491,9 @@ void RomCollection::setupDatabase()
 void RomCollection::setupProgressDialog(int size)
 {
     progress = new QProgressDialog(tr("Loading ROMs..."), tr("Cancel"), 0, size, parent);
-#if QT_VERSION >= 0x050000
     progress->setWindowFlags(progress->windowFlags() & ~Qt::WindowCloseButtonHint);
     progress->setWindowFlags(progress->windowFlags() & ~Qt::WindowMinimizeButtonHint);
     progress->setWindowFlags(progress->windowFlags() & ~Qt::WindowContextHelpButtonHint);
-#else
-    progress->setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
-#endif
     progress->setCancelButton(nullptr);
     progress->setWindowModality(Qt::WindowModal);
 
