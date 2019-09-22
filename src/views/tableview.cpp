@@ -36,6 +36,8 @@
 
 #include "widgets/treewidgetitem.h"
 
+#include <cmath>
+
 #include <QFile>
 #include <QFileInfo>
 #include <QGridLayout>
@@ -188,7 +190,7 @@ QString TableView::getCurrentRomInfo(QString infoName)
 
 bool TableView::hasSelectedRom()
 {
-    return currentItem() != NULL;
+    return currentItem() != nullptr;
 }
 
 
@@ -235,14 +237,14 @@ void TableView::resetView(bool imageUpdated)
     setHeaderLabels(headerLabels);
     headerView->setSortIndicatorShown(false);
 
-    int height = 0, width = 0;
+    double height = 0, width = 0;
     if (tableVisible.contains("Game Cover")) {
         //Get optimal height/width for cover column
         height = getImageSize("Table").height() * 1.1;
         width = getImageSize("Table").width() * 1.2;
 
         setStyleSheet("QTreeView { border: none; } QTreeView::item { height: "
-                               + QString::number(height) + "px; }");
+                               + QString::number(static_cast<int>(std::round(height))) + "px; }");
     } else
         setStyleSheet("QTreeView { border: none; } QTreeView::item { height: 25px; }");
 
@@ -284,11 +286,11 @@ void TableView::resetView(bool imageUpdated)
         if (widths.size() == tableVisible.size())
             setColumnWidth(i, widths[i - hidden].toInt());
         else
-            setColumnWidth(i, getDefaultWidth(current, width));
+            setColumnWidth(i, getDefaultWidth(current, static_cast<int>(std::round(width))));
 
         //Overwrite saved value if switching image sizes
         if (imageUpdated && current == "Game Cover")
-            setColumnWidth(i, width);
+            setColumnWidth(i, static_cast<int>(std::round(width)));
 
         i++;
     }

@@ -226,7 +226,7 @@ void ListView::highlightListWidget(QWidget *current)
     current->setFocus();
 
     QLayoutItem *listItem;
-    for (int item = 0; (listItem = listLayout->itemAt(item)) != NULL; item++)
+    for (int item = 0; (listItem = listLayout->itemAt(item)) != nullptr; item++)
     {
         if (listItem->widget() == current)
             currentListRom = item;
@@ -245,7 +245,7 @@ void ListView::highlightListWidgetSetMargin()
 {
     //Reset all margins
     QLayoutItem *listItem;
-    for (int item = 0; (listItem = listLayout->itemAt(item)) != NULL; item++)
+    for (int item = 0; (listItem = listLayout->itemAt(item)) != nullptr; item++)
         listItem->widget()->setContentsMargins(0, 0, 20, 0);
 
     getCurrentRomWidget()->setContentsMargins(20, 0, 0, 0);
@@ -265,7 +265,7 @@ void ListView::keyPressEvent(QKeyEvent *event)
 void ListView::resetView()
 {
     QLayoutItem *listItem;
-    while ((listItem = listLayout->takeAt(0)) != NULL)
+    while ((listItem = listLayout->takeAt(0)) != nullptr)
     {
         delete listItem->widget();
         delete listItem;
@@ -297,9 +297,9 @@ void ListView::selectNextRom(QWidget* current, QString keypress)
         offset = 2;
 
     QLayoutItem *listItem;
-    for (int item = 0; (listItem = listLayout->itemAt(item)) != NULL; item++)
+    for (int item = 0; (listItem = listLayout->itemAt(item)) != nullptr; item++)
     {
-        if (listItem->widget() == current && item + offset >= 0 && listLayout->itemAt(item + offset) != NULL) {
+        if (listItem->widget() == current && item + offset >= 0 && listLayout->itemAt(item + offset) != nullptr) {
             ensureWidgetVisible(listLayout->itemAt(item + offset)->widget());
             highlightListWidget(listLayout->itemAt(item + offset)->widget());
         }

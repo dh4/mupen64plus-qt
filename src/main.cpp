@@ -36,6 +36,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QFileInfo>
+#include <QScreen>
 #include <QTranslator>
 
 
@@ -71,7 +72,7 @@ int main(int argc, char *argv[])
     }
 
     if (windowx == "" && windowy == "") {
-        window.move(QApplication::desktop()->screen()->rect().center() - window.rect().center());
+        window.move(QGuiApplication::primaryScreen()->geometry().center() - window.rect().center());
     }
 
     return application.exec();

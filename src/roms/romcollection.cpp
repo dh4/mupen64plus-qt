@@ -199,13 +199,13 @@ int RomCollection::addRoms()
     database.close();
 
     //Emit signals for regular roms
-    qSort(roms.begin(), roms.end(), romSorter);
+    std::sort(roms.begin(), roms.end(), romSorter);
 
     for (int i = 0; i < roms.size(); i++)
         emit romAdded(&roms[i], i);
 
     //Emit signals for 64DD roms
-    qSort(ddRoms.begin(), ddRoms.end(), romSorter);
+    std::sort(ddRoms.begin(), ddRoms.end(), romSorter);
 
     for (int i = 0; i < ddRoms.size(); i++)
         emit ddRomAdded(&ddRoms[i]);
@@ -298,13 +298,13 @@ int RomCollection::cachedRoms(bool imageUpdated, bool onStartup)
         progress->close();
 
     //Emit signals for regular roms
-    qSort(roms.begin(), roms.end(), romSorter);
+    std::sort(roms.begin(), roms.end(), romSorter);
 
     for (int i = 0; i < roms.size(); i++)
         emit romAdded(&roms[i], i);
 
     //Emit signals for 64DD roms
-    qSort(ddRoms.begin(), ddRoms.end(), romSorter);
+    std::sort(ddRoms.begin(), ddRoms.end(), romSorter);
 
     for (int i = 0; i < ddRoms.size(); i++)
         emit ddRomAdded(&ddRoms[i]);
@@ -498,7 +498,7 @@ void RomCollection::setupProgressDialog(int size)
 #else
     progress->setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
 #endif
-    progress->setCancelButton(0);
+    progress->setCancelButton(nullptr);
     progress->setWindowModality(Qt::WindowModal);
 
     progress->show();

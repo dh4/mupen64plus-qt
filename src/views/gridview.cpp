@@ -111,7 +111,7 @@ void GridView::addToGridView(Rom *currentRom, int count, bool ddEnabled)
         Qt::AspectRatioMode aspectRatioMode = Qt::IgnoreAspectRatio;
 
         //Don't warp aspect ratio though if image is too far away from standard size (JP box art)
-        float aspectRatio = float(currentRom->image.width()) / currentRom->image.height();
+        double aspectRatio = double(currentRom->image.width()) / currentRom->image.height();
 
         if (aspectRatio < 1.1 || aspectRatio > 1.8)
             aspectRatioMode = Qt::KeepAspectRatio;
@@ -214,7 +214,7 @@ void GridView::highlightGridWidget(QWidget *current)
 
     //Set all to inactive shadow
     QLayoutItem *gridItem;
-    for (int item = 0; (gridItem = gridLayout->itemAt(item)) != NULL; item++)
+    for (int item = 0; (gridItem = gridLayout->itemAt(item)) != nullptr; item++)
     {
         gridItem->widget()->setGraphicsEffect(getShadow(false));
 
@@ -243,7 +243,7 @@ void GridView::keyPressEvent(QKeyEvent *event)
 void GridView::resetView()
 {
     QLayoutItem *gridItem;
-    while ((gridItem = gridLayout->takeAt(0)) != NULL)
+    while ((gridItem = gridLayout->takeAt(0)) != nullptr)
     {
         delete gridItem->widget();
         delete gridItem;
@@ -298,9 +298,9 @@ void GridView::selectNextRom(QWidget* current, QString keypress)
         offset = -1;
 
     QLayoutItem *gridItem;
-    for (int item = 0; (gridItem = gridLayout->itemAt(item)) != NULL; item++)
+    for (int item = 0; (gridItem = gridLayout->itemAt(item)) != nullptr; item++)
     {
-        if (gridItem->widget() == current && item + offset >= 0 && gridLayout->itemAt(item + offset) != NULL) {
+        if (gridItem->widget() == current && item + offset >= 0 && gridLayout->itemAt(item + offset) != nullptr) {
             ensureWidgetVisible(gridLayout->itemAt(item + offset)->widget());
             highlightGridWidget(gridLayout->itemAt(item + offset)->widget());
         }
