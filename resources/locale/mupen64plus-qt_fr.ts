@@ -17,22 +17,27 @@
 <context>
     <name>ConfigEditor</name>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="51"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="52"/>
         <source>&lt;ParentName&gt; Config Editor</source>
         <translation>Éditeur de configuration &lt;ParentName&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="75"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="80"/>
         <source>Key Codes Reference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="76"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="83"/>
+        <source>Mupen64Plus Documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/configeditor.cpp" line="91"/>
         <source>Save</source>
         <translation>Sauvegarder</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="77"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="92"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -78,6 +83,86 @@
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="92"/>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="142"/>
         <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="122"/>
+        <source>Quit the emulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="123"/>
+        <source>Select virtual &apos;slot&apos; for save/load state commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="124"/>
+        <source>Save emulator state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="125"/>
+        <source>Load emulator state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="126"/>
+        <source>Reset emulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="127"/>
+        <source>Slow down emulator by 5%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="128"/>
+        <source>Speed up emulator by 5%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="129"/>
+        <source>Take screenshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="130"/>
+        <source>Toggle between windowed and fullscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="131"/>
+        <source>Pause on/off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="132"/>
+        <source>Mute/unmute sound</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="133"/>
+        <source>Press &quot;Game Shark&quot; button (only if cheats are enabled)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="134"/>
+        <source>Single frame advance while paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="135"/>
+        <source>Fast forward (playback at 250% normal speed while pressed)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="136"/>
+        <source>Decrease volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/controlinfodialog.cpp" line="137"/>
+        <source>Increase volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -332,13 +417,13 @@
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="255"/>
-        <location filename="../../src/mainwindow.cpp" line="894"/>
+        <location filename="../../src/mainwindow.cpp" line="911"/>
         <source>&amp;Download/Update Info...</source>
         <translation>&amp;Télécharger/Mettre à jour les infos...</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="256"/>
-        <location filename="../../src/mainwindow.cpp" line="895"/>
+        <location filename="../../src/mainwindow.cpp" line="912"/>
         <source>D&amp;elete Current Info...</source>
         <translation>&amp;Effacer les infos actuelles...</translation>
     </message>
@@ -354,7 +439,7 @@
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="280"/>
-        <location filename="../../src/mainwindow.cpp" line="884"/>
+        <location filename="../../src/mainwindow.cpp" line="901"/>
         <source>&amp;Start</source>
         <translation>&amp;Démarrer</translation>
     </message>
@@ -375,7 +460,7 @@
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="302"/>
-        <location filename="../../src/mainwindow.cpp" line="887"/>
+        <location filename="../../src/mainwindow.cpp" line="904"/>
         <source>Configure &amp;Game...</source>
         <translation>Configurer le &amp;jeu...</translation>
     </message>
@@ -385,7 +470,7 @@
         <translation>&amp;Configurer...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="722"/>
+        <location filename="../../src/mainwindow.cpp" line="733"/>
         <source>There is no log. Either &lt;ParentName&gt; has not yet run or there was no output from the last run.</source>
         <translation>Il n&apos;y a pas de journaux. Soit &lt;ParentName&gt; n’a pas encore été lancé, soit il n’y a pas de données concernant le dernier démarrage.</translation>
     </message>
@@ -437,81 +522,91 @@
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="369"/>
+        <source>Documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="370"/>
+        <source>Mupen64Plus Docs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="372"/>
         <source>Default Controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="371"/>
+        <location filename="../../src/mainwindow.cpp" line="374"/>
         <source>&amp;About</source>
         <translation>À &amp;propos</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="451"/>
+        <location filename="../../src/mainwindow.cpp" line="456"/>
         <source>Add a directory containing ROMs under </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="452"/>
+        <location filename="../../src/mainwindow.cpp" line="457"/>
         <source>Settings-&gt;Configure-&gt;Paths to use this view.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="699"/>
+        <location filename="../../src/mainwindow.cpp" line="710"/>
         <source>Not Found</source>
         <translation>Non trouvé</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="699"/>
+        <location filename="../../src/mainwindow.cpp" line="710"/>
         <source>Editor requires config directory to be </source>
         <translation>L&apos;éditeur nécessite que le dossier de configuration soit </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="700"/>
+        <location filename="../../src/mainwindow.cpp" line="711"/>
         <source>set to a directory with mupen64plus.cfg.</source>
         <translation>un dossier contenant mupen64plus.cfg.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="701"/>
+        <location filename="../../src/mainwindow.cpp" line="712"/>
         <source>See here for the default config location:</source>
         <translation>Voir ici pour la configuration par défaut:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="721"/>
+        <location filename="../../src/mainwindow.cpp" line="732"/>
         <source>No Output</source>
         <translation>Pas de sortie</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="774"/>
+        <location filename="../../src/mainwindow.cpp" line="791"/>
         <source>All Files</source>
         <translation>Tous les fichiers</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="784"/>
+        <location filename="../../src/mainwindow.cpp" line="801"/>
         <source>Open ROM File</source>
         <translation>Ouvrir un fichier ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="802"/>
+        <location filename="../../src/mainwindow.cpp" line="819"/>
         <source>No ROMs</source>
         <translation>Aucune ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="802"/>
+        <location filename="../../src/mainwindow.cpp" line="819"/>
         <source>No ROMs found in ZIP file.</source>
         <translation>Aucune ROM trouvée dans le fichier ZIP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="817"/>
+        <location filename="../../src/mainwindow.cpp" line="834"/>
         <source>Select ROM</source>
         <translation>Choisir une ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="834"/>
+        <location filename="../../src/mainwindow.cpp" line="851"/>
         <source>Launch</source>
         <translation>Lancer</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="835"/>
+        <location filename="../../src/mainwindow.cpp" line="852"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>

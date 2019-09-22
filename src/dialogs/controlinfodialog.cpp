@@ -119,22 +119,22 @@ ControlInfo::ControlInfo(QWidget *parent) : QDialog(parent)
     hotkeysLayout->setContentsMargins(5, 10, 5, 10);
 
     QList<QStringList> hotkeys;
-    hotkeys << (QStringList() << "Esc" << "Quit the emulator")
-            << (QStringList() << "0 through 9" << "Select virtual 'slot' for save/load state commands")
-            << (QStringList() << "F5" << "Save emulator state")
-            << (QStringList() << "F7" << "Load emulator state")
-            << (QStringList() << "F9" << "Reset emulator")
-            << (QStringList() << "F10" << "Slow down emulator by 5%")
-            << (QStringList() << "F11" << "Speed up emulator by 5%")
-            << (QStringList() << "F12" << "Take screenshot")
-            << (QStringList() << "Alt+Enter" << "Toggle between windowed and fullscreen")
-            << (QStringList() << "P" << "Pause on/off")
-            << (QStringList() << "M" << "Mute/unmute sound")
-            << (QStringList() << "G" << "Press \"Game Shark\" button (only if cheats are enabled)")
-            << (QStringList() << "/" << "Single frame advance while paused")
-            << (QStringList() << "F" << "Fast forward (playback at 250% normal speed while pressed)")
-            << (QStringList() << "[" << "Decrease volume")
-            << (QStringList() << "]" << "Increase volume");
+    hotkeys << (QStringList() << "Esc" << tr("Quit the emulator"))
+            << (QStringList() << "0 through 9" << tr("Select virtual 'slot' for save/load state commands"))
+            << (QStringList() << "F5" << tr("Save emulator state"))
+            << (QStringList() << "F7" << tr("Load emulator state"))
+            << (QStringList() << "F9" << tr("Reset emulator"))
+            << (QStringList() << "F10" << tr("Slow down emulator by 5%"))
+            << (QStringList() << "F11" << tr("Speed up emulator by 5%"))
+            << (QStringList() << "F12" << tr("Take screenshot"))
+            << (QStringList() << "Alt+Enter" << tr("Toggle between windowed and fullscreen"))
+            << (QStringList() << "P" << tr("Pause on/off"))
+            << (QStringList() << "M" << tr("Mute/unmute sound"))
+            << (QStringList() << "G" << tr("Press \"Game Shark\" button (only if cheats are enabled)"))
+            << (QStringList() << "/" << tr("Single frame advance while paused"))
+            << (QStringList() << "F" << tr("Fast forward (playback at 250% normal speed while pressed)"))
+            << (QStringList() << "[" << tr("Decrease volume"))
+            << (QStringList() << "]" << tr("Increase volume"));
 
     hotkeysTable = new QTableWidget(this);
     hotkeysTable->setColumnCount(2);
