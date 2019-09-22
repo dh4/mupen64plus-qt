@@ -342,8 +342,12 @@ void MainWindow::createMenu()
     viewMenu->addSeparator();
 
     //OSX El Capitan adds it's own full-screen option
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     if (!(QOperatingSystemVersion::current() >= QOperatingSystemVersion::OSXElCapitan &&
             QOperatingSystemVersion::currentType() == QOperatingSystemVersion::MacOS))
+#else
+    if (QSysInfo::macVersion() < QSysInfo::MV_ELCAPITAN || QSysInfo::macVersion() == QSysInfo::MV_None)
+#endif
         fullScreenAction = viewMenu->addAction(tr("&Full-screen"));
     else
         fullScreenAction = new QAction(this);
@@ -569,8 +573,12 @@ bool MainWindow::eventFilter(QObject*, QEvent *event)
     }
 
     //OSX El Capitan adds it's own full-screen option, so handle the event change here
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::OSXElCapitan &&
             QOperatingSystemVersion::currentType() == QOperatingSystemVersion::MacOS) {
+#else
+    if (QSysInfo::macVersion() >= QSysInfo::MV_ELCAPITAN && QSysInfo::macVersion() != QSysInfo::MV_None) {
+#endif
         if (event->type() == QEvent::WindowStateChange) {
             QWindowStateChangeEvent *windowEvent = static_cast<QWindowStateChangeEvent*>(event);
 
