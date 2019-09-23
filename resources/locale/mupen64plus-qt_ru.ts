@@ -290,7 +290,7 @@
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="33"/>
         <source>These settings will override any global settings. If there&apos;s a setting you want to modify for this game, but it doesn&apos;t appear here, add the parameter for it to &quot;Other Parameters.&quot;</source>
-        <translation>Данные настройки будут иметь приоритет над общими. Если вы захотите изменить какую-либо настройку для данной игры, но ее здесь нет, добавьте ее в &quot;Другие настройки.&quot;</translation>
+        <translation>Данные настройки будут иметь приоритет над общими. Если вы хотите изменить какую-либо настройку для данной игры, но ее здесь нет, добавьте ее в &quot;Другие настройки.&quot;</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/gamesettingsdialog.ui" line="43"/>
