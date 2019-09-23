@@ -60,15 +60,13 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
                         + "<br /><br />" + tr("A customizable launcher for <ParentName> using Qt.")
                           .replace("<ParentName>",ParentName);
 
-    QString copyright = "";
-
     QString website = "<a href=\"" + Website + "\">"
                     + tr("<ParentName> website").replace("<ParentName>",ParentName) + "</a>";
 
     QString github = "<a href=\"" + GitHub + "\">" + tr("GitHub repository") + "</a>";
 
     descriptionLabel = new QLabel(description, this);
-    copyrightLabel = new QLabel(copyright, this);
+    copyrightLabel = new QLabel(Copyright, this);
     websiteLink = new QLabel(website, this);
     githubLink = new QLabel(github, this);
 

@@ -41,6 +41,7 @@ const QString AppNameLower      = "mupen64plus-qt";
 const QString ParentName        = "Mupen64Plus";
 const QString ParentNameLower   = "mupen64plus";
 
+const QString Copyright = "";
 const QString Website = "https://www.mupen64plus.org/";
 const QString GitHub = "https://github.com/dh4/mupen64plus-qt";
 
