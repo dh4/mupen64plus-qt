@@ -83,7 +83,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
         ui->fullscreenOption->setChecked(true);
 
     QStringList useableModes, modes;
-    useableModes << "default"; //Allow users to use the screen resolution set in the config file
+    useableModes << tr("default"); //Allow users to use the screen resolution set in the config file
 
     modes << "2560x1600"
           << "2560x1440"

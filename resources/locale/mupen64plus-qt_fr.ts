@@ -13,31 +13,46 @@
         <source>Version</source>
         <translation>Version</translation>
     </message>
+    <message>
+        <location filename="../../src/dialogs/aboutdialog.cpp" line="60"/>
+        <source>A customizable launcher for &lt;ParentName&gt; using Qt.</source>
+        <translation>Une interface élémentaire pour &lt;ParentName&gt;.</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/aboutdialog.cpp" line="66"/>
+        <source>&lt;ParentName&gt; website</source>
+        <translation>Site web de &lt;ParentName&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/aboutdialog.cpp" line="68"/>
+        <source>GitHub repository</source>
+        <translation>Dépôt GitHub</translation>
+    </message>
 </context>
 <context>
     <name>ConfigEditor</name>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="52"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="49"/>
         <source>&lt;ParentName&gt; Config Editor</source>
         <translation>Éditeur de configuration &lt;ParentName&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="80"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="72"/>
         <source>Key Codes Reference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="83"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="75"/>
         <source>Mupen64Plus Documentation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="91"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="83"/>
         <source>Save</source>
         <translation>Sauvegarder</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="92"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="84"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -227,35 +242,35 @@
 <context>
     <name>EmulatorHandler</name>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="62"/>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="190"/>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="197"/>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="207"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="57"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="185"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="192"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="202"/>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="63"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="58"/>
         <source>&lt;ParentName&gt; quit unexpectedly. Check the log for more information.</source>
         <translation>&lt;ParentName&gt; a quitté de manière inattendue. Consultez les journaux pour plus d&apos;informations.</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="67"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="62"/>
         <source>View Log</source>
         <translation>Consulter les journaux</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="191"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="186"/>
         <source>&lt;ParentName&gt; executable not found.</source>
         <translation>Executable &lt;ParentName&gt; non trouvé.</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="207"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="202"/>
         <source>Not a valid ROM File.</source>
         <translation>Fichier ROM invalide.</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="197"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="192"/>
         <source>ROM file not found.</source>
         <translation>Fichier ROM manquant.</translation>
     </message>
@@ -388,12 +403,12 @@
 <context>
     <name>LogDialog</name>
     <message>
-        <location filename="../../src/dialogs/logdialog.cpp" line="47"/>
+        <location filename="../../src/dialogs/logdialog.cpp" line="44"/>
         <source>&lt;ParentName&gt; Log</source>
         <translation>Journaux &lt;ParentName&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/logdialog.cpp" line="67"/>
+        <location filename="../../src/dialogs/logdialog.cpp" line="59"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
@@ -401,212 +416,211 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="251"/>
+        <location filename="../../src/mainwindow.cpp" line="248"/>
         <source>&amp;File</source>
         <translation>&amp;Fichier</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="252"/>
+        <location filename="../../src/mainwindow.cpp" line="249"/>
         <source>&amp;Open ROM...</source>
         <translation>&amp;Ouvrir une ROM...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="254"/>
+        <location filename="../../src/mainwindow.cpp" line="251"/>
         <source>&amp;Refresh List</source>
         <translation>&amp;Recharger la liste</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="255"/>
-        <location filename="../../src/mainwindow.cpp" line="911"/>
+        <location filename="../../src/mainwindow.cpp" line="252"/>
+        <location filename="../../src/mainwindow.cpp" line="904"/>
         <source>&amp;Download/Update Info...</source>
         <translation>&amp;Télécharger/Mettre à jour les infos...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="256"/>
-        <location filename="../../src/mainwindow.cpp" line="912"/>
+        <location filename="../../src/mainwindow.cpp" line="253"/>
+        <location filename="../../src/mainwindow.cpp" line="905"/>
         <source>D&amp;elete Current Info...</source>
         <translation>&amp;Effacer les infos actuelles...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="260"/>
+        <location filename="../../src/mainwindow.cpp" line="257"/>
         <source>&amp;Quit</source>
         <translation>&amp;Quitter</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="279"/>
+        <location filename="../../src/mainwindow.cpp" line="276"/>
         <source>&amp;Emulation</source>
         <translation>&amp;Émulation</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="280"/>
-        <location filename="../../src/mainwindow.cpp" line="901"/>
+        <location filename="../../src/mainwindow.cpp" line="277"/>
+        <location filename="../../src/mainwindow.cpp" line="894"/>
         <source>&amp;Start</source>
         <translation>&amp;Démarrer</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="281"/>
+        <location filename="../../src/mainwindow.cpp" line="278"/>
         <source>St&amp;op</source>
         <translation>&amp;Arrêter</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="299"/>
+        <location filename="../../src/mainwindow.cpp" line="296"/>
         <source>&amp;Settings</source>
         <translation>&amp;Paramètres</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="300"/>
+        <location filename="../../src/mainwindow.cpp" line="297"/>
         <source>Edit mupen64plus.cfg...</source>
         <translation>Éditer mupen64plus.cfg...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="302"/>
-        <location filename="../../src/mainwindow.cpp" line="904"/>
+        <location filename="../../src/mainwindow.cpp" line="299"/>
+        <location filename="../../src/mainwindow.cpp" line="897"/>
         <source>Configure &amp;Game...</source>
         <translation>Configurer le &amp;jeu...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="306"/>
+        <location filename="../../src/mainwindow.cpp" line="303"/>
         <source>&amp;Configure...</source>
         <translation>&amp;Configurer...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="733"/>
+        <location filename="../../src/mainwindow.cpp" line="730"/>
         <source>There is no log. Either &lt;ParentName&gt; has not yet run or there was no output from the last run.</source>
         <translation>Il n&apos;y a pas de journaux. Soit &lt;ParentName&gt; n’a pas encore été lancé, soit il n’y a pas de données concernant le dernier démarrage.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="320"/>
+        <location filename="../../src/mainwindow.cpp" line="317"/>
         <source>&amp;Layout</source>
         <translation>&amp;Disposition</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="283"/>
+        <location filename="../../src/mainwindow.cpp" line="280"/>
         <source>View Log</source>
         <translation>Consulter les journaux</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="319"/>
+        <location filename="../../src/mainwindow.cpp" line="316"/>
         <source>&amp;View</source>
         <translation>&amp;Affichage</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="324"/>
+        <location filename="../../src/mainwindow.cpp" line="321"/>
         <source>None</source>
         <translation>Aucune</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="325"/>
+        <location filename="../../src/mainwindow.cpp" line="322"/>
         <source>Table View</source>
         <translation>Vue en tableau</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="326"/>
+        <location filename="../../src/mainwindow.cpp" line="323"/>
         <source>Grid View</source>
         <translation>Vue en vignettes</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="327"/>
+        <location filename="../../src/mainwindow.cpp" line="324"/>
         <source>List View</source>
         <translation>Vue en liste</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="350"/>
-        <location filename="../../src/mainwindow.cpp" line="354"/>
+        <location filename="../../src/mainwindow.cpp" line="351"/>
         <source>&amp;Full-screen</source>
         <translation>Pl&amp;ein-Écran</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="368"/>
+        <location filename="../../src/mainwindow.cpp" line="367"/>
         <source>&amp;Help</source>
         <translation>&amp;Aide</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="369"/>
+        <location filename="../../src/mainwindow.cpp" line="368"/>
         <source>Documentation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="370"/>
+        <location filename="../../src/mainwindow.cpp" line="369"/>
         <source>Mupen64Plus Docs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="372"/>
+        <location filename="../../src/mainwindow.cpp" line="371"/>
         <source>Default Controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="374"/>
+        <location filename="../../src/mainwindow.cpp" line="373"/>
         <source>&amp;About</source>
         <translation>À &amp;propos</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="456"/>
+        <location filename="../../src/mainwindow.cpp" line="455"/>
         <source>Add a directory containing ROMs under </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="457"/>
+        <location filename="../../src/mainwindow.cpp" line="456"/>
         <source>Settings-&gt;Configure-&gt;Paths to use this view.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="710"/>
+        <location filename="../../src/mainwindow.cpp" line="707"/>
         <source>Not Found</source>
         <translation>Non trouvé</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="710"/>
+        <location filename="../../src/mainwindow.cpp" line="707"/>
         <source>Editor requires config directory to be </source>
         <translation>L&apos;éditeur nécessite que le dossier de configuration soit </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="711"/>
+        <location filename="../../src/mainwindow.cpp" line="708"/>
         <source>set to a directory with mupen64plus.cfg.</source>
         <translation>un dossier contenant mupen64plus.cfg.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="712"/>
+        <location filename="../../src/mainwindow.cpp" line="709"/>
         <source>See here for the default config location:</source>
         <translation>Voir ici pour la configuration par défaut:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="732"/>
+        <location filename="../../src/mainwindow.cpp" line="729"/>
         <source>No Output</source>
         <translation>Pas de sortie</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="791"/>
+        <location filename="../../src/mainwindow.cpp" line="788"/>
         <source>All Files</source>
         <translation>Tous les fichiers</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="801"/>
+        <location filename="../../src/mainwindow.cpp" line="794"/>
         <source>Open ROM File</source>
         <translation>Ouvrir un fichier ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="819"/>
+        <location filename="../../src/mainwindow.cpp" line="812"/>
         <source>No ROMs</source>
         <translation>Aucune ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="819"/>
+        <location filename="../../src/mainwindow.cpp" line="812"/>
         <source>No ROMs found in ZIP file.</source>
         <translation>Aucune ROM trouvée dans le fichier ZIP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="834"/>
+        <location filename="../../src/mainwindow.cpp" line="827"/>
         <source>Select ROM</source>
         <translation>Choisir une ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="851"/>
+        <location filename="../../src/mainwindow.cpp" line="844"/>
         <source>Launch</source>
         <translation>Lancer</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="852"/>
+        <location filename="../../src/mainwindow.cpp" line="845"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -614,122 +628,122 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/common.cpp" line="338"/>
+        <location filename="../../src/common.cpp" line="326"/>
         <source>GoodName</source>
         <translation>Nom Good</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="339"/>
+        <location filename="../../src/common.cpp" line="327"/>
         <source>Filename</source>
         <translation>Nom du fichier</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="340"/>
+        <location filename="../../src/common.cpp" line="328"/>
         <source>Filename (extension)</source>
         <translation>Nom du fichier (extension)</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="341"/>
+        <location filename="../../src/common.cpp" line="329"/>
         <source>Zip File</source>
         <translation>Fichier Zip</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="342"/>
+        <location filename="../../src/common.cpp" line="330"/>
         <source>Internal Name</source>
         <translation>Nom interne</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="343"/>
+        <location filename="../../src/common.cpp" line="331"/>
         <source>Size</source>
         <translation>Taille</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="344"/>
+        <location filename="../../src/common.cpp" line="332"/>
         <source>MD5</source>
         <translation>MD5</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="345"/>
+        <location filename="../../src/common.cpp" line="333"/>
         <source>CRC1</source>
         <translation>CRC1</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="346"/>
+        <location filename="../../src/common.cpp" line="334"/>
         <source>CRC2</source>
         <translation>CRC2</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="347"/>
+        <location filename="../../src/common.cpp" line="335"/>
         <source>Players</source>
         <translation>Joueurs</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="348"/>
+        <location filename="../../src/common.cpp" line="336"/>
         <source>Rumble</source>
         <translation>Rumble</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="349"/>
+        <location filename="../../src/common.cpp" line="337"/>
         <source>Save Type</source>
         <translation>Type de sauvegarde</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="350"/>
+        <location filename="../../src/common.cpp" line="338"/>
         <source>Game Title</source>
         <translation>Titre du jeu</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="351"/>
+        <location filename="../../src/common.cpp" line="339"/>
         <source>Release Date</source>
         <translation>Date de sortie</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="352"/>
+        <location filename="../../src/common.cpp" line="340"/>
         <source>Overview</source>
         <translation>Aperçu</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="353"/>
+        <location filename="../../src/common.cpp" line="341"/>
         <source>ESRB</source>
         <translation>ESRB</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="354"/>
+        <location filename="../../src/common.cpp" line="342"/>
         <source>Genre</source>
         <translation>Genre</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="355"/>
+        <location filename="../../src/common.cpp" line="343"/>
         <source>Publisher</source>
         <translation>Éditeur</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="356"/>
+        <location filename="../../src/common.cpp" line="344"/>
         <source>Developer</source>
         <translation>Développeur</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="357"/>
+        <location filename="../../src/common.cpp" line="345"/>
         <source>Rating</source>
         <translation>Certification</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="358"/>
+        <location filename="../../src/common.cpp" line="346"/>
         <source>Game Cover</source>
         <translation>Jaquette</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="359"/>
+        <location filename="../../src/common.cpp" line="347"/>
         <source>Unknown ROM</source>
         <translation>ROM inconnue</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="360"/>
+        <location filename="../../src/common.cpp" line="348"/>
         <source>Requires catalog file</source>
         <translation>Fichier catalogue demandé</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="361"/>
+        <location filename="../../src/common.cpp" line="349"/>
         <source>Not found</source>
         <translation>Non trouvé</translation>
     </message>
@@ -759,21 +773,6 @@
         <location filename="../../src/roms/thegamesdbscraper.cpp" line="363"/>
         <source>Download Complete!</source>
         <translation>Téléchargement terminé !</translation>
-    </message>
-    <message>
-        <location filename="../../src/global.h" line="44"/>
-        <source>A customizable launcher for &lt;ParentName&gt; using Qt.</source>
-        <translation>Une interface élémentaire pour &lt;ParentName&gt;.</translation>
-    </message>
-    <message>
-        <location filename="../../src/global.h" line="47"/>
-        <source>&lt;ParentName&gt; website</source>
-        <translation>Site web de &lt;ParentName&gt;</translation>
-    </message>
-    <message>
-        <location filename="../../src/global.h" line="50"/>
-        <source>GitHub repository</source>
-        <translation>Dépôt GitHub</translation>
     </message>
 </context>
 <context>
@@ -1134,6 +1133,11 @@
         <translation>&lt;b&gt;Remarque :&lt;/b&gt; Le changement de langue ne prendra effet qu&apos;après le redémarrage du programme.</translation>
     </message>
     <message>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="86"/>
+        <source>default</source>
+        <translation>Défaut</translation>
+    </message>
+    <message>
         <location filename="../../src/dialogs/settingsdialog.cpp" line="179"/>
         <source>Extra Small</source>
         <translation>Très petite</translation>
@@ -1289,8 +1293,8 @@
 <context>
     <name>TableView</name>
     <message>
-        <location filename="../../src/views/tableview.cpp" line="76"/>
-        <location filename="../../src/views/tableview.cpp" line="79"/>
+        <location filename="../../src/views/tableview.cpp" line="78"/>
+        <location filename="../../src/views/tableview.cpp" line="81"/>
         <source>No Cart</source>
         <translation>Pas de cartouche</translation>
     </message>

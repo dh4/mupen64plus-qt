@@ -41,14 +41,8 @@ const QString AppNameLower      = "mupen64plus-qt";
 const QString ParentName        = "Mupen64Plus";
 const QString ParentNameLower   = "mupen64plus";
 
-const QString Description = QObject::tr("A customizable launcher for <ParentName> using Qt.").replace("<ParentName>",ParentName);
-const QString Copyright = "";
-const QString Website = "<a href=\"https://www.mupen64plus.org/\">"
-        + QObject::tr("<ParentName> website").replace("<ParentName>",ParentName)
-        + "</a>";
-const QString GitHub = "<a href=\"https://github.com/dh4/mupen64plus-qt\">"
-        + QObject::tr("GitHub repository")
-        + "</a>";
+const QString Website = "https://www.mupen64plus.org/";
+const QString GitHub = "https://github.com/dh4/mupen64plus-qt";
 
 const QString TheGamesDBAPIKey = "5dd59a89da5c0018b0e9ded34e299cf675e94d51e229a19822074d1a67019f9f";
 
