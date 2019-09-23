@@ -29,7 +29,7 @@
     <message>
         <location filename="../../src/dialogs/configeditor.cpp" line="83"/>
         <source>Mupen64Plus Documentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Документация Mupen64Plus</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/configeditor.cpp" line="91"/>
@@ -52,7 +52,7 @@
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="51"/>
         <source>These are the default controls for Mupen64Plus. </source>
-        <translation>Это клавиши Mupen64Plus по умолчанию.</translation>
+        <translation>Это клавиши Mupen64Plus по умолчанию. </translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="52"/>
@@ -88,82 +88,82 @@
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="122"/>
         <source>Quit the emulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Выйти из эмулятора</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="123"/>
         <source>Select virtual &apos;slot&apos; for save/load state commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать виртуальный &apos;слот&apos; для команд сохранения/загрузки состояния</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="124"/>
         <source>Save emulator state</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить состояние эмулятора</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="125"/>
         <source>Load emulator state</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить состояние эмулятора</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="126"/>
         <source>Reset emulator</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить эмулятор</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="127"/>
         <source>Slow down emulator by 5%</source>
-        <translation type="unfinished"></translation>
+        <translation>Замедлить эмулятор на 5%</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="128"/>
         <source>Speed up emulator by 5%</source>
-        <translation type="unfinished"></translation>
+        <translation>Ускорить эмулятор на 5%</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="129"/>
         <source>Take screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Снять скриншот</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="130"/>
         <source>Toggle between windowed and fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>Переключиться между оконным и полноэкранным режимами</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="131"/>
         <source>Pause on/off</source>
-        <translation type="unfinished"></translation>
+        <translation>Пауза</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="132"/>
         <source>Mute/unmute sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить/выключить звук</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="133"/>
         <source>Press &quot;Game Shark&quot; button (only if cheats are enabled)</source>
-        <translation type="unfinished"></translation>
+        <translation>Нажать кнопку &quot;Game Shark&quot; (только если читы включены)</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="134"/>
         <source>Single frame advance while paused</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти на один кадр вперед во время паузы</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="135"/>
         <source>Fast forward (playback at 250% normal speed while pressed)</source>
-        <translation type="unfinished"></translation>
+        <translation>Быстрая перемотка вперед (воспроизведение на 250% от нормальной скорости при удерживании)</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="136"/>
         <source>Decrease volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Уменьшить громкость</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="137"/>
         <source>Increase volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Увеличить громкость</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="142"/>
@@ -523,12 +523,12 @@
     <message>
         <location filename="../../src/mainwindow.cpp" line="369"/>
         <source>Documentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Документация</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="370"/>
         <source>Mupen64Plus Docs</source>
-        <translation type="unfinished"></translation>
+        <translation>Документы Mupen64Plus</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="372"/>
@@ -1110,12 +1110,12 @@
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="1188"/>
         <source>Save Options:</source>
-        <translation>Настройки сохранения:</translation>
+        <translation>Сохранять настройки:</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="1181"/>
         <source>Download Game Information (thegamesdb.net):</source>
-        <translation>Загрузить информацию об игре (thegamesdb.net):</translation>
+        <translation>Загружать информацию об игре (thegamesdb.net):</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog.ui" line="1195"/>
