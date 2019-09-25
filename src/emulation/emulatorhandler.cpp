@@ -37,7 +37,6 @@
 #include <QDir>
 #include <QFile>
 #include <QMessageBox>
-#include <QProcess>
 
 #include <quazip5/quazip.h>
 #include <quazip5/quazipfile.h>
@@ -50,9 +49,9 @@ EmulatorHandler::EmulatorHandler(QWidget *parent) : QObject(parent)
     lastOutput = "";
 }
 
-void EmulatorHandler::checkStatus(int status)
+void EmulatorHandler::checkStatus(int status, QProcess::ExitStatus exitStatus)
 {
-    if (status > 0) {
+    if (status != 0 || exitStatus != QProcess::NormalExit) {
         QMessageBox exitDialog(parent);
         exitDialog.setWindowTitle(tr("Warning"));
         exitDialog.setText(tr("<ParentName> quit unexpectedly. Check the log for more information.")
@@ -120,7 +119,12 @@ QStringList EmulatorHandler::parseArgString(QString argString)
 
 void EmulatorHandler::readOutput()
 {
-    lastOutput.append(emulatorProc->readAllStandardOutput());
+    QString output = emulatorProc->readAllStandardOutput();
+    if (output != "")
+        lastOutput.append(output);
+    else
+        lastOutput.append("\n" + tr("There was no output. If you were expecting Mupen64Plus to run, try copying")
+                          + "\n" + tr("the above command into a command prompt to see if you get an error."));
 }
 
 
@@ -267,7 +271,8 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
     emulatorProc = new QProcess(this);
     connect(emulatorProc, SIGNAL(finished(int)), this, SLOT(readOutput()));
     connect(emulatorProc, SIGNAL(finished(int)), this, SLOT(emitFinished()));
-    connect(emulatorProc, SIGNAL(finished(int)), this, SLOT(checkStatus(int)));
+    connect(emulatorProc, SIGNAL(finished(int, QProcess::ExitStatus)), this,
+            SLOT(checkStatus(int, QProcess::ExitStatus)));
 
     if (zip)
         connect(emulatorProc, SIGNAL(finished(int)), this, SLOT(cleanTemp()));

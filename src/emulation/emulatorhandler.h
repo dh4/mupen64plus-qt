@@ -33,9 +33,9 @@
 #define EMULATORHANDLER_H
 
 #include <QObject>
+#include <QProcess>
 
 class QDir;
-class QProcess;
 
 
 class EmulatorHandler : public QObject
@@ -60,7 +60,7 @@ private:
     QWidget *parent;
 
 private slots:
-    void checkStatus(int status);
+    void checkStatus(int status, QProcess::ExitStatus exitStatus);
     void cleanTemp();
     void emitFinished();
     void readOutput();
