@@ -204,6 +204,12 @@ void MainWindow::autoloadSettings()
 #endif
     }
 
+    checkConfigLocation();
+}
+
+
+void MainWindow::checkConfigLocation()
+{
     //Check default location for mupen64plus.cfg in case user wants to use editor
     QString configPath = SETTINGS.value("Paths/config", "").toString();
 
@@ -698,6 +704,8 @@ void MainWindow::openDownloader()
 
 void MainWindow::openEditor()
 {
+    checkConfigLocation();
+
     QString configPath = SETTINGS.value("Paths/config", "").toString();
     QDir configDir = QDir(configPath);
     QString configFile = configDir.absoluteFilePath("mupen64plus.cfg");

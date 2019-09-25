@@ -68,6 +68,7 @@ protected:
 
 private:
     void autoloadSettings();
+    void checkConfigLocation();
     void createMenu();
     void createRomView();
     void openZipDialog(QStringList zippedFiles);
