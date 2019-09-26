@@ -19,12 +19,12 @@
         <translation>Настраиваемый интерфейс для &lt;ParentName&gt;, написанный на Qt.</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/aboutdialog.cpp" line="66"/>
+        <location filename="../../src/dialogs/aboutdialog.cpp" line="64"/>
         <source>&lt;ParentName&gt; website</source>
         <translation>Сайт &lt;ParentName&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/aboutdialog.cpp" line="68"/>
+        <location filename="../../src/dialogs/aboutdialog.cpp" line="66"/>
         <source>GitHub repository</source>
         <translation>Репозиторий GitHub</translation>
     </message>
@@ -242,35 +242,45 @@
 <context>
     <name>EmulatorHandler</name>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="57"/>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="185"/>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="192"/>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="202"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="56"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="189"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="196"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="206"/>
         <source>Warning</source>
         <translation>Внимание</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="58"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="57"/>
         <source>&lt;ParentName&gt; quit unexpectedly. Check the log for more information.</source>
         <translation>&lt;ParentName&gt; неожиданно прекратил работу. Просмотрите журнал для получения более подробной информации.</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="62"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="61"/>
         <source>View Log</source>
         <translation>Просмотреть журнал</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="186"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="126"/>
+        <source>There was no output. If you were expecting Mupen64Plus to run, try copying</source>
+        <translation>Нет вывода. Если вы думали, что Mupen64Plus запущен, попробуйте скопировать</translation>
+    </message>
+    <message>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="127"/>
+        <source>the above command into a command prompt to see if you get an error.</source>
+        <translation>команду выше в командную строку и проверить вывод на наличие ошибок.</translation>
+    </message>
+    <message>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="190"/>
         <source>&lt;ParentName&gt; executable not found.</source>
         <translation>Исполняемый файл &lt;ParentName&gt; не найден.</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="202"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="206"/>
         <source>Not a valid ROM File.</source>
         <translation>Некорректный файл ROM.</translation>
     </message>
     <message>
-        <location filename="../../src/emulation/emulatorhandler.cpp" line="192"/>
+        <location filename="../../src/emulation/emulatorhandler.cpp" line="196"/>
         <source>ROM file not found.</source>
         <translation>Файл ROM не найден.</translation>
     </message>
@@ -416,211 +426,211 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="248"/>
+        <location filename="../../src/mainwindow.cpp" line="254"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="249"/>
+        <location filename="../../src/mainwindow.cpp" line="255"/>
         <source>&amp;Open ROM...</source>
         <translation>&amp;Открыть ROM...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="251"/>
+        <location filename="../../src/mainwindow.cpp" line="257"/>
         <source>&amp;Refresh List</source>
         <translation>О&amp;бновить список</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="252"/>
-        <location filename="../../src/mainwindow.cpp" line="904"/>
+        <location filename="../../src/mainwindow.cpp" line="258"/>
+        <location filename="../../src/mainwindow.cpp" line="912"/>
         <source>&amp;Download/Update Info...</source>
         <translation>&amp;Загрузить/обновить информацию...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="253"/>
-        <location filename="../../src/mainwindow.cpp" line="905"/>
+        <location filename="../../src/mainwindow.cpp" line="259"/>
+        <location filename="../../src/mainwindow.cpp" line="913"/>
         <source>D&amp;elete Current Info...</source>
         <translation>&amp;Удалить текущую информацию...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="257"/>
+        <location filename="../../src/mainwindow.cpp" line="263"/>
         <source>&amp;Quit</source>
         <translation>&amp;Выйти</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="276"/>
+        <location filename="../../src/mainwindow.cpp" line="282"/>
         <source>&amp;Emulation</source>
         <translation>&amp;Эмуляция</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="277"/>
-        <location filename="../../src/mainwindow.cpp" line="894"/>
+        <location filename="../../src/mainwindow.cpp" line="283"/>
+        <location filename="../../src/mainwindow.cpp" line="902"/>
         <source>&amp;Start</source>
         <translation>&amp;Запустить</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="278"/>
+        <location filename="../../src/mainwindow.cpp" line="284"/>
         <source>St&amp;op</source>
         <translation>&amp;Остановить</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="296"/>
+        <location filename="../../src/mainwindow.cpp" line="302"/>
         <source>&amp;Settings</source>
         <translation>&amp;Настройки</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="297"/>
+        <location filename="../../src/mainwindow.cpp" line="303"/>
         <source>Edit mupen64plus.cfg...</source>
         <translation>Изменить mupen64plus.cfg...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="299"/>
-        <location filename="../../src/mainwindow.cpp" line="897"/>
+        <location filename="../../src/mainwindow.cpp" line="305"/>
+        <location filename="../../src/mainwindow.cpp" line="905"/>
         <source>Configure &amp;Game...</source>
         <translation>Настроить &amp;игру...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="303"/>
+        <location filename="../../src/mainwindow.cpp" line="309"/>
         <source>&amp;Configure...</source>
         <translation>&amp;Параметры...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="730"/>
+        <location filename="../../src/mainwindow.cpp" line="738"/>
         <source>There is no log. Either &lt;ParentName&gt; has not yet run or there was no output from the last run.</source>
         <translation>Журнал отсутствует. &lt;ParentName&gt; не был запущен или не выводил информацию с момента последнего запуска.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="317"/>
+        <location filename="../../src/mainwindow.cpp" line="323"/>
         <source>&amp;Layout</source>
         <translation>&amp;Расположение</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="280"/>
+        <location filename="../../src/mainwindow.cpp" line="286"/>
         <source>View Log</source>
         <translation>Просмотреть журнал</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="316"/>
+        <location filename="../../src/mainwindow.cpp" line="322"/>
         <source>&amp;View</source>
         <translation>&amp;Вид</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="321"/>
+        <location filename="../../src/mainwindow.cpp" line="327"/>
         <source>None</source>
         <translation>Нет</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="322"/>
+        <location filename="../../src/mainwindow.cpp" line="328"/>
         <source>Table View</source>
         <translation>Таблица</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="323"/>
+        <location filename="../../src/mainwindow.cpp" line="329"/>
         <source>Grid View</source>
         <translation>Сетка</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="324"/>
+        <location filename="../../src/mainwindow.cpp" line="330"/>
         <source>List View</source>
         <translation>Список</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="351"/>
+        <location filename="../../src/mainwindow.cpp" line="357"/>
         <source>&amp;Full-screen</source>
         <translation>В&amp;о весь экран</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="367"/>
+        <location filename="../../src/mainwindow.cpp" line="373"/>
         <source>&amp;Help</source>
         <translation>&amp;Помощь</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="368"/>
+        <location filename="../../src/mainwindow.cpp" line="374"/>
         <source>Documentation</source>
         <translation>Документация</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="369"/>
+        <location filename="../../src/mainwindow.cpp" line="375"/>
         <source>Mupen64Plus Docs</source>
         <translation>Документы Mupen64Plus</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="371"/>
+        <location filename="../../src/mainwindow.cpp" line="377"/>
         <source>Default Controls</source>
         <translation>Управление по умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="373"/>
+        <location filename="../../src/mainwindow.cpp" line="379"/>
         <source>&amp;About</source>
         <translation>&amp;О программе...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="455"/>
+        <location filename="../../src/mainwindow.cpp" line="461"/>
         <source>Add a directory containing ROMs under </source>
         <translation>Добавьте каталог, содержащий файлы ROM, с помощью </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="456"/>
+        <location filename="../../src/mainwindow.cpp" line="462"/>
         <source>Settings-&gt;Configure-&gt;Paths to use this view.</source>
         <translation>Настройки-&gt;Параметры-&gt;Пути, чтобы их показать.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="707"/>
+        <location filename="../../src/mainwindow.cpp" line="715"/>
         <source>Not Found</source>
         <translation>Не найдено</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="707"/>
+        <location filename="../../src/mainwindow.cpp" line="715"/>
         <source>Editor requires config directory to be </source>
         <translation>Для работы редактора нужно задать каталог </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="708"/>
+        <location filename="../../src/mainwindow.cpp" line="716"/>
         <source>set to a directory with mupen64plus.cfg.</source>
         <translation>с файлом mupen64plus.cfg в качестве каталога настроек.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="709"/>
+        <location filename="../../src/mainwindow.cpp" line="717"/>
         <source>See here for the default config location:</source>
         <translation>Посмотрите здесь, чтобы узнать местоположение файла настроек по умолчанию:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="729"/>
+        <location filename="../../src/mainwindow.cpp" line="737"/>
         <source>No Output</source>
         <translation>Нет вывода результатов</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="788"/>
+        <location filename="../../src/mainwindow.cpp" line="796"/>
         <source>All Files</source>
         <translation>Все файлы</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="794"/>
+        <location filename="../../src/mainwindow.cpp" line="802"/>
         <source>Open ROM File</source>
         <translation>Открыть файл ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="812"/>
+        <location filename="../../src/mainwindow.cpp" line="820"/>
         <source>No ROMs</source>
         <translation>Нет файлов ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="812"/>
+        <location filename="../../src/mainwindow.cpp" line="820"/>
         <source>No ROMs found in ZIP file.</source>
         <translation>Не найдены файлы ROM в файле ZIP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="827"/>
+        <location filename="../../src/mainwindow.cpp" line="835"/>
         <source>Select ROM</source>
         <translation>Выбрать ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="844"/>
+        <location filename="../../src/mainwindow.cpp" line="852"/>
         <source>Launch</source>
         <translation>Запустить</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="845"/>
+        <location filename="../../src/mainwindow.cpp" line="853"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
