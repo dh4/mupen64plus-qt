@@ -121,6 +121,8 @@ QString getDefaultLanguage()
     //Add other languages here as translations are done
     if (systemLanguage == "fr")
         return "FR";
+    else if (systemLanguage == "ru")
+        return "RU";
     else
         return "EN";
 }
