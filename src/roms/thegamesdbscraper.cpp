@@ -204,12 +204,16 @@ void TheGamesDBScraper::downloadGameInfo(QString identifier, QString searchName,
             QString apiFilter = "&filter[platform]=3&include=boxart&fields=game_title,release_date,";
             apiFilter += "developers,publishers,genres,overview,rating,players";
 
+            QString apiURL = SETTINGS.value("TheGamesDB/url", "https://api.thegamesdb.net/").toString();
+            QString gameIDPrefix = SETTINGS.value("TheGamesDB/ByGameID", "/v1/Games/ByGameID").toString();
+            QString gameNamePrefix = SETTINGS.value("TheGamesDB/ByGameName", "/v1.1/Games/ByGameName").toString();
+
             //If user submits gameID, use that
             if (gameID != "")
-                url.setUrl("https://api.thegamesdb.net/Games/ByGameID?apikey=" + TheGamesDBAPIKey + "&id="
+                url.setUrl(apiURL + gameIDPrefix + "?apikey=" + TheGamesDBAPIKey + "&id="
                            + gameID + apiFilter);
             else
-                url.setUrl("https://api.thegamesdb.net/Games/ByGameName?apikey=" + TheGamesDBAPIKey + "&name="
+                url.setUrl(apiURL + gameNamePrefix + "?apikey=" + TheGamesDBAPIKey + "&name="
                            + searchName + apiFilter);
 
             QString data = getUrlContents(url);
@@ -425,7 +429,18 @@ void TheGamesDBScraper::updateListCache(QFile *file, QString list)
 {
     if (keepGoing) {
         QUrl url;
-        url.setUrl("https://api.thegamesdb.net/" + list + "?apikey=" + TheGamesDBAPIKey);
+
+        QString apiURL = SETTINGS.value("TheGamesDB/url", "https://api.thegamesdb.net/").toString();
+        QString prefix;
+
+        if (list == "Genres")
+            prefix = SETTINGS.value("TheGamesDB/Genres", "/v1/Genres").toString();
+        else if (list == "Developers")
+            prefix = SETTINGS.value("TheGamesDB/Developers", "/v1/Developers").toString();
+        else if (list == "Publishers")
+            prefix = SETTINGS.value("TheGamesDB/Publishers", "/v1/Publishers").toString();
+
+        url.setUrl(apiURL + prefix + "?apikey=" + TheGamesDBAPIKey);
         QString data = getUrlContents(url);
         QJsonDocument document = QJsonDocument::fromJson(data.toUtf8());
         QJsonDocument result(document.object().value("data").toObject().value(list.toLower()).toObject());
