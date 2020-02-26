@@ -144,7 +144,7 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
         romData.append(zippedFile.readAll());
         zippedFile.close();
 
-        QString tempDir = QDir::tempPath() + "/" + AppNameLower + "/" + qgetenv("USER");
+        QString tempDir = QDir::tempPath() + "/" + AppNameLower + "-" + qgetenv("USER");
         QDir().mkpath(tempDir);
         completeRomPath = tempDir + "/temp.n64";
 
