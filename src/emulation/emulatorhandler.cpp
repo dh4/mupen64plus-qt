@@ -68,7 +68,7 @@ void EmulatorHandler::checkStatus(int status, QProcess::ExitStatus exitStatus)
 
 void EmulatorHandler::cleanTemp()
 {
-    QFile::remove(QDir::tempPath() + "/" + AppNameLower + "/" + qgetenv("USER") + "/temp.z64");
+    QFile::remove(QDir::tempPath() + "/" + AppNameLower + "-" + qgetenv("USER") + "/temp.z64");
 }
 
 
