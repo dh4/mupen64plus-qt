@@ -211,9 +211,7 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
 
     QStringList args;
 
-    if (SETTINGS.value("saveoptions", "").toString() == "true")
-        args << "--saveoptions";
-    else
+    if (SETTINGS.value("saveoptions", "").toString() != "true")
         args << "--nosaveoptions";
 
     if (dataPath != "" && dataDir.exists())
