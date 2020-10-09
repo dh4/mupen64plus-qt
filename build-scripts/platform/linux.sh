@@ -3,6 +3,9 @@
 [[ -z $WORKING_DIR ]] && WORKING_DIR=$(pwd)
 [[ -z $VERSION ]] && VERSION=$(git log --oneline -n 1 | awk '{print $1}')
 
+[[ -z $ARCH ]] && ARCH=".$(uname -m)"
+[[ $ARCH == ".x86_64" ]] && ARCH=""
+
 
 case "$1" in
 
@@ -27,7 +30,7 @@ case "$1" in
         mkdir -p "build/$TRAVIS_BRANCH"
 
         mv resources/README.txt .
-        tar -cvzpf "build/$TRAVIS_BRANCH/mupen64plus-qt_linux_$VERSION.tar.gz" mupen64plus-qt README.txt
+        tar -cvzpf "build/$TRAVIS_BRANCH/mupen64plus-qt_linux_$VERSION$ARCH.tar.gz" mupen64plus-qt README.txt
     ;;
 
 esac

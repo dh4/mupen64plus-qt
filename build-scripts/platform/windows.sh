@@ -3,6 +3,9 @@
 [[ -z $WORKING_DIR ]] && WORKING_DIR=$(pwd)
 [[ -z $VERSION ]] && VERSION=$(git log --oneline -n 1 | awk '{print $1}')
 
+[[ -z $ARCH ]] && ARCH=".$(uname -m)"
+[[ $ARCH == ".x86_64" ]] && ARCH=""
+
 
 case "$1" in
 
@@ -48,7 +51,7 @@ case "$1" in
         mkdir -p "build/$TRAVIS_BRANCH"
 
         mv release/mupen64plus-qt.exe resources/README.txt .
-        zip "build/$TRAVIS_BRANCH/mupen64plus-qt_win_$VERSION.zip" mupen64plus-qt.exe README.txt
+        zip "build/$TRAVIS_BRANCH/mupen64plus-qt_win_$VERSION$ARCH.zip" mupen64plus-qt.exe README.txt
     ;;
 
 esac
