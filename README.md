@@ -1,4 +1,4 @@
-# Mupen64Plus-Qt [![Build Status](https://travis-ci.org/dh4/mupen64plus-qt.svg?branch=master)](https://travis-ci.org/dh4/mupen64plus-qt) 
+# Mupen64Plus-Qt [![Build Status](https://travis-ci.com/dh4/mupen64plus-qt.svg?branch=master)](https://travis-ci.com/dh4/mupen64plus-qt)
 
 A customizable cross-platform launcher. This was adapted from CEN64-Qt to work with [Mupen64Plus](https://mupen64plus.org/).
 
