@@ -1,6 +1,7 @@
 #!/bin/bash
 
-export WORKING_DIR=$HOME/build/dh4
+export GITHUB_USER=$(echo $TRAVIS_REPO_SLUG | cut -d "/" -f1)
+export WORKING_DIR=$HOME/build/$GITHUB_USER
 
 if [[ $1 == 'package' ]]; then
     VERSION=$(echo $TRAVIS_TAG | sed -e 's/v//g')
