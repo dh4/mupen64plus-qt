@@ -1,11 +1,8 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+export QT_SELECT = qt5
 
 %:
 	dh $@
-
-override_dh_auto_configure:
-	QT_SELECT=qt5 dh_auto_configure
