@@ -425,8 +425,8 @@ void SettingsDialog::addRomDirectory()
     if (path != "") {
         //check for duplicates
         bool found = false;
-        foreach (QListWidgetItem *item, ui->romList->findItems("*", Qt::MatchWildcard))
-            if (path == item->text())
+        for (int i = 0; i < ui->romList->count(); i++)
+            if (path == ui->romList->item(i)->text())
                 found = true;
 
         if (!found)
@@ -546,9 +546,9 @@ void SettingsDialog::editSettings()
 
     //Table tab
     QStringList tableVisibleItems;
-    foreach (QListWidgetItem *item, ui->tableCurrentList->findItems("*", Qt::MatchWildcard))
-        if (available.contains(item->data(Qt::UserRole).toString()))
-            tableVisibleItems << item->data(Qt::UserRole).toString();
+    for (int i = 0; i < ui->tableCurrentList->count(); i++)
+        if (available.contains(ui->tableCurrentList->item(i)->data(Qt::UserRole).toString()))
+            tableVisibleItems << ui->tableCurrentList->item(i)->data(Qt::UserRole).toString();
 
     SETTINGS.setValue("Table/columns", tableVisibleItems.join("|"));
 
@@ -591,9 +591,9 @@ void SettingsDialog::editSettings()
 
     //List tab
     QStringList listVisibleItems;
-    foreach (QListWidgetItem *item, ui->listCurrentList->findItems("*", Qt::MatchWildcard))
-        if (available.contains(item->data(Qt::UserRole).toString()))
-            listVisibleItems << item->data(Qt::UserRole).toString();
+    for (int i = 0; i <  ui->listCurrentList->count(); i++)
+        if (available.contains(ui->listCurrentList->item(i)->data(Qt::UserRole).toString()))
+            listVisibleItems << ui->listCurrentList->item(i)->data(Qt::UserRole).toString();
 
     SETTINGS.setValue("List/columns", listVisibleItems.join("|"));
 
