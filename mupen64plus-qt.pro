@@ -16,7 +16,6 @@ TEMPLATE = app
 macx:ICON = dist/macosx/mupen64plus.icns
 win32:RC_FILE = dist/windows/icon.rc
 
-
 SOURCES += src/main.cpp \
     src/common.cpp \
     src/dialogs/controlinfodialog.cpp \
@@ -65,15 +64,23 @@ FORMS += src/dialogs/gamesettingsdialog.ui \
 TRANSLATIONS += resources/locale/mupen64plus-qt_fr.ts \
     resources/locale/mupen64plus-qt_ru.ts
 
+INCLUDEPATH += $$PWD/sdl3/include
+debug { LIBS += -L$$PWD/sdl3/lib -lSDL2 }
+release { LIBS += -L$$PWD/sdl3/lib -lSDL2 }
+
+INCLUDEPATH += $$PWD/zlib
+
 win32|macx|linux_quazip_static {
+
     CONFIG += staticlib
     DEFINES += QUAZIP_STATIC
     LIBS += -lz
 
     #Download quazip source and copy the quazip directory to project as quazip5
-    SOURCES += quazip5/*.cpp
-    SOURCES += quazip5/*.c
-    HEADERS += quazip5/*.h
+    SOURCES += $$files(quazip5/*.cpp)
+    SOURCES += $$files(quazip5/*.c)
+    HEADERS += $$files(quazip5/*.h)    
+
 } else {
     lessThan(QT_MAJOR_VERSION, 5) {
         LIBS += -lquazip
@@ -90,3 +97,5 @@ win32|macx|linux_quazip_static {
         }
     }
 }
+
+

@@ -38,14 +38,18 @@
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QListWidget>
+#include <QMouseEvent>
+#include <QStandardPaths>
 #include <QTranslator>
 
+#include <QDebug>
+
+constexpr const char* CONTROL_BUTTON_EMPTY_TEXT = "Select...";
 
 SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent), ui(new Ui::SettingsDialog)
 {
     ui->setupUi(this);
     ui->tabWidget->setCurrentIndex(activeTab);
-
 
     //Populate Paths tab
     ui->emulatorPath->setText(SETTINGS.value("Paths/mupen64plus", "").toString());
@@ -391,18 +395,216 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
     ui->languageInfoLabel->setHidden(true);
 
+    //Populate Controls tab
+    {
+        /// 1. Init Maps keys
+        mapControlButtonToControlKey = {
+            {ui->btnDPadU, "DPad U"}, {ui->btnDPadD, "DPad D"}, {ui->btnDPadL, "DPad L"}, {ui->btnDPadR, "DPad R"},
+            {ui->btnStart, "Start"}, {ui->btnLTrig, "L Trig"}, {ui->btnRTrig, "R Trig"}, {ui->btnZTrig, "Z Trig"},
+            {ui->btnCBtnU, "C Button U"}, {ui->btnCBtnD, "C Button D"}, {ui->btnCBtnL, "C Button L"}, {ui->btnCBtnR, "C Button R"},
+            {ui->btnABtn, "A Button"}, {ui->btnBBtn, "B Button"},
+            {ui->btnMempak, "Mempak switch"}, {ui->btnRumblepak, "Rumblepak switch"},
+            {ui->btnXAxis, "X Axis"}, {ui->btnYAxis, "Y Axis"},
+        };
+
+        /// 2. Load local config to UI upon selection of a Control config
+        connect(ui->cboController, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int nbController)
+        {
+            const QMap<QString, QVariant>& cfg = controlsConfig[nbController];
+
+            ui->chkMouse->setChecked(cfg.value("mouse", false).toBool());
+            ui->chkPlugged->setChecked(cfg.value("plugged", false).toBool());
+
+            ui->cboPlugin->setCurrentIndex(cfg.value("plugin", 1).toInt());
+            ui->cboDevice->setCurrentText(cfg.value("name", QString()).toString()); // ui->cboDevice->setCurrentIndex(cfg.value("device", 0).toInt()); // The name determines the device..
+            ui->cboMode->setCurrentIndex(cfg.value("mode", 0).toInt());            
+
+            QStringList analogDeadzone = cfg.value("AnalogDeadzone", "0,0").toString().split(',');
+            ui->nbAnalogDeadzoneX->setValue(analogDeadzone[0].toInt());
+            ui->nbAnalogDeadzoneY->setValue(analogDeadzone[1].toInt());
+
+            QStringList analogPeak = cfg.value("AnalogPeak", "32768,32768").toString().split(',');
+            ui->nbAnalogPeakX->setValue(analogPeak[0].toInt());
+            ui->nbAnalogPeakY->setValue(analogPeak[1].toInt());
+
+            QStringList mouseSensitivity = cfg.value("MouseSensitivity", "2.0,2.0").toString().split(',');
+            ui->nbMouseSensitivityX->setValue(mouseSensitivity[0].toInt());
+            ui->nbMouseSensitivityY->setValue(mouseSensitivity[1].toInt());
+
+            QMap<QPushButton*, QString>::const_iterator iter = mapControlButtonToControlKey.constBegin();
+            while (iter != mapControlButtonToControlKey.constEnd())
+            {
+                iter.key()->setText(cfg.value(iter.value(), CONTROL_BUTTON_EMPTY_TEXT).toString());
+                ++iter;
+            }
+        });
+
+        /// 3. Update local config upon UI change
+        connect(ui->chkMouse, &QCheckBox::toggled, this, [this] (bool mouseEnabled) { controlsConfig[ui->cboController->currentIndex()]["mouse"] = mouseEnabled; });
+        connect(ui->chkPlugged, &QCheckBox::toggled, this, [this] (bool plugged) { controlsConfig[ui->cboController->currentIndex()]["plugged"] = plugged; });
+
+        connect(ui->cboPlugin, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this] (int plugin) { controlsConfig[ui->cboController->currentIndex()]["plugin"] = plugin; });
+        connect(ui->cboDevice, &QComboBox::currentTextChanged, this, [this] (const QString& device)
+        {
+            if(sdlJoystick)
+                SDL_JoystickClose(sdlJoystick);
+
+            sdlJoystick = SDL_JoystickOpen(ui->cboDevice->currentIndex());
+
+            controlsConfig[ui->cboController->currentIndex()]["name"] = device;
+        });
+        connect(ui->cboMode, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this] (int mode) { controlsConfig[ui->cboController->currentIndex()]["mode"] = mode; });
+
+        connect(ui->nbAnalogDeadzoneX, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogDeadzoneX) { controlsConfig[ui->cboController->currentIndex()]["AnalogDeadzone"] = QString("%1,%2").arg(analogDeadzoneX).arg(ui->nbAnalogDeadzoneY->value()); });
+        connect(ui->nbAnalogDeadzoneY, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogDeadzoneY) { controlsConfig[ui->cboController->currentIndex()]["AnalogDeadzone"] = QString("%1,%2").arg(ui->nbAnalogDeadzoneX->value()).arg(analogDeadzoneY); });
+
+        connect(ui->nbAnalogPeakX, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogPeakX) { controlsConfig[ui->cboController->currentIndex()]["AnalogPeak"] = QString("%1,%2").arg(analogPeakX).arg(ui->nbAnalogDeadzoneY->value()); });
+        connect(ui->nbAnalogPeakY, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogPeakY) { controlsConfig[ui->cboController->currentIndex()]["AnalogPeak"] = QString("%1,%2").arg(ui->nbAnalogDeadzoneX->value()).arg(analogPeakY); });
+
+        connect(ui->nbMouseSensitivityX, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this] (int mouseSensitivityX) { controlsConfig[ui->cboController->currentIndex()]["MouseSensitivity"] = QString("%1,%2").arg(mouseSensitivityX).arg(ui->nbMouseSensitivityY->value()); });
+        connect(ui->nbMouseSensitivityY, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this] (int mouseSensitivityY) { controlsConfig[ui->cboController->currentIndex()]["MouseSensitivity"] = QString("%1,%2").arg(ui->nbMouseSensitivityX->value()).arg(mouseSensitivityY); });
+
+        for(QPushButton* btn : {ui->btnDPadU, ui->btnDPadD, ui->btnDPadL, ui->btnDPadR, ui->btnStart, ui->btnLTrig, ui->btnRTrig, ui->btnZTrig, ui->btnCBtnU, ui->btnCBtnD, ui->btnCBtnL, ui->btnCBtnR, ui->btnABtn, ui->btnBBtn, ui->btnMempak, ui->btnRumblepak, ui->btnXAxis, ui->btnYAxis })
+        {
+            connect(btn, &QPushButton::clicked, this, [this, btn] (bool checked)
+            {
+                if(checked)
+                {
+                    if(focusedControlButton)
+                        focusedControlButton->setChecked(false);
+                    focusedControlButton = btn;
+                }
+                else
+                {
+                    focusedControlButton = nullptr;
+                }
+            });
+        }
+
+        /// 4. Browse Shared Data Path
+        connect(ui->btnBrowseSharedDataPath, &QPushButton::clicked, this, [this]()
+        {
+           const QString path = QFileDialog::getExistingDirectory(this, "Choose Shared Data Path", QString());
+
+           if(! path.isNull())
+               ui->txtSharedDataPath->setText(path);
+        });
+
+        /// 5. Load config from AutoInputCFG.cfg whenever the Shared Data Path changes
+        connect(ui->txtSharedDataPath, &QLineEdit::textChanged, this, [this](const QString& sharedDataPath)
+        {
+            QString configPath = sharedDataPath;
+
+            // Ensure the text is never empty
+            if(configPath.isEmpty())
+            {
+                // Create shared data path if doesn't exists
+                configPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first();
+                configPath += "/.config/mupen64plus";
+                QDir().mkpath(configPath);
+
+                // Set the text in UI and prevent calling this slot again
+                ui->txtSharedDataPath->blockSignals(true);
+                ui->txtSharedDataPath->setText(configPath);
+                ui->txtSharedDataPath->blockSignals(false);
+            }
+
+            // Clear local config
+            for(int i = 0; i < 4; i++)
+            {
+                controlsConfig[i] = {
+                    {"mouse", false},
+                    {"plugged", false},
+                    {"plugin", 1},
+                    {"name", QString()},
+                    {"mode", 0},
+                    {"AnalogDeadzone", "0,0"},
+                    {"AnalogPeak", "32768,32768"},
+                    {"MouseSensitivity", "2.0,2.0"},
+                };
+
+                QMap<QPushButton*, QString>::const_iterator iter = mapControlButtonToControlKey.constBegin();
+
+                while (iter != mapControlButtonToControlKey.constEnd())
+                {
+                    controlsConfig[i][iter.value()] = CONTROL_BUTTON_EMPTY_TEXT;
+                    ++iter;
+                }
+            }
+
+            // Load from AutoInputCFG.cfg to local config
+            QFile configFile(configPath + "/AutoInputCFG.cfg");
+
+            if (configFile.open(QFile::ReadOnly))
+            {
+                QTextStream stream(&configFile);
+
+                QString line;
+                int controlId = 1;
+                int nbLine = 0;
+
+                while (stream.readLineInto(&line))
+                {
+                    line = line.simplified();
+
+                    // [Input-SDL-Control1], [Input-SDL-Control2]...
+                    if(line.size() == 20 && line.startsWith('[') && line.endsWith(']'))
+                    {
+                        controlId = line[18].digitValue();
+                    }
+                    else
+                    {
+                        QStringList keyValue = line.split("=");
+
+                        if(keyValue.size() < 2)
+                        {
+                            qDebug() << "Invalid INI format at line" << nbLine << ":" << line << keyValue;
+                            continue;
+                        }
+
+                        keyValue[0] = keyValue[0].trimmed();
+                        keyValue[1] = keyValue[1].trimmed();
+
+                        if(keyValue[1].isEmpty())
+                            keyValue[1] = CONTROL_BUTTON_EMPTY_TEXT;
+
+                        controlsConfig[controlId - 1][keyValue[0]] = keyValue[1];
+                    }
+
+                    nbLine++;
+                }
+            }
+
+            // Load from local config to UI
+            emit ui->cboController->currentIndexChanged(0);
+        });
+
+
+        /// 6. Init joystick (device) list
+        SDL_Init(SDL_INIT_JOYSTICK);
+
+        for(int i = 0; i < SDL_NumJoysticks(); i++)
+        {
+            ui->cboDevice->addItem( SDL_JoystickNameForIndex(i) );
+        }
+
+        /// 7. Init shared data path UI
+        ui->txtSharedDataPath->setText(SETTINGS.value("Controls/sharedDataPath", QString()).toString());
+
+        /// 8. Start joystick events pump
+        sdlEventsPumpTimerId = startTimer(10, Qt::VeryCoarseTimer);
+    }
+
     ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 
     connect(ui->downloadOption, SIGNAL(toggled(bool)), this, SLOT(toggleDownload(bool)));
     connect(ui->downloadOption, SIGNAL(toggled(bool)), this, SLOT(populateTableAndListTab(bool)));
-    connect(ui->languageBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateLanguageInfo()));
-
+    connect(ui->languageBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateLanguageInfo()));    
 
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(editSettings()));
-    connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));    
 }
-
 
 SettingsDialog::~SettingsDialog()
 {
@@ -626,6 +828,49 @@ void SettingsDialog::editSettings()
 
     SETTINGS.setValue("Other/parameters", ui->parametersLine->text());
     SETTINGS.setValue("language", ui->languageBox->itemData(ui->languageBox->currentIndex()));
+
+    //Controls tab
+    {
+        killTimer(sdlEventsPumpTimerId);
+        SDL_JoystickClose(sdlJoystick);
+        SDL_Quit();
+
+        SETTINGS.setValue("Controls/sharedDataPath", ui->txtSharedDataPath->text());
+
+        QFile configFile(ui->txtSharedDataPath->text() + "/AutoInputCFG.cfg");
+
+        if (configFile.open(QFile::WriteOnly | QFile::Truncate))
+        {
+            QTextStream stream(&configFile);
+
+            for(int i = 0; i < 4; i++)
+            {
+                if(controlsConfig[i].isEmpty())
+                    continue;
+
+                stream << "[Input-SDL-Control" << QString::number(i + 1) << "]\n";
+
+                QMap<QString, QVariant>::const_iterator iter = controlsConfig[i].constBegin();
+                while (iter != controlsConfig[i].constEnd())
+                {
+                    QString value = iter.value().toString();
+
+                    if(iter.value().type() == QVariant::Bool)
+                    {
+                        value[0] = value[0].toUpper(); // false -> False, true -> True
+                    }
+                    else if(value == CONTROL_BUTTON_EMPTY_TEXT)
+                    {
+                        value.clear();
+                    }
+
+                    stream << iter.key() << " = " << value << "\n";
+                    ++iter;
+                }
+            }
+        }
+    }
+
 
     close();
 }
@@ -950,4 +1195,109 @@ void SettingsDialog::updateLanguageInfo()
         ui->languageInfoLabel->setText(translator.translate("SettingsDialog", sourceText));
     } else
         ui->languageInfoLabel->setText(sourceText);
+}
+
+void SettingsDialog::inputEvent(const QString &eventType, const QString &eventData)
+{
+    bool forAxis = focusedControlButton == ui->btnXAxis || focusedControlButton == ui->btnYAxis;
+
+    if(forAxis && eventType == "mouse")
+        return; // Axis don't support mouse events
+
+    QString inputString;
+
+    if(forAxis)
+    {
+        if(controlAxisFirstEvent.name == eventType)
+        {
+            inputString = QString("%1(%2,%3)").arg(eventType, controlAxisFirstEvent.param, eventData);
+            controlAxisFirstEvent.name.clear();
+        }
+        else
+        {
+            controlAxisFirstEvent.name = eventType;
+            controlAxisFirstEvent.param = eventData;
+        }
+    }
+    else
+    {
+        inputString = QString("%1(%2)").arg(eventType, eventData);
+    }
+
+    if(!inputString.isNull() && !focusedControlButton->text().contains(inputString))
+    {
+        if(focusedControlButton->text() == CONTROL_BUTTON_EMPTY_TEXT)
+            focusedControlButton->setText(inputString);
+        else
+            focusedControlButton->setText(focusedControlButton->text() + " " + inputString);
+
+        const QString controlKey = mapControlButtonToControlKey[focusedControlButton];
+
+        focusedControlButton->setToolTip(controlKey + " = " + focusedControlButton->text());
+        controlsConfig[ui->cboController->currentIndex()][controlKey] = focusedControlButton->text();
+
+        focusedControlButton->click();
+    }
+}
+
+void SettingsDialog::mousePressEvent(QMouseEvent *event)
+{
+    if(focusedControlButton)
+    {
+        inputEvent("mouse", QString::number(event->button() == Qt::MiddleButton ? 2 : event->button() == Qt::RightButton ? 3 : 1));
+    }
+}
+
+void SettingsDialog::keyPressEvent(QKeyEvent *event)
+{
+    if(!focusedControlButton)
+        return;
+
+    if(event->key() == Qt::Key_Escape) //  == SDLK_ESCAPE
+        focusedControlButton->click();
+    else if (event->key() == Qt::Key_Backspace)
+    {
+        focusedControlButton->setText(CONTROL_BUTTON_EMPTY_TEXT);
+        focusedControlButton->setToolTip(mapControlButtonToControlKey[focusedControlButton]);
+        focusedControlButton->click();
+    }
+    else
+    {
+        //inputEvent("key", SDL_GetScancodeName(event->nativeScanCode()));
+    }
+}
+
+void SettingsDialog::timerEvent(QTimerEvent *e)
+{
+    if(e->timerId() != sdlEventsPumpTimerId || focusedControlButton == nullptr)
+        return;
+
+    SDL_Event event;
+
+    while(SDL_PollEvent(&event) == 1)
+    {
+        QString eventType, eventData;
+
+        if (event.type == SDL_JOYAXISMOTION && abs(event.jaxis.value) >= 32767)
+        {
+            eventType = "axis";
+            eventData = QString::number(event.jaxis.axis) + (event.jaxis.value > 0 ? "+" : "-");
+        }
+        else if (event.type == SDL_JOYHATMOTION)
+        {
+
+            eventType = "hat";
+            eventData = QString::number(event.jhat.hat) + event.jhat.value == SDL_HAT_UP ? " Up" :
+                                                           event.jhat.value == SDL_HAT_DOWN ? " Down" :
+                                                           event.jhat.value == SDL_HAT_LEFT ? " Left" : " Right";
+        }
+        else if (event.type == SDL_JOYBUTTONDOWN)
+        {
+            eventType = "button";
+            eventData = QString::number(event.jbutton.button);
+        }
+
+        if(! eventType.isNull())
+            inputEvent(eventType, eventData);
+    }
 }

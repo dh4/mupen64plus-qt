@@ -35,6 +35,9 @@
 #include <QDialog>
 #include <QDir>
 
+#include <QMap>
+#include <SDL2/SDL.h>
+
 class QDesktopWidget;
 class QListWidget;
 
@@ -65,6 +68,13 @@ private:
     QStringList labelOptions;
     QStringList sortOptions;
 
+    int sdlEventsPumpTimerId{0};
+    QMap<QString, QVariant> controlsConfig[4];
+    QMap<QPushButton*, QString> mapControlButtonToControlKey;
+    QPushButton* focusedControlButton{nullptr};
+    SDL_Joystick* sdlJoystick{NULL};
+    struct { QString name; QString param; } controlAxisFirstEvent;
+
 private slots:
     void addColumn(QListWidget *currentList, QListWidget *availableList);
     void addRomDirectory();
@@ -93,6 +103,13 @@ private slots:
     void toggleLabel(bool active);
     void toggleListCover(bool active);
     void updateLanguageInfo();
+
+    // QWidget interface
+protected:
+    void inputEvent(const QString& eventType, const QString& eventData);
+    void mousePressEvent(QMouseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    void timerEvent(QTimerEvent *e) override;
 };
 
 #endif // SETTINGSDIALOG_H
