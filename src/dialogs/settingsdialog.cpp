@@ -1307,14 +1307,17 @@ void SettingsDialog::timerEvent(QTimerEvent *e)
 #include <algorithm>
 void SettingsDialog::on_saveBtn_clicked()
 {
+           QString tstring;
     std::string homedir = getenv("HOME");
+
+    tstring += ui->cboController->currentText();
 if(1){
 //https://www.walletfox.com/course/parseconfigfile.php
     std::ifstream cFile (homedir + "/.config/mupen64plus/InputAutoCfg.ini");
     if (cFile.is_open())
     {
         std::string line;
-       QString tstring;
+
         while(getline(cFile, line)){
             line.erase(std::remove_if(line.begin(), line.end(), isspace),
                                  line.end());
@@ -1327,49 +1330,56 @@ if(1){
              std::string test2 = value;
          //   qDebug() << name << " " << value; //print all lines
              if ("DPadU" == name){
-            tstring +=  ui->btnDPadU->text().toLatin1() + "\n";
+            tstring += "D Pad U" ;
+                    tstring +=  " = ";
+                    tstring +=   ui->btnDPadU->text().toLatin1() + "\n";
          //    qDebug() << test.c_str() << " " << test2.c_str();
             }
              if ("DPadD" == name){
-                 tstring +=  ui->btnDPadD->text().toLatin1() + "\n";
+                 tstring += "D Pad D";
+                         tstring += " = "; tstring +=   ui->btnDPadD->text().toLatin1() + "\n";
             }
              if ("DPadL" == name){
-                 tstring +=  ui->btnDPadL->text().toLatin1() + "\n";
+                 tstring += "D Pad L";
+                         tstring += " = "; tstring +=   ui->btnDPadL->text().toLatin1() + "\n";
             }
              if ("DPadR" == name){
-                 tstring +=  ui->btnDPadR->text().toLatin1() + "\n";
+                 tstring += "D Pad R" ;
+                         tstring += " = " ;
+                                 tstring += ui->btnDPadR->text().toLatin1() + "\n";
             }
-             if ("CButtonU" == name){
-                 tstring +=  ui->btnCBtnU->text().toLatin1() + "\n";
-            }
-             if ("CButtonD" == name){
-                 tstring +=  ui->btnCBtnD->text().toLatin1() + "\n";
-            }
-             if ("CButtonR" == name){
-                 tstring +=  ui->btnCBtnR->text().toLatin1() + "\n";
-            }
-             if ("CButtonL" == name){
-                 tstring +=  ui->btnCBtnL->text().toLatin1() + "\n";
-            }
-             if ("AButton" == name){
-                 tstring +=  ui->btnABtn->text().toLatin1() + "\n";
-            }
-             if ("BButton" == name){
-                 tstring +=  ui->btnBBtn->text().toLatin1() + "\n";
-            }
-             if ("Start" == name){
-                 tstring +=  ui->btnStart->text().toLatin1() + "\n";
-            }
-             if ("ZTrig" == name){
-                 tstring +=  ui->btnZTrig->text().toLatin1() + "\n";
-            }
-             if ("LTrig" == name){
-                 tstring +=  ui->btnLTrig->text().toLatin1() + "\n";
+//             if ("CButtonU" == name){
+//                 tstring += "C Button U"  ;
+//                         tstring += " = " + ui->btnCBtnU->text().toLatin1() + "\n";
+//            }
+//             if ("CButtonD" == name){
+//                 tstring += "C Button U";  tstring += " = " +  ui->btnCBtnD->text().toLatin1() + "\n";
+//            }
+//             if ("CButtonR" == name){
+//                 tstring += "C Button U" ; tstring += " = " +  ui->btnCBtnR->text().toLatin1() + "\n";
+//            }
+//             if ("CButtonL" == name){
+//                 tstring += "C Button L" ; tstring += " = " +  ui->btnCBtnL->text().toLatin1() + "\n";
+//            }
+//             if ("AButton" == name){
+//                 tstring += "A Button";  tstring += " = " +  ui->btnABtn->text().toLatin1() + "\n";
+//            }
+//             if ("BButton" == name){
+//                 tstring += "B Button" ; tstring += " = " +  ui->btnBBtn->text().toLatin1() + "\n";
+//            }
+//             if ("Start" == name){
+//                 tstring += "Start" ; tstring += " = " +  ui->btnStart->text().toLatin1() + "\n";
+//            }
+//             if ("ZTrig" == name){
+//                 tstring += "Z Trig";  tstring += " = " +  ui->btnZTrig->text().toLatin1() + "\n";
+//            }
+//             if ("LTrig" == name){
+//                 tstring += "L Trig";  tstring += " = " +  ui->btnLTrig->text().toLatin1() + "\n";
 
-            }
-             if ("RTrig" == name){
-                 tstring +=  ui->btnRTrig->text().toLatin1() + "\n";
-            }
+//            }
+//             if ("RTrig" == name){
+//                 tstring += "R Trig";  tstring += " = " +  ui->btnRTrig->text().toLatin1() + "\n";
+//            }
 
         }
  qDebug() << tstring;
@@ -1382,6 +1392,14 @@ if(1){
     else {
         std::cerr << "Couldn't open config file for reading.\n";
     }
+}
+
+//const QString qString = "Hello, World!";
+const QString qPath("testQTextStreamEncoding.txt");
+QFile qFile(qPath);
+if (qFile.open(QIODevice::WriteOnly)) {
+  QTextStream out(&qFile); out << tstring;
+  qFile.close();
 }
 }
 
