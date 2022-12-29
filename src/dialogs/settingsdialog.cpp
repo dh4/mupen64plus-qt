@@ -1313,7 +1313,7 @@ if(1){
     if (cFile.is_open())
     {
         std::string line;
-       std::string fline="DPadR";
+       QString tstring;
         while(getline(cFile, line)){
             line.erase(std::remove_if(line.begin(), line.end(), isspace),
                                  line.end());
@@ -1328,11 +1328,54 @@ if(1){
              std::string test2 = value;
           //  test += value;
          //   qDebug() << name << " " << value;
-             if (fline == name){
-             qDebug() << test.c_str() << " " << test2.c_str();
+             if ("DPadU" == name){
+            tstring +=  ui->btnDPadU->text().toLatin1() + "\n";
+         //    qDebug() << test.c_str() << " " << test2.c_str();
             }
-        }
+             if ("DPadD" == name){
+                 tstring +=  ui->btnDPadD->text().toLatin1() + "\n";
+            }
+             if ("DPadL" == name){
+                 tstring +=  ui->btnDPadL->text().toLatin1() + "\n";
 
+            }
+             if ("DPadR" == name){
+                 tstring +=  ui->btnDPadR->text().toLatin1() + "\n";
+            }
+             if ("CButtonU" == name){
+                 tstring +=  ui->btnCBtnU->text().toLatin1() + "\n";
+
+            }
+             if ("CButtonD" == name){
+                 tstring +=  ui->btnCBtnD->text().toLatin1() + "\n";
+            }
+             if ("CButtonR" == name){
+                 tstring +=  ui->btnCBtnR->text().toLatin1() + "\n";
+
+            }
+             if ("CButtonL" == name){
+                 tstring +=  ui->btnCBtnL->text().toLatin1() + "\n";
+            }
+             if ("AButton" == name){
+                 tstring +=  ui->btnABtn->text().toLatin1() + "\n";
+
+            }
+             if ("BButton" == name){
+                 tstring +=  ui->btnBBtn->text().toLatin1() + "\n";
+            }
+             if ("Start" == name){
+                 tstring +=  ui->btnStart->text().toLatin1() + "\n";
+
+            }
+             if ("ZTrig" == name){
+                 tstring +=  ui->btnZTrig->text().toLatin1() + "\n";
+            }
+
+        }
+ qDebug() << tstring;
+       // if (){
+
+       // }
         // for each joystick found thats connected search these values
 
     }
@@ -1340,7 +1383,7 @@ if(1){
         std::cerr << "Couldn't open config file for reading.\n";
     }
 
-   qDebug() << ui->btnDPadU->text().toLatin1();
+ //  qDebug() << ui->btnDPadU->text().toLatin1();
 //    ui->btnDPadD->text()
 //    ui->btnDPadL->text()
 //    ui->btnDPadR->text()
