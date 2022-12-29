@@ -107,6 +107,8 @@ private slots:
     // QWidget interface
     void on_saveBtn_clicked();
 
+    void on_loadCCFGBtn_2_clicked();
+
 protected:
     void inputEvent(const QString& eventType, const QString& eventData);
     void mousePressEvent(QMouseEvent *event) override;

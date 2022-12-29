@@ -1300,6 +1300,7 @@ void SettingsDialog::timerEvent(QTimerEvent *e)
         if(! eventType.isNull())
             inputEvent(eventType, eventData);
     }
+        SDL_Delay(20);
 }
 #include <iostream>
 #include <fstream>
@@ -1370,6 +1371,13 @@ if(1){
              if ("ZTrig" == name){
                  tstring +=  ui->btnZTrig->text().toLatin1() + "\n";
             }
+             if ("LTrig" == name){
+                 tstring +=  ui->btnLTrig->text().toLatin1() + "\n";
+
+            }
+             if ("RTrig" == name){
+                 tstring +=  ui->btnRTrig->text().toLatin1() + "\n";
+            }
 
         }
  qDebug() << tstring;
@@ -1405,3 +1413,76 @@ if(1){
 }
 
 
+
+void SettingsDialog::on_loadCCFGBtn_2_clicked()
+{
+    std::ifstream cFile ("/home/netpipe/.config/mupen64plus/InputAutoCfg.ini");
+   // /home/netpipe/.config/mupen64plus/InputAutoCfg.ini
+    if (cFile.is_open())
+    {
+        std::string line;
+       QString tstring;
+        while(getline(cFile, line)){
+            line.erase(std::remove_if(line.begin(), line.end(), isspace),
+                                 line.end());
+            if(line[0] == '#' || line.empty())
+                continue;
+            auto delimiterPos = line.find("=");
+            auto name = line.substr(0, delimiterPos);
+            auto value = line.substr(delimiterPos + 1);
+            //std::cout << name << " " << value << '\n';
+             std::string test;
+            test = name;
+             std::string test2 = value;
+    if ("DPadU" == name){
+   ui->btnDPadU->setText(test2.c_str());
+//    qDebug() << test.c_str() << " " << test2.c_str();
+   }
+    if ("DPadD" == name){
+       ui->btnDPadD->setText(test2.c_str());
+   }
+    if ("DPadL" == name){
+        ui->btnDPadL->setText(test2.c_str());
+
+   }
+    if ("DPadR" == name){
+       ui->btnDPadR->setText(test2.c_str());
+   }
+    if ("CButtonU" == name){
+       ui->btnCBtnU->setText(test2.c_str());
+
+   }
+    if ("CButtonD" == name){
+          ui->btnCBtnD->setText(test2.c_str());
+   }
+    if ("CButtonR" == name){
+       ui->btnCBtnR->setText(test2.c_str());
+
+   }
+    if ("CButtonL" == name){
+     ui->btnCBtnL->setText(test2.c_str());
+   }
+    if ("AButton" == name){
+       ui->btnABtn->setText(test2.c_str());
+
+   }
+    if ("BButton" == name){
+        ui->btnBBtn->setText(test2.c_str());
+   }
+    if ("Start" == name){
+      ui->btnStart->setText(test2.c_str());
+
+   }
+    if ("ZTrig" == name){
+          ui->btnZTrig->setText(test2.c_str());
+   }
+    if ("LTrig" == name){
+      ui->btnLTrig->setText(test2.c_str());
+
+   }
+    if ("RTrig" == name){
+      ui->btnRTrig->setText(test2.c_str());
+   }
+}
+}
+}

@@ -1930,6 +1930,13 @@ Left/Right</string>
                </property>
               </widget>
              </item>
+             <item row="3" column="0">
+              <widget class="QPushButton" name="loadCCFGBtn_2">
+               <property name="text">
+                <string>Load</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
