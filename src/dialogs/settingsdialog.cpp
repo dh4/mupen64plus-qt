@@ -1301,15 +1301,18 @@ void SettingsDialog::timerEvent(QTimerEvent *e)
             inputEvent(eventType, eventData);
     }
 }
-
+#include <iostream>
+#include <fstream>
+#include <algorithm>
 void SettingsDialog::on_saveBtn_clicked()
 {
-
-    // std::ifstream is RAII, i.e. no need to call close
+if(1){
+//https://www.walletfox.com/course/parseconfigfile.php
     std::ifstream cFile ("~/.config/mupen64plus-qt/AutoInputCFG.cfg");
     if (cFile.is_open())
     {
         std::string line;
+       // line+="DPad R2 ";
         while(getline(cFile, line)){
             line.erase(std::remove_if(line.begin(), line.end(), isspace),
                                  line.end());
@@ -1318,7 +1321,7 @@ void SettingsDialog::on_saveBtn_clicked()
             auto delimiterPos = line.find("=");
             auto name = line.substr(0, delimiterPos);
             auto value = line.substr(delimiterPos + 1);
-            std::cout << name << " " << value << '\n';
+   //         std::cout << name << " " << value << '\n';
         }
 
     }
@@ -1344,6 +1347,7 @@ void SettingsDialog::on_saveBtn_clicked()
 
 //    ui->btnBBtn->text()
 //    ui->btnABtn->text()
+}
 }
 
 
