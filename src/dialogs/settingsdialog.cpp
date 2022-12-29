@@ -1318,7 +1318,7 @@ void SettingsDialog::on_saveBtn_clicked()
     std::string homedir = pw->pw_dir;
 if(1){
 //https://www.walletfox.com/course/parseconfigfile.php
-    std::ifstream cFile (homedir.c_str() + "/.config/mupen64plus/InputAutoCfg.ini");
+    std::ifstream cFile (homedir + "/.config/mupen64plus/InputAutoCfg.ini");
    // /home/netpipe/.config/mupen64plus/InputAutoCfg.ini
     if (cFile.is_open())
     {
