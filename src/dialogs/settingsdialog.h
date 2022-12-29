@@ -109,6 +109,8 @@ private slots:
 
     void on_loadCCFGBtn_2_clicked();
 
+    void on_btnBrowseSharedDataPath_clicked();
+
 protected:
     void inputEvent(const QString& eventType, const QString& eventData);
     void mousePressEvent(QMouseEvent *event) override;

@@ -1197,7 +1197,7 @@
             <item>
              <widget class="QPushButton" name="btnBrowseSharedDataPath">
               <property name="text">
-               <string>Browse...</string>
+               <string>Browse &amp; write...</string>
               </property>
              </widget>
             </item>

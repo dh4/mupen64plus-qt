@@ -1310,7 +1310,7 @@ void SettingsDialog::on_saveBtn_clicked()
            QString tstring;
     std::string homedir = getenv("HOME");
 
-    tstring += ui->cboController->currentText();
+    tstring += "[" + ui->cboController->currentText() + "] " + "\n";
 if(1){
 //https://www.walletfox.com/course/parseconfigfile.php
     std::ifstream cFile (homedir + "/.config/mupen64plus/InputAutoCfg.ini");
@@ -1330,56 +1330,51 @@ if(1){
              std::string test2 = value;
          //   qDebug() << name << " " << value; //print all lines
              if ("DPadU" == name){
-            tstring += "D Pad U" ;
-                    tstring +=  " = ";
-                    tstring +=   ui->btnDPadU->text().toLatin1() + "\n";
-         //    qDebug() << test.c_str() << " " << test2.c_str();
+                    tstring += "D Pad U" ;
+                    tstring += " = ";
+                    tstring += ui->btnDPadU->text().toLatin1() + "\n";
+                    //qDebug() << test.c_str() << " " << test2.c_str();
             }
              if ("DPadD" == name){
-                 tstring += "D Pad D";
-                         tstring += " = "; tstring +=   ui->btnDPadD->text().toLatin1() + "\n";
+                 tstring += "D Pad D";   tstring += " = "; tstring +=   ui->btnDPadD->text().toLatin1() + "\n";
             }
              if ("DPadL" == name){
-                 tstring += "D Pad L";
-                         tstring += " = "; tstring +=   ui->btnDPadL->text().toLatin1() + "\n";
+                 tstring += "D Pad L";   tstring += " = "; tstring +=   ui->btnDPadL->text().toLatin1() + "\n";
             }
              if ("DPadR" == name){
-                 tstring += "D Pad R" ;
-                         tstring += " = " ;
-                                 tstring += ui->btnDPadR->text().toLatin1() + "\n";
+                 tstring += "D Pad R" ;  tstring += " = " ;         tstring += ui->btnDPadR->text().toLatin1() + "\n";
             }
-//             if ("CButtonU" == name){
-//                 tstring += "C Button U"  ;
-//                         tstring += " = " + ui->btnCBtnU->text().toLatin1() + "\n";
-//            }
-//             if ("CButtonD" == name){
-//                 tstring += "C Button U";  tstring += " = " +  ui->btnCBtnD->text().toLatin1() + "\n";
-//            }
-//             if ("CButtonR" == name){
-//                 tstring += "C Button U" ; tstring += " = " +  ui->btnCBtnR->text().toLatin1() + "\n";
-//            }
-//             if ("CButtonL" == name){
-//                 tstring += "C Button L" ; tstring += " = " +  ui->btnCBtnL->text().toLatin1() + "\n";
-//            }
-//             if ("AButton" == name){
-//                 tstring += "A Button";  tstring += " = " +  ui->btnABtn->text().toLatin1() + "\n";
-//            }
-//             if ("BButton" == name){
-//                 tstring += "B Button" ; tstring += " = " +  ui->btnBBtn->text().toLatin1() + "\n";
-//            }
-//             if ("Start" == name){
-//                 tstring += "Start" ; tstring += " = " +  ui->btnStart->text().toLatin1() + "\n";
-//            }
-//             if ("ZTrig" == name){
-//                 tstring += "Z Trig";  tstring += " = " +  ui->btnZTrig->text().toLatin1() + "\n";
-//            }
-//             if ("LTrig" == name){
-//                 tstring += "L Trig";  tstring += " = " +  ui->btnLTrig->text().toLatin1() + "\n";
+             if ("CButtonU" == name){
+                 tstring += "C Button U"  ;   tstring += " = " ; tstring += ui->btnCBtnU->text().toLatin1() + "\n";
+            }
+             if ("CButtonD" == name){
+                 tstring += "C Button U";  tstring += " = " +  ui->btnCBtnD->text().toLatin1() + "\n";
+            }
+             if ("CButtonR" == name){
+                 tstring += "C Button U" ; tstring += " = " +  ui->btnCBtnR->text().toLatin1() + "\n";
+            }
+             if ("CButtonL" == name){
+                 tstring += "C Button L" ; tstring += " = " +  ui->btnCBtnL->text().toLatin1() + "\n";
+            }
+             if ("AButton" == name){
+                 tstring += "A Button";  tstring += " = " +  ui->btnABtn->text().toLatin1() + "\n";
+            }
+             if ("BButton" == name){
+                 tstring += "B Button" ; tstring += " = " +  ui->btnBBtn->text().toLatin1() + "\n";
+            }
+             if ("Start" == name){
+                 tstring += "Start" ; tstring += " = " +  ui->btnStart->text().toLatin1() + "\n";
+            }
+             if ("ZTrig" == name){
+                 tstring += "Z Trig";  tstring += " = " +  ui->btnZTrig->text().toLatin1() + "\n";
+            }
+             if ("LTrig" == name){
+                 tstring += "L Trig";  tstring += " = " +  ui->btnLTrig->text().toLatin1() + "\n";
 
-//            }
-//             if ("RTrig" == name){
-//                 tstring += "R Trig";  tstring += " = " +  ui->btnRTrig->text().toLatin1() + "\n";
-//            }
+            }
+             if ("RTrig" == name){
+                 tstring += "R Trig";  tstring += " = " +  ui->btnRTrig->text().toLatin1() + "\n";
+            }
 
         }
  qDebug() << tstring;
@@ -1427,54 +1422,84 @@ std::string homedir = getenv("HOME");
              std::string test;
             test = name;
              std::string test2 = value;
-    if ("DPadU" == name){
-   ui->btnDPadU->setText(test2.c_str());
-//    qDebug() << test.c_str() << " " << test2.c_str();
-   }
-    if ("DPadD" == name){
-       ui->btnDPadD->setText(test2.c_str());
-   }
-    if ("DPadL" == name){
-        ui->btnDPadL->setText(test2.c_str());
-   }
-    if ("DPadR" == name){
-       ui->btnDPadR->setText(test2.c_str());
-   }
-    if ("CButtonU" == name){
-       ui->btnCBtnU->setText(test2.c_str());
+            if ("DPadU" == name){
+           ui->btnDPadU->setText(test2.c_str());
+        //    qDebug() << test.c_str() << " " << test2.c_str();
+           }
+            if ("DPadD" == name){
+               ui->btnDPadD->setText(test2.c_str());
+           }
+            if ("DPadL" == name){
+                ui->btnDPadL->setText(test2.c_str());
+           }
+            if ("DPadR" == name){
+               ui->btnDPadR->setText(test2.c_str());
+           }
+            if ("CButtonU" == name){
+               ui->btnCBtnU->setText(test2.c_str());
 
-   }
-    if ("CButtonD" == name){
-          ui->btnCBtnD->setText(test2.c_str());
-   }
-    if ("CButtonR" == name){
-       ui->btnCBtnR->setText(test2.c_str());
+           }
+            if ("CButtonD" == name){
+                  ui->btnCBtnD->setText(test2.c_str());
+           }
+            if ("CButtonR" == name){
+               ui->btnCBtnR->setText(test2.c_str());
 
-   }
-    if ("CButtonL" == name){
-     ui->btnCBtnL->setText(test2.c_str());
-   }
-    if ("AButton" == name){
-       ui->btnABtn->setText(test2.c_str());
+           }
+            if ("CButtonL" == name){
+             ui->btnCBtnL->setText(test2.c_str());
+           }
+            if ("AButton" == name){
+               ui->btnABtn->setText(test2.c_str());
 
-   }
-    if ("BButton" == name){
-        ui->btnBBtn->setText(test2.c_str());
-   }
-    if ("Start" == name){
-      ui->btnStart->setText(test2.c_str());
+           }
+            if ("BButton" == name){
+                ui->btnBBtn->setText(test2.c_str());
+           }
+            if ("Start" == name){
+              ui->btnStart->setText(test2.c_str());
 
-   }
-    if ("ZTrig" == name){
-          ui->btnZTrig->setText(test2.c_str());
-   }
-    if ("LTrig" == name){
-      ui->btnLTrig->setText(test2.c_str());
+           }
+            if ("ZTrig" == name){
+                  ui->btnZTrig->setText(test2.c_str());
+           }
+            if ("LTrig" == name){
+              ui->btnLTrig->setText(test2.c_str());
 
-   }
-    if ("RTrig" == name){
-      ui->btnRTrig->setText(test2.c_str());
-   }
+           }
+            if ("RTrig" == name){
+              ui->btnRTrig->setText(test2.c_str());
+           }
+        }
 }
 }
+
+
+
+
+void SettingsDialog::on_btnBrowseSharedDataPath_clicked()
+{
+    std::string homedir = getenv("HOME");
+
+    std::ifstream cFile (homedir + "/.config/mupen64plus/InputAutoCfg.ini");
+
+    if (cFile.is_open())
+    {
+        std::string line;
+       QString tstring;
+        while(getline(cFile, line)){
+            line.erase(std::remove_if(line.begin(), line.end(), isspace),
+                                 line.end());
+            if(line[0] == '#' || line.empty())
+                continue;
+            auto delimiterPos = line.find("=");
+            auto name = line.substr(0, delimiterPos);
+            auto value = line.substr(delimiterPos + 1);
+            //std::cout << name << " " << value << '\n';
+             std::string test;
+            test = name;
+             std::string test2 = value;
+        }
+    }
 }
+
