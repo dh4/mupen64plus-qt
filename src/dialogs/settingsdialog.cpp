@@ -1308,11 +1308,12 @@ void SettingsDialog::on_saveBtn_clicked()
 {
 if(1){
 //https://www.walletfox.com/course/parseconfigfile.php
-    std::ifstream cFile ("~/.config/mupen64plus-qt/AutoInputCFG.cfg");
+    std::ifstream cFile ("/home/netpipe/.config/mupen64plus/InputAutoCfg.ini");
+   // /home/netpipe/.config/mupen64plus/InputAutoCfg.ini
     if (cFile.is_open())
     {
         std::string line;
-       // line+="DPad R2 ";
+       std::string fline="DPadR";
         while(getline(cFile, line)){
             line.erase(std::remove_if(line.begin(), line.end(), isspace),
                                  line.end());
@@ -1321,7 +1322,15 @@ if(1){
             auto delimiterPos = line.find("=");
             auto name = line.substr(0, delimiterPos);
             auto value = line.substr(delimiterPos + 1);
-   //         std::cout << name << " " << value << '\n';
+            //std::cout << name << " " << value << '\n';
+             std::string test;
+            test = name;
+             std::string test2 = value;
+          //  test += value;
+         //   qDebug() << name << " " << value;
+             if (fline == name){
+             qDebug() << test.c_str() << " " << test2.c_str();
+            }
         }
 
     }
