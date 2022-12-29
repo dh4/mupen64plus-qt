@@ -44,6 +44,11 @@
 
 #include <QDebug>
 
+#include <pwd.h>
+#include <unistd.h>
+#include <sys/types.h>
+
+
 constexpr const char* CONTROL_BUTTON_EMPTY_TEXT = "Select...";
 
 SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent), ui(new Ui::SettingsDialog)
@@ -1307,9 +1312,13 @@ void SettingsDialog::timerEvent(QTimerEvent *e)
 #include <algorithm>
 void SettingsDialog::on_saveBtn_clicked()
 {
+
+    struct passwd *pw = getpwuid(getuid());
+
+    std::string homedir = pw->pw_dir;
 if(1){
 //https://www.walletfox.com/course/parseconfigfile.php
-    std::ifstream cFile ("/home/netpipe/.config/mupen64plus/InputAutoCfg.ini");
+    std::ifstream cFile (homedir.c_str() + "/.config/mupen64plus/InputAutoCfg.ini");
    // /home/netpipe/.config/mupen64plus/InputAutoCfg.ini
     if (cFile.is_open())
     {
@@ -1413,10 +1422,14 @@ if(1){
 }
 
 
-
 void SettingsDialog::on_loadCCFGBtn_2_clicked()
 {
-    std::ifstream cFile ("/home/netpipe/.config/mupen64plus/InputAutoCfg.ini");
+
+struct passwd *pw = getpwuid(getuid());
+
+std::string homedir = pw->pw_dir;
+
+    std::ifstream cFile (homedir.c_str() + "/.config/mupen64plus/InputAutoCfg.ini");
    // /home/netpipe/.config/mupen64plus/InputAutoCfg.ini
     if (cFile.is_open())
     {
@@ -1443,7 +1456,6 @@ void SettingsDialog::on_loadCCFGBtn_2_clicked()
    }
     if ("DPadL" == name){
         ui->btnDPadL->setText(test2.c_str());
-
    }
     if ("DPadR" == name){
        ui->btnDPadR->setText(test2.c_str());
