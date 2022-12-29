@@ -105,6 +105,8 @@ private slots:
     void updateLanguageInfo();
 
     // QWidget interface
+    void on_saveBtn_clicked();
+
 protected:
     void inputEvent(const QString& eventType, const QString& eventData);
     void mousePressEvent(QMouseEvent *event) override;

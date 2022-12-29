@@ -1923,6 +1923,13 @@ Left/Right</string>
                </property>
               </widget>
              </item>
+             <item row="3" column="6">
+              <widget class="QPushButton" name="saveBtn">
+               <property name="text">
+                <string>Save</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
