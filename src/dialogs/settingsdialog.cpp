@@ -1333,6 +1333,8 @@ if(1){
             }
         }
 
+        // for each joystick found thats connected search these values
+
     }
     else {
         std::cerr << "Couldn't open config file for reading.\n";
