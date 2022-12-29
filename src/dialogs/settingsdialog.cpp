@@ -1429,7 +1429,7 @@ struct passwd *pw = getpwuid(getuid());
 
 std::string homedir = pw->pw_dir;
 
-    std::ifstream cFile (homedir.c_str() + "/.config/mupen64plus/InputAutoCfg.ini");
+    std::ifstream cFile (homedir + "/.config/mupen64plus/InputAutoCfg.ini");
    // /home/netpipe/.config/mupen64plus/InputAutoCfg.ini
     if (cFile.is_open())
     {
