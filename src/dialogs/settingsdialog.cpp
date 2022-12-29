@@ -1332,12 +1332,9 @@ if(1){
             auto delimiterPos = line.find("=");
             auto name = line.substr(0, delimiterPos);
             auto value = line.substr(delimiterPos + 1);
-            //std::cout << name << " " << value << '\n';
-             std::string test;
-            test = name;
+             std::string test =name;
              std::string test2 = value;
-          //  test += value;
-         //   qDebug() << name << " " << value;
+         //   qDebug() << name << " " << value; //print all lines
              if ("DPadU" == name){
             tstring +=  ui->btnDPadU->text().toLatin1() + "\n";
          //    qDebug() << test.c_str() << " " << test2.c_str();
@@ -1347,35 +1344,30 @@ if(1){
             }
              if ("DPadL" == name){
                  tstring +=  ui->btnDPadL->text().toLatin1() + "\n";
-
             }
              if ("DPadR" == name){
                  tstring +=  ui->btnDPadR->text().toLatin1() + "\n";
             }
              if ("CButtonU" == name){
                  tstring +=  ui->btnCBtnU->text().toLatin1() + "\n";
-
             }
              if ("CButtonD" == name){
                  tstring +=  ui->btnCBtnD->text().toLatin1() + "\n";
             }
              if ("CButtonR" == name){
                  tstring +=  ui->btnCBtnR->text().toLatin1() + "\n";
-
             }
              if ("CButtonL" == name){
                  tstring +=  ui->btnCBtnL->text().toLatin1() + "\n";
             }
              if ("AButton" == name){
                  tstring +=  ui->btnABtn->text().toLatin1() + "\n";
-
             }
              if ("BButton" == name){
                  tstring +=  ui->btnBBtn->text().toLatin1() + "\n";
             }
              if ("Start" == name){
                  tstring +=  ui->btnStart->text().toLatin1() + "\n";
-
             }
              if ("ZTrig" == name){
                  tstring +=  ui->btnZTrig->text().toLatin1() + "\n";
@@ -1399,25 +1391,6 @@ if(1){
     else {
         std::cerr << "Couldn't open config file for reading.\n";
     }
-
- //  qDebug() << ui->btnDPadU->text().toLatin1();
-//    ui->btnDPadD->text()
-//    ui->btnDPadL->text()
-//    ui->btnDPadR->text()
-
-//    ui->btnYAxis->text()
-//    ui->btnXAxis->text()
-
-//    ui->btnCBtnU->text()
-//    ui->btnCBtnD->text()
-//    ui->btnCBtnL->text()
-//    ui->btnCBtnR->text()
-
-//    ui->btnStart->text()
-//    ui->btnZTrig->text()
-
-//    ui->btnBBtn->text()
-//    ui->btnABtn->text()
 }
 }
 
@@ -1430,7 +1403,7 @@ struct passwd *pw = getpwuid(getuid());
 std::string homedir = pw->pw_dir;
 
     std::ifstream cFile (homedir + "/.config/mupen64plus/InputAutoCfg.ini");
-   // /home/netpipe/.config/mupen64plus/InputAutoCfg.ini
+
     if (cFile.is_open())
     {
         std::string line;
