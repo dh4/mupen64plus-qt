@@ -868,9 +868,40 @@ void SettingsDialog::editSettings()
                     ++iter;
                 }
             }
+            configFile.close();
         }
-    }
+ //   }
 
+    // Save SharedDataPath to mupen64plus.cfg
+    configFile.setFileName(QDir(SETTINGS.value("Paths/config", "").toString()).absoluteFilePath("mupen64plus.cfg"));
+
+    if (configFile.open(QFile::ReadOnly))
+    {
+        QString config = configFile.readAll();
+
+        configFile.close();
+
+        int i = config.indexOf("SharedDataPath");
+
+        QString sharedDataPath = "SharedDataPath = \"" + ui->txtSharedDataPath->text() + "\"";
+
+        if(i == -1)
+        {
+            config.append("\n" + sharedDataPath);
+        }
+        else
+        {
+            config.replace(i, config.indexOf('\n', i) - i, sharedDataPath);
+        }
+
+        if(configFile.open(QFile::WriteOnly | QFile::Truncate))
+        {
+            configFile.write(config.toUtf8());
+        }
+
+        configFile.close();
+    }
+}
 
     close();
 }
@@ -1501,5 +1532,7 @@ void SettingsDialog::on_btnBrowseSharedDataPath_clicked()
              std::string test2 = value;
         }
     }
+
+    // find line number then write the cfg file
 }
 

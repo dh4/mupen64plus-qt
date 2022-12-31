@@ -1154,22 +1154,22 @@
               </property>
               <item>
                <property name="text">
-                <string>Controller 1</string>
+                <string>Input-SDL-Control1</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Controller 2</string>
+                <string>Input-SDL-Control2</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Controller 3</string>
+                <string>Input-SDL-Control3</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Controller 4</string>
+                <string>Input-SDL-Control4</string>
                </property>
               </item>
              </widget>
