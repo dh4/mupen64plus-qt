@@ -417,7 +417,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
             ui->cboPlugin->setCurrentIndex(cfg.value("plugin", 1).toInt());
             ui->cboDevice->setCurrentText(cfg.value("name", QString()).toString()); // ui->cboDevice->setCurrentIndex(cfg.value("device", 0).toInt()); // The name determines the device..
-            ui->cboMode->setCurrentIndex(cfg.value("mode", 0).toInt());            
+            ui->cboMode->setCurrentIndex(cfg.value("mode", 0).toInt());
 
             QStringList analogDeadzone = cfg.value("AnalogDeadzone", "0,0").toString().split(',');
             ui->nbAnalogDeadzoneX->setValue(analogDeadzone[0].toInt());
@@ -600,10 +600,10 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
 
     connect(ui->downloadOption, SIGNAL(toggled(bool)), this, SLOT(toggleDownload(bool)));
     connect(ui->downloadOption, SIGNAL(toggled(bool)), this, SLOT(populateTableAndListTab(bool)));
-    connect(ui->languageBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateLanguageInfo()));    
+    connect(ui->languageBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateLanguageInfo()));
 
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(editSettings()));
-    connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));    
+    connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
 
 SettingsDialog::~SettingsDialog()
@@ -831,12 +831,9 @@ void SettingsDialog::editSettings()
 
     //Controls tab
     {
-        killTimer(sdlEventsPumpTimerId);
-        SDL_JoystickClose(sdlJoystick);
-        SDL_Quit();
-
         SETTINGS.setValue("Controls/sharedDataPath", ui->txtSharedDataPath->text());
 
+        // Save the mapping to AutoInputCFG.cfg
         QFile configFile(ui->txtSharedDataPath->text() + "/AutoInputCFG.cfg");
 
         if (configFile.open(QFile::WriteOnly | QFile::Truncate))
@@ -868,40 +865,40 @@ void SettingsDialog::editSettings()
                     ++iter;
                 }
             }
+
             configFile.close();
         }
- //   }
 
-    // Save SharedDataPath to mupen64plus.cfg
-    configFile.setFileName(QDir(SETTINGS.value("Paths/config", "").toString()).absoluteFilePath("mupen64plus.cfg"));
+        // Save SharedDataPath to mupen64plus.cfg
+        configFile.setFileName(QDir(SETTINGS.value("Paths/config", "").toString()).absoluteFilePath("mupen64plus.cfg"));
 
-    if (configFile.open(QFile::ReadOnly))
-    {
-        QString config = configFile.readAll();
-
-        configFile.close();
-
-        int i = config.indexOf("SharedDataPath");
-
-        QString sharedDataPath = "SharedDataPath = \"" + ui->txtSharedDataPath->text() + "\"";
-
-        if(i == -1)
+        if (configFile.open(QFile::ReadOnly))
         {
-            config.append("\n" + sharedDataPath);
-        }
-        else
-        {
-            config.replace(i, config.indexOf('\n', i) - i, sharedDataPath);
-        }
+            QString config = configFile.readAll();
 
-        if(configFile.open(QFile::WriteOnly | QFile::Truncate))
-        {
-            configFile.write(config.toUtf8());
-        }
+            configFile.close();
 
-        configFile.close();
+            int i = config.indexOf("SharedDataPath");
+
+            QString sharedDataPath = "SharedDataPath = \"" + ui->txtSharedDataPath->text() + "\"";
+
+            if(i == -1)
+            {
+                config.append("\n" + sharedDataPath);
+            }
+            else
+            {
+                config.replace(i, config.indexOf('\n', i) - i, sharedDataPath);
+            }
+
+            if(configFile.open(QFile::WriteOnly | QFile::Truncate))
+            {
+                configFile.write(config.toUtf8());
+            }
+
+            configFile.close();
+        }
     }
-}
 
     close();
 }

@@ -1189,6 +1189,9 @@
             </item>
             <item>
              <widget class="QLineEdit" name="txtSharedDataPath">
+              <property name="text">
+               <string>tester</string>
+              </property>
               <property name="placeholderText">
                <string>Shared Data Path...</string>
               </property>
