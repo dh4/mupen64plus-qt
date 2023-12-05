@@ -43,7 +43,7 @@
 #include <QJsonObject>
 #include <QMessageBox>
 #include <QProgressDialog>
-#include <QTime>
+#include <QElapsedTimer>
 
 #include <QtSql/QSqlQuery>
 
@@ -250,7 +250,7 @@ int RomCollection::cachedRoms(bool imageUpdated, bool onStartup)
 
     int count = 0;
     bool showProgress = false;
-    QTime checkPerformance;
+    QElapsedTimer checkPerformance;
 
     while (query.next())
     {
