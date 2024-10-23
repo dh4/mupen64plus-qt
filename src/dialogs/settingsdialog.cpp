@@ -38,6 +38,7 @@
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QListWidget>
+#include <QScreen>
 #include <QTranslator>
 
 
@@ -85,7 +86,9 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     QStringList useableModes, modes;
     useableModes << tr("default"); //Allow users to use the screen resolution set in the config file
 
-    modes << "2560x1600"
+    modes << "7680x4320"
+          << "3840x2160"
+          << "2560x1600"
           << "2560x1440"
           << "2048x1152"
           << "1920x1200"
@@ -108,10 +111,19 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
           << "800x600"
           << "640x480";
 
+    // Check the current screen sizes and adjust the available resolutions
+    QList <QScreen*> screens = QGuiApplication::screens();
+    int screenWidth = 0;
+    int screenHeight = 0;
 
-    desktop = new QDesktopWidget;
-    int screenWidth = desktop->width();
-    int screenHeight = desktop->height();
+    for (int i = 0; i < screens.length(); i++)
+    {
+        int height = screens.at(i)->availableGeometry().height() * screens.at(i)->devicePixelRatio();
+        int width = screens.at(i)->availableGeometry().width() * screens.at(i)->devicePixelRatio();
+
+        if (height > screenHeight) screenHeight = height;
+        if (width > screenWidth) screenWidth = width;
+    }
 
     foreach (QString mode, modes)
     {
