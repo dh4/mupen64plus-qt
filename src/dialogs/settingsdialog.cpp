@@ -957,8 +957,7 @@ void SettingsDialog::updateLanguageInfo()
     QTranslator translator;
     QString language = ui->languageBox->itemData(ui->languageBox->currentIndex()).toString().toLower();
     QString resource = ":/locale/"+AppNameLower+"_"+language+".qm";
-    if (QFileInfo(resource).exists()) {
-        translator.load(resource);
+    if (QFileInfo(resource).exists() && translator.load(resource)) {
         ui->languageInfoLabel->setText(translator.translate("SettingsDialog", sourceText));
     } else
         ui->languageInfoLabel->setText(sourceText);

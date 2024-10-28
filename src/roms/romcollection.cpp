@@ -153,10 +153,10 @@ int RomCollection::addRoms()
                             *romData = byteswap(*romData);
 
                         if (romData->left(4).toHex() == "80371240") { //Z64 ROM
-                            roms.append(addRom(romData, zippedFile, romPath, fileName, query));
+                            roms.append(addRom(romData, zippedFile, romPath, fileName, std::move(query)));
                             romCount++;
                         } else if (romData->left(4).toHex() == "e848d316") { //64DD ROM
-                            ddRoms.append(addRom(romData, zippedFile, romPath, fileName, query, true));
+                            ddRoms.append(addRom(romData, zippedFile, romPath, fileName, std::move(query), true));
                             romCount++;
                         }
 
@@ -171,10 +171,10 @@ int RomCollection::addRoms()
                         *romData = byteswap(*romData);
 
                     if (romData->left(4).toHex() == "80371240") { //Z64 ROM
-                        roms.append(addRom(romData, fileName, romPath, "", query));
+                        roms.append(addRom(romData, fileName, romPath, "", std::move(query)));
                         romCount++;
                     } else if (romData->left(4).toHex() == "e848d316") { //64DD ROM
-                        ddRoms.append(addRom(romData, fileName, romPath, "", query, true));
+                        ddRoms.append(addRom(romData, fileName, romPath, "", std::move(query), true));
                         romCount++;
                     }
 
@@ -463,17 +463,20 @@ void RomCollection::setupDatabase()
         QMessageBox::warning(parent, tr("Database Not Loaded"),
                              tr("Could not connect to Sqlite database. Application may misbehave."));
 
-    QSqlQuery version = database.exec("PRAGMA user_version");
+    QSqlQuery version(database);
+    version.exec("PRAGMA user_version");
     version.next();
 
     if (version.value(0).toInt() != dbVersion) { //old database version, reset rom_collection
         version.finish();
 
-        database.exec("DROP TABLE rom_collection");
-        database.exec("PRAGMA user_version = " + QString::number(dbVersion));
+        QSqlQuery drop(database);
+        drop.exec("DROP TABLE rom_collection; PRAGMA user_version = " + QString::number(dbVersion));
+        drop.finish();
     }
 
-    database.exec(QString()
+    QSqlQuery create(database);
+    create.exec(QString()
                     + "CREATE TABLE IF NOT EXISTS rom_collection ("
                         + "rom_id INTEGER PRIMARY KEY ASC, "
                         + "filename TEXT NOT NULL, "
@@ -483,6 +486,7 @@ void RomCollection::setupDatabase()
                         + "zip_file TEXT, "
                         + "size INTEGER, "
                         + "dd_rom INTEGER)");
+    create.finish();
 
     database.close();
 }
