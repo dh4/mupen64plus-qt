@@ -34,6 +34,7 @@
 
 #include <QDialog>
 #include <QFile>
+#include <QRegularExpression>
 #include <QSyntaxHighlighter>
 
 class QDialogButtonBox;
@@ -56,7 +57,7 @@ protected:
 
 private:
     struct Rule {
-        QRegExp pattern;
+        QRegularExpression pattern;
         QTextCharFormat format;
     };
 

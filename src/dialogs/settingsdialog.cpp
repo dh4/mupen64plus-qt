@@ -35,7 +35,7 @@
 #include "../global.h"
 #include "../common.h"
 
-#include <QDesktopWidget>
+#include <QGuiApplication>
 #include <QFileDialog>
 #include <QListWidget>
 #include <QScreen>

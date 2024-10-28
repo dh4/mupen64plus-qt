@@ -179,7 +179,7 @@ void TheGamesDBScraper::downloadGameInfo(QString identifier, QString searchName,
             QUrl url;
 
             //Remove [!], (U), etc. from GoodName for searching
-            searchName.remove(QRegExp("\\W*(\\(|\\[).+(\\)|\\])\\W*"));
+            searchName.remove(QRegularExpression("\\W*(\\(|\\[).+(\\)|\\])\\W*"));
 
             //Few game specific hacks
             if (searchName == "Legend of Zelda, The - Majora's Mask" ||
@@ -245,7 +245,7 @@ void TheGamesDBScraper::downloadGameInfo(QString identifier, QString searchName,
                     QJsonValue date = game.toObject().value("release_date");
 
                     QString check = "Game: " + title.toString();
-                    check.remove(QRegExp(QString("[^A-Za-z 0-9 \\.,\\?'""!@#\\$%\\^&\\*\\")
+                    check.remove(QRegularExpression(QString("[^A-Za-z 0-9 \\.,\\?'""!@#\\$%\\^&\\*\\")
                                          + "(\\)-_=\\+;:<>\\/\\\\|\\}\\{\\[\\]`~é]*"));
                     if (date.toString() != "") check += "\n" + tr("Released on: ") + date.toString();
                     check += "\n\n" + tr("Does this look correct?");

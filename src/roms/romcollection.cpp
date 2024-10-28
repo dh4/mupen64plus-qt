@@ -385,8 +385,8 @@ void RomCollection::initializeRom(Rom *currentRom, bool cached)
         } else {
             //tweak internal name by adding spaces to get better results
             QString search = currentRom->internalName;
-            search.replace(QRegExp("([a-z])([A-Z])"),"\\1 \\2");
-            search.replace(QRegExp("([^ \\d])(\\d)"),"\\1 \\2");
+            search.replace(QRegularExpression("([a-z])([A-Z])"),"\\1 \\2");
+            search.replace(QRegularExpression("([^ \\d])(\\d)"),"\\1 \\2");
             scraper->downloadGameInfo(currentRom->romMD5, search);
         }
 
@@ -406,14 +406,14 @@ void RomCollection::initializeRom(Rom *currentRom, bool cached)
         //Remove any non-standard characters
         QString regex = "[^A-Za-z 0-9 \\.,\\?'""!@#\\$%\\^&\\*\\(\\)-_=\\+;:<>\\/\\\\|\\}\\{\\[\\]`~é]*";
 
-        currentRom->gameTitle = json.value("game_title").toString().remove(QRegExp(regex));
+        currentRom->gameTitle = json.value("game_title").toString().remove(QRegularExpression(regex));
         if (currentRom->gameTitle == "") currentRom->gameTitle = getTranslation("Not found");
 
         currentRom->releaseDate = json.value("release_date").toString();
         currentRom->sortDate = json.value("release_date").toString();
-        currentRom->releaseDate.replace(QRegExp("(\\d{4})-(\\d{2})-(\\d{2})"), "\\2/\\3/\\1");
+        currentRom->releaseDate.replace(QRegularExpression("(\\d{4})-(\\d{2})-(\\d{2})"), "\\2/\\3/\\1");
 
-        currentRom->overview = json.value("overview").toString().remove(QRegExp(regex));
+        currentRom->overview = json.value("overview").toString().remove(QRegularExpression(regex));
         currentRom->esrb = json.value("rating").toString();
 
         currentRom->genre = json.value("genres").toString();

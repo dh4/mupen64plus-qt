@@ -34,7 +34,7 @@
 #include "mainwindow.h"
 
 #include <QApplication>
-#include <QDesktopWidget>
+#include <QGuiApplication>
 #include <QFileInfo>
 #include <QScreen>
 #include <QTranslator>
