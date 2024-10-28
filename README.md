@@ -1,4 +1,4 @@
-# Mupen64Plus-Qt [![Build Status](https://travis-ci.com/dh4/mupen64plus-qt.svg?branch=master)](https://travis-ci.com/dh4/mupen64plus-qt)
+# Mupen64Plus-Qt
 
 A customizable cross-platform launcher. This was adapted from CEN64-Qt to work with [Mupen64Plus](https://mupen64plus.org/).
 
@@ -40,16 +40,16 @@ Stable releases for Linux, Windows and OSX can be found on the [releases](https:
 Note the Linux release is just a tar.gz archive containing an executable. It's a 64-bit executable that is linked to Qt5, so you'll need Qt5 installed to run it. If you have issues with it, see the section below on building.
 
 ##### Linux and Unix Distributions
-_Debian/Ubuntu:_ Mupen64Plus-Qt is in the repositories: `apt-get install mupen64plus-qt`. Alternately, see the section below on [creating a .deb package](#creating-a-deb-package-debianubuntu).  
-_Arch Linux:_ [https://aur.archlinux.org/packages/mupen64plus-qt/](https://aur.archlinux.org/packages/mupen64plus-qt/)  
-_Redhat/Fedora:_ See the section below on [creating a .rpm package](#creating-a-rpm-package-redhatfedora).  
+_Debian/Ubuntu:_ Mupen64Plus-Qt is in the repositories: `apt-get install mupen64plus-qt`. Alternately, see the section below on [creating a .deb package](#creating-a-deb-package-debianubuntu).
+_Arch Linux:_ [https://aur.archlinux.org/packages/mupen64plus-qt/](https://aur.archlinux.org/packages/mupen64plus-qt/)
+_Redhat/Fedora:_ See the section below on [creating a .rpm package](#creating-a-rpm-package-redhatfedora).
 _FreeBSD:_ Mupen64Plus-Qt is in the ports tree: `cd /usr/ports/emulators/mupen64plus-qt && make install clean`.
 
 ### Development Builds
 
-Automatic builds of the latest git commit can be downloaded here:  
-Linux: [mupen64plus-qt_linux_git-latest.tar.gz](https://s3.amazonaws.com/dh4/mupen64plus-qt/master/mupen64plus-qt_linux_git-latest.tar.gz)  
-Windows: [mupen64plus-qt_win_git-latest.zip](https://s3.amazonaws.com/dh4/mupen64plus-qt/master/mupen64plus-qt_win_git-latest.zip)  
+Automatic builds of the latest git commit can be downloaded here:
+Linux: [mupen64plus-qt_linux_git-latest.tar.gz](https://s3.amazonaws.com/dh4/mupen64plus-qt/master/mupen64plus-qt_linux_git-latest.tar.gz)
+Windows: [mupen64plus-qt_win_git-latest.zip](https://s3.amazonaws.com/dh4/mupen64plus-qt/master/mupen64plus-qt_win_git-latest.zip)
 OSX: [mupen64plus-qt_osx_git-latest.dmg](https://s3.amazonaws.com/dh4/mupen64plus-qt/master/mupen64plus-qt_osx_git-latest.dmg)
 
 Be aware that these may contain bugs not present in the stable releases.
@@ -59,26 +59,22 @@ Be aware that these may contain bugs not present in the stable releases.
 
 First, obtain the source code for Mupen64Plus-Qt. You can either clone the repository with git or download an archive of the source code for a specific release from the [releases](https://github.com/dh4/mupen64plus-qt/releases) page.
 
-You'll need to make sure you have qmake, g++, the Qt development libraries and the QuaZIP development files installed. On Debian/Ubuntu, this can be accomplished by:
+You'll need to make sure you have cmake, the Qt development libraries and the QuaZIP development files installed. On Debian/Ubuntu, this can be accomplished by:
 
 ```
-# apt-get install qt5-qmake g++ qtbase5-dev libquazip5-dev libqt5sql5-sqlite
+# apt-get install cmake qt6-base-dev libquazip1-qt6-dev
 ```
 
-You may need to replace `libquazip5-dev` with `libquazip-qt5-dev` depending on your OS version.
-
-Once the needed packages are installed, create the Makefile with qmake and then build with make. Run the following commands from the directory that contains mupen64plus-qt.pro:
+Once the needed packages are installed, create the Makefile with cmake and then build with make. Run the following commands from the directory that contains mupen64plus-qt.pro:
 
 ```
-$ qmake
+$ cmake CMakeLists.txt
 $ make
 ```
 
-If qmake returns "qmake: could not find a Qt installation of ''", you can try running `QT_SELECT=qt5 qmake` or `/usr/lib/x86_64-linux-gnu/qt5/bin/qmake`. Some distributions also contain a `qmake-qt5` symlink.
-
 ##### Compiling QuaZIP statically
 
-You also have the option to compile QuaZIP statically. Download the QuaZIP sources from Sourceforge. Place the contents of `quazip-<version>/quazip/` in `quazip5/` within the project directory. Then run:
+You also have the option to compile QuaZIP statically. Download the QuaZIP sources from Sourceforge. Place the contents of `quazip-<version>/quazip/` in `quazip/` within the project directory. Then run:
 
 ```
 $ qmake CONFIG+=linux_quazip_static
@@ -174,8 +170,8 @@ If desired, you can also manually update the information from TheGamesDB. Note t
 
 The information cache can be found here:
 
-Linux: /home/\<user\>/.local/share/mupen64plus-qt/cache_v2/\<MD5 of game\>/  
-Windows: cache_v2 folder in same directory as executable -> MD5 of game  
+Linux: /home/\<user\>/.local/share/mupen64plus-qt/cache_v2/\<MD5 of game\>/
+Windows: cache_v2 folder in same directory as executable -> MD5 of game
 OSX: /Users/\<user\>/Library/Application Support/mupen64plus-qt/cache_v2/\<MD5 of game\>/
 
 You can find the MD5 of a game by using the table or list view and adding "MD5" to the current information.
@@ -202,8 +198,8 @@ This example shows 30 seconds. The default is 10 seconds.
 
 Mupen64Plus-Qt contains an editor with syntax highlighting for mupen64plus.cfg. To use it, make sure you have your config directory set under Settings->Configure->Paths. Mupen64Plus-Qt should auto-detect this setting for you. If it doesn't, the default location is:
 
-Linux: /home/\<user\>/.config/mupen64plus/  
-Windows: C:/Users/\<user\>/AppData/Roaming/Mupen64Plus/  
+Linux: /home/\<user\>/.config/mupen64plus/
+Windows: C:/Users/\<user\>/AppData/Roaming/Mupen64Plus/
 OSX: /Users/\<user\>/.config/mupen64plus/
 
 
@@ -214,9 +210,9 @@ Mupen64Plus-Qt allows you to view the output from the Mupen64Plus console UI. Se
 
 ## Configuration File
 
-Mupen64Plus-Qt saves its settings to a text file. If for some reason you would like to modify this, it's contained at the following locations:  
-Linux: /home/\<user\>/.config/mupen64plus/mupen64plus-qt.conf  
-Windows: mupen64plus-qt.ini within the same directory as the executable  
+Mupen64Plus-Qt saves its settings to a text file. If for some reason you would like to modify this, it's contained at the following locations:
+Linux: /home/\<user\>/.config/mupen64plus/mupen64plus-qt.conf
+Windows: mupen64plus-qt.ini within the same directory as the executable
 OSX: /Users/\<user\>/Library/Preferences/com.mupen64plus.mupen64plus-qt.plist
 
 
