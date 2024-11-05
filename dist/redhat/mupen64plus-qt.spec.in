@@ -8,8 +8,8 @@ Group:          Applications/Emulators
 License:        BSD
 URL:            https://github.com/dh4/mupen64plus-qt
 Source0:        https://github.com/dh4/%{_name}/archive/%{version}.tar.gz
-BuildRequires:  qt5-qtbase-devel, quazip-qt5-devel, gcc-c++
-Requires:       qt5-qtbase, quazip-qt5
+BuildRequires:  qt6-qtbase-devel, quazip-qt6-devel
+Requires:       qt6-qtbase, quazip-qt6
 
 %description
 Mupen64Plus-Qt is a customizable launcher for the mupen64plus-ui-console
@@ -24,7 +24,7 @@ description of its features and usage.
 %autosetup -n %{_name}-%{version}
 
 %build
-qmake-qt5
+cmake CMakeLists.txt
 make %{?_smp_mflags}
 
 %install

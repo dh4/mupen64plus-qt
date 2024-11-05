@@ -95,7 +95,7 @@ $ sudo dpkg -i mupen64plus-qt_<VERSION>-1.<ARCH>.deb
 
 You can build and install an RPM package using the spec file found in dist/redhat:
 ```
-$ sudo dnf install rpmdevtools qt5-qtbase-devel quazip-qt5-devel zlib-devel gcc-c++
+$ sudo dnf install rpmdevtools qt6-qtbase-devel quazip-qt6-devel
 $ ./dist/redhat/rpm-build.sh
 $ sudo rpm -i ~/rpmbuild/RPMS/<ARCH>/mupen64plus-qt-rpm-<VERSION>.<ARCH>.rpm
 ```
