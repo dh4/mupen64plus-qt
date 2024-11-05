@@ -4,11 +4,21 @@ project(mupen64plus-qt VERSION 1.0 LANGUAGES C CXX)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 
+option(LINUX_QUAZIP_STATIC "Link QuaZip statically")
+
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt6 REQUIRED COMPONENTS Gui Network Sql Widgets Xml)
-find_package(QuaZip-Qt6 REQUIRED)
 
 qt_standard_project_setup()
+
+if(MACOS OR WIN32 OR LINUX_QUAZIP_STATIC)
+    find_package(Qt6 REQUIRED COMPONENTS Core5Compat)
+    file(GLOB_RECURSE QUAZIP_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "quazip/*.c" "quazip/*.cpp")
+endif()
+
+if(UNIX AND NOT MACOS AND NOT LINUX_QUAZIP_STATIC)
+    find_package(QuaZip-Qt6 REQUIRED)
+endif()
 
 qt_add_executable(mupen64plus-qt WIN32 MACOSX_BUNDLE
     src/common.cpp src/common.h
@@ -31,6 +41,7 @@ qt_add_executable(mupen64plus-qt WIN32 MACOSX_BUNDLE
     src/views/tableview.cpp src/views/tableview.h
     src/views/widgets/clickablewidget.cpp src/views/widgets/clickablewidget.h
     src/views/widgets/treewidgetitem.cpp src/views/widgets/treewidgetitem.h
+    ${QUAZIP_SOURCES}
 )
 target_link_libraries(mupen64plus-qt PRIVATE
     Qt::Core
@@ -62,21 +73,14 @@ qt_add_resources(mupen64plus-qt "mupen64plusqt"
         ${mupen64plusqt_resource_files}
 )
 
-if(MACOS OR WIN32 OR linux_quazip_static)
-    target_sources(mupen64plus-qt PUBLIC
-        quazip/*.c quazip/*.cpp quazip/*.h
-    )
-
-    target_compile_definitions(mupen64plus-qt PRIVATE
-        QUAZIP_STATIC
-    )
-
+if(MACOS OR WIN32 OR LINUX_QUAZIP_STATIC)
     target_link_libraries(mupen64plus-qt PRIVATE
         z
+        Qt6::Core5Compat
     )
 endif()
 
-if(UNIX AND NOT MACOS AND NOT linux_quazip_static)
+if(UNIX AND NOT MACOS AND NOT LINUX_QUAZIP_STATIC)
     target_link_libraries(mupen64plus-qt PRIVATE
         QuaZip::QuaZip
     )

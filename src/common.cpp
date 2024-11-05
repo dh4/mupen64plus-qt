@@ -41,8 +41,8 @@
 #include <QSize>
 #include <QStandardPaths>
 
-#include <quazip.h>
-#include <quazipfile.h>
+#include <quazip/quazip.h>
+#include <quazip/quazipfile.h>
 
 #ifdef Q_OS_WIN
 #include <QCoreApplication>

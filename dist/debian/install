@@ -1,4 +1,4 @@
-mupen64plus-qt                      usr/games
-resources/mupen64plus-qt.desktop    usr/share/applications
-resources/mupen64plus-qt.6          usr/share/man/man6
-resources/images/mupen64plus-qt.png usr/share/icons/hicolor/128x128/apps/
+obj-${DEB_HOST_MULTIARCH}/mupen64plus-qt    usr/games
+resources/mupen64plus-qt.desktop            usr/share/applications
+resources/mupen64plus-qt.6                  usr/share/man/man6
+resources/images/mupen64plus-qt.png         usr/share/icons/hicolor/128x128/apps/

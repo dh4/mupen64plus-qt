@@ -38,8 +38,8 @@
 #include <QFile>
 #include <QMessageBox>
 
-#include <quazip.h>
-#include <quazipfile.h>
+#include <quazip/quazip.h>
+#include <quazip/quazipfile.h>
 
 
 EmulatorHandler::EmulatorHandler(QWidget *parent) : QObject(parent)

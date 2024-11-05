@@ -3,18 +3,16 @@ Maintainer: Dan Hasting <maintainer@hasting.email>
 Section: games
 Priority: optional
 Rules-Requires-Root: no
-Build-Depends: debhelper-compat (= 12),
-               libqt5sql5-sqlite,
-               libquazip5-dev,
-               qt5-qmake,
-               qtbase5-dev
+Build-Depends: debhelper-compat (= 13),
+               libquazip1-qt6-dev,
+               cmake,
+               qt6-base-dev
 Standards-Version: 4.5.0
 Homepage: https://github.com/dh4/mupen64plus-qt
 
 Package: mupen64plus-qt
 Architecture: any-i386 any-amd64
 Depends: mupen64plus-ui-console,
-         libqt5sql5-sqlite,
          ${misc:Depends},
          ${shlibs:Depends}
 Description: customizable launcher for Mupen64Plus

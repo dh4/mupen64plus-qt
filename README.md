@@ -62,7 +62,7 @@ First, obtain the source code for Mupen64Plus-Qt. You can either clone the repos
 You'll need to make sure you have cmake, the Qt development libraries and the QuaZIP development files installed. On Debian/Ubuntu, this can be accomplished by:
 
 ```
-# apt-get install cmake qt6-base-dev libquazip1-qt6-dev
+# apt install cmake qt6-base-dev libquazip1-qt6-dev
 ```
 
 Once the needed packages are installed, create the Makefile with cmake and then build with make. Run the following commands from the directory that contains mupen64plus-qt.pro:
@@ -77,23 +77,19 @@ $ make
 You also have the option to compile QuaZIP statically. Download the QuaZIP sources from Sourceforge. Place the contents of `quazip-<version>/quazip/` in `quazip/` within the project directory. Then run:
 
 ```
-$ qmake CONFIG+=linux_quazip_static
+$ cmake -DLINUX_QUAZIP_STATIC=ON CMakeLists.txt
 $ make
 ```
-
-You will see warnings after the qmake step if the QuaZIP sources are in the wrong place.
 
 #### Creating a .deb package (Debian/Ubuntu)
 
 You can build and install a debian package using the files found in dist/debian:
 
 ```
-$ sudo apt-get install build-essential devscripts debhelper qt5-qmake qtbase5-dev libquazip5-dev libqt5sql5-sqlite
+$ sudo apt install build-essential devscripts debhelper cmake qt6-base-dev libquazip1-qt6-dev
 $ ./dist/debian/deb-build.sh
 $ sudo dpkg -i mupen64plus-qt_<VERSION>-1.<ARCH>.deb
 ```
-
-You may need to replace `libquazip5-dev` with `libquazip-qt5-dev` depending on your OS version.
 
 #### Creating a .rpm package (Redhat/Fedora)
 
