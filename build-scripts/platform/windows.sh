@@ -15,7 +15,7 @@ case "$1" in
             autoconf automake autopoint bash bison bzip2 cmake flex \
             gettext git g++ gperf intltool libffi-dev libtool \
             libltdl-dev libssl-dev libxml-parser-perl make openssl \
-            p7zip-full patch perl pkg-config python ruby scons sed \
+            p7zip-full patch perl pkg-config python3 python-is-python3 ruby scons sed \
             unzip wget xz-utils libtool-bin lzip libgdk-pixbuf2.0-dev
         git clone https://github.com/mxe/mxe.git
         cd mxe
