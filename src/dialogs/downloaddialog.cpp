@@ -39,6 +39,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QRegularExpression>
 
 
 DownloadDialog::DownloadDialog(QString fileText, QString defaultText, QString romMD5, QWidget *parent)
@@ -56,7 +57,7 @@ DownloadDialog::DownloadDialog(QString fileText, QString defaultText, QString ro
     gameNameLabel = new QLabel(tr("Name of Game:"), this);
     gameIDLabel = new QLabel(tr("or Game ID:"), this);
 
-    defaultText.remove(QRegExp("\\W*(\\(|\\[).+(\\)|\\])\\W*"));
+    defaultText.remove(QRegularExpression("\\W*(\\(|\\[).+(\\)|\\])\\W*"));
     gameNameField = new QLineEdit(defaultText, this);
     gameIDField = new QLineEdit(this);
 

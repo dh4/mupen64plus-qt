@@ -38,7 +38,7 @@ bool TreeWidgetItem::operator< (const QTreeWidgetItem &other) const
     int column = treeWidget()->sortColumn();
 
     if (data(column, Qt::UserRole).toString() != "") {
-        if (data(column, Qt::UserRole).toString().contains(QRegExp("[^\\d]+"))) {
+        if (data(column, Qt::UserRole).toString().contains(QRegularExpression("[^\\d]+"))) {
             QString firstText = data(column, Qt::UserRole).toString();
             QString otherText = other.data(column, Qt::UserRole).toString();
             return firstText < otherText;

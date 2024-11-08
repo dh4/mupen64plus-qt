@@ -51,6 +51,7 @@
 #include "views/listview.h"
 #include "views/tableview.h"
 
+#include <QActionGroup>
 #include <QCloseEvent>
 #include <QDesktopServices>
 #include <QDialogButtonBox>
@@ -61,6 +62,7 @@
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QOperatingSystemVersion>
+#include <QStandardPaths>
 #include <QTimer>
 #include <QVBoxLayout>
 
@@ -114,7 +116,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     mainLayout->addWidget(listView);
     mainLayout->addWidget(disabledView);
 
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 
     mainWidget->setLayout(mainLayout);
     mainWidget->setMinimumSize(300, 200);

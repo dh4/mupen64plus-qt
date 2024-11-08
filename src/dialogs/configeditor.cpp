@@ -128,33 +128,33 @@ ConfigHighlighter::ConfigHighlighter(QTextDocument *parent) : QSyntaxHighlighter
 
     headerFormat.setFontWeight(QFont::Bold);
     headerFormat.setForeground(Qt::darkMagenta);
-    rule.pattern = QRegExp("\\[[A-Za-z0-9\\(\\)-\\W]*\\]");
+    rule.pattern = QRegularExpression("\\[[A-Za-z0-9\\(\\)-\\W]*\\]");
     rule.format = headerFormat;
     rules.append(rule);
 
     variableFormat.setForeground(Qt::black);
-    rule.pattern = QRegExp("[A-Za-z0-9_- ]*=");
+    rule.pattern = QRegularExpression("[A-Za-z0-9_- ]*=");
     rule.format = variableFormat;
     rules.append(rule);
 
     valueFormat.setForeground(Qt::blue);
-    rule.pattern = QRegExp("=[^\\n]+");
+    rule.pattern = QRegularExpression("=[^\\n]+");
     rule.format = valueFormat;
     rules.append(rule);
 
     separatorFormat.setFontWeight(QFont::Bold);
     separatorFormat.setForeground(Qt::black);
-    rule.pattern = QRegExp("=");
+    rule.pattern = QRegularExpression("=");
     rule.format = separatorFormat;
     rules.append(rule);
 
     quotationFormat.setForeground(Qt::darkGreen);
-    rule.pattern = QRegExp("\".*\"");
+    rule.pattern = QRegularExpression("\".*\"");
     rule.format = quotationFormat;
     rules.append(rule);
 
     commentFormat.setForeground(Qt::gray);
-    rule.pattern = QRegExp("#[^\\n]*");
+    rule.pattern = QRegularExpression("#[^\\n]*");
     rule.format = commentFormat;
     rules.append(rule);
 }
@@ -163,12 +163,15 @@ ConfigHighlighter::ConfigHighlighter(QTextDocument *parent) : QSyntaxHighlighter
 void ConfigHighlighter::highlightBlock(const QString &text)
 {
     foreach (const Rule &rule, rules) {
-        QRegExp expression(rule.pattern);
-        int index = expression.indexIn(text);
-        while (index >= 0) {
-            int length = expression.matchedLength();
-            setFormat(index, length, rule.format);
-            index = expression.indexIn(text, index + length);
+        QRegularExpression expression(rule.pattern);
+        QRegularExpressionMatchIterator matches = expression.globalMatch(text);
+        while(matches.hasNext()) {
+            QRegularExpressionMatch match = matches.next();
+            if (match.hasMatch()) {
+                int index = match.capturedStart();
+                int length = match.capturedEnd() - index;
+                setFormat(index, length, rule.format);
+            }
         }
     }
 }

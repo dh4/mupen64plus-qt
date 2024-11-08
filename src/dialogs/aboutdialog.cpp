@@ -35,6 +35,7 @@
 #include "../common.h"
 
 #include <QDialogButtonBox>
+#include <QFile>
 #include <QGridLayout>
 #include <QLabel>
 #include <QPlainTextEdit>

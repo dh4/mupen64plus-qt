@@ -1,10 +1,4 @@
-QT       += core network xml sql
-
-lessThan(QT_MAJOR_VERSION, 5) {
-    QT   += gui
-} else {
-    QT   += widgets
-}
+QT       += core widgets network xml sql
 
 macx {
     TARGET = Mupen64Plus-Qt
@@ -66,27 +60,15 @@ TRANSLATIONS += resources/locale/mupen64plus-qt_fr.ts \
     resources/locale/mupen64plus-qt_ru.ts
 
 win32|macx|linux_quazip_static {
+    QT += core5compat
     CONFIG += staticlib
     DEFINES += QUAZIP_STATIC
     LIBS += -lz
 
     #Download quazip source and copy the quazip directory to project as quazip5
-    SOURCES += quazip5/*.cpp
-    SOURCES += quazip5/*.c
-    HEADERS += quazip5/*.h
+    SOURCES += quazip/*.cpp
+    SOURCES += quazip/*.c
+    HEADERS += quazip/*.h
 } else {
-    lessThan(QT_MAJOR_VERSION, 5) {
-        LIBS += -lquazip
-    } else {
-        # Debian distributions use a different library name for Qt5 quazip
-        system("which dpkg > /dev/null 2>&1") {
-            system("dpkg -l | grep libquazip-qt5-dev | grep ^ii > /dev/null") {
-                LIBS += -lquazip-qt5
-            } else {
-                LIBS += -lquazip5
-            }
-        } else {
-            LIBS += -lquazip5
-        }
-    }
+    LIBS += -lquazip1-qt6
 }
