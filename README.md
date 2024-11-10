@@ -45,15 +45,6 @@ _Arch Linux:_ [https://aur.archlinux.org/packages/mupen64plus-qt/](https://aur.a
 _Redhat/Fedora:_ See the section below on [creating a .rpm package](#creating-a-rpm-package-redhatfedora).
 _FreeBSD:_ Mupen64Plus-Qt is in the ports tree: `cd /usr/ports/emulators/mupen64plus-qt && make install clean`.
 
-### Development Builds
-
-Automatic builds of the latest git commit can be downloaded here:
-Linux: [mupen64plus-qt_linux_git-latest.tar.gz](https://s3.amazonaws.com/dh4/mupen64plus-qt/master/mupen64plus-qt_linux_git-latest.tar.gz)
-Windows: [mupen64plus-qt_win_git-latest.zip](https://s3.amazonaws.com/dh4/mupen64plus-qt/master/mupen64plus-qt_win_git-latest.zip)
-OSX: [mupen64plus-qt_osx_git-latest.dmg](https://s3.amazonaws.com/dh4/mupen64plus-qt/master/mupen64plus-qt_osx_git-latest.dmg)
-
-Be aware that these may contain bugs not present in the stable releases.
-
 
 ### Building (Linux)
 
