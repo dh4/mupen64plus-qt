@@ -50,24 +50,24 @@ _FreeBSD:_ Mupen64Plus-Qt is in the ports tree: `cd /usr/ports/emulators/mupen64
 
 First, obtain the source code for Mupen64Plus-Qt. You can either clone the repository with git or download an archive of the source code for a specific release from the [releases](https://github.com/dh4/mupen64plus-qt/releases) page.
 
-You'll need to make sure you have cmake, the Qt development libraries and the QuaZIP development files installed. On Debian/Ubuntu, this can be accomplished by:
+You'll need to make sure you have cmake, the Qt development libraries and the QuaZip development files installed. On Debian/Ubuntu, this can be accomplished by:
 
 ```
 # apt install cmake qt6-base-dev libquazip1-qt6-dev
 ```
 
-Once the needed packages are installed, create the Makefile with cmake and then build with make. Run the following commands from the directory that contains mupen64plus-qt.pro:
+Once the needed packages are installed, create the Makefile with cmake and then build with make. Run the following commands from the directory that contains CMakeLists.txt:
 
 ```
 $ cmake .
 $ make
 ```
 
-If you want to build with Qt5 instead of Qt6, use version 1.15 with the instructions [here](https://github.com/dh4/mupen64plus-qt/blob/b975030ecff95f934170e653f6c9b6e35009b083/README.md).
+If you want to build with Qt5 instead of Qt6, use version 1.15 with the instructions [here](https://github.com/dh4/mupen64plus-qt/blob/1.15/README.md).
 
-##### Compiling QuaZIP statically
+##### Compiling QuaZip statically
 
-You also have the option to compile QuaZIP statically. Download the QuaZIP sources from Sourceforge. Place the contents of `quazip-<version>/quazip/` in `quazip/` within the project directory. Then run:
+You also have the option to compile QuaZip statically. Download the QuaZip sources from GitHub [here](https://github.com/stachenov/quazip/releases). Place the contents of `quazip-<version>/quazip/` in `quazip/` within the project directory. Then run:
 
 ```
 $ cmake -DLINUX_QUAZIP_STATIC=ON .
