@@ -49,10 +49,8 @@ int main(int argc, char *argv[])
 
     if (language != "EN") {
         QString resource = ":/locale/"+AppNameLower+"_"+language.toLower()+".qm";
-        if (QFileInfo(resource).exists()) {
-            if (translator.load(resource))
-                application.installTranslator(&translator);
-        }
+        if (QFileInfo(resource).exists() && translator.load(resource))
+            application.installTranslator(&translator);
     }
 
     QCoreApplication::setOrganizationName(ParentName);
