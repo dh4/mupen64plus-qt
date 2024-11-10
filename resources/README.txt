@@ -1,11 +1,11 @@
 Github Repository:
 https://www.github.com/dh4/mupen64plus-qt
 
-Qt is licensed under the LGPL v2.1:
-https://www.gnu.org/licenses/lgpl-2.1.html
+Qt is licensed under the LGPL v3:
+https://www.gnu.org/licenses/lgpl-3.0.html
 
 Qt's source code can be viewed here:
-https://qt.gitorious.org/qt
+https://github.com/qt
 
 
 See the README at https://www.github.com/dh4/mupen64plus-qt for a detailed

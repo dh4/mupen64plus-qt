@@ -29,7 +29,7 @@ case "$1" in
         mkdir -p "build/"
 
         mv resources/README.txt .
-        tar -cvzpf "build/mupen64plus-qt_linux_$VERSION.tar.gz" mupen64plus-qt README.txt
+        tar -cvf "build/mupen64plus-qt_linux_$VERSION.tar.gz" --owner=0 --group=0 mupen64plus-qt README.txt
     ;;
 
 esac
