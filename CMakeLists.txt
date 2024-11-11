@@ -60,6 +60,7 @@ set(mupen64plusqt_resource_files
     "resources/images/not-found.png"
     "resources/locale/mupen64plus-qt_fr.qm"
     "resources/locale/mupen64plus-qt_ru.qm"
+    "resources/locale/mupen64plus-qt_pt.qm"
     "resources/other/LICENSE"
     "resources/other/VERSION"
 )
