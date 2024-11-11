@@ -60,7 +60,7 @@ RomCollection::RomCollection(QStringList fileTypes, QStringList romPaths, QWidge
 
 
 Rom RomCollection::addRom(QByteArray *romData, QString fileName, QString directory, QString zipFile,
-                          QSqlQuery query, bool ddRom)
+                          QSqlQuery *query, bool ddRom)
 {
     Rom currentRom;
 
@@ -77,19 +77,19 @@ Rom RomCollection::addRom(QByteArray *romData, QString fileName, QString directo
     currentRom.zipFile = zipFile;
     currentRom.sortSize = romData->size();
 
-    query.bindValue(":filename",      currentRom.fileName);
-    query.bindValue(":directory",     currentRom.directory);
-    query.bindValue(":internal_name", currentRom.internalName);
-    query.bindValue(":md5",           currentRom.romMD5);
-    query.bindValue(":zip_file",      currentRom.zipFile);
-    query.bindValue(":size",          currentRom.sortSize);
+    query->bindValue(":filename",      currentRom.fileName);
+    query->bindValue(":directory",     currentRom.directory);
+    query->bindValue(":internal_name", currentRom.internalName);
+    query->bindValue(":md5",           currentRom.romMD5);
+    query->bindValue(":zip_file",      currentRom.zipFile);
+    query->bindValue(":size",          currentRom.sortSize);
 
     if (ddRom)
-        query.bindValue(":dd_rom", 1);
+        query->bindValue(":dd_rom", 1);
     else
-        query.bindValue(":dd_rom", 0);
+        query->bindValue(":dd_rom", 0);
 
-    query.exec();
+    query->exec();
 
     if (!ddRom)
         initializeRom(&currentRom, false);
@@ -153,10 +153,10 @@ int RomCollection::addRoms()
                             *romData = byteswap(*romData);
 
                         if (romData->left(4).toHex() == "80371240") { //Z64 ROM
-                            roms.append(addRom(romData, zippedFile, romPath, fileName, std::move(query)));
+                            roms.append(addRom(romData, zippedFile, romPath, fileName, &query));
                             romCount++;
                         } else if (romData->left(4).toHex() == "e848d316") { //64DD ROM
-                            ddRoms.append(addRom(romData, zippedFile, romPath, fileName, std::move(query), true));
+                            ddRoms.append(addRom(romData, zippedFile, romPath, fileName, &query, true));
                             romCount++;
                         }
 
@@ -171,10 +171,10 @@ int RomCollection::addRoms()
                         *romData = byteswap(*romData);
 
                     if (romData->left(4).toHex() == "80371240") { //Z64 ROM
-                        roms.append(addRom(romData, fileName, romPath, "", std::move(query)));
+                        roms.append(addRom(romData, fileName, romPath, "", &query));
                         romCount++;
                     } else if (romData->left(4).toHex() == "e848d316") { //64DD ROM
-                        ddRoms.append(addRom(romData, fileName, romPath, "", std::move(query), true));
+                        ddRoms.append(addRom(romData, fileName, romPath, "", &query, true));
                         romCount++;
                     }
 

@@ -67,7 +67,7 @@ private:
     void setupDatabase();
     void setupProgressDialog(int size);
 
-    Rom addRom(QByteArray *romData, QString fileName, QString directory, QString zipFile, QSqlQuery query,
+    Rom addRom(QByteArray *romData, QString fileName, QString directory, QString zipFile, QSqlQuery *query,
                bool ddRom = false);
 
     QStringList fileTypes;
