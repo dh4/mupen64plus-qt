@@ -24,7 +24,7 @@ Comment[it]=È un lanciatore di giochi multipiattaforma personalizzabile che è 
 Comment[it_IT]=È un lanciatore di giochi multipiattaforma personalizzabile che è stato adattato da CEN64-Qt per funzionare con Mupen64Plus
 Comment[pt]=É um inicializador ou lançador de jogos multiplataforma personalizável que foi adaptado do CEN64-Qt para funcionar com o Mupen64Plus
 Comment[pt_BR]=O ‘Mupen64Plus-Qt’ é um inicializador ou lançador de jogos multiplataforma personalizável que foi adaptado do CEN64-Qt para funcionar com o Mupen64Plus
-GenericName[ru]=Интерфейс для Mupen64Plus
+Comment[ru]=Настраиваемый интерфейс для Mupen64Plus
 
 # Translators: Search terms to find this application. Don't translate the semicolons! The list MUST also end with a semicolon!
 Keywords=emulator;mupen;mupen64plus;Nintendo;64;
