@@ -303,6 +303,7 @@ void MainWindow::createMenu()
     //Settings
     settingsMenu = new QMenu(tr("&Settings"), this);
     editorAction = settingsMenu->addAction(tr("Edit mupen64plus.cfg..."));
+        editorAction2 = settingsMenu->addAction(tr("Edit AutoInputCFG.cfg..."));
     settingsMenu->addSeparator();
     configureGameAction = settingsMenu->addAction(tr("Configure &Game..."));
 #ifndef Q_OS_OSX //OSX does not show the quit action so the separator is unneeded
@@ -316,6 +317,7 @@ void MainWindow::createMenu()
     menuBar->addMenu(settingsMenu);
 
     connect(editorAction, SIGNAL(triggered()), this, SLOT(openEditor()));
+        connect(editorAction2, SIGNAL(triggered()), this, SLOT(openEditor2()));
     connect(configureGameAction, SIGNAL(triggered()), this, SLOT(openGameSettings()));
     connect(configureAction, SIGNAL(triggered()), this, SLOT(openSettings()));
 
@@ -725,6 +727,26 @@ void MainWindow::openEditor()
     }
 }
 
+void MainWindow::openEditor2()
+{
+    checkConfigLocation();
+
+    QString configPath = SETTINGS.value("Paths/config", "").toString();
+    QDir configDir = QDir(configPath);
+    QString configFile = configDir.absoluteFilePath("InputAutoCfg.ini");
+    QFile config(configFile);
+
+    if (configPath == "" || !config.exists()) {
+        QMessageBox::information(this, tr("Not Found"), QString(tr("Editor requires config directory to be "))
+                                 + tr("set to a directory with mupen64plus.cfg.") + "<br /><br />"
+                                 + tr("See here for the default config location:") + "<br />"
+                                 + "<a href=\"https://mupen64plus.org/wiki/index.php?title=FileLocations\">"
+                                 + "https://mupen64plus.org/wiki/index.php?title=FileLocations</a>");
+    } else {
+        ConfigEditor configEditor(configFile, this);
+        configEditor.exec();
+    }
+}
 
 void MainWindow::openGameSettings()
 {
