@@ -1333,7 +1333,7 @@ void SettingsDialog::timerEvent(QTimerEvent *e)
         {
 
             eventType = "hat";
-            eventData = QString::number(event.jhat.hat) + event.jhat.value == SDL_HAT_UP ? " Up" :
+            eventData = QString::number(event.jhat.hat) + QChar(event.jhat.value) == QChar(SDL_HAT_UP) ? " Up" :
                                                            event.jhat.value == SDL_HAT_DOWN ? " Down" :
                                                            event.jhat.value == SDL_HAT_LEFT ? " Left" : " Right";
         }

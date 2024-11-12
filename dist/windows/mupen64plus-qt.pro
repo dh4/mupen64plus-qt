@@ -60,11 +60,7 @@ TRANSLATIONS += resources/locale/mupen64plus-qt_fr.ts \
     resources/locale/mupen64plus-qt_ru.ts \
     resources/locale/mupen64plus-qt_pt.ts
 
-INCLUDEPATH += $$PWD/sdl3/include
-debug { LIBS += -L$$PWD/sdl3/lib -lSDL2 }
-release { LIBS += -L$$PWD/sdl3/lib -lSDL2 }
-
-INCLUDEPATH += $$PWD/zlib
+LIBS += -lSDL2
 
 win32|macx|linux_quazip_static {
     QT += core5compat

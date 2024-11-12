@@ -50,11 +50,13 @@ target_link_libraries(mupen64plus-qt PRIVATE
     Qt::Sql
     Qt::Widgets
     Qt::Xml
+    SDL2
 )
 
 
 # Resources:
 set(mupen64plusqt_resource_files
+    "resources/images/controller.svg"
     "resources/images/keyboard.png"
     "resources/images/mupen64plus.png"
     "resources/images/not-found.png"
