@@ -1426,7 +1426,7 @@
                 <item row="1" column="0">
                  <widget class="QLabel" name="label_6">
                   <property name="toolTip">
-                   <string>An absolute value of the SDL joystick axis &gt;= AnalogPeak will saturate the N64 controller axis value (at 80). For X, Y axes. 
+                   <string>An absolute value of the SDL joystick axis &gt;= AnalogPeak will saturate the N64 controller axis value (at 80). For X, Y axes.
 For each axis, this must be greater than the corresponding AnalogDeadzone value.</string>
                   </property>
                   <property name="text">
@@ -1488,7 +1488,7 @@ For each axis, this must be greater than the corresponding AnalogDeadzone value.
                 <item row="2" column="0">
                  <widget class="QLabel" name="label_33">
                   <property name="toolTip">
-                   <string>An absolute value of the SDL joystick axis &gt;= AnalogPeak will saturate the N64 controller axis value (at 80). For X, Y axes. 
+                   <string>An absolute value of the SDL joystick axis &gt;= AnalogPeak will saturate the N64 controller axis value (at 80). For X, Y axes.
 For each axis, this must be greater than the corresponding AnalogDeadzone value.</string>
                   </property>
                   <property name="text">
