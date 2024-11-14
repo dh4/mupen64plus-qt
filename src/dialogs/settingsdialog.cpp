@@ -38,6 +38,7 @@
 #include <QGuiApplication>
 #include <QFileDialog>
 #include <QListWidget>
+#include <QMessageBox>
 #include <QMouseEvent>
 #include <QScreen>
 #include <QStandardPaths>
@@ -469,7 +470,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
         connect(ui->cboPlugin, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this] (int plugin) { controlsConfig[ui->cboController->currentIndex()]["plugin"] = plugin; });
         connect(ui->cboDevice, &QComboBox::currentTextChanged, this, [this] (const QString& device)
         {
-            if(sdlJoystick)
+            if (sdlJoystick)
                 SDL_JoystickClose(sdlJoystick);
 
             sdlJoystick = SDL_JoystickOpen(ui->cboDevice->currentIndex());
@@ -491,16 +492,12 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
         {
             connect(btn, &QPushButton::clicked, this, [this, btn] (bool checked)
             {
-                if(checked)
-                {
-                    if(focusedControlButton)
+                if (checked) {
+                    if (focusedControlButton)
                         focusedControlButton->setChecked(false);
                     focusedControlButton = btn;
-                }
-                else
-                {
+                } else
                     focusedControlButton = nullptr;
-                }
             });
         }
 
@@ -509,7 +506,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
         {
            const QString path = QFileDialog::getExistingDirectory(this, "Choose Shared Data Path", QString());
 
-           if(! path.isNull())
+           if (!path.isNull())
                ui->txtSharedDataPath->setText(path);
         });
 
@@ -519,8 +516,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
             QString configPath = sharedDataPath;
 
             // Ensure the text is never empty
-            if(configPath.isEmpty())
-            {
+            if (configPath.isEmpty()) {
                 // Create shared data path if doesn't exists
                 configPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation).first();
                 configPath += "/.config/mupen64plus";
@@ -556,42 +552,38 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
             }
 
             // Load from AutoInputCFG.cfg to local config
-            QFile configFile(configPath + "/AutoInputCFG.cfg");
+            QFile configFile(configPath + "/mupen64plus.cfg");
 
-            if (configFile.open(QFile::ReadOnly))
-            {
+            if (configFile.open(QFile::ReadOnly)) {
                 QTextStream stream(&configFile);
 
                 QString line;
-                int controlId = 1;
+                int controlId = -1;
                 int nbLine = 0;
+                bool controllerSection = false;
 
                 while (stream.readLineInto(&line))
                 {
                     line = line.simplified();
 
                     // [Input-SDL-Control1], [Input-SDL-Control2]...
-                    if(line.size() == 20 && line.startsWith('[') && line.endsWith(']'))
-                    {
+                    // Grab controller ID and set controllerSection to true
+                    if (line.trimmed().size() == 20 && line.startsWith("[Input-SDL-Control") && line.endsWith(']')) {
+                        controllerSection = true;
                         controlId = line[18].digitValue();
-                    }
-                    else
-                    {
-                        QStringList keyValue = line.split("=");
+                    } else if (line.startsWith('[')) // Set other sections to false
+                        controllerSection = false;
+                    else if (controllerSection) {
+                        // Remove comments and split on the "="
+                        QStringList keyValue = line.split("#").first().split("=");
 
-                        if(keyValue.size() < 2)
-                        {
-                            qDebug() << "Invalid INI format at line" << nbLine << ":" << line << keyValue;
-                            continue;
+                        if (keyValue.size() == 2) { // Else, not a config line
+                            QString value = keyValue[1].trimmed().replace('"',"");
+                            if (value.isEmpty())
+                                value = CONTROL_BUTTON_EMPTY_TEXT;
+
+                            controlsConfig[controlId - 1][keyValue[0].trimmed()] = value;
                         }
-
-                        keyValue[0] = keyValue[0].trimmed();
-                        keyValue[1] = keyValue[1].trimmed();
-
-                        if(keyValue[1].isEmpty())
-                            keyValue[1] = CONTROL_BUTTON_EMPTY_TEXT;
-
-                        controlsConfig[controlId - 1][keyValue[0]] = keyValue[1];
                     }
 
                     nbLine++;
@@ -607,9 +599,7 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
         SDL_Init(SDL_INIT_JOYSTICK);
 
         for(int i = 0; i < SDL_NumJoysticks(); i++)
-        {
             ui->cboDevice->addItem( SDL_JoystickNameForIndex(i) );
-        }
 
         /// 7. Init shared data path UI
         ui->txtSharedDataPath->setText(SETTINGS.value("Controls/sharedDataPath", QString()).toString());
@@ -847,76 +837,6 @@ void SettingsDialog::editSettings()
     SETTINGS.setValue("Other/parameters", ui->parametersLine->text());
     SETTINGS.setValue("language", ui->languageBox->itemData(ui->languageBox->currentIndex()));
 
-    //Controls tab
-    {
-        SETTINGS.setValue("Controls/sharedDataPath", ui->txtSharedDataPath->text());
-
-        // Save the mapping to AutoInputCFG.cfg
-        QFile configFile(ui->txtSharedDataPath->text() + "/AutoInputCFG.cfg");
-
-        if (configFile.open(QFile::WriteOnly | QFile::Truncate))
-        {
-            QTextStream stream(&configFile);
-
-            for(int i = 0; i < 4; i++)
-            {
-                if(controlsConfig[i].isEmpty())
-                    continue;
-
-                stream << "[Input-SDL-Control" << QString::number(i + 1) << "]\n";
-
-                QMap<QString, QVariant>::const_iterator iter = controlsConfig[i].constBegin();
-                while (iter != controlsConfig[i].constEnd())
-                {
-                    QString value = iter.value().toString();
-
-                    if(iter.value().type() == QVariant::Bool)
-                    {
-                        value[0] = value[0].toUpper(); // false -> False, true -> True
-                    }
-                    else if(value == CONTROL_BUTTON_EMPTY_TEXT)
-                    {
-                        value.clear();
-                    }
-
-                    stream << iter.key() << " = " << value << "\n";
-                    ++iter;
-                }
-            }
-
-            configFile.close();
-        }
-
-        // Save SharedDataPath to mupen64plus.cfg
-        configFile.setFileName(QDir(SETTINGS.value("Paths/config", "").toString()).absoluteFilePath("mupen64plus.cfg"));
-
-        if (configFile.open(QFile::ReadOnly))
-        {
-            QString config = configFile.readAll();
-
-            configFile.close();
-
-            int i = config.indexOf("SharedDataPath");
-
-            QString sharedDataPath = "SharedDataPath = \"" + ui->txtSharedDataPath->text() + "\"";
-
-            if(i == -1)
-            {
-                config.append("\n" + sharedDataPath);
-            }
-            else
-            {
-                config.replace(i, config.indexOf('\n', i) - i, sharedDataPath);
-            }
-
-            if(configFile.open(QFile::WriteOnly | QFile::Truncate))
-            {
-                configFile.write(config.toUtf8());
-            }
-
-            configFile.close();
-        }
-    }
 
     close();
 }
@@ -1252,27 +1172,19 @@ void SettingsDialog::inputEvent(const QString &eventType, const QString &eventDa
 
     QString inputString;
 
-    if(forAxis)
-    {
-        if(controlAxisFirstEvent.name == eventType)
-        {
+    if(forAxis) {
+        if(controlAxisFirstEvent.name == eventType) {
             inputString = QString("%1(%2,%3)").arg(eventType, controlAxisFirstEvent.param, eventData);
             controlAxisFirstEvent.name.clear();
-        }
-        else
-        {
+        } else {
             controlAxisFirstEvent.name = eventType;
             controlAxisFirstEvent.param = eventData;
         }
-    }
-    else
-    {
+    } else
         inputString = QString("%1(%2)").arg(eventType, eventData);
-    }
 
-    if(!inputString.isNull() && !focusedControlButton->text().contains(inputString))
-    {
-        if(focusedControlButton->text() == CONTROL_BUTTON_EMPTY_TEXT)
+    if (!inputString.isNull() && !focusedControlButton->text().contains(inputString)) {
+        if (focusedControlButton->text() == CONTROL_BUTTON_EMPTY_TEXT)
             focusedControlButton->setText(inputString);
         else
             focusedControlButton->setText(focusedControlButton->text() + " " + inputString);
@@ -1288,28 +1200,21 @@ void SettingsDialog::inputEvent(const QString &eventType, const QString &eventDa
 
 void SettingsDialog::mousePressEvent(QMouseEvent *event)
 {
-    if(focusedControlButton)
-    {
+    if (focusedControlButton)
         inputEvent("mouse", QString::number(event->button() == Qt::MiddleButton ? 2 : event->button() == Qt::RightButton ? 3 : 1));
-    }
 }
 
 void SettingsDialog::keyPressEvent(QKeyEvent *event)
 {
-    if(!focusedControlButton)
+    if (!focusedControlButton)
         return;
 
-    if(event->key() == Qt::Key_Escape) //  == SDLK_ESCAPE
+    if (event->key() == Qt::Key_Escape) //  == SDLK_ESCAPE
         focusedControlButton->click();
-    else if (event->key() == Qt::Key_Backspace)
-    {
+    else if (event->key() == Qt::Key_Backspace) {
         focusedControlButton->setText(CONTROL_BUTTON_EMPTY_TEXT);
         focusedControlButton->setToolTip(mapControlButtonToControlKey[focusedControlButton]);
         focusedControlButton->click();
-    }
-    else
-    {
-        //inputEvent("key", SDL_GetScancodeName(event->nativeScanCode()));
     }
 }
 
@@ -1324,21 +1229,15 @@ void SettingsDialog::timerEvent(QTimerEvent *e)
     {
         QString eventType, eventData;
 
-        if (event.type == SDL_JOYAXISMOTION && abs(event.jaxis.value) >= 32767)
-        {
+        if (event.type == SDL_JOYAXISMOTION && abs(event.jaxis.value) >= 32767) {
             eventType = "axis";
             eventData = QString::number(event.jaxis.axis) + (event.jaxis.value > 0 ? "+" : "-");
-        }
-        else if (event.type == SDL_JOYHATMOTION)
-        {
-
+        } else if (event.type == SDL_JOYHATMOTION) {
             eventType = "hat";
             eventData = QString::number(event.jhat.hat) + QChar(event.jhat.value) == QChar(SDL_HAT_UP) ? " Up" :
                                                            event.jhat.value == SDL_HAT_DOWN ? " Down" :
                                                            event.jhat.value == SDL_HAT_LEFT ? " Left" : " Right";
-        }
-        else if (event.type == SDL_JOYBUTTONDOWN)
-        {
+        } else if (event.type == SDL_JOYBUTTONDOWN) {
             eventType = "button";
             eventData = QString::number(event.jbutton.button);
         }
@@ -1346,207 +1245,112 @@ void SettingsDialog::timerEvent(QTimerEvent *e)
         if(! eventType.isNull())
             inputEvent(eventType, eventData);
     }
-        SDL_Delay(20);
+
+    SDL_Delay(20);
 }
-#include <iostream>
-#include <fstream>
-#include <algorithm>
+
+
 void SettingsDialog::on_saveBtn_clicked()
 {
-           QString tstring;
-    std::string homedir = getenv("HOME");
 
-    tstring += "[" + ui->cboController->currentText() + "] " + "\n";
-if(1){
-//https://www.walletfox.com/course/parseconfigfile.php
-    std::ifstream cFile (homedir + "/.config/mupen64plus/InputAutoCfg.ini");
-    if (cFile.is_open())
-    {
-        std::string line;
+    mupen64plusConfig.setFileName(SETTINGS.value("Paths/config", "").toString() + "/mupen64plus.cfg");
 
-        while(getline(cFile, line)){
-            line.erase(std::remove_if(line.begin(), line.end(), isspace),
-                                 line.end());
-            if(line[0] == '#' || line.empty())
-                continue;
-            auto delimiterPos = line.find("=");
-            auto name = line.substr(0, delimiterPos);
-            auto value = line.substr(delimiterPos + 1);
-             std::string test =name;
-             std::string test2 = value;
-         //   qDebug() << name << " " << value; //print all lines
-             if ("DPadU" == name){
-                    tstring += "D Pad U" ;
-                    tstring += " = ";
-                    tstring += ui->btnDPadU->text().toLatin1() + "\n";
-                    //qDebug() << test.c_str() << " " << test2.c_str();
-            }
-             if ("DPadD" == name){
-                 tstring += "D Pad D";   tstring += " = "; tstring +=   ui->btnDPadD->text().toLatin1() + "\n";
-            }
-             if ("DPadL" == name){
-                 tstring += "D Pad L";   tstring += " = "; tstring +=   ui->btnDPadL->text().toLatin1() + "\n";
-            }
-             if ("DPadR" == name){
-                 tstring += "D Pad R" ;  tstring += " = " ;         tstring += ui->btnDPadR->text().toLatin1() + "\n";
-            }
-             if ("CButtonU" == name){
-                 tstring += "C Button U"  ;   tstring += " = " ; tstring += ui->btnCBtnU->text().toLatin1() + "\n";
-            }
-             if ("CButtonD" == name){
-                 tstring += "C Button U";  tstring += " = " +  ui->btnCBtnD->text().toLatin1() + "\n";
-            }
-             if ("CButtonR" == name){
-                 tstring += "C Button U" ; tstring += " = " +  ui->btnCBtnR->text().toLatin1() + "\n";
-            }
-             if ("CButtonL" == name){
-                 tstring += "C Button L" ; tstring += " = " +  ui->btnCBtnL->text().toLatin1() + "\n";
-            }
-             if ("AButton" == name){
-                 tstring += "A Button";  tstring += " = " +  ui->btnABtn->text().toLatin1() + "\n";
-            }
-             if ("BButton" == name){
-                 tstring += "B Button" ; tstring += " = " +  ui->btnBBtn->text().toLatin1() + "\n";
-            }
-             if ("Start" == name){
-                 tstring += "Start" ; tstring += " = " +  ui->btnStart->text().toLatin1() + "\n";
-            }
-             if ("ZTrig" == name){
-                 tstring += "Z Trig";  tstring += " = " +  ui->btnZTrig->text().toLatin1() + "\n";
-            }
-             if ("LTrig" == name){
-                 tstring += "L Trig";  tstring += " = " +  ui->btnLTrig->text().toLatin1() + "\n";
-
-            }
-             if ("RTrig" == name){
-                 tstring += "R Trig";  tstring += " = " +  ui->btnRTrig->text().toLatin1() + "\n";
-            }
-
-        }
- qDebug() << tstring;
-       // if (){
-
-       // }
-        // for each joystick found thats connected search these values
-
-    }
-    else {
-        std::cerr << "Couldn't open config file for reading.\n";
-    }
-}
-
-//const QString qString = "Hello, World!";
-const QString qPath("testQTextStreamEncoding.txt");
-QFile qFile(qPath);
-if (qFile.open(QIODevice::WriteOnly)) {
-  QTextStream out(&qFile); out << tstring;
-  qFile.close();
-}
-}
-
-
-void SettingsDialog::on_loadCCFGBtn_2_clicked()
-{
-
-std::string homedir = getenv("HOME");
-
-    std::ifstream cFile (homedir + "/.config/mupen64plus/InputAutoCfg.ini");
-
-    if (cFile.is_open())
-    {
-        std::string line;
-       QString tstring;
-        while(getline(cFile, line)){
-            line.erase(std::remove_if(line.begin(), line.end(), isspace),
-                                 line.end());
-            if(line[0] == '#' || line.empty())
-                continue;
-            auto delimiterPos = line.find("=");
-            auto name = line.substr(0, delimiterPos);
-            auto value = line.substr(delimiterPos + 1);
-            //std::cout << name << " " << value << '\n';
-             std::string test;
-            test = name;
-             std::string test2 = value;
-            if ("DPadU" == name){
-           ui->btnDPadU->setText(test2.c_str());
-        //    qDebug() << test.c_str() << " " << test2.c_str();
-           }
-            if ("DPadD" == name){
-               ui->btnDPadD->setText(test2.c_str());
-           }
-            if ("DPadL" == name){
-                ui->btnDPadL->setText(test2.c_str());
-           }
-            if ("DPadR" == name){
-               ui->btnDPadR->setText(test2.c_str());
-           }
-            if ("CButtonU" == name){
-               ui->btnCBtnU->setText(test2.c_str());
-
-           }
-            if ("CButtonD" == name){
-                  ui->btnCBtnD->setText(test2.c_str());
-           }
-            if ("CButtonR" == name){
-               ui->btnCBtnR->setText(test2.c_str());
-
-           }
-            if ("CButtonL" == name){
-             ui->btnCBtnL->setText(test2.c_str());
-           }
-            if ("AButton" == name){
-               ui->btnABtn->setText(test2.c_str());
-
-           }
-            if ("BButton" == name){
-                ui->btnBBtn->setText(test2.c_str());
-           }
-            if ("Start" == name){
-              ui->btnStart->setText(test2.c_str());
-
-           }
-            if ("ZTrig" == name){
-                  ui->btnZTrig->setText(test2.c_str());
-           }
-            if ("LTrig" == name){
-              ui->btnLTrig->setText(test2.c_str());
-
-           }
-            if ("RTrig" == name){
-              ui->btnRTrig->setText(test2.c_str());
-           }
-        }
-}
-}
-
-
-
-
-void SettingsDialog::on_btnBrowseSharedDataPath_clicked()
-{
-    std::string homedir = getenv("HOME");
-
-    std::ifstream cFile (homedir + "/.config/mupen64plus/InputAutoCfg.ini");
-
-    if (cFile.is_open())
-    {
-        std::string line;
-       QString tstring;
-        while(getline(cFile, line)){
-            line.erase(std::remove_if(line.begin(), line.end(), isspace),
-                                 line.end());
-            if(line[0] == '#' || line.empty())
-                continue;
-            auto delimiterPos = line.find("=");
-            auto name = line.substr(0, delimiterPos);
-            auto value = line.substr(delimiterPos + 1);
-            //std::cout << name << " " << value << '\n';
-             std::string test;
-            test = name;
-             std::string test2 = value;
-        }
+    // Check if the file can be opened for reading
+    if (!mupen64plusConfig.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QMessageBox::information(this, tr("mupen64plus.cfg was not found"), QString(tr("Either set the config path to a directory with mupen64plus.cfg, ")
+                                                            + tr("or try or try launching a game once to have it generated.")));
+        return;
     }
 
-    // find line number then write the cfg file
+    bool controllerFound = false;
+
+    // Read all lines from the config file
+    QStringList lines;
+    QTextStream in(&mupen64plusConfig);
+
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+
+        // Check for the header sections and set controllerFound to true if we're in the right one
+        if (line.startsWith("[")) {
+            if (line.startsWith("[" + ui->cboController->currentText() + "]"))
+                controllerFound = true;
+            else
+                controllerFound = false;
+        } else if (controllerFound) {
+            QStringList configValue = line.split("=");
+
+            if (!configValue.isEmpty()) {
+                if (configValue.first().trimmed() == "device")
+                    line = configValue.first().trimmed() + " = " + QString::number(ui->cboDevice->currentIndex());
+                if (configValue.first().trimmed() == "name")
+                    line = configValue.first().trimmed() + " = " + ui->cboDevice->currentText().toLatin1();
+                if (configValue.first().trimmed() == "plugged")
+                    line = configValue.first().trimmed() + " = " + (ui->chkPlugged->isChecked() ? "True" : "False");
+                if (configValue.first().trimmed() == "plugin")
+                    line = configValue.first().trimmed() + " = " + QString::number(ui->cboPlugin->currentIndex());
+                if (configValue.first().trimmed() == "mouse")
+                    line = configValue.first().trimmed() + " = " + (ui->chkMouse->isChecked() ? "True" : "False");
+                if (configValue.first().trimmed() == "MouseSensitivity")
+                    line = configValue.first().trimmed() + " = " + ui->nbMouseSensitivityX->text().toLatin1() + "," + ui->nbMouseSensitivityY->text().toLatin1();
+                if (configValue.first().trimmed() == "AnalogDeadzone")
+                    line = configValue.first().trimmed() + " = " + ui->nbAnalogDeadzoneX->text().toLatin1() + "," + ui->nbAnalogDeadzoneY->text().toLatin1();
+                if (configValue.first().trimmed() == "AnalogPeak")
+                    line = configValue.first().trimmed() + " = " + ui->nbAnalogPeakX->text().toLatin1() + "," + ui->nbAnalogPeakY->text().toLatin1();
+                if (configValue.first().trimmed() == "DPad R")
+                    line = configValue.first().trimmed() + " = " + ui->btnDPadR->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "DPad L")
+                    line = configValue.first().trimmed() + " = " + ui->btnDPadL->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "DPad D")
+                    line = configValue.first().trimmed() + " = " + ui->btnDPadD->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "DPad U")
+                    line = configValue.first().trimmed() + " = " + ui->btnDPadU->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "Start")
+                    line = configValue.first().trimmed() + " = " + ui->btnStart->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "Z Trig")
+                    line = configValue.first().trimmed() + " = " + ui->btnZTrig->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "B Button")
+                    line = configValue.first().trimmed() + " = " + ui->btnBBtn->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "A Button")
+                    line = configValue.first().trimmed() + " = " + ui->btnABtn->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "C Button R")
+                    line = configValue.first().trimmed() + " = " + ui->btnCBtnR->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "C Button L")
+                    line = configValue.first().trimmed() + " = " + ui->btnCBtnL->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "C Button D")
+                    line = configValue.first().trimmed() + " = " + ui->btnCBtnD->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "C Button U")
+                    line = configValue.first().trimmed() + " = " + ui->btnCBtnU->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "R Trig")
+                    line = configValue.first().trimmed() + " = " + ui->btnRTrig->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "L Trig")
+                    line = configValue.first().trimmed() + " = " + ui->btnLTrig->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "Mempak switch")
+                    line = configValue.first().trimmed() + " = " + ui->btnMempak->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "Rumblepak switch")
+                    line = configValue.first().trimmed() + " = " + ui->btnRumblepak->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "X Axis")
+                    line = configValue.first().trimmed() + " = " + ui->btnXAxis->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+                if (configValue.first().trimmed() == "Y Axis")
+                    line = configValue.first().trimmed() + " = " + ui->btnYAxis->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+            }
+        }
+
+
+        lines << line;
+    }
+    mupen64plusConfig.close();
+
+
+    // Write the modified lines back to the config
+    if (!mupen64plusConfig.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QMessageBox::information(this, tr("Could not open mupen64plus.cfg for writing"), QString(tr("Check the write permissions in your config directory")));
+        return;
+    }
+
+    QTextStream out(&mupen64plusConfig);
+    for (const QString &line : lines)
+        out << line << "\n";
+
+    mupen64plusConfig.close();
 }

@@ -34,6 +34,7 @@
 
 #include <QDialog>
 #include <QDir>
+#include <QFile>
 
 #include <QMap>
 #include <SDL2/SDL.h>
@@ -61,6 +62,7 @@ private:
 
     QDesktopWidget *desktop;
     QDir pluginsDir;
+    QFile mupen64plusConfig;
     QList<QWidget*> downloadEnable;
     QList<QWidget*> labelEnable;
     QList<QWidget*> listCoverEnable;
@@ -106,10 +108,6 @@ private slots:
 
     // QWidget interface
     void on_saveBtn_clicked();
-
-    void on_loadCCFGBtn_2_clicked();
-
-    void on_btnBrowseSharedDataPath_clicked();
 
 protected:
     void inputEvent(const QString& eventType, const QString& eventData);
