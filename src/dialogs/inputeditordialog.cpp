@@ -162,11 +162,6 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
         });
 
         connect(ui->cboDevice, &QComboBox::currentTextChanged, this, [this] (const QString& device) {
-            if (sdlJoystick)
-                SDL_JoystickClose(sdlJoystick);
-
-            sdlJoystick = SDL_JoystickOpen(ui->cboDevice->currentIndex());
-
             controlsConfig[ui->cboController->currentIndex()]["name"] = device;
             unsavedChanges = true;
         });
@@ -219,8 +214,17 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
                     if (focusedControlButton)
                         focusedControlButton->setChecked(false);
                     focusedControlButton = btn;
-                } else
+
+                    /// Start joystick events timer
+                    SDL_Init(SDL_INIT_JOYSTICK);
+                    sdlJoystick = SDL_JoystickOpen(ui->cboDevice->currentIndex());
+                    sdlEventsPumpTimerId = startTimer(10, Qt::VeryCoarseTimer);
+                } else {
                     focusedControlButton = nullptr;
+                    if (sdlJoystick)
+                        SDL_JoystickClose(sdlJoystick);
+                    SDL_Quit();
+                }
             });
         }
 
@@ -238,10 +242,6 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
 
     for(int i = 0; i < SDL_NumJoysticks(); i++)
         ui->cboDevice->addItem( SDL_JoystickNameForIndex(i) );
-
-
-    /// Start joystick events timer
-    sdlEventsPumpTimerId = startTimer(10, Qt::VeryCoarseTimer);
 
 
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Close"));
