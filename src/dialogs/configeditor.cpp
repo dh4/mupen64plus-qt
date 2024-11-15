@@ -128,12 +128,12 @@ ConfigHighlighter::ConfigHighlighter(QTextDocument *parent) : QSyntaxHighlighter
 
     headerFormat.setFontWeight(QFont::Bold);
     headerFormat.setForeground(Qt::darkMagenta);
-    rule.pattern = QRegularExpression("\\[[A-Za-z0-9\\(\\)-\\W]*\\]");
+    rule.pattern = QRegularExpression("\\[[A-Za-z0-9\\(\\)\\-\\W]*\\]");
     rule.format = headerFormat;
     rules.append(rule);
 
     variableFormat.setForeground(Qt::black);
-    rule.pattern = QRegularExpression("[A-Za-z0-9_- ]*=");
+    rule.pattern = QRegularExpression("[A-Za-z0-9_\\-\\s]*=");
     rule.format = variableFormat;
     rules.append(rule);
 
