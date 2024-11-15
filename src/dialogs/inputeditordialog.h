@@ -68,6 +68,7 @@ private:
     bool fromAutoChange;
     bool unsavedChanges;
     int currentController;
+    int initialMode;
 
     const QString CONTROL_BUTTON_EMPTY_TEXT = "Select...";
 
@@ -85,7 +86,7 @@ private slots:
     void confirmClose();
     void openHelp();
     void saveInputSettings();
-    void setUnsavedChanges(bool changes);
+    void setUnsavedChanges(bool changes, bool modeChange = false);
     void updateControllerConfig(int controller);
 
 

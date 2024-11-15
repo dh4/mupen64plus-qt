@@ -42,6 +42,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     unsavedChanges = false;
     fromAutoChange = false;
     currentController = 0;
+    initialMode = 0;
 
 
     /// Populate plugin drop down
@@ -171,7 +172,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
 
         connect(ui->cboMode, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this] (int mode) {
             controlsConfig[ui->cboController->currentIndex()]["mode"] = mode;
-            setUnsavedChanges(true);
+            setUnsavedChanges(true, true);
         });
 
         connect(ui->nbAnalogDeadzoneX, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogDeadzoneX) {
@@ -233,6 +234,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
 
 
         /// Load from local config to UI
+        initialMode = controlsConfig[0].value("mode", 0).toInt();
         updateControllerConfig(currentController);
     }
 
@@ -241,9 +243,10 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     SDL_Init(SDL_INIT_JOYSTICK);
 
     for(int i = 0; i < SDL_NumJoysticks(); i++)
-        ui->cboDevice->addItem( SDL_JoystickNameForIndex(i) );
-    setUnsavedChanges(false);
+        ui->cboDevice->addItem(SDL_JoystickNameForIndex(i));
 
+    setUnsavedChanges(false);
+    ui->cboMode->setCurrentIndex(initialMode);
 
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Close"));
 
@@ -406,10 +409,12 @@ void InputEditorDialog::saveInputSettings()
             QStringList configValue = line.split("=");
 
             if (!configValue.isEmpty()) {
+                if (configValue.first().trimmed() == "mode")
+                    line = configValue.first().trimmed() + " = " + QString::number(ui->cboMode->currentIndex());
                 if (configValue.first().trimmed() == "device")
                     line = configValue.first().trimmed() + " = " + QString::number(ui->cboDevice->currentIndex());
                 if (configValue.first().trimmed() == "name")
-                    line = configValue.first().trimmed() + " = " + ui->cboDevice->currentText().toLatin1();
+                    line = configValue.first().trimmed() + " = \"" + ui->cboDevice->currentText().toLatin1() + "\"";
                 if (configValue.first().trimmed() == "plugged")
                     line = configValue.first().trimmed() + " = " + (ui->chkPlugged->isChecked() ? "True" : "False");
                 if (configValue.first().trimmed() == "plugin")
@@ -457,13 +462,19 @@ void InputEditorDialog::saveInputSettings()
 }
 
 
-void InputEditorDialog::setUnsavedChanges(bool changes)
+void InputEditorDialog::setUnsavedChanges(bool changes, bool modeChange)
 {
     if (changes) {
         unsavedChanges = true;
 
         if (!ui->saveBtn->isEnabled())
             ui->saveBtn->setEnabled(true);
+
+        qDebug() << ui->cboMode->currentIndex();
+
+        // Set mode to fully manual so changes don't get overwritten by Mupen64Plus
+        if (ui->cboMode->currentIndex() != 0 && !modeChange)
+            ui->cboMode->setCurrentIndex(0);
     } else {
         unsavedChanges = false;
         ui->saveBtn->setEnabled(false);
