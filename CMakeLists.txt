@@ -57,7 +57,7 @@ target_link_libraries(mupen64plus-qt PRIVATE
 
 # Resources:
 set(mupen64plusqt_resource_files
-    "resources/images/controller.svg"
+    "resources/images/controller.png"
     "resources/images/keyboard.png"
     "resources/images/mupen64plus.png"
     "resources/images/not-found.png"

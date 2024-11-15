@@ -473,7 +473,10 @@ For each axis, this must be greater than the corresponding AnalogDeadzone value.
               </size>
              </property>
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/controller.svg&quot; /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../../resources/mupen64plusqt.qrc">:/images/controller.png</pixmap>
              </property>
             </widget>
            </item>
@@ -856,6 +859,8 @@ Left/Right</string>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resources/mupen64plusqt.qrc"/>
+ </resources>
  <connections/>
 </ui>
