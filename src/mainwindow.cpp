@@ -721,7 +721,8 @@ void MainWindow::openEditor()
                                  + tr("set to a directory with mupen64plus.cfg.") + "<br /><br />"
                                  + tr("See here for the default config location:") + "<br />"
                                  + "<a href=\"https://mupen64plus.org/wiki/index.php?title=FileLocations\">"
-                                 + "https://mupen64plus.org/wiki/index.php?title=FileLocations</a>");
+                                 + "https://mupen64plus.org/wiki/index.php?title=FileLocations</a>" + "<br /><br />"
+                                 + tr("If you have not launched Mupen64Plus yet, launch it with a ROM to create the default config."));
     } else {
         ConfigEditor configEditor(configFile, this);
         configEditor.exec();
@@ -742,7 +743,8 @@ void MainWindow::openInputEditor()
                                  + tr("set to a directory with mupen64plus.cfg.") + "<br /><br />"
                                  + tr("See here for the default config location:") + "<br />"
                                  + "<a href=\"https://mupen64plus.org/wiki/index.php?title=FileLocations\">"
-                                 + "https://mupen64plus.org/wiki/index.php?title=FileLocations</a>");
+                                 + "https://mupen64plus.org/wiki/index.php?title=FileLocations</a>" + "<br /><br />"
+                                 + tr("If you have not launched Mupen64Plus yet, launch it with a ROM to create the default config."));
     } else {
         InputEditorDialog inputEditor(configFile, this);
         inputEditor.exec();

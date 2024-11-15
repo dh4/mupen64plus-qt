@@ -389,7 +389,15 @@ SettingsDialog::SettingsDialog(QWidget *parent, int activeTab) : QDialog(parent)
     } else
         toggleDownload(false);
 
-    if (SETTINGS.value("saveoptions", "").toString() == "true")
+    // Set default of save options based on whether mupen64plus.cfg already exists
+    QString saveOptions;
+    QString configPath = SETTINGS.value("Paths/config", "").toString();
+    if (QFile(configPath + "/mupen64plus.cfg").exists())
+        saveOptions = SETTINGS.value("saveoptions", "").toString();
+    else
+        saveOptions = SETTINGS.value("saveoptions", "true").toString();
+
+    if (saveOptions == "true")
         ui->saveOption->setChecked(true);
 
     ui->parametersLine->setText(SETTINGS.value("Other/parameters", "").toString());

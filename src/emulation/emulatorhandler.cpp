@@ -211,7 +211,13 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
 
     QStringList args;
 
-    if (SETTINGS.value("saveoptions", "").toString() != "true")
+    // Set default of save options based on whether mupen64plus.cfg already exists
+    QString saveOptions;
+    if (QFile(configPath + "/mupen64plus.cfg").exists())
+        saveOptions = SETTINGS.value("saveoptions", "").toString();
+    else
+        saveOptions = SETTINGS.value("saveoptions", "true").toString();
+    if (saveOptions != "true")
         args << "--nosaveoptions";
 
     if (dataPath != "" && dataDir.exists())
