@@ -65,6 +65,10 @@ TRANSLATIONS += resources/locale/mupen64plus-qt_fr.ts \
 
 LIBS += -lSDL2
 
+win32 {
+    LIBS += -lsamplerate
+}
+
 win32|macx|linux_quazip_static {
     QT += core5compat
     CONFIG += staticlib

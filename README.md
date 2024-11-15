@@ -50,10 +50,10 @@ _FreeBSD:_ Mupen64Plus-Qt is in the ports tree: `cd /usr/ports/emulators/mupen64
 
 First, obtain the source code for Mupen64Plus-Qt. You can either clone the repository with git or download an archive of the source code for a specific release from the [releases](https://github.com/dh4/mupen64plus-qt/releases) page.
 
-You'll need to make sure you have cmake, the Qt development libraries and the QuaZip development files installed. On Debian/Ubuntu, this can be accomplished by:
+You'll need to make sure you have cmake, the Qt development libraries, SDL2 development files, and the QuaZip development files installed. On Debian/Ubuntu, this can be accomplished by:
 
 ```
-# apt install cmake qt6-base-dev libquazip1-qt6-dev
+# apt install cmake qt6-base-dev libquazip1-qt6-dev libsdl2-dev
 ```
 
 Once the needed packages are installed, create the Makefile with cmake and then build with make. Run the following commands from the directory that contains CMakeLists.txt:
@@ -79,7 +79,7 @@ $ make
 You can build and install a debian package using the files found in dist/debian:
 
 ```
-$ sudo apt install build-essential devscripts debhelper cmake qt6-base-dev libquazip1-qt6-dev
+$ sudo apt install build-essential devscripts debhelper cmake qt6-base-dev libquazip1-qt6-dev libsdl2-dev
 $ ./dist/debian/deb-build.sh
 $ sudo dpkg -i mupen64plus-qt_<VERSION>-1.<ARCH>.deb
 ```
@@ -88,7 +88,7 @@ $ sudo dpkg -i mupen64plus-qt_<VERSION>-1.<ARCH>.deb
 
 You can build and install an RPM package using the spec file found in dist/redhat:
 ```
-$ sudo dnf install rpmdevtools qt6-qtbase-devel quazip-qt6-devel
+$ sudo dnf install rpmdevtools qt6-qtbase-devel quazip-qt6-devel SDL2-devel
 $ ./dist/redhat/rpm-build.sh
 $ sudo rpm -i ~/rpmbuild/RPMS/<ARCH>/mupen64plus-qt-rpm-<VERSION>.<ARCH>.rpm
 ```

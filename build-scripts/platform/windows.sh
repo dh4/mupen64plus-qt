@@ -19,7 +19,7 @@ case "$1" in
             unzip wget xz-utils libtool-bin lzip libgdk-pixbuf2.0-dev
         git clone https://github.com/mxe/mxe.git
         cd mxe
-        make -j8 MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qtbase qt6-qt5compat
+        make -j8 MXE_TARGETS='x86_64-w64-mingw32.static' qt6-qtbase qt6-qt5compat sdl2
 
         cd "$WORKING_DIR/mupen64plus-qt"
     ;;
