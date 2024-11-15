@@ -34,8 +34,6 @@
 
 #include <QDialog>
 #include <QDir>
-#include <QFile>
-
 
 class QDesktopWidget;
 class QListWidget;
