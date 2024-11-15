@@ -399,6 +399,9 @@ For each axis, this must be greater than the corresponding AnalogDeadzone value.
         </item>
         <item>
          <widget class="QFrame" name="frameControlMap">
+          <property name="toolTip">
+           <string>Help</string>
+          </property>
           <property name="styleSheet">
            <string notr="true">QPushButton:checked {
 	color: #000;
@@ -412,65 +415,6 @@ For each axis, this must be greater than the corresponding AnalogDeadzone value.
            <enum>QFrame::Shadow::Sunken</enum>
           </property>
           <layout class="QGridLayout" name="gridLayout_15">
-           <item row="0" column="3">
-            <spacer name="TopSpacer">
-             <property name="orientation">
-              <enum>Qt::Orientation::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="3" column="5">
-            <widget class="QPushButton" name="btnZTrig">
-             <property name="maximumSize">
-              <size>
-               <width>100</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Select...</string>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QPushButton" name="btnStart">
-             <property name="text">
-              <string>Select...</string>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="4">
-            <widget class="QLabel" name="RTrigLabel">
-             <property name="text">
-              <string>R Trigger</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1" rowspan="2" colspan="5">
-            <widget class="QLabel" name="ControllerImage">
-             <property name="minimumSize">
-              <size>
-               <width>420</width>
-               <height>408</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/controller.svg&quot; /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="5">
             <widget class="QPushButton" name="btnRTrig">
              <property name="maximumSize">
@@ -487,217 +431,11 @@ For each axis, this must be greater than the corresponding AnalogDeadzone value.
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QGroupBox" name="AnalogStick">
-             <property name="title">
-              <string>Analog Stick</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_17">
-              <item row="0" column="1">
-               <widget class="QPushButton" name="btnYAxis">
-                <property name="text">
-                 <string>Select...</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="YAxisLabel">
-                <property name="text">
-                 <string>Y Axis
-Up/Down</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="btnXAxis">
-                <property name="text">
-                 <string>Select...</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="XAxisLabel">
-                <property name="text">
-                 <string>X Axis
-Left/Right</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
            <item row="0" column="2">
             <widget class="QLabel" name="LTrigLabel">
              <property name="text">
               <string>L Trigger</string>
              </property>
-            </widget>
-           </item>
-           <item row="1" column="6">
-            <widget class="QGroupBox" name="CButtons">
-             <property name="title">
-              <string>C - Buttons</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_18">
-              <item row="2" column="0">
-               <widget class="QLabel" name="CLLabel">
-                <property name="text">
-                 <string>Left</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QPushButton" name="btnCBtnU">
-                <property name="text">
-                 <string>Select...</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="btnCBtnD">
-                <property name="text">
-                 <string>Select...</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="CULabel">
-                <property name="text">
-                 <string>Up</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="CDLabel">
-                <property name="text">
-                 <string>Down</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="CRLabel">
-                <property name="text">
-                 <string>Right</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QPushButton" name="btnCBtnL">
-                <property name="text">
-                 <string>Select...</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QPushButton" name="btnCBtnR">
-                <property name="text">
-                 <string>Select...</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="3" column="2">
-            <widget class="QLabel" name="StartLabel">
-             <property name="text">
-              <string>Start</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="6">
-            <widget class="QGroupBox" name="Buttons">
-             <property name="title">
-              <string>Buttons</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_19">
-              <item row="2" column="0">
-               <widget class="QLabel" name="MempakLabel">
-                <property name="text">
-                 <string>Mempak</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QPushButton" name="btnBBtn">
-                <property name="text">
-                 <string>Select...</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="btnABtn">
-                <property name="text">
-                 <string>Select...</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="BLabel">
-                <property name="text">
-                 <string>B Button</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="ALabel">
-                <property name="text">
-                 <string>A Button</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="RumblepakLabel">
-                <property name="text">
-                 <string>Rumblepak</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QPushButton" name="btnMempak">
-                <property name="text">
-                 <string>Select...</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QPushButton" name="btnRumblepak">
-                <property name="text">
-                 <string>Select...</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
             </widget>
            </item>
            <item row="3" column="3">
@@ -713,20 +451,29 @@ Left/Right</string>
              </property>
             </spacer>
            </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="btnLTrig">
-             <property name="text">
-              <string>Select...</string>
+           <item row="0" column="3">
+            <spacer name="TopSpacer">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
-             <property name="checkable">
-              <bool>true</bool>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
              </property>
-            </widget>
+            </spacer>
            </item>
-           <item row="3" column="4">
-            <widget class="QLabel" name="ZTrigLabel">
+           <item row="1" column="1" rowspan="2" colspan="5">
+            <widget class="QLabel" name="ControllerImage">
+             <property name="minimumSize">
+              <size>
+               <width>420</width>
+               <height>408</height>
+              </size>
+             </property>
              <property name="text">
-              <string>Z Trigger</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/controller.svg&quot; /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -807,11 +554,286 @@ Left/Right</string>
              </layout>
             </widget>
            </item>
+           <item row="3" column="1">
+            <widget class="QPushButton" name="btnStart">
+             <property name="text">
+              <string>Select...</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLabel" name="StartLabel">
+             <property name="text">
+              <string>Start</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="btnLTrig">
+             <property name="text">
+              <string>Select...</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="6" alignment="Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter">
+            <widget class="QPushButton" name="helpButton">
+             <property name="maximumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LayoutDirection::LeftToRight</enum>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset theme="QIcon::ThemeIcon::HelpAbout"/>
+             </property>
+            </widget>
+           </item>
            <item row="3" column="6">
             <widget class="QPushButton" name="saveBtn">
              <property name="text">
               <string>Save</string>
              </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QLabel" name="RTrigLabel">
+             <property name="text">
+              <string>R Trigger</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QGroupBox" name="AnalogStick">
+             <property name="title">
+              <string>Analog Stick</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_17">
+              <item row="0" column="1">
+               <widget class="QPushButton" name="btnYAxis">
+                <property name="text">
+                 <string>Select...</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="YAxisLabel">
+                <property name="text">
+                 <string>Y Axis
+Up/Down</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="btnXAxis">
+                <property name="text">
+                 <string>Select...</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="XAxisLabel">
+                <property name="text">
+                 <string>X Axis
+Left/Right</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="3" column="4">
+            <widget class="QLabel" name="ZTrigLabel">
+             <property name="text">
+              <string>Z Trigger</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="6">
+            <widget class="QGroupBox" name="CButtons">
+             <property name="title">
+              <string>C Buttons</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_18">
+              <item row="2" column="0">
+               <widget class="QLabel" name="CLLabel">
+                <property name="text">
+                 <string>Left</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QPushButton" name="btnCBtnU">
+                <property name="text">
+                 <string>Select...</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="btnCBtnD">
+                <property name="text">
+                 <string>Select...</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="CULabel">
+                <property name="text">
+                 <string>Up</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="CDLabel">
+                <property name="text">
+                 <string>Down</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="CRLabel">
+                <property name="text">
+                 <string>Right</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QPushButton" name="btnCBtnL">
+                <property name="text">
+                 <string>Select...</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QPushButton" name="btnCBtnR">
+                <property name="text">
+                 <string>Select...</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="3" column="5">
+            <widget class="QPushButton" name="btnZTrig">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Select...</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="6">
+            <widget class="QGroupBox" name="Buttons">
+             <property name="title">
+              <string>Buttons</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_19">
+              <item row="4" column="1">
+               <widget class="QPushButton" name="btnRumblepak">
+                <property name="text">
+                 <string>Select...</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="btnABtn">
+                <property name="text">
+                 <string>Select...</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="ALabel">
+                <property name="text">
+                 <string>A Button</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="MempakLabel">
+                <property name="text">
+                 <string>Mempak</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QPushButton" name="btnMempak">
+                <property name="text">
+                 <string>Select...</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="RumblepakLabel">
+                <property name="text">
+                 <string>Rumblepak</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="BLabel">
+                <property name="text">
+                 <string>B Button</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QPushButton" name="btnBBtn">
+                <property name="text">
+                 <string>Select...</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
           </layout>

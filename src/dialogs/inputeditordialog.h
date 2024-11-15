@@ -75,6 +75,7 @@ private:
     
 
 private slots:
+    void openHelp();
     void saveInputSettings();
 
     

@@ -204,6 +204,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
 
 
     connect(ui->saveBtn, SIGNAL(clicked()), this, SLOT(saveInputSettings()));
+    connect(ui->helpButton, SIGNAL(clicked()), this, SLOT(openHelp()));
     connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
 
@@ -270,6 +271,19 @@ void InputEditorDialog::keyPressEvent(QKeyEvent *event)
         focusedControlButton->setToolTip(mapControlButtonToControlKey[focusedControlButton]);
         focusedControlButton->click();
     }
+}
+
+
+void InputEditorDialog::openHelp()
+{
+    QMessageBox::information(this, tr("Input Editor Help"), QString(tr("To map your controller inputs, left click an input to start listening and then press ")
+                                                                  + tr("the corresponding button or axis you want it mapped to on your controller. ")
+                                                                  + tr("For the X and Y axis, press both directions while listening.") + "<br /><br />"
+                                                                  + tr("You have the following shortcuts while listening:") + "<br /><b>Esc</b>: "
+                                                                  + tr("Abandon this input") + "<br /><b>Backspace</b>: " + tr("Clear the current input selection") + "<br /><br /><br />"
+                                                                  + tr("See <link>here<linkend> for a full description of all the input options.")
+                                                                        .replace("<link>", "<a href=\"https://mupen64plus.org/wiki/index.php/Mupen64Plus_Plugin_Parameters#Input-SDL\">")
+                                                                        .replace("<linkend>", "</a>")));
 }
 
 
