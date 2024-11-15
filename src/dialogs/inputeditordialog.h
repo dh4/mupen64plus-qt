@@ -68,6 +68,7 @@ private:
 
     int sdlEventsPumpTimerId{0};
     QMap<QString, QVariant> controlsConfig[4];
+    QMap<int, QString> pluginOptions;
     QMap<QPushButton*, QString> mapControlButtonToControlKey;
     QPushButton* focusedControlButton{nullptr};
     SDL_Joystick* sdlJoystick{NULL};

@@ -40,6 +40,14 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     config.setFileName(configFile);
     ui->setupUi(this);
 
+    // Populate plugin drop down
+    pluginOptions.insert(1, "None");
+    pluginOptions.insert(2, "Mem pak");
+    pluginOptions.insert(5, "Rumble pak");
+
+    foreach (const QString &value, pluginOptions)
+        ui->cboPlugin->addItem(value);
+
 
     /// 1. Init joystick (device) list
     SDL_Init(SDL_INIT_JOYSTICK);
@@ -129,7 +137,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
                 ui->chkMouse->setChecked(cfg.value("mouse", false).toBool());
                 ui->chkPlugged->setChecked(cfg.value("plugged", false).toBool());
 
-                ui->cboPlugin->setCurrentIndex(cfg.value("plugin", 1).toInt());
+                ui->cboPlugin->setCurrentText(pluginOptions.value(cfg.value("plugin", 1).toInt()));
                 ui->cboDevice->setCurrentText(cfg.value("name", QString()).toString());
                 ui->cboMode->setCurrentIndex(cfg.value("mode", 0).toInt());
 
@@ -158,7 +166,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     connect(ui->chkMouse, &QCheckBox::toggled, this, [this] (bool mouseEnabled) { controlsConfig[ui->cboController->currentIndex()]["mouse"] = mouseEnabled; });
     connect(ui->chkPlugged, &QCheckBox::toggled, this, [this] (bool plugged) { controlsConfig[ui->cboController->currentIndex()]["plugged"] = plugged; });
 
-    connect(ui->cboPlugin, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this] (int plugin) { controlsConfig[ui->cboController->currentIndex()]["plugin"] = plugin; });
+    connect(ui->cboPlugin, QOverload<const QString &>::of(&QComboBox::currentTextChanged), this, [this] (QString plugin) { controlsConfig[ui->cboController->currentIndex()]["plugin"] = pluginOptions.key(plugin); });
     connect(ui->cboDevice, &QComboBox::currentTextChanged, this, [this] (const QString& device)
             {
                 if (sdlJoystick)
@@ -373,7 +381,7 @@ void InputEditorDialog::saveInputSettings()
                 if (configValue.first().trimmed() == "plugged")
                     line = configValue.first().trimmed() + " = " + (ui->chkPlugged->isChecked() ? "True" : "False");
                 if (configValue.first().trimmed() == "plugin")
-                    line = configValue.first().trimmed() + " = " + QString::number(ui->cboPlugin->currentIndex());
+                    line = configValue.first().trimmed() + " = " + QString::number(pluginOptions.key(ui->cboPlugin->currentText()));
                 if (configValue.first().trimmed() == "mouse")
                     line = configValue.first().trimmed() + " = " + (ui->chkMouse->isChecked() ? "True" : "False");
                 if (configValue.first().trimmed() == "MouseSensitivity")

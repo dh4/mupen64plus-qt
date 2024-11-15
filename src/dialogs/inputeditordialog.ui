@@ -173,27 +173,9 @@
                 <property name="toolTip">
                  <string>Specifies which type of expansion pak is in the controller</string>
                 </property>
-                <property name="currentIndex">
-                 <number>1</number>
-                </property>
                 <property name="sizeAdjustPolicy">
                  <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
                 </property>
-                <item>
-                 <property name="text">
-                  <string>None</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Mem pak</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Rumble pak</string>
-                 </property>
-                </item>
                </widget>
               </item>
               <item row="2" column="0">
