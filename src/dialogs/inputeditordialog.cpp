@@ -201,6 +201,11 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     emit ui->cboController->currentIndexChanged(0);
 
 
+    controller = new QPixmap(":/images/controller.svg");
+    ui->controllerImage->setAlignment(Qt::AlignCenter);
+    ui->controllerImage->setPixmap(*controller);
+
+
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Close"));
 
 

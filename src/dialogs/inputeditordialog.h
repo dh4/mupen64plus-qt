@@ -63,6 +63,7 @@ private:
 
     QDesktopWidget *desktop;
     QFile config;
+    QPixmap *controller;
 
     const QString CONTROL_BUTTON_EMPTY_TEXT = "Select...";
 

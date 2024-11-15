@@ -465,7 +465,7 @@ For each axis, this must be greater than the corresponding AnalogDeadzone value.
             </spacer>
            </item>
            <item row="1" column="1" rowspan="2" colspan="5">
-            <widget class="QLabel" name="ControllerImage">
+            <widget class="QLabel" name="controllerImage">
              <property name="minimumSize">
               <size>
                <width>420</width>
