@@ -50,6 +50,7 @@ ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent
 
     setWindowTitle(tr("<ParentName> Config Editor").replace("<ParentName>",ParentName));
     setMinimumSize(600, 400);
+    setGeometry(0, 0, 900, 700);
 
     editorLayout = new QGridLayout(this);
     editorLayout->setContentsMargins(5, 10, 5, 10);
