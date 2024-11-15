@@ -35,10 +35,12 @@
 
 #include "keycodesdialog.h"
 
+#include <QApplication>
 #include <QDialogButtonBox>
 #include <QFontDatabase>
 #include <QGridLayout>
 #include <QLabel>
+#include <QPalette>
 #include <QTextEdit>
 
 
@@ -48,6 +50,7 @@ ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent
 
     setWindowTitle(tr("<ParentName> Config Editor").replace("<ParentName>",ParentName));
     setMinimumSize(600, 400);
+    setGeometry(0, 0, 900, 700);
 
     editorLayout = new QGridLayout(this);
     editorLayout->setContentsMargins(5, 10, 5, 10);
@@ -100,6 +103,14 @@ ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent
 }
 
 
+bool isDarkTheme() {
+    QPalette palette = QApplication::palette();
+    QColor windowColor = palette.color(QPalette::Window);
+
+    return windowColor.lightness() < 128; // 128 is the midpoint of the lightness scale
+}
+
+
 void ConfigEditor::openKeyCodes()
 {
     if (!keyCodes) {
@@ -127,33 +138,51 @@ ConfigHighlighter::ConfigHighlighter(QTextDocument *parent) : QSyntaxHighlighter
     Rule rule;
 
     headerFormat.setFontWeight(QFont::Bold);
-    headerFormat.setForeground(Qt::darkMagenta);
-    rule.pattern = QRegularExpression("\\[[A-Za-z0-9\\(\\)-\\W]*\\]");
+    if (isDarkTheme())
+        headerFormat.setForeground(Qt::magenta);
+    else
+        headerFormat.setForeground(Qt::darkMagenta);
+    rule.pattern = QRegularExpression("\\[[A-Za-z0-9\\(\\)\\-\\W]*\\]");
     rule.format = headerFormat;
     rules.append(rule);
 
-    variableFormat.setForeground(Qt::black);
-    rule.pattern = QRegularExpression("[A-Za-z0-9_- ]*=");
+    if (isDarkTheme())
+        variableFormat.setForeground(Qt::white);
+    else
+        variableFormat.setForeground(Qt::black);
+    rule.pattern = QRegularExpression("[A-Za-z0-9_\\-\\s]*=");
     rule.format = variableFormat;
     rules.append(rule);
 
-    valueFormat.setForeground(Qt::blue);
+    if (isDarkTheme())
+        valueFormat.setForeground(Qt::cyan);
+    else
+        valueFormat.setForeground(Qt::blue);
     rule.pattern = QRegularExpression("=[^\\n]+");
     rule.format = valueFormat;
     rules.append(rule);
 
     separatorFormat.setFontWeight(QFont::Bold);
-    separatorFormat.setForeground(Qt::black);
+    if (isDarkTheme())
+        separatorFormat.setForeground(Qt::white);
+    else
+        separatorFormat.setForeground(Qt::black);
     rule.pattern = QRegularExpression("=");
     rule.format = separatorFormat;
     rules.append(rule);
 
-    quotationFormat.setForeground(Qt::darkGreen);
+    if (isDarkTheme())
+        quotationFormat.setForeground(Qt::green);
+    else
+        quotationFormat.setForeground(Qt::darkGreen);
     rule.pattern = QRegularExpression("\".*\"");
     rule.format = quotationFormat;
     rules.append(rule);
 
-    commentFormat.setForeground(Qt::gray);
+    if (isDarkTheme())
+        commentFormat.setForeground(Qt::darkGray);
+    else
+        commentFormat.setForeground(Qt::gray);
     rule.pattern = QRegularExpression("#[^\\n]*");
     rule.format = commentFormat;
     rules.append(rule);

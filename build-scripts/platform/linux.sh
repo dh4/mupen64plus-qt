@@ -10,7 +10,7 @@ case "$1" in
 
     'setup_qt')
         sudo apt-get update -qq
-        sudo apt-get -y install cmake qt6-base-dev libquazip1-qt6-dev
+        sudo apt-get -y install cmake qt6-base-dev libquazip1-qt6-dev libsdl2-dev
     ;;
 
     'get_quazip')

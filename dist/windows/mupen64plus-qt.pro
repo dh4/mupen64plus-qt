@@ -20,6 +20,7 @@ SOURCES += src/main.cpp \
     src/dialogs/configeditor.cpp \
     src/dialogs/downloaddialog.cpp \
     src/dialogs/gamesettingsdialog.cpp \
+    src/dialogs/inputeditordialog.cpp \
     src/dialogs/logdialog.cpp \
     src/dialogs/settingsdialog.cpp \
     src/emulation/emulatorhandler.cpp \
@@ -40,6 +41,7 @@ HEADERS += src/global.h \
     src/dialogs/configeditor.h \
     src/dialogs/downloaddialog.h \
     src/dialogs/gamesettingsdialog.h \
+    src/dialogs/inputeditordialog.h \
     src/dialogs/logdialog.h \
     src/dialogs/settingsdialog.h \
     src/emulation/emulatorhandler.h \
@@ -54,10 +56,18 @@ HEADERS += src/global.h \
 RESOURCES += resources/mupen64plusqt.qrc
 
 FORMS += src/dialogs/gamesettingsdialog.ui \
+    src/dialogs/inputeditordialog.ui \
     src/dialogs/settingsdialog.ui
 
 TRANSLATIONS += resources/locale/mupen64plus-qt_fr.ts \
-    resources/locale/mupen64plus-qt_ru.ts
+    resources/locale/mupen64plus-qt_ru.ts \
+    resources/locale/mupen64plus-qt_pt.ts
+
+LIBS += -lSDL2
+
+win32 {
+    LIBS += -lsamplerate
+}
 
 win32|macx|linux_quazip_static {
     QT += core5compat

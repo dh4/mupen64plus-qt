@@ -39,6 +39,7 @@
 #include "dialogs/controlinfodialog.h"
 #include "dialogs/downloaddialog.h"
 #include "dialogs/gamesettingsdialog.h"
+#include "dialogs/inputeditordialog.h"
 #include "dialogs/logdialog.h"
 #include "dialogs/settingsdialog.h"
 
@@ -303,6 +304,7 @@ void MainWindow::createMenu()
     //Settings
     settingsMenu = new QMenu(tr("&Settings"), this);
     editorAction = settingsMenu->addAction(tr("Edit mupen64plus.cfg..."));
+    inputEditorAction = settingsMenu->addAction(tr("Input Configuration..."));
     settingsMenu->addSeparator();
     configureGameAction = settingsMenu->addAction(tr("Configure &Game..."));
 #ifndef Q_OS_OSX //OSX does not show the quit action so the separator is unneeded
@@ -316,6 +318,7 @@ void MainWindow::createMenu()
     menuBar->addMenu(settingsMenu);
 
     connect(editorAction, SIGNAL(triggered()), this, SLOT(openEditor()));
+    connect(inputEditorAction, SIGNAL(triggered()), this, SLOT(openInputEditor()));
     connect(configureGameAction, SIGNAL(triggered()), this, SLOT(openGameSettings()));
     connect(configureAction, SIGNAL(triggered()), this, SLOT(openSettings()));
 
@@ -718,13 +721,35 @@ void MainWindow::openEditor()
                                  + tr("set to a directory with mupen64plus.cfg.") + "<br /><br />"
                                  + tr("See here for the default config location:") + "<br />"
                                  + "<a href=\"https://mupen64plus.org/wiki/index.php?title=FileLocations\">"
-                                 + "https://mupen64plus.org/wiki/index.php?title=FileLocations</a>");
+                                 + "https://mupen64plus.org/wiki/index.php?title=FileLocations</a>" + "<br /><br />"
+                                 + tr("If you have not launched Mupen64Plus yet, launch it with a ROM to create the default config."));
     } else {
         ConfigEditor configEditor(configFile, this);
         configEditor.exec();
     }
 }
 
+void MainWindow::openInputEditor()
+{
+    checkConfigLocation();
+
+    QString configPath = SETTINGS.value("Paths/config", "").toString();
+    QDir configDir = QDir(configPath);
+    QString configFile = configDir.absoluteFilePath("mupen64plus.cfg");
+    QFile config(configFile);
+
+    if (configPath == "" || !config.exists()) {
+        QMessageBox::information(this, tr("Not Found"), QString(tr("Editor requires config directory to be "))
+                                 + tr("set to a directory with mupen64plus.cfg.") + "<br /><br />"
+                                 + tr("See here for the default config location:") + "<br />"
+                                 + "<a href=\"https://mupen64plus.org/wiki/index.php?title=FileLocations\">"
+                                 + "https://mupen64plus.org/wiki/index.php?title=FileLocations</a>" + "<br /><br />"
+                                 + tr("If you have not launched Mupen64Plus yet, launch it with a ROM to create the default config."));
+    } else {
+        InputEditorDialog inputEditor(configFile, this);
+        inputEditor.exec();
+    }
+}
 
 void MainWindow::openGameSettings()
 {

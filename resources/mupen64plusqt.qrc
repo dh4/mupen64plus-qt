@@ -7,5 +7,6 @@
         <file>locale/mupen64plus-qt_fr.qm</file>
         <file>locale/mupen64plus-qt_ru.qm</file>
         <file>images/keyboard.png</file>
+        <file>images/controller.png</file>
     </qresource>
 </RCC>

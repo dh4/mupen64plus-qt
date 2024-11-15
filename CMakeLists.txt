@@ -26,6 +26,7 @@ qt_add_executable(mupen64plus-qt WIN32 MACOSX_BUNDLE
     src/dialogs/configeditor.cpp src/dialogs/configeditor.h
     src/dialogs/controlinfodialog.cpp src/dialogs/controlinfodialog.h
     src/dialogs/downloaddialog.cpp src/dialogs/downloaddialog.h
+    src/dialogs/inputeditordialog.cpp src/dialogs/inputeditordialog.h src/dialogs/inputeditordialog.ui
     src/dialogs/gamesettingsdialog.cpp src/dialogs/gamesettingsdialog.h src/dialogs/gamesettingsdialog.ui
     src/dialogs/keycodesdialog.cpp src/dialogs/keycodesdialog.h
     src/dialogs/logdialog.cpp src/dialogs/logdialog.h
@@ -50,11 +51,13 @@ target_link_libraries(mupen64plus-qt PRIVATE
     Qt::Sql
     Qt::Widgets
     Qt::Xml
+    SDL2
 )
 
 
 # Resources:
 set(mupen64plusqt_resource_files
+    "resources/images/controller.png"
     "resources/images/keyboard.png"
     "resources/images/mupen64plus.png"
     "resources/images/not-found.png"
