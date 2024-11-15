@@ -63,6 +63,7 @@ private:
 
     QDesktopWidget *desktop;
     QFile config;
+    QStringList missingControllers;
 
     bool fromAutoChange;
     bool unsavedChanges;
@@ -80,7 +81,7 @@ private:
     
 
 private slots:
-    void checkSDLInputs();
+    void checkErrors();
     void confirmClose();
     void openHelp();
     void saveInputSettings();

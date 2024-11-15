@@ -86,6 +86,10 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
 
 
     /// Grab current configuration from mupen64plus.cfg
+
+    // Populate this and we'll remove them as they're found
+    missingControllers << "[Input-SDL-Control1]" << "[Input-SDL-Control2]" << "[Input-SDL-Control3]" << "[Input-SDL-Control4]";
+
     if (config.open(QFile::ReadOnly)) {
         QTextStream stream(&config);
 
@@ -101,6 +105,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
             // Grab controller ID and set controllerSection to true
             if (line.trimmed().size() == 20 && line.startsWith("[Input-SDL-Control") && line.endsWith(']')) {
                 controllerSection = true;
+                missingControllers.removeOne(line.trimmed());
                 controlId = line[18].digitValue();
             } else if (line.startsWith('[')) // Set other sections to false
                 controllerSection = false;
@@ -120,103 +125,111 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
         config.close();
     }
 
+    if (missingControllers.size() == 0) {
+        /// Load local config to UI upon selection of a Control config
+        connect(ui->cboController, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int nbController) {
+            if (!fromAutoChange && unsavedChanges) {
+                int answer = QMessageBox::question(this, tr("Unsaved Changes"), tr("There are unsaved changes. Are you sure you want to leave?"),
+                                                   QMessageBox::Yes | QMessageBox::No);
 
-    /// Load local config to UI upon selection of a Control config
-    connect(ui->cboController, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int nbController) {
-        if (!fromAutoChange && unsavedChanges) {
-            int answer = QMessageBox::question(this, tr("Unsaved Changes"), tr("There are unsaved changes. Are you sure you want to leave?"),
-                                               QMessageBox::Yes | QMessageBox::No);
-
-            if (answer == QMessageBox::Yes)
+                if (answer == QMessageBox::Yes)
+                    updateControllerConfig(nbController);
+                else { // Revert to old selection, making no changes
+                    fromAutoChange = true; // Set to true so the question is ignored on the automatic change
+                    ui->cboController->setCurrentIndex(currentController);
+                }
+            } else if (fromAutoChange)
+                fromAutoChange = false;
+            else
                 updateControllerConfig(nbController);
-            else { // Revert to old selection, making no changes
-                fromAutoChange = true; // Set to true so the question is ignored on the automatic change
-                ui->cboController->setCurrentIndex(currentController);
-            }
-        } else if (fromAutoChange)
-            fromAutoChange = false;
-        else
-            updateControllerConfig(nbController);
-    });
-
-
-    /// Update local config upon UI change
-    connect(ui->chkMouse, &QCheckBox::toggled, this, [this] (bool mouseEnabled) {
-        controlsConfig[ui->cboController->currentIndex()]["mouse"] = mouseEnabled;
-        unsavedChanges = true;
-    });
-
-    connect(ui->chkPlugged, &QCheckBox::toggled, this, [this] (bool plugged) {
-        controlsConfig[ui->cboController->currentIndex()]["plugged"] = plugged;
-        unsavedChanges = true;
-    });
-
-    connect(ui->cboPlugin, QOverload<const QString &>::of(&QComboBox::currentTextChanged), this, [this] (QString plugin) {
-        controlsConfig[ui->cboController->currentIndex()]["plugin"] = pluginOptions.key(plugin);
-        unsavedChanges = true;
-    });
-
-    connect(ui->cboDevice, &QComboBox::currentTextChanged, this, [this] (const QString& device) {
-        if (sdlJoystick)
-            SDL_JoystickClose(sdlJoystick);
-
-        sdlJoystick = SDL_JoystickOpen(ui->cboDevice->currentIndex());
-
-        controlsConfig[ui->cboController->currentIndex()]["name"] = device;
-        unsavedChanges = true;
-    });
-
-    connect(ui->cboMode, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this] (int mode) {
-        controlsConfig[ui->cboController->currentIndex()]["mode"] = mode;
-        unsavedChanges = true;
-    });
-
-    connect(ui->nbAnalogDeadzoneX, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogDeadzoneX) {
-        controlsConfig[ui->cboController->currentIndex()]["AnalogDeadzone"] = QString("%1,%2").arg(analogDeadzoneX).arg(ui->nbAnalogDeadzoneY->value());
-        unsavedChanges = true;
-    });
-
-    connect(ui->nbAnalogDeadzoneY, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogDeadzoneY) {
-        controlsConfig[ui->cboController->currentIndex()]["AnalogDeadzone"] = QString("%1,%2").arg(ui->nbAnalogDeadzoneX->value()).arg(analogDeadzoneY);
-        unsavedChanges = true;
-    });
-
-    connect(ui->nbAnalogPeakX, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogPeakX) {
-        controlsConfig[ui->cboController->currentIndex()]["AnalogPeak"] = QString("%1,%2").arg(analogPeakX).arg(ui->nbAnalogDeadzoneY->value());
-        unsavedChanges = true;
-    });
-
-    connect(ui->nbAnalogPeakY, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogPeakY) {
-        controlsConfig[ui->cboController->currentIndex()]["AnalogPeak"] = QString("%1,%2").arg(ui->nbAnalogDeadzoneX->value()).arg(analogPeakY);
-        unsavedChanges = true;
-    });
-
-    connect(ui->nbMouseSensitivityX, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this] (int mouseSensitivityX) {
-        controlsConfig[ui->cboController->currentIndex()]["MouseSensitivity"] = QString("%1,%2").arg(mouseSensitivityX).arg(ui->nbMouseSensitivityY->value());
-        unsavedChanges = true;
-    });
-
-    connect(ui->nbMouseSensitivityY, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this] (int mouseSensitivityY) {
-        controlsConfig[ui->cboController->currentIndex()]["MouseSensitivity"] = QString("%1,%2").arg(ui->nbMouseSensitivityX->value()).arg(mouseSensitivityY);
-        unsavedChanges = true;
-    });
-
-
-    /// Iterate through all the mapped control buttons and connect them
-    QList<QPushButton*> btnList;
-    for (auto it = mapControlButtonToControlKey.constBegin(); it != mapControlButtonToControlKey.constEnd(); ++it)
-        btnList.append(it.key());
-
-    for(QPushButton* btn : btnList)
-    {
-        connect(btn, &QPushButton::clicked, this, [this, btn] (bool checked) {
-            if (checked) {
-                if (focusedControlButton)
-                    focusedControlButton->setChecked(false);
-                focusedControlButton = btn;
-            } else
-                focusedControlButton = nullptr;
         });
+
+
+        /// Update local config upon UI change
+        connect(ui->chkMouse, &QCheckBox::toggled, this, [this] (bool mouseEnabled) {
+            controlsConfig[ui->cboController->currentIndex()]["mouse"] = mouseEnabled;
+            unsavedChanges = true;
+        });
+
+        connect(ui->chkPlugged, &QCheckBox::toggled, this, [this] (bool plugged) {
+            controlsConfig[ui->cboController->currentIndex()]["plugged"] = plugged;
+            unsavedChanges = true;
+        });
+
+        connect(ui->cboPlugin, QOverload<const QString &>::of(&QComboBox::currentTextChanged), this, [this] (QString plugin) {
+            controlsConfig[ui->cboController->currentIndex()]["plugin"] = pluginOptions.key(plugin);
+            unsavedChanges = true;
+        });
+
+        connect(ui->cboDevice, &QComboBox::currentTextChanged, this, [this] (const QString& device) {
+            if (sdlJoystick)
+                SDL_JoystickClose(sdlJoystick);
+
+            sdlJoystick = SDL_JoystickOpen(ui->cboDevice->currentIndex());
+
+            controlsConfig[ui->cboController->currentIndex()]["name"] = device;
+            unsavedChanges = true;
+        });
+
+        connect(ui->cboMode, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this] (int mode) {
+            controlsConfig[ui->cboController->currentIndex()]["mode"] = mode;
+            unsavedChanges = true;
+        });
+
+        connect(ui->nbAnalogDeadzoneX, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogDeadzoneX) {
+            controlsConfig[ui->cboController->currentIndex()]["AnalogDeadzone"] = QString("%1,%2").arg(analogDeadzoneX).arg(ui->nbAnalogDeadzoneY->value());
+            unsavedChanges = true;
+        });
+
+        connect(ui->nbAnalogDeadzoneY, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogDeadzoneY) {
+            controlsConfig[ui->cboController->currentIndex()]["AnalogDeadzone"] = QString("%1,%2").arg(ui->nbAnalogDeadzoneX->value()).arg(analogDeadzoneY);
+            unsavedChanges = true;
+        });
+
+        connect(ui->nbAnalogPeakX, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogPeakX) {
+            controlsConfig[ui->cboController->currentIndex()]["AnalogPeak"] = QString("%1,%2").arg(analogPeakX).arg(ui->nbAnalogDeadzoneY->value());
+            unsavedChanges = true;
+        });
+
+        connect(ui->nbAnalogPeakY, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogPeakY) {
+            controlsConfig[ui->cboController->currentIndex()]["AnalogPeak"] = QString("%1,%2").arg(ui->nbAnalogDeadzoneX->value()).arg(analogPeakY);
+            unsavedChanges = true;
+        });
+
+        connect(ui->nbMouseSensitivityX, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this] (int mouseSensitivityX) {
+            controlsConfig[ui->cboController->currentIndex()]["MouseSensitivity"] = QString("%1,%2").arg(mouseSensitivityX).arg(ui->nbMouseSensitivityY->value());
+            unsavedChanges = true;
+        });
+
+        connect(ui->nbMouseSensitivityY, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this] (int mouseSensitivityY) {
+            controlsConfig[ui->cboController->currentIndex()]["MouseSensitivity"] = QString("%1,%2").arg(ui->nbMouseSensitivityX->value()).arg(mouseSensitivityY);
+            unsavedChanges = true;
+        });
+
+
+        /// Iterate through all the mapped control buttons and connect them
+        QList<QPushButton*> btnList;
+        for (auto it = mapControlButtonToControlKey.constBegin(); it != mapControlButtonToControlKey.constEnd(); ++it)
+            btnList.append(it.key());
+
+        for(QPushButton* btn : btnList)
+        {
+            connect(btn, &QPushButton::clicked, this, [this, btn] (bool checked) {
+                if (checked) {
+                    if (focusedControlButton)
+                        focusedControlButton->setChecked(false);
+                    focusedControlButton = btn;
+                } else
+                    focusedControlButton = nullptr;
+            });
+        }
+
+
+        /// Load from local config to UI
+        unsavedChanges = false;
+        fromAutoChange = false;
+        currentController = 0;
+        updateControllerConfig(currentController);
     }
 
 
@@ -229,13 +242,6 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
 
     /// Start joystick events timer
     sdlEventsPumpTimerId = startTimer(10, Qt::VeryCoarseTimer);
-
-
-    /// Load from local config to UI
-    unsavedChanges = false;
-    fromAutoChange = false;
-    currentController = 0;
-    updateControllerConfig(currentController);
 
 
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Close"));
@@ -259,17 +265,24 @@ void InputEditorDialog::showEvent(QShowEvent* event)
 
     // Override showEvent so we can check for SDL inputs after the dialog has rendered
     // This is so users can at least see the dialog even without a controller connected
-    QMetaObject::invokeMethod(this, "checkSDLInputs", Qt::ConnectionType::QueuedConnection);
+    QMetaObject::invokeMethod(this, "checkErrors", Qt::ConnectionType::QueuedConnection);
 }
 
 
-void InputEditorDialog::checkSDLInputs()
+void InputEditorDialog::checkErrors()
 {
     if (SDL_NumJoysticks() == 0) {
         setEnabled(false);
         QMessageBox::critical(this, tr("No SDL inputs found"), QString(tr("Could not find a connected controller. This editor only works with controller/gamepad input and not with keyboard input. ")
                                                                      + tr("Check to make sure your controller is connected to your PC.") + "<br /><br />"
                                                                      + tr("If you just connected your controller, try restarting <AppName>.").replace("<AppName>", AppName)));
+        close();
+    }
+
+    if (missingControllers.size() != 0) {
+        setEnabled(false);
+        QMessageBox::critical(this, missingControllers.join(", ") + tr("Not Found"),
+                              QString(tr("Input configuration sections for ") + missingControllers.join(", ")+ tr(" not found in your mupen64plus.cfg. Please fix this and try again.")));
         close();
     }
 }
@@ -371,6 +384,7 @@ void InputEditorDialog::saveInputSettings()
     }
 
     bool controllerFound = false;
+    bool missing = true;
 
     // Read all lines from the config file
     QStringList lines;
@@ -381,9 +395,10 @@ void InputEditorDialog::saveInputSettings()
 
         // Check for the header sections and set controllerFound to true if we're in the right one
         if (line.startsWith("[")) {
-            if (line.startsWith("[" + ui->cboController->currentText() + "]"))
+            if (line.startsWith("[" + ui->cboController->currentText() + "]")) {
                 controllerFound = true;
-            else
+                missing = false;
+            } else
                 controllerFound = false;
         } else if (controllerFound) {
             QStringList configValue = line.split("=");
@@ -405,42 +420,10 @@ void InputEditorDialog::saveInputSettings()
                     line = configValue.first().trimmed() + " = " + ui->nbAnalogDeadzoneX->text().toLatin1() + "," + ui->nbAnalogDeadzoneY->text().toLatin1();
                 if (configValue.first().trimmed() == "AnalogPeak")
                     line = configValue.first().trimmed() + " = " + ui->nbAnalogPeakX->text().toLatin1() + "," + ui->nbAnalogPeakY->text().toLatin1();
-                if (configValue.first().trimmed() == "DPad R")
-                    line = configValue.first().trimmed() + " = " + ui->btnDPadR->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "DPad L")
-                    line = configValue.first().trimmed() + " = " + ui->btnDPadL->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "DPad D")
-                    line = configValue.first().trimmed() + " = " + ui->btnDPadD->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "DPad U")
-                    line = configValue.first().trimmed() + " = " + ui->btnDPadU->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "Start")
-                    line = configValue.first().trimmed() + " = " + ui->btnStart->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "Z Trig")
-                    line = configValue.first().trimmed() + " = " + ui->btnZTrig->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "B Button")
-                    line = configValue.first().trimmed() + " = " + ui->btnBBtn->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "A Button")
-                    line = configValue.first().trimmed() + " = " + ui->btnABtn->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "C Button R")
-                    line = configValue.first().trimmed() + " = " + ui->btnCBtnR->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "C Button L")
-                    line = configValue.first().trimmed() + " = " + ui->btnCBtnL->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "C Button D")
-                    line = configValue.first().trimmed() + " = " + ui->btnCBtnD->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "C Button U")
-                    line = configValue.first().trimmed() + " = " + ui->btnCBtnU->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "R Trig")
-                    line = configValue.first().trimmed() + " = " + ui->btnRTrig->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "L Trig")
-                    line = configValue.first().trimmed() + " = " + ui->btnLTrig->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "Mempak switch")
-                    line = configValue.first().trimmed() + " = " + ui->btnMempak->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "Rumblepak switch")
-                    line = configValue.first().trimmed() + " = " + ui->btnRumblepak->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "X Axis")
-                    line = configValue.first().trimmed() + " = " + ui->btnXAxis->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
-                if (configValue.first().trimmed() == "Y Axis")
-                    line = configValue.first().trimmed() + " = " + ui->btnYAxis->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
+
+                for (auto it = mapControlButtonToControlKey.constBegin(); it != mapControlButtonToControlKey.constEnd(); ++it)
+                    if (configValue.first().trimmed() == it.value())
+                        line = configValue.first().trimmed() + " = " + it.key()->text().replace(CONTROL_BUTTON_EMPTY_TEXT,"").toLatin1();
             }
         }
 
@@ -450,21 +433,25 @@ void InputEditorDialog::saveInputSettings()
     config.close();
 
 
-    // Write the modified lines back to the config
-    if (!config.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QMessageBox::information(this, tr("Could not open mupen64plus.cfg for writing"), QString(tr("Check the write permissions in your config directory.")));
-        return;
-    }
+    if (!missing) {
+        // Write the modified lines back to the config
+        if (!config.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QMessageBox::information(this, tr("Could not open mupen64plus.cfg for writing"), QString(tr("Check the write permissions in your config directory.")));
+            return;
+        }
 
-    QTextStream out(&config);
-    for (const QString &line : std::as_const(lines))
-        out << line << "\n";
+        QTextStream out(&config);
+        for (const QString &line : std::as_const(lines))
+            out << line << "\n";
 
-    config.close();
+        config.close();
 
 
-    unsavedChanges = false;
-    QMessageBox::information(this, tr("Save successful"), QString(tr("Input configuration for ") + ui->cboController->currentText() + tr(" successfully saved to mupen64plus.cfg.")));
+        unsavedChanges = false;
+        QMessageBox::information(this, tr("Save successful"), QString(tr("Input configuration for [") + ui->cboController->currentText() + tr("] successfully saved to mupen64plus.cfg.")));
+    } else
+        QMessageBox::critical(this, "[" + ui->cboController->currentText() + "] " + tr("Not Found"),
+                              QString(tr("Input configuration section for [") + ui->cboController->currentText() + tr("] not found in your mupen64plus.cfg. Please fix this and try again.")));
 }
 
 
