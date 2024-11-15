@@ -60,15 +60,15 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     for(int i = 0; i < 4; i++)
     {
         controlsConfig[i] = {
-                             {"mouse", false},
-                             {"plugged", false},
-                             {"plugin", 1},
-                             {"name", QString()},
-                             {"mode", 0},
-                             {"AnalogDeadzone", "0,0"},
-                             {"AnalogPeak", "32768,32768"},
-                             {"MouseSensitivity", "2.0,2.0"},
-                             };
+            {"mouse", false},
+            {"plugged", false},
+            {"plugin", 1},
+            {"name", QString()},
+            {"mode", 0},
+            {"AnalogDeadzone", "0,0"},
+            {"AnalogPeak", "32768,32768"},
+            {"MouseSensitivity", "2.0,2.0"},
+        };
 
         QMap<QPushButton*, QString>::const_iterator iter = mapControlButtonToControlKey.constBegin();
 
@@ -86,7 +86,6 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
 
         QString line;
         int controlId = -1;
-        int nbLine = 0;
         bool controllerSection = false;
 
         while (stream.readLineInto(&line))
@@ -112,8 +111,6 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
                     controlsConfig[controlId - 1][keyValue[0].trimmed()] = value;
                 }
             }
-
-            nbLine++;
         }
         config.close();
     }
@@ -130,74 +127,103 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     };
 
     /// 5. Load local config to UI upon selection of a Control config
-    connect(ui->cboController, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int nbController)
-            {
-                const QMap<QString, QVariant>& cfg = controlsConfig[nbController];
+    connect(ui->cboController, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int nbController) {
+        const QMap<QString, QVariant>& cfg = controlsConfig[nbController];
 
-                ui->chkMouse->setChecked(cfg.value("mouse", false).toBool());
-                ui->chkPlugged->setChecked(cfg.value("plugged", false).toBool());
+        ui->chkMouse->setChecked(cfg.value("mouse", false).toBool());
+        ui->chkPlugged->setChecked(cfg.value("plugged", false).toBool());
 
-                ui->cboPlugin->setCurrentText(pluginOptions.value(cfg.value("plugin", 1).toInt()));
-                ui->cboDevice->setCurrentText(cfg.value("name", QString()).toString());
-                ui->cboMode->setCurrentIndex(cfg.value("mode", 0).toInt());
+        ui->cboPlugin->setCurrentText(pluginOptions.value(cfg.value("plugin", 1).toInt()));
+        ui->cboDevice->setCurrentText(cfg.value("name", QString()).toString());
+        ui->cboMode->setCurrentIndex(cfg.value("mode", 0).toInt());
 
-                QStringList analogDeadzone = cfg.value("AnalogDeadzone", "0,0").toString().split(',');
-                ui->nbAnalogDeadzoneX->setValue(analogDeadzone[0].toInt());
-                ui->nbAnalogDeadzoneY->setValue(analogDeadzone[1].toInt());
+        QStringList analogDeadzone = cfg.value("AnalogDeadzone", "0,0").toString().split(',');
+        ui->nbAnalogDeadzoneX->setValue(analogDeadzone[0].toInt());
+        ui->nbAnalogDeadzoneY->setValue(analogDeadzone[1].toInt());
 
-                QStringList analogPeak = cfg.value("AnalogPeak", "32768,32768").toString().split(',');
-                ui->nbAnalogPeakX->setValue(analogPeak[0].toInt());
-                ui->nbAnalogPeakY->setValue(analogPeak[1].toInt());
+        QStringList analogPeak = cfg.value("AnalogPeak", "32768,32768").toString().split(',');
+        ui->nbAnalogPeakX->setValue(analogPeak[0].toInt());
+        ui->nbAnalogPeakY->setValue(analogPeak[1].toInt());
 
-                QStringList mouseSensitivity = cfg.value("MouseSensitivity", "2.0,2.0").toString().split(',');
-                ui->nbMouseSensitivityX->setValue(mouseSensitivity[0].toInt());
-                ui->nbMouseSensitivityY->setValue(mouseSensitivity[1].toInt());
+        QStringList mouseSensitivity = cfg.value("MouseSensitivity", "2.0,2.0").toString().split(',');
+        ui->nbMouseSensitivityX->setValue(mouseSensitivity[0].toInt());
+        ui->nbMouseSensitivityY->setValue(mouseSensitivity[1].toInt());
 
-                QMap<QPushButton*, QString>::const_iterator iter = mapControlButtonToControlKey.constBegin();
-                while (iter != mapControlButtonToControlKey.constEnd())
-                {
-                    iter.key()->setText(cfg.value(iter.value(), CONTROL_BUTTON_EMPTY_TEXT).toString());
-                    ++iter;
-                }
-            });
+        QMap<QPushButton*, QString>::const_iterator iter = mapControlButtonToControlKey.constBegin();
+        while (iter != mapControlButtonToControlKey.constEnd())
+        {
+            iter.key()->setText(cfg.value(iter.value(), CONTROL_BUTTON_EMPTY_TEXT).toString());
+            ++iter;
+        }
+    });
 
 
     /// 6. Update local config upon UI change
-    connect(ui->chkMouse, &QCheckBox::toggled, this, [this] (bool mouseEnabled) { controlsConfig[ui->cboController->currentIndex()]["mouse"] = mouseEnabled; });
-    connect(ui->chkPlugged, &QCheckBox::toggled, this, [this] (bool plugged) { controlsConfig[ui->cboController->currentIndex()]["plugged"] = plugged; });
+    connect(ui->chkMouse, &QCheckBox::toggled, this, [this] (bool mouseEnabled) {
+        controlsConfig[ui->cboController->currentIndex()]["mouse"] = mouseEnabled;
+    });
 
-    connect(ui->cboPlugin, QOverload<const QString &>::of(&QComboBox::currentTextChanged), this, [this] (QString plugin) { controlsConfig[ui->cboController->currentIndex()]["plugin"] = pluginOptions.key(plugin); });
-    connect(ui->cboDevice, &QComboBox::currentTextChanged, this, [this] (const QString& device)
-            {
-                if (sdlJoystick)
-                    SDL_JoystickClose(sdlJoystick);
+    connect(ui->chkPlugged, &QCheckBox::toggled, this, [this] (bool plugged) {
+        controlsConfig[ui->cboController->currentIndex()]["plugged"] = plugged;
+    });
 
-                sdlJoystick = SDL_JoystickOpen(ui->cboDevice->currentIndex());
+    connect(ui->cboPlugin, QOverload<const QString &>::of(&QComboBox::currentTextChanged), this, [this] (QString plugin) {
+        controlsConfig[ui->cboController->currentIndex()]["plugin"] = pluginOptions.key(plugin);
+    });
 
-                controlsConfig[ui->cboController->currentIndex()]["name"] = device;
-            });
-    connect(ui->cboMode, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this] (int mode) { controlsConfig[ui->cboController->currentIndex()]["mode"] = mode; });
+    connect(ui->cboDevice, &QComboBox::currentTextChanged, this, [this] (const QString& device) {
+        if (sdlJoystick)
+            SDL_JoystickClose(sdlJoystick);
 
-    connect(ui->nbAnalogDeadzoneX, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogDeadzoneX) { controlsConfig[ui->cboController->currentIndex()]["AnalogDeadzone"] = QString("%1,%2").arg(analogDeadzoneX).arg(ui->nbAnalogDeadzoneY->value()); });
-    connect(ui->nbAnalogDeadzoneY, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogDeadzoneY) { controlsConfig[ui->cboController->currentIndex()]["AnalogDeadzone"] = QString("%1,%2").arg(ui->nbAnalogDeadzoneX->value()).arg(analogDeadzoneY); });
+        sdlJoystick = SDL_JoystickOpen(ui->cboDevice->currentIndex());
 
-    connect(ui->nbAnalogPeakX, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogPeakX) { controlsConfig[ui->cboController->currentIndex()]["AnalogPeak"] = QString("%1,%2").arg(analogPeakX).arg(ui->nbAnalogDeadzoneY->value()); });
-    connect(ui->nbAnalogPeakY, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogPeakY) { controlsConfig[ui->cboController->currentIndex()]["AnalogPeak"] = QString("%1,%2").arg(ui->nbAnalogDeadzoneX->value()).arg(analogPeakY); });
+        controlsConfig[ui->cboController->currentIndex()]["name"] = device;
+    });
 
-    connect(ui->nbMouseSensitivityX, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this] (int mouseSensitivityX) { controlsConfig[ui->cboController->currentIndex()]["MouseSensitivity"] = QString("%1,%2").arg(mouseSensitivityX).arg(ui->nbMouseSensitivityY->value()); });
-    connect(ui->nbMouseSensitivityY, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this] (int mouseSensitivityY) { controlsConfig[ui->cboController->currentIndex()]["MouseSensitivity"] = QString("%1,%2").arg(ui->nbMouseSensitivityX->value()).arg(mouseSensitivityY); });
+    connect(ui->cboMode, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this] (int mode) {
+        controlsConfig[ui->cboController->currentIndex()]["mode"] = mode;
+    });
 
-    for(QPushButton* btn : {ui->btnDPadU, ui->btnDPadD, ui->btnDPadL, ui->btnDPadR, ui->btnStart, ui->btnLTrig, ui->btnRTrig, ui->btnZTrig, ui->btnCBtnU, ui->btnCBtnD, ui->btnCBtnL, ui->btnCBtnR, ui->btnABtn, ui->btnBBtn, ui->btnMempak, ui->btnRumblepak, ui->btnXAxis, ui->btnYAxis })
+    connect(ui->nbAnalogDeadzoneX, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogDeadzoneX) {
+        controlsConfig[ui->cboController->currentIndex()]["AnalogDeadzone"] = QString("%1,%2").arg(analogDeadzoneX).arg(ui->nbAnalogDeadzoneY->value());
+    });
+
+    connect(ui->nbAnalogDeadzoneY, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogDeadzoneY) {
+        controlsConfig[ui->cboController->currentIndex()]["AnalogDeadzone"] = QString("%1,%2").arg(ui->nbAnalogDeadzoneX->value()).arg(analogDeadzoneY);
+    });
+
+    connect(ui->nbAnalogPeakX, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogPeakX) {
+        controlsConfig[ui->cboController->currentIndex()]["AnalogPeak"] = QString("%1,%2").arg(analogPeakX).arg(ui->nbAnalogDeadzoneY->value());
+    });
+
+    connect(ui->nbAnalogPeakY, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogPeakY) {
+        controlsConfig[ui->cboController->currentIndex()]["AnalogPeak"] = QString("%1,%2").arg(ui->nbAnalogDeadzoneX->value()).arg(analogPeakY);
+    });
+
+    connect(ui->nbMouseSensitivityX, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this] (int mouseSensitivityX) {
+        controlsConfig[ui->cboController->currentIndex()]["MouseSensitivity"] = QString("%1,%2").arg(mouseSensitivityX).arg(ui->nbMouseSensitivityY->value());
+    });
+
+    connect(ui->nbMouseSensitivityY, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this] (int mouseSensitivityY) {
+        controlsConfig[ui->cboController->currentIndex()]["MouseSensitivity"] = QString("%1,%2").arg(ui->nbMouseSensitivityX->value()).arg(mouseSensitivityY);
+    });
+
+
+    // Iterate through all the mapped control buttons and connect them
+    QList<QPushButton*> btnList;
+    for (auto it = mapControlButtonToControlKey.constBegin(); it != mapControlButtonToControlKey.constEnd(); ++it)
+        btnList.append(it.key());
+
+    for(QPushButton* btn : btnList)
     {
-        connect(btn, &QPushButton::clicked, this, [this, btn] (bool checked)
-                {
-                    if (checked) {
-                        if (focusedControlButton)
-                            focusedControlButton->setChecked(false);
-                        focusedControlButton = btn;
-                    } else
-                        focusedControlButton = nullptr;
-                });
+        connect(btn, &QPushButton::clicked, this, [this, btn] (bool checked) {
+            if (checked) {
+                if (focusedControlButton)
+                    focusedControlButton->setChecked(false);
+                focusedControlButton = btn;
+            } else
+                focusedControlButton = nullptr;
+        });
     }
 
 
@@ -248,12 +274,12 @@ void InputEditorDialog::inputEvent(const QString &eventType, const QString &even
 {
     bool forAxis = focusedControlButton == ui->btnXAxis || focusedControlButton == ui->btnYAxis;
 
-    if(forAxis && eventType == "mouse")
+    if (forAxis && eventType == "mouse")
         return; // Axis don't support mouse events
 
     QString inputString;
 
-    if(forAxis) {
+    if (forAxis) {
         if(controlAxisFirstEvent.name == eventType) {
             inputString = QString("%1(%2,%3)").arg(eventType, controlAxisFirstEvent.param, eventData);
             controlAxisFirstEvent.name.clear();
@@ -292,9 +318,9 @@ void InputEditorDialog::keyPressEvent(QKeyEvent *event)
     if (!focusedControlButton)
         return;
 
-    if (event->key() == Qt::Key_Escape) //  == SDLK_ESCAPE
+    if (event->key() == Qt::Key_Escape) // Abandon current selection
         focusedControlButton->click();
-    else if (event->key() == Qt::Key_Backspace) {
+    else if (event->key() == Qt::Key_Backspace) { // Empty the current input selection
         focusedControlButton->setText(CONTROL_BUTTON_EMPTY_TEXT);
         focusedControlButton->setToolTip(mapControlButtonToControlKey[focusedControlButton]);
         focusedControlButton->click();
