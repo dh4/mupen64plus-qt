@@ -48,6 +48,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     /// Populate plugin drop down
     pluginOptions.insert(1, "None");
     pluginOptions.insert(2, "Mem pak");
+    pluginOptions.insert(4, "Transfer pak");
     pluginOptions.insert(5, "Rumble pak");
 
     foreach (const QString &value, pluginOptions)
@@ -157,7 +158,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
 
         connect(ui->chkPlugged, &QCheckBox::toggled, this, [this] (bool plugged) {
             controlsConfig[ui->cboController->currentIndex()]["plugged"] = plugged;
-            setUnsavedChanges(true);
+            setUnsavedChanges(true, true);
         });
 
         connect(ui->cboPlugin, QOverload<const QString &>::of(&QComboBox::currentTextChanged), this, [this] (QString plugin) {
@@ -245,8 +246,9 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     for(int i = 0; i < SDL_NumJoysticks(); i++)
         ui->cboDevice->addItem(SDL_JoystickNameForIndex(i));
 
-    setUnsavedChanges(false);
+    // Reset the intial setting for mode
     ui->cboMode->setCurrentIndex(initialMode);
+    setUnsavedChanges(false);
 
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Close"));
 
@@ -277,7 +279,7 @@ void InputEditorDialog::checkErrors()
 {
     if (SDL_NumJoysticks() == 0) {
         setEnabled(false);
-        QMessageBox::critical(this, tr("No SDL inputs found"), QString(tr("Could not find a connected controller. This editor only works with controller/gamepad input and not with keyboard input. ")
+        QMessageBox::critical(this, tr("No SDL Devices Found"), QString(tr("Could not find a connected controller. This editor only works with controller/gamepad input and not with keyboard input. ")
                                                                      + tr("Check to make sure your controller is connected to your PC.") + "<br /><br />"
                                                                      + tr("If you just connected your controller, try restarting <AppName>.").replace("<AppName>", AppName)));
         close();
@@ -470,11 +472,13 @@ void InputEditorDialog::setUnsavedChanges(bool changes, bool modeChange)
         if (!ui->saveBtn->isEnabled())
             ui->saveBtn->setEnabled(true);
 
-        qDebug() << ui->cboMode->currentIndex();
-
         // Set mode to fully manual so changes don't get overwritten by Mupen64Plus
         if (ui->cboMode->currentIndex() != 0 && !modeChange)
             ui->cboMode->setCurrentIndex(0);
+
+        // Do the same with plugged in case the user forgets to check it
+        if (!ui->chkPlugged->isChecked() && !modeChange)
+            ui->chkPlugged->setChecked(true);
     } else {
         unsavedChanges = false;
         ui->saveBtn->setEnabled(false);
