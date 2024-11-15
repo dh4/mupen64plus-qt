@@ -40,7 +40,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     config.setFileName(configFile);
     ui->setupUi(this);
 
-    // Populate plugin drop down
+    /// Populate plugin drop down
     pluginOptions.insert(1, "None");
     pluginOptions.insert(2, "Mem pak");
     pluginOptions.insert(5, "Rumble pak");
@@ -49,14 +49,18 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
         ui->cboPlugin->addItem(value);
 
 
-    /// 1. Init joystick (device) list
-    SDL_Init(SDL_INIT_JOYSTICK);
+    /// Init input map
+    mapControlButtonToControlKey = {
+        {ui->btnDPadU, "DPad U"}, {ui->btnDPadD, "DPad D"}, {ui->btnDPadL, "DPad L"}, {ui->btnDPadR, "DPad R"},
+        {ui->btnStart, "Start"}, {ui->btnLTrig, "L Trig"}, {ui->btnRTrig, "R Trig"}, {ui->btnZTrig, "Z Trig"},
+        {ui->btnCBtnU, "C Button U"}, {ui->btnCBtnD, "C Button D"}, {ui->btnCBtnL, "C Button L"}, {ui->btnCBtnR, "C Button R"},
+        {ui->btnABtn, "A Button"}, {ui->btnBBtn, "B Button"},
+        {ui->btnMempak, "Mempak switch"}, {ui->btnRumblepak, "Rumblepak switch"},
+        {ui->btnXAxis, "X Axis"}, {ui->btnYAxis, "Y Axis"},
+    };
 
-    for(int i = 0; i < SDL_NumJoysticks(); i++)
-        ui->cboDevice->addItem( SDL_JoystickNameForIndex(i) );
 
-
-    /// 2. Populate controlsConfig with empty values
+    /// Populate controlsConfig with empty values
     for(int i = 0; i < 4; i++)
     {
         controlsConfig[i] = {
@@ -80,7 +84,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     }
 
 
-    /// 3. Grab current configuration from mupen64plus.cfg
+    /// Grab current configuration from mupen64plus.cfg
     if (config.open(QFile::ReadOnly)) {
         QTextStream stream(&config);
 
@@ -116,17 +120,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     }
 
 
-    /// 4. Init Maps keys
-    mapControlButtonToControlKey = {
-        {ui->btnDPadU, "DPad U"}, {ui->btnDPadD, "DPad D"}, {ui->btnDPadL, "DPad L"}, {ui->btnDPadR, "DPad R"},
-        {ui->btnStart, "Start"}, {ui->btnLTrig, "L Trig"}, {ui->btnRTrig, "R Trig"}, {ui->btnZTrig, "Z Trig"},
-        {ui->btnCBtnU, "C Button U"}, {ui->btnCBtnD, "C Button D"}, {ui->btnCBtnL, "C Button L"}, {ui->btnCBtnR, "C Button R"},
-        {ui->btnABtn, "A Button"}, {ui->btnBBtn, "B Button"},
-        {ui->btnMempak, "Mempak switch"}, {ui->btnRumblepak, "Rumblepak switch"},
-        {ui->btnXAxis, "X Axis"}, {ui->btnYAxis, "Y Axis"},
-    };
-
-    /// 5. Load local config to UI upon selection of a Control config
+    /// Load local config to UI upon selection of a Control config
     connect(ui->cboController, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int nbController) {
         const QMap<QString, QVariant>& cfg = controlsConfig[nbController];
 
@@ -158,7 +152,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     });
 
 
-    /// 6. Update local config upon UI change
+    /// Update local config upon UI change
     connect(ui->chkMouse, &QCheckBox::toggled, this, [this] (bool mouseEnabled) {
         controlsConfig[ui->cboController->currentIndex()]["mouse"] = mouseEnabled;
     });
@@ -209,7 +203,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     });
 
 
-    // Iterate through all the mapped control buttons and connect them
+    /// Iterate through all the mapped control buttons and connect them
     QList<QPushButton*> btnList;
     for (auto it = mapControlButtonToControlKey.constBegin(); it != mapControlButtonToControlKey.constEnd(); ++it)
         btnList.append(it.key());
@@ -227,11 +221,18 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     }
 
 
-    /// 7. Start joystick events pump
+    /// Init joystick (device) list
+    SDL_Init(SDL_INIT_JOYSTICK);
+
+    for(int i = 0; i < SDL_NumJoysticks(); i++)
+        ui->cboDevice->addItem( SDL_JoystickNameForIndex(i) );
+
+
+    /// Start joystick events timer
     sdlEventsPumpTimerId = startTimer(10, Qt::VeryCoarseTimer);
 
 
-    /// 8. Load from local config to UI
+    /// Load from local config to UI
     emit ui->cboController->currentIndexChanged(0);
 
 
