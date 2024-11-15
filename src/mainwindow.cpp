@@ -39,6 +39,7 @@
 #include "dialogs/controlinfodialog.h"
 #include "dialogs/downloaddialog.h"
 #include "dialogs/gamesettingsdialog.h"
+#include "dialogs/inputeditordialog.h"
 #include "dialogs/logdialog.h"
 #include "dialogs/settingsdialog.h"
 
@@ -303,7 +304,7 @@ void MainWindow::createMenu()
     //Settings
     settingsMenu = new QMenu(tr("&Settings"), this);
     editorAction = settingsMenu->addAction(tr("Edit mupen64plus.cfg..."));
-        editorAction2 = settingsMenu->addAction(tr("Edit AutoInputCFG.cfg..."));
+    inputEditorAction = settingsMenu->addAction(tr("Input Configuration..."));
     settingsMenu->addSeparator();
     configureGameAction = settingsMenu->addAction(tr("Configure &Game..."));
 #ifndef Q_OS_OSX //OSX does not show the quit action so the separator is unneeded
@@ -317,7 +318,7 @@ void MainWindow::createMenu()
     menuBar->addMenu(settingsMenu);
 
     connect(editorAction, SIGNAL(triggered()), this, SLOT(openEditor()));
-        connect(editorAction2, SIGNAL(triggered()), this, SLOT(openEditor2()));
+    connect(inputEditorAction, SIGNAL(triggered()), this, SLOT(openInputEditor()));
     connect(configureGameAction, SIGNAL(triggered()), this, SLOT(openGameSettings()));
     connect(configureAction, SIGNAL(triggered()), this, SLOT(openSettings()));
 
@@ -727,13 +728,13 @@ void MainWindow::openEditor()
     }
 }
 
-void MainWindow::openEditor2()
+void MainWindow::openInputEditor()
 {
     checkConfigLocation();
 
     QString configPath = SETTINGS.value("Paths/config", "").toString();
     QDir configDir = QDir(configPath);
-    QString configFile = configDir.absoluteFilePath("InputAutoCfg.ini");
+    QString configFile = configDir.absoluteFilePath("mupen64plus.cfg");
     QFile config(configFile);
 
     if (configPath == "" || !config.exists()) {
@@ -743,8 +744,8 @@ void MainWindow::openEditor2()
                                  + "<a href=\"https://mupen64plus.org/wiki/index.php?title=FileLocations\">"
                                  + "https://mupen64plus.org/wiki/index.php?title=FileLocations</a>");
     } else {
-        ConfigEditor configEditor(configFile, this);
-        configEditor.exec();
+        InputEditorDialog inputEditor(configFile, this);
+        inputEditor.exec();
     }
 }
 

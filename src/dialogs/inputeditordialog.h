@@ -29,73 +29,60 @@
  *
  ***/
 
-#ifndef SETTINGSDIALOG_H
-#define SETTINGSDIALOG_H
+#ifndef INPUTEDITORDIALOG_H
+#define INPUTEDITORDIALOG_H
 
 #include <QDialog>
 #include <QDir>
 #include <QFile>
+#include <QMap>
+#include <QMessageBox>
+#include <QMouseEvent>
 
+#include <SDL2/SDL.h>
 
 class QDesktopWidget;
-class QListWidget;
 
 
 namespace Ui {
-    class SettingsDialog;
+    class InputEditorDialog;
 }
 
-class SettingsDialog : public QDialog
+class InputEditorDialog : public QDialog
 {
     Q_OBJECT
 
+    
 public:
-    explicit SettingsDialog(QWidget *parent = 0, int activeTab = 0);
-    ~SettingsDialog();
+    explicit InputEditorDialog(QString configFile, QWidget *parent = 0);
+    ~InputEditorDialog();
 
+    
 private:
-    void populateAvailable(bool downloadItems);
-
-    Ui::SettingsDialog *ui;
+    Ui::InputEditorDialog *ui;
 
     QDesktopWidget *desktop;
-    QDir pluginsDir;
-    QList<QWidget*> downloadEnable;
-    QList<QWidget*> labelEnable;
-    QList<QWidget*> listCoverEnable;
-    QStringList available;
-    QStringList labelOptions;
-    QStringList sortOptions;
+    QFile config;
 
+    const QString CONTROL_BUTTON_EMPTY_TEXT = "Select...";
+
+    int sdlEventsPumpTimerId{0};
+    QMap<QString, QVariant> controlsConfig[4];
+    QMap<QPushButton*, QString> mapControlButtonToControlKey;
+    QPushButton* focusedControlButton{nullptr};
+    SDL_Joystick* sdlJoystick{NULL};
+    struct { QString name; QString param; } controlAxisFirstEvent;
+    
 
 private slots:
-    void addColumn(QListWidget *currentList, QListWidget *availableList);
-    void addRomDirectory();
-    void browseBackground();
-    void browseEmulator();
-    void browsePlugin();
-    void browseData();
-    void browseConfig();
-    void editSettings();
-    void hideBGTheme(QString imagePath);
-    void listAddColumn();
-    void listRemoveColumn();
-    void listSortDown();
-    void listSortUp();
-    void removeColumn(QListWidget *currentList, QListWidget *availableList);
-    void removeRomDirectory();
-    void populateTableAndListTab(bool downloadItems);
-    void sortDown(QListWidget *currentList);
-    void sortUp(QListWidget *currentList);
-    void tableAddColumn();
-    void tableRemoveColumn();
-    void tableSortDown();
-    void tableSortUp();
-    void toggleDownload(bool active);
-    void toggleGridColumn(bool active);
-    void toggleLabel(bool active);
-    void toggleListCover(bool active);
-    void updateLanguageInfo();
+    void saveInputSettings();
+
+    
+protected:
+    void inputEvent(const QString& eventType, const QString& eventData);
+    void mousePressEvent(QMouseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    void timerEvent(QTimerEvent *e) override;
 };
 
-#endif // SETTINGSDIALOG_H
+#endif // INPUTEDITORDIALOG_H
