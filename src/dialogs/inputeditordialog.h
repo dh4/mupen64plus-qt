@@ -85,6 +85,7 @@ private slots:
     void confirmClose();
     void openHelp();
     void saveInputSettings();
+    void setUnsavedChanges(bool changes);
     void updateControllerConfig(int controller);
 
 

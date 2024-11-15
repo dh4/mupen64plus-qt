@@ -39,6 +39,9 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
 {
     config.setFileName(configFile);
     ui->setupUi(this);
+    unsavedChanges = false;
+    fromAutoChange = false;
+    currentController = 0;
 
 
     /// Populate plugin drop down
@@ -148,57 +151,57 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
         /// Update local config upon UI change
         connect(ui->chkMouse, &QCheckBox::toggled, this, [this] (bool mouseEnabled) {
             controlsConfig[ui->cboController->currentIndex()]["mouse"] = mouseEnabled;
-            unsavedChanges = true;
+            setUnsavedChanges(true);
         });
 
         connect(ui->chkPlugged, &QCheckBox::toggled, this, [this] (bool plugged) {
             controlsConfig[ui->cboController->currentIndex()]["plugged"] = plugged;
-            unsavedChanges = true;
+            setUnsavedChanges(true);
         });
 
         connect(ui->cboPlugin, QOverload<const QString &>::of(&QComboBox::currentTextChanged), this, [this] (QString plugin) {
             controlsConfig[ui->cboController->currentIndex()]["plugin"] = pluginOptions.key(plugin);
-            unsavedChanges = true;
+            setUnsavedChanges(true);
         });
 
         connect(ui->cboDevice, &QComboBox::currentTextChanged, this, [this] (const QString& device) {
             controlsConfig[ui->cboController->currentIndex()]["name"] = device;
-            unsavedChanges = true;
+            setUnsavedChanges(true);
         });
 
         connect(ui->cboMode, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this] (int mode) {
             controlsConfig[ui->cboController->currentIndex()]["mode"] = mode;
-            unsavedChanges = true;
+            setUnsavedChanges(true);
         });
 
         connect(ui->nbAnalogDeadzoneX, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogDeadzoneX) {
             controlsConfig[ui->cboController->currentIndex()]["AnalogDeadzone"] = QString("%1,%2").arg(analogDeadzoneX).arg(ui->nbAnalogDeadzoneY->value());
-            unsavedChanges = true;
+            setUnsavedChanges(true);
         });
 
         connect(ui->nbAnalogDeadzoneY, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogDeadzoneY) {
             controlsConfig[ui->cboController->currentIndex()]["AnalogDeadzone"] = QString("%1,%2").arg(ui->nbAnalogDeadzoneX->value()).arg(analogDeadzoneY);
-            unsavedChanges = true;
+            setUnsavedChanges(true);
         });
 
         connect(ui->nbAnalogPeakX, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogPeakX) {
             controlsConfig[ui->cboController->currentIndex()]["AnalogPeak"] = QString("%1,%2").arg(analogPeakX).arg(ui->nbAnalogDeadzoneY->value());
-            unsavedChanges = true;
+            setUnsavedChanges(true);
         });
 
         connect(ui->nbAnalogPeakY, QOverload<int>::of(&QSpinBox::valueChanged), this, [this] (int analogPeakY) {
             controlsConfig[ui->cboController->currentIndex()]["AnalogPeak"] = QString("%1,%2").arg(ui->nbAnalogDeadzoneX->value()).arg(analogPeakY);
-            unsavedChanges = true;
+            setUnsavedChanges(true);
         });
 
         connect(ui->nbMouseSensitivityX, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this] (int mouseSensitivityX) {
             controlsConfig[ui->cboController->currentIndex()]["MouseSensitivity"] = QString("%1,%2").arg(mouseSensitivityX).arg(ui->nbMouseSensitivityY->value());
-            unsavedChanges = true;
+            setUnsavedChanges(true);
         });
 
         connect(ui->nbMouseSensitivityY, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this] (int mouseSensitivityY) {
             controlsConfig[ui->cboController->currentIndex()]["MouseSensitivity"] = QString("%1,%2").arg(ui->nbMouseSensitivityX->value()).arg(mouseSensitivityY);
-            unsavedChanges = true;
+            setUnsavedChanges(true);
         });
 
 
@@ -230,9 +233,6 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
 
 
         /// Load from local config to UI
-        unsavedChanges = false;
-        fromAutoChange = false;
-        currentController = 0;
         updateControllerConfig(currentController);
     }
 
@@ -242,6 +242,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
 
     for(int i = 0; i < SDL_NumJoysticks(); i++)
         ui->cboDevice->addItem( SDL_JoystickNameForIndex(i) );
+    setUnsavedChanges(false);
 
 
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Close"));
@@ -286,6 +287,7 @@ void InputEditorDialog::checkErrors()
         close();
     }
 }
+
 
 void InputEditorDialog::confirmClose()
 {
@@ -333,7 +335,7 @@ void InputEditorDialog::inputEvent(const QString &eventType, const QString &even
 
         focusedControlButton->setToolTip(controlKey + " = " + focusedControlButton->text());
         controlsConfig[ui->cboController->currentIndex()][controlKey] = focusedControlButton->text();
-        unsavedChanges = true;
+        setUnsavedChanges(true);
 
         focusedControlButton->click();
     }
@@ -447,11 +449,25 @@ void InputEditorDialog::saveInputSettings()
         config.close();
 
 
-        unsavedChanges = false;
+        setUnsavedChanges(false);
         QMessageBox::information(this, tr("Save successful"), QString(tr("Input configuration for [") + ui->cboController->currentText() + tr("] successfully saved to mupen64plus.cfg.")));
     } else
         QMessageBox::critical(this, "[" + ui->cboController->currentText() + "] " + tr("Not Found"),
                               QString(tr("Input configuration section for [") + ui->cboController->currentText() + tr("] not found in your mupen64plus.cfg. Please fix this and try again.")));
+}
+
+
+void InputEditorDialog::setUnsavedChanges(bool changes)
+{
+    if (changes) {
+        unsavedChanges = true;
+
+        if (!ui->saveBtn->isEnabled())
+            ui->saveBtn->setEnabled(true);
+    } else {
+        unsavedChanges = false;
+        ui->saveBtn->setEnabled(false);
+    }
 }
 
 
@@ -517,6 +533,6 @@ void InputEditorDialog::updateControllerConfig(int controller)
         ++iter;
     }
 
-    unsavedChanges = false;
+    setUnsavedChanges(false);
     currentController = controller;
 }
