@@ -4,27 +4,27 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../../src/dialogs/aboutdialog.cpp" line="45"/>
+        <location filename="../../src/dialogs/aboutdialog.cpp" line="46"/>
         <source>About &lt;AppName&gt;</source>
         <translation>О программе &lt;AppName&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/aboutdialog.cpp" line="59"/>
+        <location filename="../../src/dialogs/aboutdialog.cpp" line="60"/>
         <source>Version</source>
         <translation>Версия</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/aboutdialog.cpp" line="60"/>
+        <location filename="../../src/dialogs/aboutdialog.cpp" line="61"/>
         <source>A customizable launcher for &lt;ParentName&gt; using Qt.</source>
         <translation>Настраиваемый интерфейс для &lt;ParentName&gt;, написанный на Qt.</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/aboutdialog.cpp" line="64"/>
+        <location filename="../../src/dialogs/aboutdialog.cpp" line="65"/>
         <source>&lt;ParentName&gt; website</source>
         <translation>Сайт &lt;ParentName&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/aboutdialog.cpp" line="66"/>
+        <location filename="../../src/dialogs/aboutdialog.cpp" line="67"/>
         <source>GitHub repository</source>
         <translation>Репозиторий GitHub</translation>
     </message>
@@ -32,27 +32,27 @@
 <context>
     <name>ConfigEditor</name>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="49"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="51"/>
         <source>&lt;ParentName&gt; Config Editor</source>
         <translation>Редактор настроек &lt;ParentName&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="72"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="75"/>
         <source>Key Codes Reference</source>
         <translation>Таблица кодов клавиш</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="75"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="78"/>
         <source>Mupen64Plus Documentation</source>
         <translation>Документация Mupen64Plus</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="83"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="86"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/configeditor.cpp" line="84"/>
+        <location filename="../../src/dialogs/configeditor.cpp" line="87"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -204,37 +204,37 @@
 <context>
     <name>DownloadDialog</name>
     <message>
-        <location filename="../../src/dialogs/downloaddialog.cpp" line="50"/>
+        <location filename="../../src/dialogs/downloaddialog.cpp" line="51"/>
         <source>Search Game Information</source>
         <translation>Найти информацию об игре</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/downloaddialog.cpp" line="54"/>
+        <location filename="../../src/dialogs/downloaddialog.cpp" line="55"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/downloaddialog.cpp" line="56"/>
+        <location filename="../../src/dialogs/downloaddialog.cpp" line="57"/>
         <source>Name of Game:</source>
         <translation>Название игры:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/downloaddialog.cpp" line="57"/>
+        <location filename="../../src/dialogs/downloaddialog.cpp" line="58"/>
         <source>or Game ID:</source>
         <translation>или идентификатор игры:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/downloaddialog.cpp" line="63"/>
+        <location filename="../../src/dialogs/downloaddialog.cpp" line="64"/>
         <source>From thegamesdb.net URL of game</source>
         <translation>URL игры на thegamesdb.net</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/downloaddialog.cpp" line="66"/>
+        <location filename="../../src/dialogs/downloaddialog.cpp" line="67"/>
         <source>Search</source>
         <translation>Найти</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/downloaddialog.cpp" line="67"/>
+        <location filename="../../src/dialogs/downloaddialog.cpp" line="68"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -380,6 +380,416 @@
     </message>
 </context>
 <context>
+    <name>InputEditorDialog</name>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="20"/>
+        <source>Input Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="54"/>
+        <source>Controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="61"/>
+        <source>Input-SDL-Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="68"/>
+        <source>Input-SDL-Control1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="73"/>
+        <source>Input-SDL-Control2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="78"/>
+        <source>Input-SDL-Control3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="83"/>
+        <source>Input-SDL-Control4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="129"/>
+        <source>Specifies whether this controller is &apos;plugged in&apos; to the simulated N64</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="132"/>
+        <source>Plugged</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="139"/>
+        <source>If checked, then mouse buttons may be used with this controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="142"/>
+        <source>Mouse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="167"/>
+        <source>Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="174"/>
+        <source>Specifies which type of expansion pak is in the controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="184"/>
+        <source>Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="191"/>
+        <source>SDL joystick name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="201"/>
+        <source>Controller configuration mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="208"/>
+        <source>Fully Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="213"/>
+        <source>Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="218"/>
+        <source>Fully Automatic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="226"/>
+        <source>Plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="258"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="265"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="340"/>
+        <source>Y:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="272"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="303"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="347"/>
+        <source>X:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="292"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="354"/>
+        <source>An absolute value of the SDL joystick axis &gt;= AnalogPeak will saturate the N64 controller axis value (at 80). For X, Y axes.
+For each axis, this must be greater than the corresponding AnalogDeadzone value.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="296"/>
+        <source>Analog Peak</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="310"/>
+        <source>The minimum absolute value of the SDL analog joystick axis to move the N64 controller axis value from 0. For X, Y axes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="313"/>
+        <source>Analog Deadzone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="358"/>
+        <source>Mouse Sensitivity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="385"/>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="409"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="481"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="491"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="522"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="532"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="545"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="562"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="611"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="629"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="670"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="680"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="711"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="721"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="740"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="756"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="766"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="790"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="814"/>
+        <source>Select...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="419"/>
+        <source>L Trigger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="468"/>
+        <source>Digital Pad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="474"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="663"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="501"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="690"/>
+        <source>Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="508"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="697"/>
+        <source>Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="515"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="704"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="555"/>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="591"/>
+        <source>Save</source>
+        <translation type="unfinished">Сохранить</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="598"/>
+        <source>R Trigger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="605"/>
+        <source>Analog Stick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="621"/>
+        <source>Y Axis
+Up/Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="639"/>
+        <source>X Axis
+Left/Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="650"/>
+        <source>Z Trigger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="657"/>
+        <source>C Buttons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="750"/>
+        <source>Buttons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="776"/>
+        <source>A Button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="783"/>
+        <source>Mempak</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="800"/>
+        <source>Rumblepak</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="807"/>
+        <source>B Button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="137"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="300"/>
+        <source>Unsaved Changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="137"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="300"/>
+        <source>There are unsaved changes. Are you sure you want to leave?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="253"/>
+        <source>Close</source>
+        <translation type="unfinished">Закрыть</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="282"/>
+        <source>No SDL Devices Found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="282"/>
+        <source>Could not find a connected controller. This editor only works with controller/gamepad devices and not with keyboard input. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="283"/>
+        <source>Check to make sure your controller is connected to your PC.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="284"/>
+        <source>If you just connected your controller, try restarting &lt;AppName&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="290"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="462"/>
+        <source>Not Found</source>
+        <translation type="unfinished">Не найдено</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="291"/>
+        <source>Input configuration sections for </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="291"/>
+        <source> not found in your mupen64plus.cfg. Please fix this and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="374"/>
+        <source>Input Editor Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="374"/>
+        <source>To map your controller inputs, left click an input to start listening and then press </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="375"/>
+        <source>the corresponding button or axis you want it mapped to on your controller. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="376"/>
+        <source>For the X and Y axis, press both directions while listening.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="377"/>
+        <source>You have the following shortcuts while listening:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="378"/>
+        <source>Abandon this input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="378"/>
+        <source>Clear the current input selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="379"/>
+        <source>See &lt;link&gt;here&lt;linkend&gt; for a full description of all the input options.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="389"/>
+        <source>mupen64plus.cfg was not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="389"/>
+        <source>Make sure you&apos;ve set the config path to a directory with mupen64plus.cfg.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="448"/>
+        <source>Could not open mupen64plus.cfg for writing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="448"/>
+        <source>Check the write permissions in your config directory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="460"/>
+        <source>Save successful</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="460"/>
+        <source>Input configuration for [</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="460"/>
+        <source>] successfully saved to mupen64plus.cfg.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="463"/>
+        <source>Input configuration section for [</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="463"/>
+        <source>] not found in your mupen64plus.cfg. Please fix this and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>KeyCodes</name>
     <message>
         <location filename="../../src/dialogs/keycodesdialog.cpp" line="43"/>
@@ -426,211 +836,226 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="254"/>
+        <location filename="../../src/mainwindow.cpp" line="257"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="255"/>
+        <location filename="../../src/mainwindow.cpp" line="258"/>
         <source>&amp;Open ROM...</source>
         <translation>&amp;Открыть ROM...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="257"/>
+        <location filename="../../src/mainwindow.cpp" line="260"/>
         <source>&amp;Refresh List</source>
         <translation>О&amp;бновить список</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="258"/>
-        <location filename="../../src/mainwindow.cpp" line="912"/>
+        <location filename="../../src/mainwindow.cpp" line="261"/>
+        <location filename="../../src/mainwindow.cpp" line="939"/>
         <source>&amp;Download/Update Info...</source>
         <translation>&amp;Загрузить/обновить информацию...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="259"/>
-        <location filename="../../src/mainwindow.cpp" line="913"/>
+        <location filename="../../src/mainwindow.cpp" line="262"/>
+        <location filename="../../src/mainwindow.cpp" line="940"/>
         <source>D&amp;elete Current Info...</source>
         <translation>&amp;Удалить текущую информацию...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="263"/>
+        <location filename="../../src/mainwindow.cpp" line="266"/>
         <source>&amp;Quit</source>
         <translation>&amp;Выйти</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="282"/>
+        <location filename="../../src/mainwindow.cpp" line="285"/>
         <source>&amp;Emulation</source>
         <translation>&amp;Эмуляция</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="283"/>
-        <location filename="../../src/mainwindow.cpp" line="902"/>
+        <location filename="../../src/mainwindow.cpp" line="286"/>
+        <location filename="../../src/mainwindow.cpp" line="929"/>
         <source>&amp;Start</source>
         <translation>&amp;Запустить</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="284"/>
+        <location filename="../../src/mainwindow.cpp" line="287"/>
         <source>St&amp;op</source>
         <translation>&amp;Остановить</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="302"/>
+        <location filename="../../src/mainwindow.cpp" line="305"/>
         <source>&amp;Settings</source>
         <translation>&amp;Настройки</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="303"/>
+        <location filename="../../src/mainwindow.cpp" line="306"/>
         <source>Edit mupen64plus.cfg...</source>
         <translation>Изменить mupen64plus.cfg...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="305"/>
-        <location filename="../../src/mainwindow.cpp" line="905"/>
+        <location filename="../../src/mainwindow.cpp" line="309"/>
+        <location filename="../../src/mainwindow.cpp" line="932"/>
         <source>Configure &amp;Game...</source>
         <translation>Настроить &amp;игру...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="309"/>
+        <location filename="../../src/mainwindow.cpp" line="313"/>
         <source>&amp;Configure...</source>
         <translation>&amp;Параметры...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="738"/>
+        <location filename="../../src/mainwindow.cpp" line="765"/>
         <source>There is no log. Either &lt;ParentName&gt; has not yet run or there was no output from the last run.</source>
         <translation>Журнал отсутствует. &lt;ParentName&gt; не был запущен или не выводил информацию с момента последнего запуска.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="323"/>
+        <location filename="../../src/mainwindow.cpp" line="328"/>
         <source>&amp;Layout</source>
         <translation>&amp;Расположение</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="286"/>
+        <location filename="../../src/mainwindow.cpp" line="289"/>
         <source>View Log</source>
         <translation>Просмотреть журнал</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="322"/>
+        <location filename="../../src/mainwindow.cpp" line="307"/>
+        <source>Input Configuration...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="327"/>
         <source>&amp;View</source>
         <translation>&amp;Вид</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="327"/>
+        <location filename="../../src/mainwindow.cpp" line="332"/>
         <source>None</source>
         <translation>Нет</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="328"/>
+        <location filename="../../src/mainwindow.cpp" line="333"/>
         <source>Table View</source>
         <translation>Таблица</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="329"/>
+        <location filename="../../src/mainwindow.cpp" line="334"/>
         <source>Grid View</source>
         <translation>Сетка</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="330"/>
+        <location filename="../../src/mainwindow.cpp" line="335"/>
         <source>List View</source>
         <translation>Список</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="357"/>
+        <location filename="../../src/mainwindow.cpp" line="362"/>
         <source>&amp;Full-screen</source>
         <translation>В&amp;о весь экран</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="373"/>
+        <location filename="../../src/mainwindow.cpp" line="378"/>
         <source>&amp;Help</source>
         <translation>&amp;Помощь</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="374"/>
+        <location filename="../../src/mainwindow.cpp" line="379"/>
         <source>Documentation</source>
         <translation>Документация</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="375"/>
+        <location filename="../../src/mainwindow.cpp" line="380"/>
         <source>Mupen64Plus Docs</source>
         <translation>Документы Mupen64Plus</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="377"/>
+        <location filename="../../src/mainwindow.cpp" line="382"/>
         <source>Default Controls</source>
         <translation>Управление по умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="379"/>
+        <location filename="../../src/mainwindow.cpp" line="384"/>
         <source>&amp;About</source>
         <translation>&amp;О программе...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="461"/>
+        <location filename="../../src/mainwindow.cpp" line="466"/>
         <source>Add a directory containing ROMs under </source>
         <translation>Добавьте каталог, содержащий файлы ROM, с помощью </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="462"/>
+        <location filename="../../src/mainwindow.cpp" line="467"/>
         <source>Settings-&gt;Configure-&gt;Paths to use this view.</source>
         <translation>Настройки-&gt;Параметры-&gt;Пути, чтобы их показать.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="715"/>
+        <location filename="../../src/mainwindow.cpp" line="720"/>
+        <location filename="../../src/mainwindow.cpp" line="742"/>
         <source>Not Found</source>
         <translation>Не найдено</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="715"/>
+        <location filename="../../src/mainwindow.cpp" line="720"/>
+        <location filename="../../src/mainwindow.cpp" line="742"/>
         <source>Editor requires config directory to be </source>
         <translation>Для работы редактора нужно задать каталог </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="716"/>
+        <location filename="../../src/mainwindow.cpp" line="721"/>
+        <location filename="../../src/mainwindow.cpp" line="743"/>
         <source>set to a directory with mupen64plus.cfg.</source>
         <translation>с файлом mupen64plus.cfg в качестве каталога настроек.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="717"/>
+        <location filename="../../src/mainwindow.cpp" line="722"/>
+        <location filename="../../src/mainwindow.cpp" line="744"/>
         <source>See here for the default config location:</source>
         <translation>Посмотрите здесь, чтобы узнать местоположение файла настроек по умолчанию:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="737"/>
+        <location filename="../../src/mainwindow.cpp" line="725"/>
+        <location filename="../../src/mainwindow.cpp" line="747"/>
+        <source>If you have not launched Mupen64Plus yet, launch it with a ROM to create the default config.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/mainwindow.cpp" line="764"/>
         <source>No Output</source>
         <translation>Нет вывода результатов</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="796"/>
+        <location filename="../../src/mainwindow.cpp" line="823"/>
         <source>All Files</source>
         <translation>Все файлы</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="802"/>
+        <location filename="../../src/mainwindow.cpp" line="829"/>
         <source>Open ROM File</source>
         <translation>Открыть файл ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="820"/>
+        <location filename="../../src/mainwindow.cpp" line="847"/>
         <source>No ROMs</source>
         <translation>Нет файлов ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="820"/>
+        <location filename="../../src/mainwindow.cpp" line="847"/>
         <source>No ROMs found in ZIP file.</source>
         <translation>Не найдены файлы ROM в файле ZIP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="835"/>
+        <location filename="../../src/mainwindow.cpp" line="862"/>
         <source>Select ROM</source>
         <translation>Выбрать ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="852"/>
+        <location filename="../../src/mainwindow.cpp" line="879"/>
         <source>Launch</source>
         <translation>Запустить</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="853"/>
+        <location filename="../../src/mainwindow.cpp" line="880"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -638,122 +1063,122 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/common.cpp" line="328"/>
+        <location filename="../../src/common.cpp" line="329"/>
         <source>GoodName</source>
         <translation>GoodName</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="329"/>
+        <location filename="../../src/common.cpp" line="330"/>
         <source>Filename</source>
         <translation>Имя файла</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="330"/>
+        <location filename="../../src/common.cpp" line="331"/>
         <source>Filename (extension)</source>
         <translation>Имя файла (расширение)</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="331"/>
+        <location filename="../../src/common.cpp" line="332"/>
         <source>Zip File</source>
         <translation>Файл Zip</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="332"/>
+        <location filename="../../src/common.cpp" line="333"/>
         <source>Internal Name</source>
         <translation>Внутреннее имя</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="333"/>
+        <location filename="../../src/common.cpp" line="334"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="334"/>
+        <location filename="../../src/common.cpp" line="335"/>
         <source>MD5</source>
         <translation>MD5</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="335"/>
+        <location filename="../../src/common.cpp" line="336"/>
         <source>CRC1</source>
         <translation>CRC1</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="336"/>
+        <location filename="../../src/common.cpp" line="337"/>
         <source>CRC2</source>
         <translation>CRC2</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="337"/>
+        <location filename="../../src/common.cpp" line="338"/>
         <source>Players</source>
         <translation>Игроки</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="338"/>
+        <location filename="../../src/common.cpp" line="339"/>
         <source>Rumble</source>
         <translation>Rumble</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="339"/>
+        <location filename="../../src/common.cpp" line="340"/>
         <source>Save Type</source>
         <translation>Тип сохранений</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="340"/>
+        <location filename="../../src/common.cpp" line="341"/>
         <source>Game Title</source>
         <translation>Название игры</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="341"/>
+        <location filename="../../src/common.cpp" line="342"/>
         <source>Release Date</source>
         <translation>Дата выпуска</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="342"/>
+        <location filename="../../src/common.cpp" line="343"/>
         <source>Overview</source>
         <translation>Обзор</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="343"/>
+        <location filename="../../src/common.cpp" line="344"/>
         <source>ESRB</source>
         <translation>ESRB</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="344"/>
+        <location filename="../../src/common.cpp" line="345"/>
         <source>Genre</source>
         <translation>Жанр</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="345"/>
+        <location filename="../../src/common.cpp" line="346"/>
         <source>Publisher</source>
         <translation>Издатель</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="346"/>
+        <location filename="../../src/common.cpp" line="347"/>
         <source>Developer</source>
         <translation>Разработчик</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="347"/>
+        <location filename="../../src/common.cpp" line="348"/>
         <source>Rating</source>
         <translation>Рейтинг</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="348"/>
+        <location filename="../../src/common.cpp" line="349"/>
         <source>Game Cover</source>
         <translation>Обложка игры</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="349"/>
+        <location filename="../../src/common.cpp" line="350"/>
         <source>Unknown ROM</source>
         <translation>Неизвестный ROM</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="350"/>
+        <location filename="../../src/common.cpp" line="351"/>
         <source>Requires catalog file</source>
         <translation>Требуется файл каталога</translation>
     </message>
     <message>
-        <location filename="../../src/common.cpp" line="351"/>
+        <location filename="../../src/common.cpp" line="352"/>
         <source>Not found</source>
         <translation>Не найдено</translation>
     </message>
@@ -763,24 +1188,24 @@
         <translation>%1 МБ</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="249"/>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="322"/>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="362"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="253"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="326"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="366"/>
         <source>Game Information Download</source>
         <translation>Загрузка информации об игре</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="318"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="322"/>
         <source>No results found.</source>
         <translation>Результатов нет.</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="320"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="324"/>
         <source>No more results found.</source>
         <translation>Больше результатов нет.</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="363"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="367"/>
         <source>Download Complete!</source>
         <translation>Загрузка завершена!</translation>
     </message>
@@ -814,12 +1239,12 @@
         <translation>Не удалось подключиться к базе данных SQLite. Некоторые функции программы могут не работать.</translation>
     </message>
     <message>
-        <location filename="../../src/roms/romcollection.cpp" line="493"/>
+        <location filename="../../src/roms/romcollection.cpp" line="497"/>
         <source>Loading ROMs...</source>
         <translation>Загрузка файлов ROM...</translation>
     </message>
     <message>
-        <location filename="../../src/roms/romcollection.cpp" line="493"/>
+        <location filename="../../src/roms/romcollection.cpp" line="497"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
@@ -832,469 +1257,469 @@
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="43"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="33"/>
         <source>Paths</source>
         <translation>Пути</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="60"/>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="67"/>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="87"/>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="101"/>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="712"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="50"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="57"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="77"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="91"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="702"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="49"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="39"/>
         <source>Mupen64Plus Files</source>
         <translation>Файлы Mupen64Plus</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="108"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="98"/>
         <source>Mupen64Plus executable: </source>
         <translation>Исполняемый файл Mupen64Plus :</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="149"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="139"/>
         <source>ROM Directories</source>
         <translation>Каталоги файлов ROM</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="191"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="181"/>
         <source>Add...</source>
         <translation>Добавить...</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="198"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="188"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="214"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="204"/>
         <source>Emulation</source>
         <translation>Эмуляция</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="80"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="70"/>
         <source>Config directory:</source>
         <translation>Каталог настроек:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="94"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="84"/>
         <source>Plugins directory:</source>
         <translation>Каталог плагинов:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="118"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="108"/>
         <source>Data directory:</source>
         <translation>Каталог данных:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="175"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="165"/>
         <source>Mupen64Plus-Qt will search for all .z64, .v64, .n64, and .zip files in these directories</source>
         <translation>Mupen64Plus-Qt будет искать все файлы Z64, V64, N64 и ZIP в этих каталогах</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="225"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="215"/>
         <source>Cached Interpreter</source>
         <translation>Кэшируемый интерпретатор</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="232"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="222"/>
         <source>Pure Interpreter</source>
         <translation>Чистый интерпретатор</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="239"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="229"/>
         <source>Dynamic Recompiler</source>
         <translation>Динамический рекомпилятор</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="275"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="265"/>
         <source>Graphics</source>
         <translation>Графика</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="286"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="276"/>
         <source>On Screen Display:</source>
         <translation>Наэкранный дисплей:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="293"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="283"/>
         <source>Fullscreen:</source>
         <translation>Полный экран:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="300"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="290"/>
         <source>Resolution:</source>
         <translation>Разрешение:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="360"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="350"/>
         <source>Plugins</source>
         <translation>Плагины</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="368"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="358"/>
         <source>Video Plugin:</source>
         <translation>Плагин видео:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="375"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="365"/>
         <source>Audio Plugin:</source>
         <translation>Плагин аудио:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="382"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="372"/>
         <source>Input Plugin:</source>
         <translation>Плагин ввода:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="389"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="379"/>
         <source>RSP Plugin:</source>
         <translation>Плагин RSP:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="424"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="414"/>
         <source>Table</source>
         <translation>Таблица</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="438"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="428"/>
         <source>Image:</source>
         <translation>Изображение:</translation>
     </message>
     <message>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="465"/>
         <location filename="../../src/dialogs/settingsdialog.ui" line="475"/>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="485"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="517"/>
         <location filename="../../src/dialogs/settingsdialog.ui" line="527"/>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="537"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="939"/>
         <location filename="../../src/dialogs/settingsdialog.ui" line="949"/>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="959"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="985"/>
         <location filename="../../src/dialogs/settingsdialog.ui" line="995"/>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1005"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="552"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="542"/>
         <source>Current Columns:</source>
         <translation>Текущие столбцы:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="566"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="556"/>
         <source>Stretch First Column</source>
         <translation>Растягивать первый столбец</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="559"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="549"/>
         <source>Available Columns:</source>
         <translation>Доступные столбцы:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="615"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="605"/>
         <source>Grid</source>
         <translation>Сетка</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="621"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="611"/>
         <source>ROM Label</source>
         <translation>Метка ROM</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="632"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="622"/>
         <source>Show Label:</source>
         <translation>Показать метку:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="655"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="645"/>
         <source>Label Text:</source>
         <translation>Текст метки:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="669"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="659"/>
         <source>Label Color:</source>
         <translation>Цвет метки:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="704"/>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1134"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="694"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1124"/>
         <source>Other</source>
         <translation>Другое</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="719"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="709"/>
         <source>Custom Background:</source>
         <translation>Пользовательский фон:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="726"/>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1051"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="716"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1041"/>
         <source>Sorting:</source>
         <translation>Сортировка:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="736"/>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1044"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="726"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1034"/>
         <source>Descending</source>
         <translation>По убыванию</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="753"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="743"/>
         <source>Background:</source>
         <translation>Фон:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="768"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="758"/>
         <source>ROM Image</source>
         <translation>Изображение ROM</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="801"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="791"/>
         <source>Shadow Inactive Color:</source>
         <translation>Цвет неактивной тени:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="808"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="798"/>
         <source>Shadow Active Color:</source>
         <translation>Цвет активной тени: </translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="815"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="805"/>
         <source>Columns:</source>
         <translation>Столбцы:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="822"/>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1037"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="812"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1027"/>
         <source>Image Size:</source>
         <translation>Размер изображения:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="878"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="868"/>
         <source>Adjust Automatically</source>
         <translation>Выравнивать автоматически</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="904"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="894"/>
         <source>List</source>
         <translation>Список</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1071"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1061"/>
         <source>First Item as Header</source>
         <translation>Первый элемент в качестве заголовка</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="931"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="921"/>
         <source>Current Items:</source>
         <translation>Текущие элементы:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1030"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1020"/>
         <source>Available Items:</source>
         <translation>Доступные элементы:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1078"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1068"/>
         <source>Display Cover Image</source>
         <translation>Отображать изображение обложки</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1085"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1075"/>
         <source>Text Size:</source>
         <translation>Размер текста:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1092"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1082"/>
         <source>Theme:</source>
         <translation>Тема:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1168"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1158"/>
         <source>Additional Parameters:</source>
         <translation>Дополнительные настройки:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1188"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1178"/>
         <source>Save Options:</source>
         <translation>Сохранять настройки:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1181"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1171"/>
         <source>Download Game Information (thegamesdb.net):</source>
         <translation>Загружать информацию об игре (thegamesdb.net):</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1195"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1185"/>
         <source>Language:</source>
         <translation>Язык:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1205"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1195"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use to pass additional parameters to Mupen64Plus (cheats, etc.). See &lt;a href=&quot;http://mupen64plus.org/wiki/index.php?title=UIConsoleUsage&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://mupen64plus.org/wiki/index.php?title=UIConsoleUsage&lt;/span&gt;&lt;/a&gt; for more information.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;используйте для передачи дополнительных параметров (читов и т.д.). Смотрите &lt;a href=&quot;http://mupen64plus.org/wiki/index.php?title=UIConsoleUsage&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0057ae;&quot;&gt;http://mupen64plus.org/wiki/index.php?title=UIConsoleUsage&lt;/span&gt;&lt;/a&gt; для получения более подробной информации.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.ui" line="1240"/>
+        <location filename="../../src/dialogs/settingsdialog.ui" line="1230"/>
         <source>&lt;b&gt;Note:&lt;/b&gt; Language changes will not take place until application restart.</source>
         <translation>&lt;b&gt;Примечание:&lt;/b&gt; Язык изменится только после перезапуска программы.</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="86"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="87"/>
         <source>default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="179"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="191"/>
         <source>Extra Small</source>
         <translation>Очень маленький</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="180"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="192"/>
         <source>Small</source>
         <translation>Маленький</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="181"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="193"/>
         <source>Medium</source>
         <translation>Средний</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="182"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="194"/>
         <source>Large</source>
         <translation>Большой</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="183"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="195"/>
         <source>Extra Large</source>
         <translation>Очень большой</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="184"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="196"/>
         <source>Super</source>
         <translation>Супер</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="218"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="230"/>
         <source>Black</source>
         <translation>Черный</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="219"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="231"/>
         <source>White</source>
         <translation>Белый</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="220"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="232"/>
         <source>Light Gray</source>
         <translation>Светло-серый</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="221"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="233"/>
         <source>Dark Gray</source>
         <translation>Темно-серый</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="222"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="234"/>
         <source>Green</source>
         <translation>Зеленый</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="223"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="235"/>
         <source>Cyan</source>
         <translation>Голубой</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="224"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="236"/>
         <source>Blue</source>
         <translation>Синий</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="225"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="237"/>
         <source>Purple</source>
         <translation>Пурпурный</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="226"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="238"/>
         <source>Red</source>
         <translation>Красный</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="227"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="239"/>
         <source>Pink</source>
         <translation>Розовый</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="228"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="240"/>
         <source>Orange</source>
         <translation>Оранжевый</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="229"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="241"/>
         <source>Yellow</source>
         <translation>Желтый</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="230"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="242"/>
         <source>Brown</source>
         <translation>Коричневый</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="233"/>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="312"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="245"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="324"/>
         <source>Light</source>
         <translation>Светлый</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="234"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="246"/>
         <source>Normal</source>
         <translation>Обычный</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="235"/>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="313"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="247"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="325"/>
         <source>Dark</source>
         <translation>Темный</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="394"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="415"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="395"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="416"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="424"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="445"/>
         <source>ROM Directory</source>
         <translation>Каталог файлов ROM</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="448"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="469"/>
         <source>&lt;ParentName&gt; Executable</source>
         <translation>Исполняемый файл &lt;ParentName&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="466"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="487"/>
         <source>Plugin Directory</source>
         <translation>Каталог плагинов</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="475"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="496"/>
         <source>Data Directory</source>
         <translation>Каталог данных</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="483"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="504"/>
         <source>Config Directory</source>
         <translation>Каталог настроек</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog.cpp" line="440"/>
+        <location filename="../../src/dialogs/settingsdialog.cpp" line="461"/>
         <source>Background Image</source>
         <translation>Фоновое изображение</translation>
     </message>
@@ -1351,33 +1776,33 @@
         <translation>Удалить информацию об игре</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="223"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="227"/>
         <source>The following error from TheGamesDB occured while downloading:</source>
         <translation>Во время загрузки с TheGamesDB произошла ошибка:</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="246"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="250"/>
         <source>Released on: </source>
         <translation>Выпущено на:</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="247"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="251"/>
         <source>Does this look correct?</source>
         <translation>Все верно?</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="402"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="406"/>
         <source>Request timed out. Check your network settings.</source>
         <translation>Время запроса истекло. Проверьте настройки сети.</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="410"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="414"/>
         <source>Continue scraping information?</source>
         <translation>Продолжить получение информации?</translation>
     </message>
     <message>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="413"/>
-        <location filename="../../src/roms/thegamesdbscraper.cpp" line="415"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="417"/>
+        <location filename="../../src/roms/thegamesdbscraper.cpp" line="419"/>
         <source>Network Error</source>
         <translation>Ошибка сети</translation>
     </message>

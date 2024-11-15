@@ -279,7 +279,7 @@ void InputEditorDialog::checkErrors()
 {
     if (SDL_NumJoysticks() == 0) {
         setEnabled(false);
-        QMessageBox::critical(this, tr("No SDL Devices Found"), QString(tr("Could not find a connected controller. This editor only works with controller/gamepad input and not with keyboard input. ")
+        QMessageBox::critical(this, tr("No SDL Devices Found"), QString(tr("Could not find a connected controller. This editor only works with controller/gamepad devices and not with keyboard input. ")
                                                                      + tr("Check to make sure your controller is connected to your PC.") + "<br /><br />"
                                                                      + tr("If you just connected your controller, try restarting <AppName>.").replace("<AppName>", AppName)));
         close();
