@@ -64,6 +64,10 @@ private:
     QDesktopWidget *desktop;
     QFile config;
 
+    bool fromAutoChange;
+    bool unsavedChanges;
+    int currentController;
+
     const QString CONTROL_BUTTON_EMPTY_TEXT = "Select...";
 
     int sdlEventsPumpTimerId{0};
@@ -77,8 +81,10 @@ private:
 
 private slots:
     void checkSDLInputs();
+    void confirmClose();
     void openHelp();
     void saveInputSettings();
+    void updateControllerConfig(int controller);
 
 
 protected:
