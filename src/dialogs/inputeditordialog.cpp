@@ -289,6 +289,9 @@ void InputEditorDialog::confirmClose()
 
 void InputEditorDialog::inputEvent(const QString &eventType, const QString &eventData)
 {
+    if (!focusedControlButton)
+        return;
+
     bool forAxis = focusedControlButton == ui->btnXAxis || focusedControlButton == ui->btnYAxis;
 
     if (forAxis && eventType == "mouse")
@@ -467,12 +470,12 @@ void InputEditorDialog::saveInputSettings()
 
 void InputEditorDialog::timerEvent(QTimerEvent *e)
 {
-    if(e->timerId() != sdlEventsPumpTimerId || focusedControlButton == nullptr)
+    if (e->timerId() != sdlEventsPumpTimerId || focusedControlButton == nullptr)
         return;
 
     SDL_Event event;
 
-    while(SDL_PollEvent(&event) == 1)
+    while (SDL_PollEvent(&event) == 1)
     {
         QString eventType, eventData;
 
@@ -489,7 +492,7 @@ void InputEditorDialog::timerEvent(QTimerEvent *e)
             eventData = QString::number(event.jbutton.button);
         }
 
-        if(! eventType.isNull())
+        if (!eventType.isNull())
             inputEvent(eventType, eventData);
     }
 
