@@ -32,7 +32,7 @@
 #include "inputeditordialog.h"
 #include "ui_inputeditordialog.h"
 
-#include <QDebug>
+#include "../global.h"
 
 
 InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDialog(parent), ui(new Ui::InputEditorDialog)
@@ -41,7 +41,14 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     ui->setupUi(this);
 
 
-    /// 1. Populate controlsConfig with empty values
+    /// 1. Init joystick (device) list
+    SDL_Init(SDL_INIT_JOYSTICK);
+
+    for(int i = 0; i < SDL_NumJoysticks(); i++)
+        ui->cboDevice->addItem( SDL_JoystickNameForIndex(i) );
+
+
+    /// 2. Populate controlsConfig with empty values
     for(int i = 0; i < 4; i++)
     {
         controlsConfig[i] = {
@@ -65,7 +72,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     }
 
 
-    /// 2. Grab current configuration from mupen64plus.cfg
+    /// 3. Grab current configuration from mupen64plus.cfg
     if (config.open(QFile::ReadOnly)) {
         QTextStream stream(&config);
 
@@ -104,7 +111,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     }
 
 
-    /// 3. Init Maps keys
+    /// 4. Init Maps keys
     mapControlButtonToControlKey = {
         {ui->btnDPadU, "DPad U"}, {ui->btnDPadD, "DPad D"}, {ui->btnDPadL, "DPad L"}, {ui->btnDPadR, "DPad R"},
         {ui->btnStart, "Start"}, {ui->btnLTrig, "L Trig"}, {ui->btnRTrig, "R Trig"}, {ui->btnZTrig, "Z Trig"},
@@ -114,7 +121,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
         {ui->btnXAxis, "X Axis"}, {ui->btnYAxis, "Y Axis"},
     };
 
-    /// 4. Load local config to UI upon selection of a Control config
+    /// 5. Load local config to UI upon selection of a Control config
     connect(ui->cboController, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int nbController)
             {
                 const QMap<QString, QVariant>& cfg = controlsConfig[nbController];
@@ -123,7 +130,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
                 ui->chkPlugged->setChecked(cfg.value("plugged", false).toBool());
 
                 ui->cboPlugin->setCurrentIndex(cfg.value("plugin", 1).toInt());
-                ui->cboDevice->setCurrentText(cfg.value("name", QString()).toString()); // ui->cboDevice->setCurrentIndex(cfg.value("device", 0).toInt()); // The name determines the device..
+                ui->cboDevice->setCurrentText(cfg.value("name", QString()).toString());
                 ui->cboMode->setCurrentIndex(cfg.value("mode", 0).toInt());
 
                 QStringList analogDeadzone = cfg.value("AnalogDeadzone", "0,0").toString().split(',');
@@ -147,7 +154,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
             });
 
 
-    /// 5. Update local config upon UI change
+    /// 6. Update local config upon UI change
     connect(ui->chkMouse, &QCheckBox::toggled, this, [this] (bool mouseEnabled) { controlsConfig[ui->cboController->currentIndex()]["mouse"] = mouseEnabled; });
     connect(ui->chkPlugged, &QCheckBox::toggled, this, [this] (bool plugged) { controlsConfig[ui->cboController->currentIndex()]["plugged"] = plugged; });
 
@@ -186,12 +193,6 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     }
 
 
-    /// 6. Init joystick (device) list
-    SDL_Init(SDL_INIT_JOYSTICK);
-
-    for(int i = 0; i < SDL_NumJoysticks(); i++)
-        ui->cboDevice->addItem( SDL_JoystickNameForIndex(i) );
-
     /// 7. Start joystick events pump
     sdlEventsPumpTimerId = startTimer(10, Qt::VeryCoarseTimer);
 
@@ -214,6 +215,25 @@ InputEditorDialog::~InputEditorDialog()
     delete ui;
 }
 
+
+void InputEditorDialog::showEvent(QShowEvent* event) {
+    QWidget::showEvent(event);
+
+    // Override showEvent so we can check for SDL inputs after the dialog has rendered
+    // This is so users can at least see the dialog even without a controller connected
+    QMetaObject::invokeMethod(this, "checkSDLInputs", Qt::ConnectionType::QueuedConnection);
+}
+
+
+void InputEditorDialog::checkSDLInputs() {
+    if (SDL_NumJoysticks() == 0) {
+        setEnabled(false);
+        QMessageBox::critical(this, tr("No SDL inputs found"), QString(tr("Could not find a connected controller. This editor only works with controller/gamepad input and not with keyboard input. ")
+                                                                     + tr("Check to make sure your controller is connected to your PC.") + "<br /><br />"
+                                                                     + tr("If you just connected your controller, try restarting <AppName>.").replace("<AppName>", AppName)));
+        close();
+    }
+}
 
 
 void InputEditorDialog::inputEvent(const QString &eventType, const QString &eventData)

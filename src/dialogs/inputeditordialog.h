@@ -75,14 +75,16 @@ private:
     
 
 private slots:
+    void checkSDLInputs();
     void openHelp();
     void saveInputSettings();
 
-    
+
 protected:
     void inputEvent(const QString& eventType, const QString& eventData);
     void mousePressEvent(QMouseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
+    void showEvent(QShowEvent *event) override;
     void timerEvent(QTimerEvent *e) override;
 };
 
