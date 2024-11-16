@@ -502,9 +502,11 @@ void InputEditorDialog::timerEvent(QTimerEvent *e)
             eventData = QString::number(event.jaxis.axis) + (event.jaxis.value > 0 ? "+" : "-");
         } else if (event.type == SDL_JOYHATMOTION) {
             eventType = "hat";
-            eventData = QString::number(event.jhat.hat) + QChar(event.jhat.value) == QChar(SDL_HAT_UP) ? " Up" :
-                            event.jhat.value == SDL_HAT_DOWN ? " Down" :
-                            event.jhat.value == SDL_HAT_LEFT ? " Left" : " Right";
+            eventData = QString::number(event.jhat.hat) + (
+                event.jhat.value == SDL_HAT_UP ? " Up" :
+                event.jhat.value == SDL_HAT_DOWN ? " Down" :
+                event.jhat.value == SDL_HAT_LEFT ? " Left" : " Right"
+            );
         } else if (event.type == SDL_JOYBUTTONDOWN) {
             eventType = "button";
             eventData = QString::number(event.jbutton.button);
