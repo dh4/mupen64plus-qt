@@ -282,7 +282,10 @@ void InputEditorDialog::checkErrors()
         setEnabled(false);
         QMessageBox::critical(this, tr("No SDL Devices Found"), QString(tr("Could not find a connected controller. This editor only works with controller/gamepad devices and not with keyboard input. ")
                                                                      + tr("Check to make sure your controller is connected to your PC.") + "<br /><br />"
-                                                                     + tr("If you just connected your controller, try restarting <AppName>.").replace("<AppName>", AppName)));
+                                                                     + tr("If you just connected your controller, try restarting <AppName>.").replace("<AppName>", AppName) + "<br /><br />"
+                                                                     + tr("If you're trying to configure your keyboard, use Settings->Edit mupen64plus.cfg... ")
+                                                                     + tr("The editor contains an SDL keycode reference and a link to the <ParentName> documentation. ").replace("<ParentName>", ParentName)
+                                                                     + tr("You can also find the default controls under Help->Default Controls.")));
         close();
     }
 

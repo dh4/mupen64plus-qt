@@ -81,7 +81,7 @@
     </message>
     <message>
         <location filename="../../src/dialogs/controlinfodialog.cpp" line="57"/>
-        <source>For setting up a gamepad controller see &lt;link&gt;this page&lt;linkend&gt;. </source>
+        <source>For setting up a gamepad controller use Settings-&gt;Input Editor or see &lt;link&gt;this page&lt;linkend&gt;. </source>
         <translation>Para configurar o controle do jogo, consulte esta &lt;link&gt;página&lt;linkend&gt;. </translation>
     </message>
     <message>
@@ -523,142 +523,147 @@ For each axis, this must be greater than the corresponding AnalogDeadzone value.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="385"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="575"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="409"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="481"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="491"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="522"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="532"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="545"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="562"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="611"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="629"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="670"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="680"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="711"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="721"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="740"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="756"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="766"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="790"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="814"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="821"/>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="406"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="478"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="488"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="519"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="529"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="542"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="559"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="605"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="623"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="664"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="674"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="705"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="715"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="734"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="750"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="760"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="784"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="808"/>
         <source>Select...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="419"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="416"/>
         <source>L Trigger</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="468"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="465"/>
         <source>Digital Pad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="474"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="663"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="471"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="657"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="501"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="690"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="498"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="684"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="508"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="697"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="505"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="691"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="515"/>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="704"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="512"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="698"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="555"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="552"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="591"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="585"/>
         <source>Save</source>
         <translation type="unfinished">Salvar</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="598"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="592"/>
         <source>R Trigger</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="605"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="599"/>
         <source>Analog Stick</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="621"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="615"/>
         <source>Y Axis
 Up/Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="639"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="633"/>
         <source>X Axis
 Left/Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="650"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="644"/>
         <source>Z Trigger</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="657"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="651"/>
         <source>C Buttons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="750"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="744"/>
         <source>Buttons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="776"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="770"/>
         <source>A Button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="783"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="777"/>
         <source>Mempak</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="800"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="794"/>
         <source>Rumblepak</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.ui" line="807"/>
+        <location filename="../../src/dialogs/inputeditordialog.ui" line="801"/>
         <source>B Button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/dialogs/inputeditordialog.cpp" line="137"/>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="300"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="304"/>
         <source>Unsaved Changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/dialogs/inputeditordialog.cpp" line="137"/>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="300"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="304"/>
         <source>There are unsaved changes. Are you sure you want to leave?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -668,123 +673,148 @@ Left/Right</source>
         <translation type="unfinished">Fechar</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="282"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="283"/>
         <source>No SDL Devices Found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="282"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="283"/>
         <source>Could not find a connected controller. This editor only works with controller/gamepad devices and not with keyboard input. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="283"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="284"/>
         <source>Check to make sure your controller is connected to your PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="284"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="285"/>
         <source>If you just connected your controller, try restarting &lt;AppName&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="290"/>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="462"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="286"/>
+        <source>If you&apos;re trying to configure your keyboard, use Settings-&gt;Edit mupen64plus.cfg... </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="287"/>
+        <source>The editor contains an SDL keycode reference and a link to the &lt;ParentName&gt; documentation. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="288"/>
+        <source>You can also find the default controls under Help-&gt;Default Controls.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="294"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="508"/>
         <source>Not Found</source>
         <translation type="unfinished">Não foi encontrado</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="291"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="295"/>
         <source>Input configuration sections for </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="291"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="295"/>
         <source> not found in your mupen64plus.cfg. Please fix this and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="374"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="378"/>
         <source>Input Editor Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="374"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="378"/>
         <source>To map your controller inputs, left click an input to start listening and then press </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="375"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="379"/>
         <source>the corresponding button or axis you want it mapped to on your controller. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="376"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="380"/>
         <source>For the X and Y axis, press both directions while listening.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="377"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="381"/>
         <source>You have the following shortcuts while listening:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="378"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="382"/>
         <source>Abandon this input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="378"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="382"/>
         <source>Clear the current input selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="379"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="383"/>
         <source>See &lt;link&gt;here&lt;linkend&gt; for a full description of all the input options.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="389"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="391"/>
+        <source>Reset Controller</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="391"/>
+        <source>This will reset all of the settings for the current controller. Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="435"/>
         <source>mupen64plus.cfg was not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="389"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="435"/>
         <source>Make sure you&apos;ve set the config path to a directory with mupen64plus.cfg.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="448"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="494"/>
         <source>Could not open mupen64plus.cfg for writing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="448"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="494"/>
         <source>Check the write permissions in your config directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="460"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="506"/>
         <source>Save successful</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="460"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="506"/>
         <source>Input configuration for [</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="460"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="506"/>
         <source>] successfully saved to mupen64plus.cfg.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="463"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="509"/>
         <source>Input configuration section for [</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="463"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="509"/>
         <source>] not found in your mupen64plus.cfg. Please fix this and try again.</source>
         <translation type="unfinished"></translation>
     </message>

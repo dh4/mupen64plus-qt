@@ -192,13 +192,15 @@ Windows: C:/Users/\<user\>/AppData/Roaming/Mupen64Plus/
 OSX: /Users/\<user\>/.config/mupen64plus/
 
 
-## Input Configuration Editor
+## Input Editor
 
 Starting with version 1.17, Mupen64Plus-Qt has an input configuration editor:
 
 <img src="https://raw.githubusercontent.com/dh4/mupen64plus-qt/master/resources/demos/input-editor.jpg" alt="Input Editor" width="450" />
 
 The editor grabs SDL inputs from your controller and saves them directly to your mupen64plus.cfg file.
+
+This feature is new and has not been tested with many different controllers and systems yet. If you find a bug with it, please add an [issue](https://github.com/dh4/mupen64plus-qt/issues). Provide as much information as possible including the steps you took to arrive at the bug, expected vs. actual result, your controller section in mupen64plus.cfg, and also your operating system, controler, and anything else unique about your setup.
 
 
 ## Mupen64Plus Log Viewer
