@@ -72,12 +72,12 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
         controlsConfig[i] = {
             {"mouse", false},
             {"plugged", false},
-            {"plugin", 1},
+            {"plugin", 2},
             {"name", QString()},
-            {"mode", 0},
-            {"AnalogDeadzone", "0,0"},
+            {"mode", 2},
+            {"AnalogDeadzone", "4096,4096"},
             {"AnalogPeak", "32768,32768"},
-            {"MouseSensitivity", "2.0,2.0"},
+            {"MouseSensitivity", "2.00,2.00"},
         };
 
         QMap<QPushButton*, QString>::const_iterator iter = mapControlButtonToControlKey.constBegin();
@@ -253,6 +253,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Close"));
 
 
+    connect(ui->resetBtn, SIGNAL(clicked()), this, SLOT(resetInputSettings()));
     connect(ui->saveBtn, SIGNAL(clicked()), this, SLOT(saveInputSettings()));
     connect(ui->helpButton, SIGNAL(clicked()), this, SLOT(openHelp()));
     connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(confirmClose()));
@@ -379,6 +380,48 @@ void InputEditorDialog::openHelp()
                                                                   + tr("See <link>here<linkend> for a full description of all the input options.")
                                                                         .replace("<link>", "<a href=\"https://mupen64plus.org/wiki/index.php/Mupen64Plus_Plugin_Parameters#Input-SDL\">")
                                                                         .replace("<linkend>", "</a>")));
+}
+
+
+void InputEditorDialog::resetInputSettings()
+{
+    int answer = QMessageBox::question(this, tr("Reset Controller"), tr("This will reset all of the settings for the current controller. Are you sure?"),
+                                       QMessageBox::Yes | QMessageBox::No);
+
+    if (answer == QMessageBox::Yes) {
+        ui->chkMouse->setChecked(false);
+        controlsConfig[ui->cboController->currentIndex()]["mouse"] = false;
+
+        ui->cboPlugin->setCurrentText(pluginOptions.value(2));
+        controlsConfig[ui->cboController->currentIndex()]["plugin"] = 2;
+
+        ui->nbAnalogDeadzoneX->setValue(4096);
+        ui->nbAnalogDeadzoneY->setValue(4096);
+        controlsConfig[ui->cboController->currentIndex()]["AnalogDeadzone"] = "4096,4096";
+
+        ui->nbAnalogPeakX->setValue(32768);
+        ui->nbAnalogPeakY->setValue(32768);
+        controlsConfig[ui->cboController->currentIndex()]["AnalogPeak"] = "32768,32768";
+
+        ui->nbMouseSensitivityX->setValue(2.00);
+        ui->nbMouseSensitivityY->setValue(2.00);
+        controlsConfig[ui->cboController->currentIndex()]["MouseSensitivity"] = "2.00,2.00";
+
+        for (auto it = mapControlButtonToControlKey.constBegin(); it != mapControlButtonToControlKey.constEnd(); ++it) {
+            it.key()->setText(CONTROL_BUTTON_EMPTY_TEXT);
+            it.key()->setToolTip("");
+            controlsConfig[ui->cboController->currentIndex()][it.value()] = CONTROL_BUTTON_EMPTY_TEXT;
+        }
+
+        setUnsavedChanges(true, true);
+
+        // Do these last so they don't get overwritten
+        ui->chkPlugged->setChecked(false);
+        controlsConfig[ui->cboController->currentIndex()]["plugged"] = false;
+
+        ui->cboMode->setCurrentIndex(2); // Fully automatic
+        controlsConfig[ui->cboController->currentIndex()]["mode"] = 2;
+    }
 }
 
 
@@ -539,9 +582,9 @@ void InputEditorDialog::updateControllerConfig(int controller)
     ui->nbAnalogPeakX->setValue(analogPeak[0].toInt());
     ui->nbAnalogPeakY->setValue(analogPeak[1].toInt());
 
-    QStringList mouseSensitivity = cfg.value("MouseSensitivity", "2.0,2.0").toString().split(',');
-    ui->nbMouseSensitivityX->setValue(mouseSensitivity[0].toInt());
-    ui->nbMouseSensitivityY->setValue(mouseSensitivity[1].toInt());
+    QStringList mouseSensitivity = cfg.value("MouseSensitivity", "2.00,2.00").toString().split(',');
+    ui->nbMouseSensitivityX->setValue(mouseSensitivity[0].toFloat());
+    ui->nbMouseSensitivityY->setValue(mouseSensitivity[1].toFloat());
 
     QMap<QPushButton*, QString>::const_iterator iter = mapControlButtonToControlKey.constBegin();
     while (iter != mapControlButtonToControlKey.constEnd())
