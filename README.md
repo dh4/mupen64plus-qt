@@ -183,13 +183,22 @@ This example shows 30 seconds. The default is 10 seconds.
 
 ## Editor For mupen64plus.cfg
 
-<img src="https://raw.githubusercontent.com/dh4/mupen64plus-qt/master/resources/demos/config-editor.jpg" alt="Table View" height="200" />
+<img src="https://raw.githubusercontent.com/dh4/mupen64plus-qt/master/resources/demos/config-editor.jpg" alt="Config Editor" width="450" />
 
 Mupen64Plus-Qt contains an editor with syntax highlighting for mupen64plus.cfg. To use it, make sure you have your config directory set under Settings->Configure->Paths. Mupen64Plus-Qt should auto-detect this setting for you. If it doesn't, the default location is:
 
 Linux: /home/\<user\>/.config/mupen64plus/
 Windows: C:/Users/\<user\>/AppData/Roaming/Mupen64Plus/
 OSX: /Users/\<user\>/.config/mupen64plus/
+
+
+## Input Configuration Editor
+
+Starting with version 1.17, Mupen64Plus-Qt has an input configuration editor:
+
+<img src="https://raw.githubusercontent.com/dh4/mupen64plus-qt/master/resources/demos/input-editor.jpg" alt="Input Editor" width="450" />
+
+The editor grabs SDL inputs from your controller and saves them directly to your mupen64plus.cfg file.
 
 
 ## Mupen64Plus Log Viewer
