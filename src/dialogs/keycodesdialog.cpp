@@ -31,9 +31,14 @@
 
 #include "keycodesdialog.h"
 
+#include "../global.h"
+
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QHeaderView>
+#include <QLabel>
+#include <QMessageBox>
+#include <QPushButton>
 #include <QTableWidget>
 #include <QTableWidgetItem>
 
@@ -198,13 +203,48 @@ KeyCodes::KeyCodes(QWidget *parent) : QDialog(parent)
         keyCodesTable->setItem(i, 1, new QTableWidgetItem(codes.at(i).at(1)));
     }
 
+    controls = new QWidget(this);
+    controlsLayout = new QGridLayout(controls);
+    controlsLayout->setContentsMargins(0, 0, 0, 0);
+
     keyCodesButtonBox = new QDialogButtonBox(Qt::Horizontal, this);
     keyCodesButtonBox->addButton(tr("Close"), QDialogButtonBox::RejectRole);
 
+    helpButtonBox = new QDialogButtonBox(Qt::Horizontal, this);
+    QPushButton *helpButton = new QPushButton();
+    helpButton->setIcon(QIcon::fromTheme("help-about"));
+    helpButtonBox->addButton(helpButton, QDialogButtonBox::HelpRole);
+
+    QString docsLinkString = "<a href=\"https://www.libsdl.org/release/SDL-1.2.15/include/SDL_keysym.h\">"
+                             + tr("Full Reference") + "</a>";
+
+    docsLink = new QLabel(docsLinkString, controls);
+    docsLink->setOpenExternalLinks(true);
+
+    QSpacerItem *spacer = new QSpacerItem(1,1, QSizePolicy::Expanding, QSizePolicy::Fixed);
+
+    controlsLayout->addWidget(helpButtonBox, 0, 0, Qt::AlignLeft);
+    controlsLayout->addWidget(docsLink, 0, 1, Qt::AlignLeft);
+    controlsLayout->addItem(spacer, 0, 2);
+    controlsLayout->addWidget(keyCodesButtonBox, 0, 3, Qt::AlignRight);
+    controls->setLayout(controlsLayout);
+
     keyCodesLayout->addWidget(keyCodesTable, 0, 0);
-    keyCodesLayout->addWidget(keyCodesButtonBox, 1, 0);
+    keyCodesLayout->addWidget(controls, 1, 0);
 
     connect(keyCodesButtonBox, SIGNAL(rejected()), this, SLOT(close()));
+    connect(helpButton, SIGNAL(clicked()), this, SLOT(openHelp()));
 
     setLayout(keyCodesLayout);
+}
+
+
+void KeyCodes::openHelp()
+{
+    QMessageBox::information(this, tr("Key Codes Help"), QString(tr("These codes can be used to map keyboard keys to N64 inputs under the [Input-SDL-Control] sections. ")
+                                                                    + tr("To use a code put it inside of key(). For example:") + "<br />"
+                                                                    + "A Button = key(97)" + "<br /><br />"
+                                                                    + tr("This would set the A button to the a key on your keyboard.") + "<br /><br />"
+                                                                    + tr("When modifying keys, set the controller mode to 0 (Fully Manual). Otherwise <ParentName> will overwrite your settings.")
+                                                                          .replace("<ParentName>", ParentName)));
 }

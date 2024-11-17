@@ -656,165 +656,165 @@ Left/Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="137"/>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="304"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="138"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="307"/>
         <source>Unsaved Changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="137"/>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="304"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="138"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="307"/>
         <source>There are unsaved changes. Are you sure you want to leave?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="253"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="256"/>
         <source>Close</source>
         <translation type="unfinished">Fermer</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="283"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="286"/>
         <source>No SDL Devices Found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="283"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="286"/>
         <source>Could not find a connected controller. This editor only works with controller/gamepad devices and not with keyboard input. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="284"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="287"/>
         <source>Check to make sure your controller is connected to your PC.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="285"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="288"/>
         <source>If you just connected your controller, try restarting &lt;AppName&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="286"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="289"/>
         <source>If you&apos;re trying to configure your keyboard, use Settings-&gt;Edit mupen64plus.cfg... </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="287"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="290"/>
         <source>The editor contains an SDL keycode reference and a link to the &lt;ParentName&gt; documentation. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="288"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="291"/>
         <source>You can also find the default controls under Help-&gt;Default Controls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="294"/>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="508"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="297"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="511"/>
         <source>Not Found</source>
         <translation type="unfinished">Non trouvé</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="295"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="298"/>
         <source>Input configuration sections for </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="295"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="298"/>
         <source> not found in your mupen64plus.cfg. Please fix this and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="378"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="381"/>
         <source>Input Editor Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="378"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="381"/>
         <source>To map your controller inputs, left click an input to start listening and then press </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="379"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="382"/>
         <source>the corresponding button or axis you want it mapped to on your controller. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="380"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="383"/>
         <source>For the X and Y axis, press both directions while listening.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="381"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="384"/>
         <source>You have the following shortcuts while listening:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="382"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="385"/>
         <source>Abandon this input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="382"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="385"/>
         <source>Clear the current input selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="383"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="386"/>
         <source>See &lt;link&gt;here&lt;linkend&gt; for a full description of all the input options.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="391"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="394"/>
         <source>Reset Controller</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="391"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="394"/>
         <source>This will reset all of the settings for the current controller. Are you sure?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="435"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="438"/>
         <source>mupen64plus.cfg was not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="435"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="438"/>
         <source>Make sure you&apos;ve set the config path to a directory with mupen64plus.cfg.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="494"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="497"/>
         <source>Could not open mupen64plus.cfg for writing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="494"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="497"/>
         <source>Check the write permissions in your config directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="506"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="509"/>
         <source>Save successful</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="506"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="509"/>
         <source>Input configuration for [</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="506"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="509"/>
         <source>] successfully saved to mupen64plus.cfg.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="509"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="512"/>
         <source>Input configuration section for [</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/inputeditordialog.cpp" line="509"/>
+        <location filename="../../src/dialogs/inputeditordialog.cpp" line="512"/>
         <source>] not found in your mupen64plus.cfg. Please fix this and try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -822,24 +822,54 @@ Left/Right</source>
 <context>
     <name>KeyCodes</name>
     <message>
-        <location filename="../../src/dialogs/keycodesdialog.cpp" line="43"/>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="48"/>
         <source>SDL Key Codes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/keycodesdialog.cpp" line="189"/>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="194"/>
         <source>Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/keycodesdialog.cpp" line="189"/>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="194"/>
         <source>SDL Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/keycodesdialog.cpp" line="202"/>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="211"/>
         <source>Close</source>
         <translation>Fermer</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="219"/>
+        <source>Full Reference</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="244"/>
+        <source>Key Codes Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="244"/>
+        <source>These codes can be used to map keyboard keys to N64 inputs under the [Input-SDL-Control] sections. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="245"/>
+        <source>To use a code put it inside of key(). For example:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="247"/>
+        <source>This would set the A button to the a key on your keyboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/keycodesdialog.cpp" line="248"/>
+        <source>When modifying keys, set the controller mode to 0 (Fully Manual). Otherwise &lt;ParentName&gt; will overwrite your settings.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -882,13 +912,13 @@ Left/Right</source>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="261"/>
-        <location filename="../../src/mainwindow.cpp" line="939"/>
+        <location filename="../../src/mainwindow.cpp" line="961"/>
         <source>&amp;Download/Update Info...</source>
         <translation>&amp;Télécharger/Mettre à jour les infos...</translation>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="262"/>
-        <location filename="../../src/mainwindow.cpp" line="940"/>
+        <location filename="../../src/mainwindow.cpp" line="962"/>
         <source>D&amp;elete Current Info...</source>
         <translation>&amp;Effacer les infos actuelles...</translation>
     </message>
@@ -904,7 +934,7 @@ Left/Right</source>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="286"/>
-        <location filename="../../src/mainwindow.cpp" line="929"/>
+        <location filename="../../src/mainwindow.cpp" line="951"/>
         <source>&amp;Start</source>
         <translation>&amp;Démarrer</translation>
     </message>
@@ -925,7 +955,7 @@ Left/Right</source>
     </message>
     <message>
         <location filename="../../src/mainwindow.cpp" line="309"/>
-        <location filename="../../src/mainwindow.cpp" line="932"/>
+        <location filename="../../src/mainwindow.cpp" line="954"/>
         <source>Configure &amp;Game...</source>
         <translation>Configurer le &amp;jeu...</translation>
     </message>
@@ -935,7 +965,7 @@ Left/Right</source>
         <translation>&amp;Configurer...</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="765"/>
+        <location filename="../../src/mainwindow.cpp" line="773"/>
         <source>There is no log. Either &lt;ParentName&gt; has not yet run or there was no output from the last run.</source>
         <translation>Il n&apos;y a pas de journaux. Soit &lt;ParentName&gt; n’a pas encore été lancé, soit il n’y a pas de données concernant le dernier démarrage.</translation>
     </message>
@@ -980,112 +1010,112 @@ Left/Right</source>
         <translation>Vue en liste</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="362"/>
+        <location filename="../../src/mainwindow.cpp" line="370"/>
         <source>&amp;Full-screen</source>
         <translation>Pl&amp;ein-Écran</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="378"/>
+        <location filename="../../src/mainwindow.cpp" line="386"/>
         <source>&amp;Help</source>
         <translation>&amp;Aide</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="379"/>
+        <location filename="../../src/mainwindow.cpp" line="387"/>
         <source>Documentation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="380"/>
+        <location filename="../../src/mainwindow.cpp" line="388"/>
         <source>Mupen64Plus Docs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="382"/>
+        <location filename="../../src/mainwindow.cpp" line="390"/>
         <source>Default Controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="384"/>
+        <location filename="../../src/mainwindow.cpp" line="392"/>
         <source>&amp;About</source>
         <translation>À &amp;propos</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="466"/>
+        <location filename="../../src/mainwindow.cpp" line="474"/>
         <source>Add a directory containing ROMs under </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="467"/>
+        <location filename="../../src/mainwindow.cpp" line="475"/>
         <source>Settings-&gt;Configure-&gt;Paths to use this view.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="720"/>
-        <location filename="../../src/mainwindow.cpp" line="742"/>
+        <location filename="../../src/mainwindow.cpp" line="728"/>
+        <location filename="../../src/mainwindow.cpp" line="750"/>
         <source>Not Found</source>
         <translation>Non trouvé</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="720"/>
-        <location filename="../../src/mainwindow.cpp" line="742"/>
+        <location filename="../../src/mainwindow.cpp" line="728"/>
+        <location filename="../../src/mainwindow.cpp" line="750"/>
         <source>Editor requires config directory to be </source>
         <translation>L&apos;éditeur nécessite que le dossier de configuration soit </translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="721"/>
-        <location filename="../../src/mainwindow.cpp" line="743"/>
+        <location filename="../../src/mainwindow.cpp" line="729"/>
+        <location filename="../../src/mainwindow.cpp" line="751"/>
         <source>set to a directory with mupen64plus.cfg.</source>
         <translation>un dossier contenant mupen64plus.cfg.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="722"/>
-        <location filename="../../src/mainwindow.cpp" line="744"/>
+        <location filename="../../src/mainwindow.cpp" line="730"/>
+        <location filename="../../src/mainwindow.cpp" line="752"/>
         <source>See here for the default config location:</source>
         <translation>Voir ici pour la configuration par défaut:</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="725"/>
-        <location filename="../../src/mainwindow.cpp" line="747"/>
+        <location filename="../../src/mainwindow.cpp" line="733"/>
+        <location filename="../../src/mainwindow.cpp" line="755"/>
         <source>If you have not launched Mupen64Plus yet, launch it with a ROM to create the default config.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="764"/>
+        <location filename="../../src/mainwindow.cpp" line="772"/>
         <source>No Output</source>
         <translation>Pas de sortie</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="823"/>
+        <location filename="../../src/mainwindow.cpp" line="845"/>
         <source>All Files</source>
         <translation>Tous les fichiers</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="829"/>
+        <location filename="../../src/mainwindow.cpp" line="851"/>
         <source>Open ROM File</source>
         <translation>Ouvrir un fichier ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="847"/>
+        <location filename="../../src/mainwindow.cpp" line="869"/>
         <source>No ROMs</source>
         <translation>Aucune ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="847"/>
+        <location filename="../../src/mainwindow.cpp" line="869"/>
         <source>No ROMs found in ZIP file.</source>
         <translation>Aucune ROM trouvée dans le fichier ZIP.</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="862"/>
+        <location filename="../../src/mainwindow.cpp" line="884"/>
         <source>Select ROM</source>
         <translation>Choisir une ROM</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="879"/>
+        <location filename="../../src/mainwindow.cpp" line="901"/>
         <source>Launch</source>
         <translation>Lancer</translation>
     </message>
     <message>
-        <location filename="../../src/mainwindow.cpp" line="880"/>
+        <location filename="../../src/mainwindow.cpp" line="902"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>

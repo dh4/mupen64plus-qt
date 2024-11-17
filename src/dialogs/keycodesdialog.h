@@ -35,6 +35,7 @@
 #include <QDialog>
 
 class QDialogButtonBox;
+class QLabel;
 class QGridLayout;
 class QTableWidget;
 
@@ -46,9 +47,16 @@ public:
     explicit KeyCodes(QWidget *parent = 0);
 
 private:
+    QDialogButtonBox *helpButtonBox;
     QDialogButtonBox *keyCodesButtonBox;
+    QGridLayout *controlsLayout;
     QGridLayout *keyCodesLayout;
+    QLabel *docsLink;
     QTableWidget *keyCodesTable;
+    QWidget *controls;
+
+private slots:
+    void openHelp();
 };
 
 #endif // KEYCODESDIALOG_H

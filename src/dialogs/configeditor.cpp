@@ -86,8 +86,8 @@ ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent
     editorButtonBox->addButton(tr("Save"), QDialogButtonBox::AcceptRole);
     editorButtonBox->addButton(tr("Cancel"), QDialogButtonBox::RejectRole);
 
-    controlsLayout->addWidget(codesButtonBox, 0, 0);
-    controlsLayout->addWidget(docsLink, 0, 1);
+    controlsLayout->addWidget(codesButtonBox, 0, 0, Qt::AlignLeft);
+    controlsLayout->addWidget(docsLink, 0, 1, Qt::AlignLeft);
     controlsLayout->addItem(spacer, 0, 2);
     controlsLayout->addWidget(editorButtonBox, 0, 3);
     controls->setLayout(controlsLayout);
