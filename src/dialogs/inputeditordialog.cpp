@@ -43,6 +43,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     fromAutoChange = false;
     currentController = 0;
     initialMode = 0;
+    initialPlugged = 0;
 
 
     /// Populate plugin drop down
@@ -236,6 +237,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
 
         /// Load from local config to UI
         initialMode = controlsConfig[0].value("mode", 0).toInt();
+        initialPlugged = controlsConfig[0].value("plugged", false).toBool();
         updateControllerConfig(currentController);
     }
 
@@ -248,6 +250,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
 
     // Reset the intial setting for mode
     ui->cboMode->setCurrentIndex(initialMode);
+    ui->chkPlugged->setChecked(initialPlugged);
     setUnsavedChanges(false);
 
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Close"));

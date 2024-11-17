@@ -69,6 +69,7 @@ private:
     bool unsavedChanges;
     int currentController;
     int initialMode;
+    bool initialPlugged;
 
     const QString CONTROL_BUTTON_EMPTY_TEXT = "Select...";
 
