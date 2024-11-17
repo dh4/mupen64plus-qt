@@ -6,7 +6,8 @@ Rules-Requires-Root: no
 Build-Depends: debhelper-compat (= 13),
                libquazip1-qt6-dev,
                cmake,
-               qt6-base-dev
+               qt6-base-dev,
+               libsdl2-dev
 Standards-Version: 4.5.0
 Homepage: https://github.com/dh4/mupen64plus-qt
 
