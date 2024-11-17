@@ -254,6 +254,7 @@ InputEditorDialog::InputEditorDialog(QString configFile, QWidget *parent): QDial
     setUnsavedChanges(false);
 
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Close"));
+    ui->helpButton->setIcon(QIcon::fromTheme("help-about"));
 
 
     connect(ui->resetBtn, SIGNAL(clicked()), this, SLOT(resetInputSettings()));
