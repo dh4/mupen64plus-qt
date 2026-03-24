@@ -358,11 +358,14 @@ QString getTranslation(QString text)
 QString getVersion()
 {
     QFile versionFile(":/other/VERSION");
-    versionFile.open(QIODevice::ReadOnly);
-    QString version = versionFile.readAll();
-    versionFile.close();
+    if (versionFile.open(QIODevice::ReadOnly)) {
+        QString version = versionFile.readAll();
+        versionFile.close();
 
-    return version;
+        return version;
+    }
+
+    return "";
 }
 
 

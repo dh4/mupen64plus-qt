@@ -163,22 +163,23 @@ int RomCollection::addRoms()
                         delete romData;
                     }
                 } else { //Just a normal file
-                    file.open(QIODevice::ReadOnly);
-                    QByteArray *romData = new QByteArray(file.readAll());
-                    file.close();
+                    if (file.open(QIODevice::ReadOnly)) {
+                        QByteArray *romData = new QByteArray(file.readAll());
+                        file.close();
 
-                    if (fileTypes.contains("*.v64"))
-                        *romData = byteswap(*romData);
+                        if (fileTypes.contains("*.v64"))
+                            *romData = byteswap(*romData);
 
-                    if (romData->left(4).toHex() == "80371240") { //Z64 ROM
-                        roms.append(addRom(romData, fileName, romPath, "", &query));
-                        romCount++;
-                    } else if (romData->left(4).toHex() == "e848d316") { //64DD ROM
-                        ddRoms.append(addRom(romData, fileName, romPath, "", &query, true));
-                        romCount++;
+                        if (romData->left(4).toHex() == "80371240") { //Z64 ROM
+                            roms.append(addRom(romData, fileName, romPath, "", &query));
+                            romCount++;
+                        } else if (romData->left(4).toHex() == "e848d316") { //64DD ROM
+                            ddRoms.append(addRom(romData, fileName, romPath, "", &query, true));
+                            romCount++;
+                        }
+
+                        delete romData;
                     }
-
-                    delete romData;
                 }
 
                 count++;
@@ -335,7 +336,7 @@ void RomCollection::initializeRom(Rom *currentRom, bool cached)
         QString dataPath = SETTINGS.value("Paths/data", "").toString();
         QDir dataDir(dataPath);
 
-        if (QFileInfo(dataDir.absoluteFilePath("mupen64plus.ini")).exists())
+        if (QFileInfo::exists(dataDir.absoluteFilePath("mupen64plus.ini")))
             catalogFile = dataDir.absoluteFilePath("mupen64plus.ini");
     }
 
@@ -346,7 +347,7 @@ void RomCollection::initializeRom(Rom *currentRom, bool cached)
     currentRom->imageExists = false;
 
     bool getGoodName = false;
-    if (QFileInfo(catalogFile).exists()) {
+    if (QFileInfo::exists(catalogFile)) {
         romCatalog = new QSettings(catalogFile, QSettings::IniFormat, parent);
         getGoodName = true;
     }
@@ -396,38 +397,39 @@ void RomCollection::initializeRom(Rom *currentRom, bool cached)
         QString dataFile = getCacheLocation() + currentRom->romMD5.toLower() + "/data.json";
         QFile file(dataFile);
 
-        file.open(QIODevice::ReadOnly);
-        QString data = file.readAll();
-        file.close();
+        if (file.open(QIODevice::ReadOnly)) {
+            QString data = file.readAll();
+            file.close();
 
-        QJsonDocument document = QJsonDocument::fromJson(data.toUtf8());
-        QJsonObject json = document.object();
+            QJsonDocument document = QJsonDocument::fromJson(data.toUtf8());
+            QJsonObject json = document.object();
 
-        //Remove any non-standard characters
-        QString regex = "[^A-Za-z 0-9 \\.,\\?'""!@#\\$%\\^&\\*\\(\\)-_=\\+;:<>\\/\\\\|\\}\\{\\[\\]`~é]*";
+            //Remove any non-standard characters
+            QString regex = "[^A-Za-z 0-9 \\.,\\?'""!@#\\$%\\^&\\*\\(\\)-_=\\+;:<>\\/\\\\|\\}\\{\\[\\]`~é]*";
 
-        currentRom->gameTitle = json.value("game_title").toString().remove(QRegularExpression(regex));
-        if (currentRom->gameTitle == "") currentRom->gameTitle = getTranslation("Not found");
+            currentRom->gameTitle = json.value("game_title").toString().remove(QRegularExpression(regex));
+            if (currentRom->gameTitle == "") currentRom->gameTitle = getTranslation("Not found");
 
-        currentRom->releaseDate = json.value("release_date").toString();
-        currentRom->sortDate = json.value("release_date").toString();
-        currentRom->releaseDate.replace(QRegularExpression("(\\d{4})-(\\d{2})-(\\d{2})"), "\\2/\\3/\\1");
+            currentRom->releaseDate = json.value("release_date").toString();
+            currentRom->sortDate = json.value("release_date").toString();
+            currentRom->releaseDate.replace(QRegularExpression("(\\d{4})-(\\d{2})-(\\d{2})"), "\\2/\\3/\\1");
 
-        currentRom->overview = json.value("overview").toString().remove(QRegularExpression(regex));
-        currentRom->esrb = json.value("rating").toString();
+            currentRom->overview = json.value("overview").toString().remove(QRegularExpression(regex));
+            currentRom->esrb = json.value("rating").toString();
 
-        currentRom->genre = json.value("genres").toString();
-        currentRom->publisher = json.value("publisher").toString();
-        currentRom->developer = json.value("developer").toString();
+            currentRom->genre = json.value("genres").toString();
+            currentRom->publisher = json.value("publisher").toString();
+            currentRom->developer = json.value("developer").toString();
 
-        foreach (QString ext, QStringList() << "jpg" << "png")
-        {
-            QString imageFile = getCacheLocation() + currentRom->romMD5.toLower() + "/boxart-front." + ext;
-            QFile cover(imageFile);
+            foreach (QString ext, QStringList() << "jpg" << "png")
+            {
+                QString imageFile = getCacheLocation() + currentRom->romMD5.toLower() + "/boxart-front." + ext;
+                QFile cover(imageFile);
 
-            if (cover.exists() && currentRom->image.load(imageFile)) {
-                currentRom->imageExists = true;
-                break;
+                if (cover.exists() && currentRom->image.load(imageFile)) {
+                    currentRom->imageExists = true;
+                    break;
+                }
             }
         }
     }

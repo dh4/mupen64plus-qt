@@ -149,9 +149,10 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
         completeRomPath = tempDir + "/temp.n64";
 
         QFile tempRom(completeRomPath);
-        tempRom.open(QIODevice::WriteOnly);
-        tempRom.write(romData);
-        tempRom.close();
+        if (tempRom.open(QIODevice::WriteOnly)) {
+            tempRom.write(romData);
+            tempRom.close();
+        }
     } else
         completeRomPath = romDir.absoluteFilePath(romFileName);
 
@@ -198,14 +199,15 @@ void EmulatorHandler::startEmulator(QDir romDir, QString romFileName, QString zi
         return;
     }
 
-    romFile.open(QIODevice::ReadOnly);
-    QByteArray romCheck = romFile.read(4);
-    romFile.close();
+    if (romFile.open(QIODevice::ReadOnly)) {
+        QByteArray romCheck = romFile.read(4);
+        romFile.close();
 
-    if (romCheck.toHex() != "80371240" && romCheck.toHex() != "37804012") {
-        QMessageBox::warning(parent, tr("Warning"), tr("Not a valid ROM File."));
-        if (zip) cleanTemp();
-        return;
+        if (romCheck.toHex() != "80371240" && romCheck.toHex() != "37804012") {
+            QMessageBox::warning(parent, tr("Warning"), tr("Not a valid ROM File."));
+            if (zip) cleanTemp();
+            return;
+        }
     }
 
 

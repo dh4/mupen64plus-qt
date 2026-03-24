@@ -64,32 +64,34 @@ QString TheGamesDBScraper::convertIDs(QJsonObject foundGame, QString typeName, Q
     QString cacheFileString = getCacheLocation() + typeName + ".json";
     QFile cacheFile(cacheFileString);
 
-    cacheFile.open(QIODevice::ReadOnly);
-    QString data = cacheFile.readAll();
-    cacheFile.close();
-
-    QJsonDocument document = QJsonDocument::fromJson(data.toUtf8());
-    QJsonObject cache = document.object();
-
     QString result = "";
 
-    foreach (QJsonValue id, idArray)
-    {
-        QString entryID = QString::number(id.toInt());
-        QString entryName = cache.value(entryID).toObject().value("name").toString();
+    if (cacheFile.open(QIODevice::ReadOnly)) {
+        QString data = cacheFile.readAll();
+        cacheFile.close();
 
-        if (entryName == "") {
-            updateListCache(&cacheFile, listName);
-            cacheFile.open(QIODevice::ReadOnly);
-            data = cacheFile.readAll();
-            cacheFile.close();
+        QJsonDocument document = QJsonDocument::fromJson(data.toUtf8());
+        QJsonObject cache = document.object();
 
-            document = QJsonDocument::fromJson(data.toUtf8());
-            entryName = cache.value(entryID).toObject().value("name").toString();
+        foreach (QJsonValue id, idArray)
+        {
+            QString entryID = QString::number(id.toInt());
+            QString entryName = cache.value(entryID).toObject().value("name").toString();
+
+            if (entryName == "") {
+                updateListCache(&cacheFile, listName);
+                if (cacheFile.open(QIODevice::ReadOnly)) {
+                    data = cacheFile.readAll();
+                    cacheFile.close();
+
+                    document = QJsonDocument::fromJson(data.toUtf8());
+                    entryName = cache.value(entryID).toObject().value("name").toString();
+                }
+            }
+
+            if (entryName != "")
+                result += entryName + ", ";
         }
-
-        if (entryName != "")
-            result += entryName + ", ";
     }
 
     int pos = result.lastIndexOf(QChar(','));
@@ -121,10 +123,11 @@ void TheGamesDBScraper::deleteGameInfo(QString fileName, QString identifier)
         QFile file(dataFile);
 
         // Remove game information
-        file.open(QIODevice::WriteOnly);
-        QTextStream stream(&file);
-        stream << "NULL";
-        file.close();
+        if (file.open(QIODevice::WriteOnly)) {
+            QTextStream stream(&file);
+            stream << "NULL";
+            file.close();
+        }
 
         // Remove cover image
         QString coverFile = gameCache + "/boxart-front.";
@@ -137,10 +140,11 @@ void TheGamesDBScraper::deleteGameInfo(QString fileName, QString identifier)
         if (coverPNG.exists())
             coverPNG.remove();
 
-        coverJPG.open(QIODevice::WriteOnly);
-        QTextStream streamImage(&coverJPG);
-        streamImage << "";
-        coverJPG.close();
+        if (coverJPG.open(QIODevice::WriteOnly)) {
+            QTextStream streamImage(&coverJPG);
+            streamImage << "";
+            coverJPG.close();
+        }
     }
 }
 
@@ -310,9 +314,10 @@ void TheGamesDBScraper::downloadGameInfo(QString identifier, QString searchName,
 
                 QJsonDocument document(saveData);
 
-                file.open(QIODevice::WriteOnly);
-                file.write(document.toJson());
-                file.close();
+                if (file.open(QIODevice::WriteOnly)) {
+                    file.write(document.toJson());
+                    file.close();
+                }
             }
 
             if (force && !updated) {
@@ -337,28 +342,30 @@ void TheGamesDBScraper::downloadGameInfo(QString identifier, QString searchName,
         QFile coverPNG(coverFile + "png");
 
         if ((!coverJPG.exists() && !coverPNG.exists()) || (force && updated)) {
-            file.open(QIODevice::ReadOnly);
-            QString data = file.readAll();
-            file.close();
+            if (file.open(QIODevice::ReadOnly)) {
+                QString data = file.readAll();
+                file.close();
 
-            QJsonDocument document = QJsonDocument::fromJson(data.toUtf8());
-            QJsonObject json = document.object();
-            QString boxartURL = json.value("boxart").toString();
+                QJsonDocument document = QJsonDocument::fromJson(data.toUtf8());
+                QJsonObject json = document.object();
+                QString boxartURL = json.value("boxart").toString();
 
-            if (boxartURL != "") {
-                QUrl url(boxartURL);
+                if (boxartURL != "") {
+                    QUrl url(boxartURL);
 
-                //Delete current box art
-                QFile::remove(coverFile + "jpg");
-                QFile::remove(coverFile + "png");
+                    //Delete current box art
+                    QFile::remove(coverFile + "jpg");
+                    QFile::remove(coverFile + "png");
 
-                //Check to save as JPG or PNG
-                boxartExt = QFileInfo(boxartURL).completeSuffix().toLower();
-                QFile cover(coverFile + boxartExt);
+                    //Check to save as JPG or PNG
+                    boxartExt = QFileInfo(boxartURL).completeSuffix().toLower();
+                    QFile cover(coverFile + boxartExt);
 
-                cover.open(QIODevice::WriteOnly);
-                cover.write(getUrlContents(url));
-                cover.close();
+                    if (cover.open(QIODevice::WriteOnly)) {
+                        cover.write(getUrlContents(url));
+                        cover.close();
+                    }
+                }
             }
         }
 

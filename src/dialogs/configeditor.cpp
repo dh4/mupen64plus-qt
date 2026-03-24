@@ -63,9 +63,10 @@ ConfigEditor::ConfigEditor(QString configFile, QWidget *parent) : QDialog(parent
 
     highlighter = new ConfigHighlighter(editorArea->document());
 
-    config.open(QIODevice::ReadOnly);
-    editorArea->setPlainText(config.readAll());
-    config.close();
+    if (config.open(QIODevice::ReadOnly)) {
+        editorArea->setPlainText(config.readAll());
+        config.close();
+    }
 
     controls = new QWidget(this);
     controlsLayout = new QGridLayout(controls);
@@ -125,9 +126,10 @@ void ConfigEditor::openKeyCodes()
 
 void ConfigEditor::saveConfig()
 {
-    config.open(QIODevice::WriteOnly);
-    config.write(editorArea->toPlainText().toUtf8().data());
-    config.close();
+    if (config.open(QIODevice::WriteOnly)) {
+        config.write(editorArea->toPlainText().toUtf8().data());
+        config.close();
+    }
 
     close();
 }

@@ -52,10 +52,11 @@ AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
     icon->setPixmap(QPixmap(":/images/"+ParentNameLower+".png"));
 
     QFile licenseFile(":/other/LICENSE");
-    licenseFile.open(QIODevice::ReadOnly);
-    license = new QPlainTextEdit(licenseFile.readAll(), this);
-    license->setReadOnly(true);
-    licenseFile.close();
+    if (licenseFile.open(QIODevice::ReadOnly)) {
+        license = new QPlainTextEdit(licenseFile.readAll(), this);
+        license->setReadOnly(true);
+        licenseFile.close();
+    }
 
     QString description = "<b>"+AppName+"</b><br />" + tr("Version") + " " + getVersion()
                         + "<br /><br />" + tr("A customizable launcher for <ParentName> using Qt.")
